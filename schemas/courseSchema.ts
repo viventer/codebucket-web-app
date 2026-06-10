@@ -125,3 +125,18 @@ export const courseSchema = z.object({
   structure: z.array(courseSectionSchema),
   ending: courseEndingSchema,
 });
+
+export type Language = z.infer<typeof languageSchema>;
+export type QuestionAnswerType = z.infer<typeof questionAnswerTypeSchema>;
+export type QuestionContentType = z.infer<typeof questionContentTypeSchema>;
+export type VideoContent = z.infer<typeof videoContentSchema>;
+export type CodeSnippet = z.infer<typeof codeSnippetSchema>;
+export type ExerciseContent = z.infer<typeof exerciseContentSchema>;
+export type Question = z.infer<typeof questionSchema>;
+export type QuizContent = z.infer<typeof quizContentSchema>;
+export type ProjectContent = z.infer<typeof projectContentSchema>;
+export type FinalProject = z.infer<typeof finalProjectSchema>;
+export type CourseElement = z.infer<typeof courseElementSchema>;
+export type CourseSection = z.infer<typeof courseSectionSchema>;
+export type CourseEnding = z.infer<typeof courseEndingSchema>;
+export type Course = z.infer<typeof courseSchema>;
