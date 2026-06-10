@@ -78,6 +78,7 @@ export const finalProjectSchema = z.object({
 });
 
 export const courseElementSchema = z.object({
+  id: z.string().min(1, "Element id is required"),
   type: z.enum(["video", "exercise", "quiz", "project", "finalProject"]),
   content: z.union([
     videoContentSchema,
@@ -89,6 +90,7 @@ export const courseElementSchema = z.object({
 });
 
 export const courseSectionSchema = z.object({
+  id: z.string().min(1, "Section id is required"),
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
   whatYouWillLearn: z.array(z.string()),
@@ -122,8 +124,10 @@ export const courseSchema = z.object({
   whatYouWillLearn: z
     .array(z.string())
     .min(1, "What you will learn is required"),
-  structure: z.array(courseSectionSchema),
+  sections: z.array(courseSectionSchema),
   ending: courseEndingSchema,
+  createdAt: z.date(),
+  updatedAt: z.date(),
 });
 
 export type Language = z.infer<typeof languageSchema>;
