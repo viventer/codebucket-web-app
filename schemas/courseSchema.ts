@@ -112,10 +112,16 @@ export const courseEndingSchema = z.object({
   }),
 });
 
+export const coursePriceSchema = z.object({
+  standardPrice: z.number().min(0, "Price must be positive"),
+  currentPrice: z.number().min(0, "Price must be positive"),
+  thirtyDayLowestPrice: z.number().min(0, "Price must be positive"),
+});
+
 export const courseSchema = z.object({
   id: z.string().min(1, "Course id is required"),
   title: z.string().min(1, "Title is required"),
-  price: z.number().min(0, "Price must be positive"),
+  price: coursePriceSchema,
   description: z.string().min(1, "Description is required"),
   image: z.string().min(1, "Image is required"),
   duration: z.number().gt(0, "Duration must be greater than 0"),
