@@ -1,0 +1,127 @@
+import { z } from "zod";
+
+export const languageSchema = z.enum(["javascript", "html", "css"]);
+
+export const questionAnswerTypeSchema = z.enum(["code", "image", "text"]);
+export const questionContentTypeSchema = z.enum([
+  "code",
+  "image",
+  "video",
+  "textOnly",
+]);
+
+export const videoContentSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  duration: z.number().min(0, "Duration must be greater than 0"),
+  whatYouWillLearn: z
+    .array(z.string())
+    .min(1, "What you will learn is required"),
+  videoUrl: z.string().min(1, "Video URL is required"),
+});
+
+export const codeSnippetSchema = z.object({
+  language: languageSchema,
+  code: z.string().min(1, "Code is required"),
+});
+
+export const exerciseContentSchema = z.object({
+  command: z.string().min(1, "Command is required"),
+  languages: z.array(languageSchema),
+  starterCode: z.array(codeSnippetSchema),
+  solutionCode: z.array(codeSnippetSchema),
+  hints: z.array(z.string()).min(1, "Hints are required"),
+});
+
+export const questionAnswerSchema = z.object({
+  id: z
+    .number()
+    .min(1, "Answer id must be between 1 and 4")
+    .max(4, "Answer id must be between 1 and 4"),
+  type: questionAnswerTypeSchema,
+  content: z.string().or(codeSnippetSchema),
+  explanation: z.string().optional(),
+});
+
+export const questionSchema = z.object({
+  text: z.string().min(1, "Question text is required"),
+  contentType: questionContentTypeSchema,
+  content: z.string().optional(),
+  order: z.number().min(0, "Order must be greater than 0"),
+  correctAnswerId: z
+    .number()
+    .min(1, "Correct answer id must be between 1 and 4")
+    .max(4, "Correct answer id must be between 1 and 4"),
+  answers: z
+    .array(questionAnswerSchema)
+    .length(4, "The question must contain four answers"),
+});
+
+export const quizContentSchema = z.object({
+  questions: questionSchema,
+});
+
+export const projectContentSchema = z.object({
+  videoUrl: z.string().min(1, "Project video url is required"),
+  title: z.string().min(1, "Project title is required"),
+  description: z.string().min(1, "Project description is required"),
+  starterCode: z.array(codeSnippetSchema),
+  finalCode: z.array(codeSnippetSchema),
+});
+
+export const finalProjectSchema = z.object({
+  videoUrl: z.string().min(1, "Project video url is required"),
+  title: z.string().min(1, "Project title is required"),
+  description: z.string().min(1, "Project description is required"),
+  sampleSolution: z.array(codeSnippetSchema),
+  figmaProjectUrl: z.string().min(1, "Figma project url is required"),
+});
+
+export const courseElementSchema = z.object({
+  type: z.enum(["video", "exercise", "quiz", "project", "finalProject"]),
+  content: z.union([
+    videoContentSchema,
+    exerciseContentSchema,
+    quizContentSchema,
+    projectContentSchema,
+  ]),
+  order: z.number().min(1, "Order must be greater than 0"),
+});
+
+export const courseSectionSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  whatYouWillLearn: z.array(z.string()),
+  order: z.number().min(0, "Order must be positive"),
+  elements: z.array(courseElementSchema),
+  cheatsheets: z.array(z.string()).optional(),
+});
+
+export const courseEndingSchema = z.object({
+  congrats: z.object({
+    heading: z.string(),
+    subheading: z.string(),
+  }),
+  obtainedSkills: z.array(z.string()).min(1, "Obtained skills is required"),
+  nextSteps: z.object({
+    heading: z.string(),
+    subheading: z.string(),
+    recommendedCourseIds: z.array(z.string()),
+  }),
+});
+
+export const courseSchema = z.object({
+  id: z.string().min(1, "Course id is required"),
+  title: z.string().min(1, "Title is required"),
+  price: z.number().min(0, "Price must be positive"),
+  description: z.string().min(1, "Description is required"),
+  image: z.string().min(1, "Image is required"),
+  duration: z.number().gt(0, "Duration must be greater than 0"),
+  prerequisites: z.array(z.string()).min(1, "Prerequisites are required"),
+  CTADescription: z.string().min(1, "CTA Description is required"),
+  whatYouWillLearn: z
+    .array(z.string())
+    .min(1, "What you will learn is required"),
+  structure: z.array(courseSectionSchema),
+  ending: courseEndingSchema,
+});
