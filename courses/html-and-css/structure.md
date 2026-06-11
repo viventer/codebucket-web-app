@@ -25,13 +25,13 @@
 - czym są tagi i jak są zbudowane
 - tag h1
 
-## 1.2 [E] Twój pierwszy tag
+## 1.2 [Ec] Twój pierwszy tag
 
 - dodaj na stronie tag h1 z dowolnym tekstem w środku, sprawdź, czy wyświetla się na podglądzie w przeglądarce
 
 ## 1.3 [V] Podstawowe tagi (h1-6, p, br, hr)
 
-## 1.4 [E] Skorzystaj z podstawowych tagów
+## 1.4 [Ec] Skorzystaj z podstawowych tagów
 
 - Za pomocą tagów h1, p, br i hr postaraj się odwzorować stronę oznaczoną jako "docelowy wygląd"
 - Jakiś nagłówek, poniżej paragraf, br, hr, br i na koniec paragraf
@@ -44,16 +44,16 @@
 - target
 - title
 
-## 1.6 [E] Dodaj tag a
+## 1.6 [Ec] Dodaj tag a
 
 - paragraf w kodzie startowym
 - dodaj link i info, że ma się otwierać w nowej karcie, mieć podpowiedź po najechaniu i gdzie ma przekierowywać
 
 ## 1.7 [V] Struktura strony
 
-## 1.8 [E] Uzupełnij strukturę strony
+## 1.8 [Ei] Uzupełnij strukturę strony
 
-- brakuje jakiś dwóch tagów
+- ułoż bloczki w strukturę strony
 
 ## 1.9 [Pg] Strona o wiadrach
 
@@ -63,11 +63,16 @@
 - Rozszerzenie live server
 - Rozszerzenie prettier
 
-## 1.10 [Pi] Twoja własna strona
+## 1.10 [Di] Podstawowe tagi HTML
+
+- podstrona z budową tagu
+- podstrona z omówieniem każdego tagu osobno
+
+## 1.11 [Pi] Twoja własna strona
 
 - Prosta strona (piosenka) do odwzorowania, ale już w vs code
 
-## 1.11 [Pg] Zdjęcia na stronie o wiadrach
+## 1.12 [Pg] Zdjęcia na stronie o wiadrach
 
 - Wrzucanie zdjęć do vs code
 - tag img
@@ -77,39 +82,78 @@
 - ścieżki do plików
 - komentarze w HTML
 
-## 1.12 [V] Listy
+## 1.13 [V] Listy
 
 - ol, li, ul
 
-## 1.13 [E] Wstaw listę
+## 1.14 [E] Wstaw listę
 
 - kod do uzupełnienia poprzez wstawienie listy wraz z wyglądem docelowym
 
-## 1.14 [Pg] Listy na stronie o wiadrach
+## 1.15 [Pg] Listy na stronie o wiadrach
 
 - Modyfikujemy wcześniej napisany kod, żeby dodać na stronie listy
 - Szybkie info o emmet
 
-## 1.15 [V] Tabele - Warzywniak "u Grzegorza"
+## 1.16 [V] Tabele - Warzywniak "u Grzegorza"
 
-## 1.16 [E] Odwzoruj tabelę
+## 1.17 [E] Odwzoruj tabelę
 
-## 1.17 [Pg] Tag audio
+## 1.18 [Pg] Tag audio
 
 - Rozwinięcie strony z 1.10 [Pi] o tag audio
 
-## 1.18 [Pg] Tag video
+## 1.19 [Pg] Tag video
 
 - Rozwinięcie strony o wiadrach
 
-## 1.19 [Pg] Przycisk
+## 1.20 [Pg] Przycisk
 
 - tag button i button w a
 
-## 1.20 [Pi] Wykozystaj wszystkie tagi w praktyce
+## 1.21 [Di] Podsumowanie podstaw HTML
+
+- po kolei po jednej podstronie z każdego zagadnienia, niektóre interaktywne np. wybierz listę ul/ol, a niektóre zwykłe
+
+## 1.22 [Pi] Wykozystaj wszystkie tagi w praktyce
 
 - strona wykorzystująca wszystkie poznane tagi
 
-## 1.21 [Q] Sprawdź swoją wiedzę na temat HTML
+## 1.23 [Q] Sprawdź swoją wiedzę na temat HTML
 
-- Pytanie dot. do tej pory omówionych zagadnień
+- Pytania dot. do tej pory omówionych zagadnień
+
+# 2. Formularze w HTML
+
+## 2.1 [V] Wprowadzenie
+
+- Gdzie są używane formularze
+- Jak działają
+
+## 2.2 [V] Podstawy budowy formularza
+
+- form, input, label, podstawowe atrybuty
+
+## 2.3 [Di] Podstawowe pola formularza
+
+- można wybrać rodzaj pola i widać zmianę w przeglądarce
+
+## 2.4 [Pg] Formularz logowania
+
+- podstawowe pola formularza submit, password, email...
+
+## 2.5 [E] Stwórz swój pierwszy formularz
+
+- strona z fomularzem do odwzrowania
+
+## 2.6 [V] Radiobutton, checkbox, select
+
+- jak działają, po co, atrybuty
+
+## 2.7 [Pg] Formularz zamówienia
+
+- zwykłe inputy, radio, checkbox, select, file, pole tekstowe
+
+## 2.8 [Pi] Konfigurator PC
+
+## 2.9 [Q] Sprawdź swoją wiedzę o formularzach HTML
