@@ -12,3 +12,7 @@
 3. CSS Position w 5 minut
 
 - fragment kursu z aplikacji - sam film, bez ćwiczeń i projektów
+
+4. CSS Grid w 5 minut
+
+- fragment kursu z aplikacji - sam film, bez ćwiczeń i projektów
