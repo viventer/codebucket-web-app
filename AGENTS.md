@@ -26,7 +26,8 @@ Beginner web developers.
 
 Available:
 
-- HTML & CSS Basics course
+- HTML Full Course
+- CSS Basics
 
 Pre-sale:
 
@@ -55,10 +56,8 @@ Pre-sale:
 
 Courses are promoted through YouTube.
 
-Most YouTube videos are educational previews that introduce concepts without covering the entire learning path.
-
-Exception:
-Beginner courses, such as HTML & CSS Basics, are available on YouTube for free.
+Most YouTube videos are educational previews that introduce concepts without covering the entire learning path. Like CSS Overview in 10 minutes.
+Also course fragments will be available on yt like css flexbox in 10 minutees.
 
 Premium courses on CodeBucket include:
 
