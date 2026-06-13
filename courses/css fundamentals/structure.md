@@ -163,7 +163,7 @@
 
 ## 3.7 [Q] Specyficzność
 
-## 3.8 [V] Filtry
+## 3.8 [V] Filtry i stany
 
 - filter, backdrop-filter
 

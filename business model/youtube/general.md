@@ -13,6 +13,8 @@
 
 - fragment kursu z aplikacji - sam film, bez ćwiczeń i projektów
 
-4. CSS Grid w 5 minut
+4. CSS Grid w 10 minut
 
 - fragment kursu z aplikacji - sam film, bez ćwiczeń i projektów
+
+5. Jak tworzyć responsywne strony internetowe? (5 minut)
