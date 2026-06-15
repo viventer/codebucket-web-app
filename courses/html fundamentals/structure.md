@@ -2,20 +2,8 @@
 
 ## 0.1 [V] Wstęp do kursu
 
-### a. Czego nauczysz się z kursu
-
-- Krótkie info o tym jakie umiejętności uzyskasz po zakończeniu kursu.
-
-### b. Dlaczego warto kupić kurs
-
-- zalety kursu ponad innymi
-- dlaczego warto kupić kurs premium zamiast oglądać na yt
-- jak wygląda nauka na tej platformie
-
-## 0.2 [V] Jak skutecznie korzystać z dostępnych materiałów
-
-- Szybki poradnik jak poruszać się po kursie
-- Demonstracja jak działają zadania, quizy, projekty
+- zalety platformy nad innymi kursami
+- jak korzystać z materiałów
 
 # 1. Podstawy HTML
 
@@ -60,6 +48,7 @@
 - Instalacja vs code
 - Szybkie wstawianie templatki
 - Podstawowe tagi - h1, h2, h3, p, a
+- button i button w a
 - Rozszerzenie live server
 - Rozszerzenie prettier
 
@@ -94,27 +83,19 @@
 
 ## 1.15 [Ec] Odwzoruj tabelę
 
-## 1.16 [Pg] Tag audio
+## 1.16 [Pg] Tag audio i video
 
-- Rozwinięcie strony z 1.11 [Pi] o tag audio
+- Rozwinięcie strony z 1.11 [Pi] o tagi audio i video
 
-## 1.17 [Pg] Tag video
-
-- Rozwinięcie strony o wiadrach
-
-## 1.18 [Pg] Przycisk
-
-- tag button i button w a
-
-## 1.19 [Di] Podsumowanie podstaw HTML
+## 1.17 [Di] Podsumowanie podstaw HTML
 
 - po kolei po jednej podstronie z każdego zagadnienia, niektóre interaktywne np. wybierz listę ul/ol, a niektóre zwykłe
 
-## 1.20 [Q] Sprawdź swoją wiedzę na temat podstaw HTML
+## 1.18 [Q] Sprawdź swoją wiedzę na temat podstaw HTML
 
 - Pytania dot. do tej pory omówionych zagadnień
 
-## 1.21 [Pi] Wykozystaj wszystkie tagi w praktyce
+## 1.19 [Pi] Wykozystaj wszystkie tagi w praktyce
 
 - strona wykorzystująca wszystkie poznane tagi
 
@@ -163,6 +144,8 @@
 ## 3.2 [Pg] Tagi semantyczne w praktyce
 
 - prosta stronka z headerem, navem, footerem, sekcjami itp.
+- tagi meta, favicon
+- encje html
 
 ## 3.3 [Dn] Najważniejsze tagi semantyczne
 
@@ -172,11 +155,7 @@
 
 - wpisz w lukę odpowiedni tag semantyczny
 
-## 3.5 [V] Metadane o stronie internetowej
-
-- elementy sekcji head np. tagi meta, favicon
-
-## 3.6 [Q] Sprawdź swoją wiedzę o semantycznym HTML
+## 3.5 [Q] Sprawdź swoją wiedzę o semantycznym HTML
 
 # 4. Zakończenie
 
