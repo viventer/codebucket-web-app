@@ -1,4 +1,4 @@
-# 0. Wprowadzenie (darmowy moduł)
+# 0. Wprowadzenie
 
 ## 0.1 [V] Wstęp do kursu
 
@@ -110,7 +110,7 @@
 
 - po kolei po jednej podstronie z każdego zagadnienia, niektóre interaktywne np. wybierz listę ul/ol, a niektóre zwykłe
 
-## 1.20 [Q] Sprawdź swoją wiedzę na temat HTML
+## 1.20 [Q] Sprawdź swoją wiedzę na temat podstaw HTML
 
 - Pytania dot. do tej pory omówionych zagadnień
 
@@ -129,15 +129,15 @@
 
 - form, input, label, podstawowe atrybuty
 
-## 2.3 [Di] Podstawowe pola formularza
-
-- można wybrać rodzaj pola i widać zmianę w przeglądarce
-
-## 2.4 [Pg] Formularz logowania
+## 2.3 [Pg] Formularz logowania
 
 - podstawowe pola formularza submit, password, email...
 
-## 2.5 [E] Stwórz swój pierwszy formularz
+## 2.4 [Di] Podstawowe pola formularza
+
+- można wybrać rodzaj pola i widać zmianę w przeglądarce
+
+## 2.5 [Ec] Stwórz swój pierwszy formularz
 
 - strona z fomularzem do odwzrowania
 
@@ -158,15 +158,32 @@
 ## 3.1 [V] Komu to potrzebne?
 
 - wyjaśnienie czym jest i czemu służy
-
-## 3.2 [V] Semantyczna struktura strony
-
 - pokazanie na przykładzie jakiejś strony z jakich semantycznych znaczników się składa i dlaczego
 
-## 3.3 [Pg] Tagi semantyczne w praktyce
+## 3.2 [Pg] Tagi semantyczne w praktyce
 
 - prosta stronka z headerem, navem, footerem, sekcjami itp.
 
-## 3.4 [Ei] Uzupełnij semantyczne tagi 
+## 3.3 [Dn] Najważniejsze tagi semantyczne
 
-- wpisz w lukę odpowiedni tag semantyczny 
+- lista semantycznych tagów z krótkim opisem
+
+## 3.4 [Ei] Uzupełnij semantyczne tagi
+
+- wpisz w lukę odpowiedni tag semantyczny
+
+## 3.5 [V] Metadane o stronie internetowej
+
+- elementy sekcji head np. tagi meta, favicon
+
+## 3.6 [Q] Sprawdź swoją wiedzę o semantycznym HTML
+
+# 4. Zakończenie
+
+## 4.1 [CS] HTML Cheatsheet
+
+## 4.2 [Q] Sprawdź swoją wiedzę na temat HTML
+
+## 4.3 [V] Podsumowanie kursu - HTML w 5 minut
+
+- podsumowanie wszystkich zagadnień + kolejne kroki - odesłanie do kursu CSS
