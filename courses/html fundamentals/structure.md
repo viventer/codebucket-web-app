@@ -48,18 +48,18 @@
 - Instalacja vs code
 - Szybkie wstawianie templatki
 - Podstawowe tagi - h1, h2, h3, p, a
+- listy
 - button i button w a
 - Rozszerzenie live server
 - Rozszerzenie prettier
 
-## 1.10 [Di] Podstawowe tagi HTML
-
-- podstrona z budową tagu
-- podstrona z omówieniem każdego tagu osobno
+## 1.10 [V] Podsumowanie podstaw
 
 ## 1.11 [Pi] Twoja własna strona
 
 - Prosta strona (piosenka) do odwzorowania, ale już w vs code
+
+---- rejestracja ----
 
 ## 1.12 [Pg] Zdjęcia na stronie o wiadrach
 
@@ -71,25 +71,30 @@
 - ścieżki do plików
 - komentarze w HTML
 
-## 1.13 [Pg] Listy na stronie o wiadrach
+## 1.12 [Ei] Uzupełnij ścieżkę
 
-- Krótkie wyjaśnienie jak tworzyć listy
-- Modyfikujemy wcześniej napisany kod, żeby dodać na stronie listy
-- Szybkie info o emmet
+- pokazana struktura plików i trzeba wpisać ścieżkę do zdjęcia, zdjęcie pokazuje się gdy ścieżka będzie poprawna
+- dać tak ze 3 przykłady różnych ułożeń plików
 
-## 1.14 [V] Tabele - Warzywniak "u Grzegorza"
+## 1.13 [Pg] Dane techniczne wiadra
 
 - krótkie wyjaśnienie jak działają tabele i ich działanie w praktyce
 
-## 1.15 [Ec] Odwzoruj tabelę
+## 1.14 [Ei] Dopasuj elementy tabeli
+
+- dopasuj element tabeli do jego opisu
+
+## 1.15 [Ei] Odwzoruj tabelę
+
+- ułóż odpowiednio tagi aby powstała tabela taka jak na podglądzie
 
 ## 1.16 [Pg] Tag audio i video
 
 - Rozwinięcie strony z 1.11 [Pi] o tagi audio i video
 
-## 1.17 [Di] Podsumowanie podstaw HTML
+## 1.17 [V] Media i tabele
 
-- po kolei po jednej podstronie z każdego zagadnienia, niektóre interaktywne np. wybierz listę ul/ol, a niektóre zwykłe
+- podsumowanie wiadomości o tagu img, audio, video i o tabelach
 
 ## 1.18 [Q] Sprawdź swoją wiedzę na temat podstaw HTML
 
@@ -99,65 +104,23 @@
 
 - strona wykorzystująca wszystkie poznane tagi
 
-# 2. Formularze w HTML
+# 2. Formularze w html
 
-## 2.1 [V] Wprowadzenie
+## 2.1 [V] Tworzenie formularzy
 
-- Gdzie są używane formularze
-- Jak działają
+- Lekko zmodyfikowany film z yt
+- z info, że może być trochę za szybko, ale wszystko powtórzysz w kolejnych rozdziałach
 
-## 2.2 [V] Podstawy budowy formularza
+## 2.2 [Ei] Podstawy tworzenia formularzy
 
-- form, input, label, podstawowe atrybuty
+- połącz tagi input i label
+- połącz typ inputa z opisem
+- pogrupuj radio buttony (brakuje value i name)
+- stwórz listę wyboru - kod do uzupełnienia
 
-## 2.3 [Pg] Formularz logowania
+## 2.3 [Pi] Konfigurator PC
 
-- podstawowe pola formularza submit, password, email...
-
-## 2.4 [Di] Podstawowe pola formularza
-
-- można wybrać rodzaj pola i widać zmianę w przeglądarce
-
-## 2.5 [Ec] Stwórz swój pierwszy formularz
-
-- strona z fomularzem do odwzrowania
-
-## 2.6 [V] Radiobutton, checkbox, select
-
-- jak działają, po co, atrybuty
-
-## 2.7 [Pg] Formularz zamówienia
-
-- zwykłe inputy, radio, checkbox, select, file, pole tekstowe
-
-## 2.8 [Pi] Konfigurator PC
-
-## 2.9 [Q] Sprawdź swoją wiedzę o formularzach HTML
-
-# 3. Semantyczny HTML
-
-## 3.1 [V] Komu to potrzebne?
-
-- wyjaśnienie czym jest i czemu służy
-- pokazanie na przykładzie jakiejś strony z jakich semantycznych znaczników się składa i dlaczego
-
-## 3.2 [Pg] Tagi semantyczne w praktyce
-
-- prosta stronka z headerem, navem, footerem, sekcjami itp.
-- tagi meta, favicon
-- encje html
-
-## 3.3 [Dn] Najważniejsze tagi semantyczne
-
-- lista semantycznych tagów z krótkim opisem
-
-## 3.4 [Ei] Uzupełnij semantyczne tagi
-
-- wpisz w lukę odpowiedni tag semantyczny
-
-## 3.5 [Q] Sprawdź swoją wiedzę o semantycznym HTML
-
-# 4. Zakończenie
+# 3. Zakończenie
 
 ## 4.1 [CS] HTML Cheatsheet
 
@@ -165,4 +128,6 @@
 
 ## 4.3 [V] Podsumowanie kursu - HTML w 5 minut
 
-- podsumowanie wszystkich zagadnień + kolejne kroki - odesłanie do kursu CSS
+- podsumowanie wszystkich zagadnień
+- szybkie info o semantyczności, że jest już częścią kursu css
+- kolejne kroki - odesłanie do kursu CSS
