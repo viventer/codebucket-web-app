@@ -18,16 +18,13 @@ export const courseElementTypeSchema = z.enum([
   "guidedProject",
   "individualProject",
   "finalProject",
-  "cheatsheet",
 ]);
 
 export const videoContentSchema = z.object({
   title: z.string().min(1, "Title is required"),
-  description: z.string().min(1, "Description is required"),
+  description: z.string().optional(),
   duration: z.number().min(0, "Duration must be greater than 0"),
-  whatYouWillLearn: z
-    .array(z.string())
-    .min(1, "What you will learn is required"),
+  whatYouWillLearn: z.array(z.string()).optional(),
   videoUrl: z.string().min(1, "Video URL is required"),
 });
 
@@ -102,12 +99,6 @@ export const individualProjectContentSchema = z.object({
   sampleSolution: z.array(codeSnippetSchema),
 });
 
-export const cheatsheetContentSchema = z.object({
-  title: z.string().min(1, "Cheatsheet title is required"),
-  description: z.string().min(1, "Cheatsheet description is required"),
-  slides: z.array(z.string()).min(1, "Slides are required"),
-});
-
 export const courseElementSchema = z.object({
   id: z.string().min(1, "Element id is required"),
   type: courseElementTypeSchema,
@@ -119,7 +110,6 @@ export const courseElementSchema = z.object({
     quizContentSchema,
     guidedProjectContentSchema,
     individualProjectContentSchema,
-    cheatsheetContentSchema,
   ]),
   order: z.number().min(1, "Order must be greater than 0"),
 });
@@ -128,7 +118,7 @@ export const courseSectionSchema = z.object({
   id: z.string().min(1, "Section id is required"),
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
-  whatYouWillLearn: z.array(z.string()),
+  whatYouWillLearn: z.array(z.string()).optional(),
   order: z.number().min(0, "Order must be positive"),
   elements: z.array(courseElementSchema),
   cheatsheets: z.array(z.string()).optional(),
@@ -148,9 +138,10 @@ export const courseEndingSchema = z.object({
 });
 
 export const coursePriceSchema = z.object({
-  standardPrice: z.number().min(0, "Price must be positive"),
-  currentPrice: z.number().min(0, "Price must be positive"),
-  thirtyDayLowestPrice: z.number().min(0, "Price must be positive"),
+  isFree: z.boolean(),
+  standardPrice: z.number().min(0, "Price must be positive").optional(),
+  currentPrice: z.number().min(0, "Price must be positive").optional(),
+  thirtyDayLowestPrice: z.number().min(0, "Price must be positive").optional(),
 });
 
 export const courseSchema = z.object({
@@ -160,7 +151,7 @@ export const courseSchema = z.object({
   description: z.string().min(1, "Description is required"),
   image: z.string().min(1, "Image is required"),
   duration: z.number().gt(0, "Duration must be greater than 0"),
-  prerequisites: z.array(z.string()).min(1, "Prerequisites are required"),
+  prerequisites: z.array(z.string()).optional(),
   CTADescription: z.string().min(1, "CTA Description is required"),
   whatYouWillLearn: z
     .array(z.string())
@@ -189,7 +180,6 @@ export type GuidedProjectContent = z.infer<typeof guidedProjectContentSchema>;
 export type IndividualProjectContent = z.infer<
   typeof individualProjectContentSchema
 >;
-export type CheatsheetContent = z.infer<typeof cheatsheetContentSchema>;
 export type CourseElement = z.infer<typeof courseElementSchema>;
 export type CourseSection = z.infer<typeof courseSectionSchema>;
 export type CourseEnding = z.infer<typeof courseEndingSchema>;

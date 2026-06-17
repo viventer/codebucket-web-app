@@ -1,0 +1,85 @@
+{
+  "id": "html-fundamentals",
+  "title": "Pełny kurs HTML dla początkujących",
+  "description": "Wszystko co musisz wiedzieć o HTML, aby zacząć tworzyć swoje pierwsze strony",
+  "price": {
+    "isFree": true
+  },
+  "image": "html-logo.svg",
+  "duration": 120,
+  "prerequisites": [],
+  "CTADescription": "Zacznij tworzyć swoje pierwsze strony",
+  "whatYouWillLearn": [
+    "Tworzyć strukturę strony.",
+    "Korzystać z podstawowych tagów HTML.",
+    "Zamieszczać na stronie multimedia.",
+    "Tworzyć formularze.",
+    "Korzystać z semantycznych tagów."
+  ],
+  "sections": [
+    {
+      "id": "introduction",
+      "title": "Wprowadzenie",
+      "description": "Wstęp do kursu",
+      "order": 0,
+      "elements": [
+        {
+          "id": "introduction-video",
+          "type": "video",
+          "content": {
+            "title": "Wprowadzenie do kursu",
+            "duration": 2,
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y"
+          },
+          "order": 0
+        },
+        {
+          "id": "tools",
+          "type": "video",
+          "content": {
+            "title": "Narzędzia z jakich będziemy korzystać",
+            "duration": 2,
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y"
+          },
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": "basics",
+      "title": "Podstawy HTML",
+      "description": "Poznaj podstawowe tagi HTML",
+      "whatYouWillLearn": [
+        "Czym jest HTML",
+        "Jak wstawić strukturę strony",
+        "Jak korzystać z podstawowych tagów",
+        "Jak wstawić multimedia na stronę"
+      ],
+      "order": 1,
+      "elements": [
+        {
+          "id": "what-is-html",
+          "type": "video",
+          "content": {
+            "title": "Czym jest HTML?",
+            "duration": 2,
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y"
+          },
+          "order": 0
+        },
+        {
+          "id": "first-website",
+          "type": "guidedProject",
+          "content": {
+            "title": "Twoja pierwsza strona",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "description": "Stwórz swoją pierwszą stronę",
+            "starterCode": [],
+            "finalCode": []
+          },
+          "order": 1
+        }
+      ]
+    }
+  ]
+}
