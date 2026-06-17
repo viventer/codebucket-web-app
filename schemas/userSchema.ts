@@ -16,7 +16,7 @@ export const userSchema = z.object({
   currentCourse: z.string().optional(),
   courseProgress: z.array(courseProgressSchema),
   preferences: z.object({
-    colorScheme: z.enum(["light", "dark"]),
+    colorScheme: z.enum(["light", "dark"]).optional(),
   }),
 });
 

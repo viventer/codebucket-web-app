@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Ubuntu, Ubuntu_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { mockUser } from "@/lib/mock-user";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -25,8 +26,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const userTheme = mockUser.preferences.colorScheme;
+
   return (
-    <html lang="pl" className={cn("h-full", "antialiased", "font-sans", ubuntu.variable, ubuntuMono.variable)}>
+    <html
+      lang="pl"
+      className={cn(
+        userTheme,
+        "h-full",
+        "antialiased",
+        "font-sans",
+        ubuntu.variable,
+        ubuntuMono.variable,
+      )}
+    >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
