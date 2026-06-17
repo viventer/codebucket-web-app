@@ -1,6 +1,6 @@
 # 0. Wstęp
 
-## Wstęp -> 0.1 [V] Wprowadzenie
+## 0.1 [V] Wprowadzenie
 
 - wyrzucić fragment o notatce, zastąpić go informacją o ćwiczeniach, podsumowaniach itp.
 
@@ -24,7 +24,7 @@
 
 ## 1.6 [V] Live Server + podstawowe tagi
 
-## Ćwiczenie #1 -> 1.7 [Pg] Strona o wiadrach + Prettier
+## 1.7 [Pg] Strona o wiadrach + Prettier
 
 - usunąć fragment o like'u i subie ;)
 - fragment o zadaniu #1 całkiem usunąć

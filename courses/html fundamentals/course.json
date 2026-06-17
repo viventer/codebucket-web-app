@@ -19,7 +19,7 @@
   "sections": [
     {
       "id": "introduction",
-      "title": "Wprowadzenie",
+      "title": "Wstęp",
       "description": "Wstęp do kursu",
       "order": 0,
       "elements": [
@@ -27,21 +27,21 @@
           "id": "introduction-video",
           "type": "video",
           "content": {
-            "title": "Wprowadzenie do kursu",
-            "duration": 2,
+            "title": "Wprowadzenie",
+            "duration": 0,
             "videoUrl": "https://youtu.be/3b1CFUJeI-Y"
           },
-          "order": 0
+          "order": 1
         },
         {
           "id": "tools",
           "type": "video",
           "content": {
-            "title": "Narzędzia z jakich będziemy korzystać",
-            "duration": 2,
+            "title": "Potrzebne narzędzia",
+            "duration": 0,
             "videoUrl": "https://youtu.be/3b1CFUJeI-Y"
           },
-          "order": 1
+          "order": 2
         }
       ]
     },
@@ -61,25 +61,382 @@
           "id": "what-is-html",
           "type": "video",
           "content": {
-            "title": "Czym jest HTML?",
-            "duration": 2,
+            "title": "Czym jest HTML",
+            "duration": 0,
             "videoUrl": "https://youtu.be/3b1CFUJeI-Y"
           },
-          "order": 0
+          "order": 1
         },
         {
           "id": "first-website",
           "type": "guidedProject",
           "content": {
-            "title": "Twoja pierwsza strona",
+            "title": "Nasza pierwsza strona",
             "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
-            "description": "Stwórz swoją pierwszą stronę",
+            "description": "",
             "starterCode": [],
             "finalCode": []
           },
+          "order": 2
+        },
+        {
+          "id": "page-structure",
+          "type": "guidedProject",
+          "content": {
+            "title": "Struktura strony",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "description": "",
+            "starterCode": [],
+            "finalCode": []
+          },
+          "order": 3
+        },
+        {
+          "id": "arrange-page-structure",
+          "type": "interactiveExercise",
+          "content": {
+            "title": "Ułóż strukturę strony",
+            "command": "",
+            "component": ""
+          },
+          "order": 4
+        },
+        {
+          "id": "tags-meaning-in-structure",
+          "type": "interactiveExercise",
+          "content": {
+            "title": "Znaczenie tagów w strukturze strony",
+            "command": "Dopasuj tag do opisu.",
+            "component": ""
+          },
+          "order": 5
+        },
+        {
+          "id": "live-server-basic-tags",
+          "type": "video",
+          "content": {
+            "title": "Live Server + podstawowe tagi",
+            "duration": 3,
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y"
+          },
+          "order": 6
+        },
+        {
+          "id": "buckets-website-prettier",
+          "type": "guidedProject",
+          "content": {
+            "title": "Strona o wiadrach + Prettier",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "starterCode": [],
+            "finalCode": []
+          },
+          "order": 7
+        },
+        {
+          "id": "complete-tags",
+          "type": "interactiveExercise",
+          "content": {
+            "title": "Uzupełnij tagi",
+            "command": "Przeciągnij tagi w odpowiednie miejsca.",
+            "component": ""
+          },
+          "order": 8
+        },
+        {
+          "id": "song",
+          "type": "individualProject",
+          "content": {
+            "title": "Piosenka",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "sampleSolution": []
+          },
+          "order": 9
+        },
+        {
+          "id": "images",
+          "type": "guidedProject",
+          "content": {
+            "title": "Zdjęcia na stronie",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "starterCode": [],
+            "finalCode": []
+          },
+          "order": 10
+        },
+        {
+          "id": "complete-path",
+          "type": "interactiveExercise",
+          "content": {
+            "title": "Uzupełnij ścieżkę",
+            "command": "Wpisz ścieżkę do zdjęcia.",
+            "component": ""
+          },
+          "order": 11
+        },
+        {
+          "id": "comments",
+          "type": "video",
+          "content": {
+            "title": "Komentarze",
+            "duration": 1,
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y"
+          },
+          "order": 12
+        },
+        {
+          "id": "lists-emmet",
+          "type": "guidedProject",
+          "content": {
+            "title": "Listy + Emmet",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "starterCode": [],
+            "finalCode": []
+          },
+          "order": 13
+        },
+        {
+          "id": "create-list",
+          "type": "interactiveExercise",
+          "content": {
+            "title": "Stwórz listę",
+            "command": "Uzupełnij tagi, aby stworzyć listę jak na obrazku.",
+            "component": ""
+          },
+          "order": 14
+        },
+        {
+          "id": "tables",
+          "type": "guidedProject",
+          "content": {
+            "title": "Tabele",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "starterCode": [],
+            "finalCode": []
+          },
+          "order": 15
+        },
+        {
+          "id": "reproduce-table",
+          "type": "interactiveExercise",
+          "content": {
+            "title": "Odwzoruj tabelę",
+            "command": "Uzupełnij tagi, aby odwzorować tabelę jak na obrazku.",
+            "component": ""
+          },
+          "order": 16
+        },
+        {
+          "id": "video-audio",
+          "type": "guidedProject",
+          "content": {
+            "title": "Video i audio",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "starterCode": [],
+            "finalCode": []
+          },
+          "order": 17
+        },
+        {
+          "id": "html-basics-quiz",
+          "type": "quiz",
+          "content": {
+            "questions": []
+          },
+          "order": 18
+        },
+        {
+          "id": "use-knowledge-in-practice",
+          "type": "individualProject",
+          "content": {
+            "title": "Wykorzystaj nową wiedzę w praktyce",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "sampleSolution": []
+          },
+          "order": 19
+        }
+      ],
+      "cheatsheets": [""]
+    },
+    {
+      "id": "forms",
+      "title": "Formularze w HTML",
+      "description": "Naucz się tworzyć formularze w HTML",
+      "order": 2,
+      "elements": [
+        {
+          "id": "forms-intro",
+          "type": "video",
+          "content": {
+            "title": "Wstęp",
+            "duration": 0,
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y"
+          },
           "order": 1
+        },
+        {
+          "id": "form-basics",
+          "type": "guidedProject",
+          "content": {
+            "title": "Podstawy budowy formularza",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "description": "",
+            "starterCode": [],
+            "finalCode": []
+          },
+          "order": 2
+        },
+        {
+          "id": "connect-label-with-field",
+          "type": "interactiveExercise",
+          "content": {
+            "title": "Połącz etykietę z polem formularza",
+            "description": "Połącz tagi input i label.",
+            "command": "",
+            "component": ""
+          },
+          "order": 3
+        },
+        {
+          "id": "basic-form-fields",
+          "type": "guidedProject",
+          "content": {
+            "title": "Podstawowe pola formularza",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "starterCode": [],
+            "finalCode": []
+          },
+          "order": 4
+        },
+        {
+          "id": "form-field-types",
+          "type": "interactiveExercise",
+          "content": {
+            "title": "Typy pól formularza",
+            "command": "Dopasuj typ do opisu.",
+            "component": ""
+          },
+          "order": 5
+        },
+        {
+          "id": "radiobutton",
+          "type": "guidedProject",
+          "content": {
+            "title": "Radiobutton",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "starterCode": [],
+            "finalCode": []
+          },
+          "order": 6
+        },
+        {
+          "id": "grouping-radiobuttons",
+          "type": "interactiveExercise",
+          "content": {
+            "title": "Grupowanie radiobutton'ów",
+            "command": "Dodaj name i value, żeby nie dało się wybrać dwóch na raz.",
+            "component": ""
+          },
+          "order": 7
+        },
+        {
+          "id": "remaining-fields",
+          "type": "guidedProject",
+          "content": {
+            "title": "Pozostałe pola",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "starterCode": [],
+            "finalCode": []
+          },
+          "order": 8
+        },
+        {
+          "id": "create-select-list",
+          "type": "interactiveExercise",
+          "content": {
+            "title": "Stwórz listę wyboru",
+            "command": "Uzupełnij braki, aby stworzyć listę wyboru jak na obrazku.",
+            "component": ""
+          },
+          "order": 9
+        },
+        {
+          "id": "html-forms-quiz",
+          "type": "quiz",
+          "content": {
+            "questions": []
+          },
+          "order": 10
+        },
+        {
+          "id": "pc-configurator",
+          "type": "individualProject",
+          "content": {
+            "title": "Konfigurator PC",
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y",
+            "sampleSolution": []
+          },
+          "order": 11
+        }
+      ],
+      "cheatsheets": [""]
+    },
+    {
+      "id": "summary",
+      "title": "Podsumowanie i zakończenie + semantyczny HTML",
+      "description": "Poznaj semantyczny HTML i podsumuj zdobytą wiedzę",
+      "order": 3,
+      "elements": [
+        {
+          "id": "semantic-html",
+          "type": "video",
+          "content": {
+            "title": "Semantyczny HTML",
+            "duration": 0,
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y"
+          },
+          "order": 1
+        },
+        {
+          "id": "complete-semantic-tags",
+          "type": "interactiveExercise",
+          "content": {
+            "title": "Uzupełnij semantyczne tagi",
+            "command": "Uzupełnij braki, aby stworzyć semantyczną strukturę strony jak na obrazku.",
+            "component": ""
+          },
+          "order": 2
+        },
+        {
+          "id": "course-summary",
+          "type": "video",
+          "content": {
+            "title": "Podsumowanie kursu - HTML w 5 minut",
+            "duration": 5,
+            "videoUrl": "https://youtu.be/3b1CFUJeI-Y"
+          },
+          "order": 3
         }
       ]
     }
-  ]
+  ],
+  "ending": {
+    "congrats": {
+      "heading": "Gratulacje!",
+      "subheading": "Ukończyłeś pełny kurs HTML"
+    },
+    "obtainedSkills": [
+      "Tworzenie struktury strony",
+      "Korzystanie z podstawowych tagów",
+      "Wstawianie multimedia",
+      "Tworzenie formularzy",
+      "Korzystanie z semantycznych tagów"
+    ],
+    "nextSteps": {
+      "heading": "Co dalej?",
+      "subheading": "Zacznij naukę CSS",
+      "recommendedCourseIds": ["css-basics"]
+    }
+  },
+  "createdAt": "2026-06-17T00:00:00.000Z",
+  "updatedAt": "2026-06-17T00:00:00.000Z"
 }
