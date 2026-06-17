@@ -9,6 +9,17 @@ export const questionContentTypeSchema = z.enum([
   "video",
   "textOnly",
 ]);
+export const courseElementTypeSchema = z.enum([
+  "video",
+  "codeExercise",
+  "interactiveExercise",
+  "interactiveDemo",
+  "quiz",
+  "guidedProject",
+  "individualProject",
+  "finalProject",
+  "cheatsheet",
+]);
 
 export const videoContentSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -25,7 +36,20 @@ export const codeSnippetSchema = z.object({
   code: z.string().min(1, "Code is required"),
 });
 
-export const exerciseContentSchema = z.object({
+export const interactiveDemoContentSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  component: z.string().min(1, "Component is required"),
+});
+
+export const interactiveExerciseContentSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  command: z.string().min(1, "Command is required"),
+  component: z.string().min(1, "Component is required"),
+});
+
+export const codeExerciseContentSchema = z.object({
   command: z.string().min(1, "Command is required"),
   languages: z.array(languageSchema),
   starterCode: z.array(codeSnippetSchema),
@@ -58,10 +82,12 @@ export const questionSchema = z.object({
 });
 
 export const quizContentSchema = z.object({
-  questions: questionSchema,
+  questions: z
+    .array(questionSchema)
+    .min(1, "Quiz must contain at least one question"),
 });
 
-export const projectContentSchema = z.object({
+export const guidedProjectContentSchema = z.object({
   videoUrl: z.string().min(1, "Project video url is required"),
   title: z.string().min(1, "Project title is required"),
   description: z.string().min(1, "Project description is required"),
@@ -69,22 +95,31 @@ export const projectContentSchema = z.object({
   finalCode: z.array(codeSnippetSchema),
 });
 
-export const finalProjectSchema = z.object({
+export const individualProjectContentSchema = z.object({
   videoUrl: z.string().min(1, "Project video url is required"),
   title: z.string().min(1, "Project title is required"),
   description: z.string().min(1, "Project description is required"),
   sampleSolution: z.array(codeSnippetSchema),
-  figmaProjectUrl: z.string().min(1, "Figma project url is required"),
+});
+
+export const cheatsheetContentSchema = z.object({
+  title: z.string().min(1, "Cheatsheet title is required"),
+  description: z.string().min(1, "Cheatsheet description is required"),
+  slides: z.array(z.string()).min(1, "Slides are required"),
 });
 
 export const courseElementSchema = z.object({
   id: z.string().min(1, "Element id is required"),
-  type: z.enum(["video", "exercise", "quiz", "project", "finalProject"]),
+  type: courseElementTypeSchema,
   content: z.union([
     videoContentSchema,
-    exerciseContentSchema,
+    codeExerciseContentSchema,
+    interactiveDemoContentSchema,
+    interactiveExerciseContentSchema,
     quizContentSchema,
-    projectContentSchema,
+    guidedProjectContentSchema,
+    individualProjectContentSchema,
+    cheatsheetContentSchema,
   ]),
   order: z.number().min(1, "Order must be greater than 0"),
 });
@@ -141,11 +176,20 @@ export type QuestionAnswerType = z.infer<typeof questionAnswerTypeSchema>;
 export type QuestionContentType = z.infer<typeof questionContentTypeSchema>;
 export type VideoContent = z.infer<typeof videoContentSchema>;
 export type CodeSnippet = z.infer<typeof codeSnippetSchema>;
-export type ExerciseContent = z.infer<typeof exerciseContentSchema>;
+export type CodeExerciseContent = z.infer<typeof codeExerciseContentSchema>;
+export type InteractiveDemoContent = z.infer<
+  typeof interactiveDemoContentSchema
+>;
+export type InteractiveExerciseContent = z.infer<
+  typeof interactiveExerciseContentSchema
+>;
 export type Question = z.infer<typeof questionSchema>;
 export type QuizContent = z.infer<typeof quizContentSchema>;
-export type ProjectContent = z.infer<typeof projectContentSchema>;
-export type FinalProject = z.infer<typeof finalProjectSchema>;
+export type GuidedProjectContent = z.infer<typeof guidedProjectContentSchema>;
+export type IndividualProjectContent = z.infer<
+  typeof individualProjectContentSchema
+>;
+export type CheatsheetContent = z.infer<typeof cheatsheetContentSchema>;
 export type CourseElement = z.infer<typeof courseElementSchema>;
 export type CourseSection = z.infer<typeof courseSectionSchema>;
 export type CourseEnding = z.infer<typeof courseEndingSchema>;
