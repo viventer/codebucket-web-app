@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, UserIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -33,7 +33,8 @@ export function AccountDialog({
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm">
-          Twoje konto
+          <p className="hidden sm:block">Twoje konto</p>
+          <UserIcon className="size-4 sm:hidden" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">

@@ -46,8 +46,9 @@ export function CourseHeader({
             width={28}
             height={28}
             priority
+            className="hidden sm:block"
           />
-          <section className="flex items-center gap-4">
+          <section className="flex items-center gap-2 sm:gap-4">
             <CourseNavSheet
               courseId={courseId}
               courseTitle={courseTitle}
@@ -56,9 +57,9 @@ export function CourseHeader({
               currentChapterId={currentChapterId}
             />
 
-            <span className="truncate text-sm font-medium text-foreground">
+            <p className="truncate text-sm font-medium text-foreground">
               {sectionTitle}
-            </span>
+            </p>
 
             <div className="flex items-center gap-2">
               <Progress value={progress.percent} className="w-24" />
