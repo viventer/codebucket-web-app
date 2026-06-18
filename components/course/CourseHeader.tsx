@@ -17,7 +17,7 @@ export type CourseHeaderProps = {
   sectionTitle: string;
   sections: NavSection[];
   currentSectionId: string;
-  currentChapterId: string;
+  currentElementId: string;
   progress: SectionProgress;
   account: {
     email: string;
@@ -32,7 +32,7 @@ export function CourseHeader({
   sectionTitle,
   sections,
   currentSectionId,
-  currentChapterId,
+  currentElementId,
   progress,
   account,
 }: CourseHeaderProps) {
@@ -54,7 +54,7 @@ export function CourseHeader({
               courseTitle={courseTitle}
               sections={sections}
               currentSectionId={currentSectionId}
-              currentChapterId={currentChapterId}
+              currentElementId={currentElementId}
             />
 
             <p className="truncate text-sm font-medium text-foreground">

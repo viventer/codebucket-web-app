@@ -17,7 +17,6 @@ export const courseElementTypeSchema = z.enum([
   "quiz",
   "guidedProject",
   "individualProject",
-  "finalProject",
 ]);
 
 export const videoContentSchema = z.object({
@@ -89,6 +88,7 @@ export const guidedProjectContentSchema = z.object({
   title: z.string().min(1, "Project title is required"),
   description: z.string().min(1, "Project description is required"),
   starterCode: z.array(codeSnippetSchema),
+  materials: z.array(z.string()).optional(),
   finalCode: z.array(codeSnippetSchema),
 });
 
@@ -97,22 +97,51 @@ export const individualProjectContentSchema = z.object({
   title: z.string().min(1, "Project title is required"),
   description: z.string().min(1, "Project description is required"),
   sampleSolution: z.array(codeSnippetSchema),
+  materials: z.array(z.string()).optional(),
 });
 
-export const courseElementSchema = z.object({
+const elementBase = {
   id: z.string().min(1, "Element id is required"),
-  type: courseElementTypeSchema,
-  content: z.union([
-    videoContentSchema,
-    codeExerciseContentSchema,
-    interactiveDemoContentSchema,
-    interactiveExerciseContentSchema,
-    quizContentSchema,
-    guidedProjectContentSchema,
-    individualProjectContentSchema,
-  ]),
   order: z.number().min(1, "Order must be greater than 0"),
-});
+};
+
+export const courseElementSchema = z.discriminatedUnion("type", [
+  z.object({
+    ...elementBase,
+    type: z.literal("video"),
+    content: videoContentSchema,
+  }),
+  z.object({
+    ...elementBase,
+    type: z.literal("codeExercise"),
+    content: codeExerciseContentSchema,
+  }),
+  z.object({
+    ...elementBase,
+    type: z.literal("interactiveExercise"),
+    content: interactiveExerciseContentSchema,
+  }),
+  z.object({
+    ...elementBase,
+    type: z.literal("interactiveDemo"),
+    content: interactiveDemoContentSchema,
+  }),
+  z.object({
+    ...elementBase,
+    type: z.literal("quiz"),
+    content: quizContentSchema,
+  }),
+  z.object({
+    ...elementBase,
+    type: z.literal("guidedProject"),
+    content: guidedProjectContentSchema,
+  }),
+  z.object({
+    ...elementBase,
+    type: z.literal("individualProject"),
+    content: individualProjectContentSchema,
+  }),
+]);
 
 export const courseSectionSchema = z.object({
   id: z.string().min(1, "Section id is required"),

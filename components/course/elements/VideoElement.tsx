@@ -1,0 +1,27 @@
+import type { VideoContent } from "@/schemas/courseSchema";
+import { getYouTubeEmbedUrl } from "@/lib/videos";
+
+export function VideoElement({ content }: { content: VideoContent }) {
+  const { title, videoUrl } = content;
+  const embedUrl = getYouTubeEmbedUrl(videoUrl);
+
+  return (
+    <div className="mx-auto w-full">
+      <div className="aspect-video w-full overflow-hidden rounded-xl bg-black shadow-md">
+        {embedUrl ? (
+          <iframe
+            src={embedUrl}
+            title={title}
+            className="h-full w-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center text-sm text-muted-foreground">
+            Nie udało się załadować filmu.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

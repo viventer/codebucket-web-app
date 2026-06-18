@@ -20,7 +20,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-export type NavChapter = {
+export type NavElement = {
   id: string;
   title: string;
   completed: boolean;
@@ -30,7 +30,7 @@ export type NavSection = {
   id: string;
   title: string;
   order: number;
-  chapters: NavChapter[];
+  elements: NavElement[];
 };
 
 export type CourseNavSheetProps = {
@@ -38,7 +38,7 @@ export type CourseNavSheetProps = {
   courseTitle: string;
   sections: NavSection[];
   currentSectionId: string;
-  currentChapterId: string;
+  currentElementId: string;
 };
 
 export function CourseNavSheet({
@@ -46,7 +46,7 @@ export function CourseNavSheet({
   courseTitle,
   sections,
   currentSectionId,
-  currentChapterId,
+  currentElementId,
 }: CourseNavSheetProps) {
   return (
     <Sheet>
@@ -80,16 +80,16 @@ export function CourseNavSheet({
                 </AccordionTrigger>
                 <AccordionContent className="pb-1">
                   <ul className="flex flex-col gap-2">
-                    {section.chapters.map((chapter) => {
+                    {section.elements.map((element) => {
                       const isCurrent =
                         section.id === currentSectionId &&
-                        chapter.id === currentChapterId;
+                        element.id === currentElementId;
 
                       return (
-                        <li key={chapter.id}>
+                        <li key={element.id}>
                           <SheetClose asChild>
                             <Link
-                              href={`/course/${courseId}/${section.id}/${chapter.id}`}
+                              href={`/course/${courseId}/${section.id}/${element.id}`}
                               aria-current={isCurrent ? "page" : undefined}
                               className={cn(
                                 "flex items-center gap-2 rounded-md px-2 py-1.5 text-sm no-underline! transition-colors hover:bg-muted",
@@ -98,12 +98,12 @@ export function CourseNavSheet({
                                   : "text-muted-foreground",
                               )}
                             >
-                              {chapter.completed ? (
+                              {element.completed ? (
                                 <CircleCheckIcon className="size-4 shrink-0 text-green-500" />
                               ) : (
                                 <CircleIcon className="size-4 shrink-0 text-muted-foreground/50" />
                               )}
-                              <p className="truncate">{chapter.title}</p>
+                              <p className="truncate">{element.title}</p>
                             </Link>
                           </SheetClose>
                         </li>

@@ -30,7 +30,6 @@ const ELEMENT_TYPE_LABELS: Record<CourseElement["type"], string> = {
   quiz: "Quiz",
   guidedProject: "Projekt",
   individualProject: "Projekt indywidualny",
-  finalProject: "Projekt końcowy",
 };
 
 export function getElementTitle(element: CourseElement): string {
@@ -38,6 +37,18 @@ export function getElementTitle(element: CourseElement): string {
     return element.content.title;
   }
   return ELEMENT_TYPE_LABELS[element.type];
+}
+
+export function elementHasMaterials(element: CourseElement): boolean {
+  if (
+    element.type !== "guidedProject" &&
+    element.type !== "individualProject"
+  ) {
+    return false;
+  }
+
+  const materials = element.content.materials;
+  return (materials?.filter((item) => item.trim().length > 0).length ?? 0) > 0;
 }
 
 // Strict courseSchema.parse is intentionally skipped: the JSON stores
