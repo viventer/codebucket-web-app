@@ -19,6 +19,14 @@ export const courseElementTypeSchema = z.enum([
   "individualProject",
 ]);
 
+export const interactiveExerciseTypeSchema = z.enum([
+  "fillGaps",
+  "matchPairs",
+  "fillCode",
+  "selectCorrect",
+  "custom",
+]);
+
 export const videoContentSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
@@ -38,12 +46,68 @@ export const interactiveDemoContentSchema = z.object({
   component: z.string().min(1, "Component is required"),
 });
 
-export const interactiveExerciseContentSchema = z.object({
+const interactiveExerciseBaseSchema = {
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
   command: z.string().min(1, "Command is required"),
+};
+
+export const fillGapsLineSchema = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("code"),
+    text: z.string(),
+    indent: z.number().min(0),
+  }),
+  z.object({
+    kind: z.literal("gap"),
+    id: z.string().min(1),
+    indent: z.number().min(0),
+    answer: z.string().min(1),
+  }),
+  z.object({
+    kind: z.literal("autoClose"),
+    id: z.string().min(1),
+    indent: z.number().min(0),
+    pairedGapId: z.string().min(1),
+  }),
+]);
+
+export const fillGapsContentSchema = z.object({
+  ...interactiveExerciseBaseSchema,
+  type: z.literal("fillGaps"),
+  language: languageSchema,
+  lines: z.array(fillGapsLineSchema).min(1),
+  options: z.array(z.string().min(1)).min(1),
+});
+
+export const matchPairsContentSchema = z.object({
+  ...interactiveExerciseBaseSchema,
+  type: z.literal("matchPairs"),
+});
+
+export const fillCodeContentSchema = z.object({
+  ...interactiveExerciseBaseSchema,
+  type: z.literal("fillCode"),
+});
+
+export const selectCorrectContentSchema = z.object({
+  ...interactiveExerciseBaseSchema,
+  type: z.literal("selectCorrect"),
+});
+
+export const customInteractiveExerciseContentSchema = z.object({
+  ...interactiveExerciseBaseSchema,
+  type: z.literal("custom"),
   component: z.string().min(1, "Component is required"),
 });
+
+export const interactiveExerciseContentSchema = z.discriminatedUnion("type", [
+  fillGapsContentSchema,
+  matchPairsContentSchema,
+  fillCodeContentSchema,
+  selectCorrectContentSchema,
+  customInteractiveExerciseContentSchema,
+]);
 
 export const codeExerciseContentSchema = z.object({
   command: z.string().min(1, "Command is required"),
@@ -200,6 +264,11 @@ export type CodeExerciseContent = z.infer<typeof codeExerciseContentSchema>;
 export type InteractiveDemoContent = z.infer<
   typeof interactiveDemoContentSchema
 >;
+export type InteractiveExerciseType = z.infer<
+  typeof interactiveExerciseTypeSchema
+>;
+export type FillGapsLine = z.infer<typeof fillGapsLineSchema>;
+export type FillGapsContent = z.infer<typeof fillGapsContentSchema>;
 export type InteractiveExerciseContent = z.infer<
   typeof interactiveExerciseContentSchema
 >;

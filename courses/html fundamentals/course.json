@@ -96,8 +96,68 @@
           "type": "interactiveExercise",
           "content": {
             "title": "Ułóż strukturę strony",
-            "command": "",
-            "component": ""
+            "description": "Ułóż podstawową strukturę dokumentu HTML, wstawiając brakujące tagi otwierające.",
+            "command": "Wybierz odpowiednie tagi, aby uzupełnić strukturę strony.",
+            "type": "fillGaps",
+            "language": "html",
+            "lines": [
+              {
+                "kind": "gap",
+                "id": "doctype-gap",
+                "indent": 0,
+                "answer": "<!DOCTYPE html>"
+              },
+              {
+                "kind": "gap",
+                "id": "html-open",
+                "indent": 0,
+                "answer": "<html>"
+              },
+              {
+                "kind": "gap",
+                "id": "head-open",
+                "indent": 1,
+                "answer": "<head>"
+              },
+              {
+                "kind": "code",
+                "text": "<title>tytuł strony</title>",
+                "indent": 2
+              },
+              {
+                "kind": "autoClose",
+                "id": "head-close",
+                "indent": 1,
+                "pairedGapId": "head-open"
+              },
+              {
+                "kind": "gap",
+                "id": "body-open",
+                "indent": 1,
+                "answer": "<body>"
+              },
+              { "kind": "code", "text": "<h1>siema</h1>", "indent": 2 },
+              {
+                "kind": "autoClose",
+                "id": "body-close",
+                "indent": 1,
+                "pairedGapId": "body-open"
+              },
+              {
+                "kind": "autoClose",
+                "id": "html-close",
+                "indent": 0,
+                "pairedGapId": "html-open"
+              }
+            ],
+            "options": [
+              "<html>",
+              "<body>",
+              "<head>",
+              "<content>",
+              "<header>",
+              "<!DOCTYPE html>"
+            ]
           },
           "order": 4
         },

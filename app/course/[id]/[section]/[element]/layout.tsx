@@ -1,6 +1,11 @@
 import { notFound } from "next/navigation";
 
-import { getCourseById, getCourseTitle, getElementTitle, elementHasMaterials } from "@/lib/courses";
+import {
+  getCourseById,
+  getCourseTitle,
+  getElementTitle,
+  elementHasMaterials,
+} from "@/lib/courses";
 import { mockUser } from "@/lib/mock-user";
 import { getCompletedElementIds, getSectionProgress } from "@/lib/progress";
 import { ElementActionBar } from "@/components/course/element-action-bar";
@@ -96,7 +101,7 @@ export default async function ElementLayout({
         progress={progress}
         account={account}
       />
-      <main className="mx-auto mt-8 w-[95vw] max-w-[1280px] flex-1 pb-28">
+      <main className="mx-auto mt-16 w-[95vw] max-w-[1280px] flex-1 pb-28">
         {children}
       </main>
       <ElementActionBar
