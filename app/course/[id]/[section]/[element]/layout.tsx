@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getCourseById, getCourseTitle, getElementTitle, elementHasMaterials } from "@/lib/courses";
 import { mockUser } from "@/lib/mock-user";
 import { getCompletedElementIds, getSectionProgress } from "@/lib/progress";
-import { ElementActionBar } from "@/components/course/ElementActionBar";
+import { ElementActionBar } from "@/components/course/element-action-bar";
 import { CourseHeader } from "@/components/course/CourseHeader";
 
 type ElementLayoutProps = {
