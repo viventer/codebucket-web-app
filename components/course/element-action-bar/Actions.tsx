@@ -12,6 +12,7 @@ function renderActions(
   prevHref: string | null,
   nextHref: string | null,
   hasMaterials: boolean,
+  hasHint?: boolean,
 ) {
   switch (type) {
     case "video":
@@ -25,12 +26,10 @@ function renderActions(
         </>
       );
     case "individualProject":
-      return (
-        <ProjectActions nextHref={nextHref} hasMaterials={hasMaterials} />
-      );
+      return <ProjectActions nextHref={nextHref} hasMaterials={hasMaterials} />;
     case "codeExercise":
     case "interactiveExercise":
-      return <ExerciseActions nextHref={nextHref} />;
+      return <ExerciseActions nextHref={nextHref} hasHint={hasHint} />;
     case "quiz":
       return (
         <PlaceholderButton variant="ghost">Następne pytanie</PlaceholderButton>
@@ -43,10 +42,11 @@ export function Actions({
   prevHref,
   nextHref,
   hasMaterials,
+  hasHint,
 }: ElementActionsProps) {
   return (
     <div className="flex shrink-0 items-center gap-2">
-      {renderActions(type, prevHref, nextHref, hasMaterials)}
+      {renderActions(type, prevHref, nextHref, hasMaterials, hasHint)}
     </div>
   );
 }

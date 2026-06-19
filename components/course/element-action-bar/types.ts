@@ -6,11 +6,12 @@ export type ElementActionBarProps = {
   prevHref: string | null;
   nextHref: string | null;
   hasMaterials: boolean;
+  hasHint?: boolean;
 };
 
 export type ElementActionsProps = Pick<
   ElementActionBarProps,
-  "type" | "prevHref" | "nextHref" | "hasMaterials"
+  "type" | "prevHref" | "nextHref" | "hasMaterials" | "hasHint"
 >;
 
 export type NavButtonProps = {
