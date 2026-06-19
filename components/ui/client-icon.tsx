@@ -8,6 +8,10 @@ import { cn } from "@/lib/utils";
 
 const fetchedSvgCache = new Map<string, string>();
 
+export async function prefetchClientIcon(src: string): Promise<void> {
+  await fetchRawSvg(getIconName(src));
+}
+
 async function fetchRawSvg(name: string): Promise<string> {
   const cached = fetchedSvgCache.get(name);
   if (cached) return cached;
