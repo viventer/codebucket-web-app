@@ -38,7 +38,7 @@ export function CourseHeader({
 }: CourseHeaderProps) {
   return (
     <header className="gap-3 border-b bg-background px-3">
-      <div className="flex h-14 items-center w-[95vw] mx-auto">
+      <div className="flex h-14 items-center w-[90vw] mx-auto">
         <div className="flex min-w-0 items-center gap-8">
           <Image
             src="/logo.svg"
@@ -63,7 +63,7 @@ export function CourseHeader({
 
             <div className="flex items-center gap-2">
               <Progress value={progress.percent} className="w-24" />
-              <span className="text-xs whitespace-nowrap text-muted-foreground">
+              <span className="sm:block hidden text-xs whitespace-nowrap text-muted-foreground">
                 {progress.completed} / {progress.total}
               </span>
             </div>

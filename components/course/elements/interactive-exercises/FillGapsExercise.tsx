@@ -30,9 +30,8 @@ export function FillGapsExercise({ content }: FillGapsExerciseProps) {
   } = controller;
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col sm:gap-8 gap-4">
       <div className="flex items-center gap-2">
-        <CircleHelp className="size-5 shrink-0 text-foreground" />
         <h3 className="text-base font-medium">{content.command}</h3>
       </div>
 

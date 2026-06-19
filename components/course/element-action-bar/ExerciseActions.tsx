@@ -1,8 +1,17 @@
 "use client";
 
+import {
+  CheckIcon,
+  ChevronRightIcon,
+  EyeIcon,
+  LightbulbIcon,
+  RotateCcwIcon,
+} from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
 
+import { ActionBarButtonLabel } from "./ActionBarButtonLabel";
 import { NavButton } from "./NavButton";
 
 type ExerciseActionsProps = {
@@ -24,10 +33,10 @@ export function ExerciseActions({ nextHref, hasHint }: ExerciseActionsProps) {
   const hasController = controller !== null;
 
   return (
-    <>
+    <div className="flex gap-2 items-center justify-around sm:justify-end w-full">
       {hasHint && (
         <Button variant="ghost" onClick={showHintDialog} disabled={isLocked}>
-          Wskazówka
+          <ActionBarButtonLabel label="Wskazówka" icon={LightbulbIcon} />
         </Button>
       )}
       <Button
@@ -35,18 +44,20 @@ export function ExerciseActions({ nextHref, hasHint }: ExerciseActionsProps) {
         onClick={tryShowSolution}
         disabled={!hasController || isLocked}
       >
-        Rozwiązanie
+        <ActionBarButtonLabel label="Rozwiązanie" icon={EyeIcon} />
       </Button>
       <Button variant="ghost" onClick={reset} disabled={!hasController}>
-        Reset
+        <ActionBarButtonLabel label="Reset" icon={RotateCcwIcon} />
       </Button>
       {canProceed ? (
-        <NavButton href={nextHref}>Przejdź dalej</NavButton>
+        <NavButton href={nextHref}>
+          <ActionBarButtonLabel label="Przejdź dalej" icon={ChevronRightIcon} />
+        </NavButton>
       ) : (
         <Button onClick={handleCheck} disabled={!hasController}>
-          Zrobione
+          <ActionBarButtonLabel label="Zrobione" icon={CheckIcon} />
         </Button>
       )}
-    </>
+    </div>
   );
 }

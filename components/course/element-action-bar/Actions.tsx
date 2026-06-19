@@ -1,5 +1,8 @@
+import { ChevronRightIcon } from "lucide-react";
+
 import type { CourseElement } from "@/schemas/courseSchema";
 
+import { ActionBarButtonLabel } from "./ActionBarButtonLabel";
 import { BackNextActions } from "./BackNextActions";
 import { DownloadMaterialsButton } from "./DownloadMaterialsButton";
 import { ExerciseActions } from "./ExerciseActions";
@@ -32,7 +35,12 @@ function renderActions(
       return <ExerciseActions nextHref={nextHref} hasHint={hasHint} />;
     case "quiz":
       return (
-        <PlaceholderButton variant="ghost">Następne pytanie</PlaceholderButton>
+        <PlaceholderButton variant="ghost">
+          <ActionBarButtonLabel
+            label="Następne pytanie"
+            icon={ChevronRightIcon}
+          />
+        </PlaceholderButton>
       );
   }
 }
@@ -45,7 +53,7 @@ export function Actions({
   hasHint,
 }: ElementActionsProps) {
   return (
-    <div className="flex shrink-0 items-center gap-2">
+    <div className="flex items-center gap-2  justify-end w-fit flex-1 sm:justify-start ">
       {renderActions(type, prevHref, nextHref, hasMaterials, hasHint)}
     </div>
   );

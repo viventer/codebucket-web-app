@@ -15,7 +15,11 @@ const Toaster = ({ ...props }: ToasterProps) => {
       theme="system"
       position="bottom-right"
       offset="6.5rem"
-      mobileOffset="5.5rem"
+      mobileOffset={{
+        bottom: "5.5rem",
+        left: "5%",
+        right: "5%",
+      }}
       className="toaster group"
       icons={{
         success: <CheckIcon className="size-5 text-feedback-success" />,

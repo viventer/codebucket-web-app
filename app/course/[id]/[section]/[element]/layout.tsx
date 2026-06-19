@@ -96,7 +96,7 @@ export default async function ElementLayout({
     currentElement.type === "interactiveExercise";
 
   const main = (
-    <main className="mx-auto mt-16 w-[95vw] max-w-[1280px] flex-1 pb-28">
+    <main className="mx-auto mt-8 sm:mt-16 w-[90vw] max-w-[1280px] flex-1 pb-28">
       {children}
     </main>
   );

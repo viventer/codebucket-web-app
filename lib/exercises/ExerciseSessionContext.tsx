@@ -108,7 +108,7 @@ function FillGapsSessionBridge({
 
     const timeout = window.setTimeout(() => {
       setShowCelebration(false);
-    }, 2500);
+    }, 1500);
 
     return () => window.clearTimeout(timeout);
   }, [showCelebration]);

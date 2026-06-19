@@ -31,6 +31,8 @@ export function SuccessCelebration({ visible }: SuccessCelebrationProps) {
 
   const { icon, text } = celebration;
 
+  // visible = true;
+
   return (
     <AnimatePresence>
       {visible && (
@@ -40,17 +42,17 @@ export function SuccessCelebration({ visible }: SuccessCelebrationProps) {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
-          transition={{ duration: 0.25 }}
+          transition={{ duration: 0.15 }}
         >
-          <ClientIcon
-            src={icon}
-            size={96}
-            className="text-feedback-success"
-            label={text}
-          />
-          <p className="max-w-sm text-xl font-medium text-feedback-success">
-            {text}
-          </p>
+          <div className="bg-background/15 backdrop-blur-xs rounded-xl p-8 h-screen w-screen flex flex-col items-center justify-center">
+            <ClientIcon
+              src={icon}
+              size={96}
+              className="text-feedback-success"
+              label={text}
+            />
+            <p className="max-w-sm text-lg font-medium ">{text}</p>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
