@@ -1,11 +1,15 @@
 "use client";
 
+import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
+import { feedbackGlowStyle } from "@/lib/exercises/feedback-glow-style";
 import type { FillGapsContent } from "@/schemas/courseSchema";
+import { cn } from "@/lib/utils";
+
+import { Card, CardContent } from "@/components/ui/card";
 
 import { GapSlot } from "./GapSlot";
 import { getClosingTag } from "./getClosingTag";
 import { HighlightedCode } from "./HighlightedCode";
-import { Card, CardContent } from "@/components/ui/card";
 
 const INDENT_PX = 24;
 
@@ -15,7 +19,6 @@ type CodePanelProps = {
   activeGapId: string | null;
   onClearGap: (gapId: string) => void;
   onSelectGap: (gapId: string) => void;
-  disabled?: boolean;
 };
 
 export function CodePanel({
@@ -24,10 +27,18 @@ export function CodePanel({
   activeGapId,
   onClearGap,
   onSelectGap,
-  disabled = false,
 }: CodePanelProps) {
+  const { feedback, isLocked } = useExerciseSession();
+  const disabled = isLocked;
+
   return (
-    <Card className="font-mono text-sm leading-10">
+    <Card
+      className={cn(
+        "font-mono text-sm leading-10 transition-shadow duration-300",
+        isLocked && "pointer-events-none select-none opacity-80",
+      )}
+      style={feedbackGlowStyle(feedback)}
+    >
       <CardContent>
         {content.lines.map((line, index) => {
           const style = { paddingLeft: line.indent * INDENT_PX };

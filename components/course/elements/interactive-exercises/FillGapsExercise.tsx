@@ -2,6 +2,7 @@
 
 import { CircleHelp } from "lucide-react";
 
+import { ExerciseFeedbackMessage } from "@/components/course/exercises/ExerciseFeedbackMessage";
 import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
 import type { FillGapsContent } from "@/schemas/courseSchema";
 
@@ -13,7 +14,7 @@ type FillGapsExerciseProps = {
 };
 
 export function FillGapsExercise({ content }: FillGapsExerciseProps) {
-  const { controller, isLocked } = useExerciseSession();
+  const { controller, canProceed } = useExerciseSession();
 
   if (!controller || controller.kind !== "fillGaps") {
     return null;
@@ -41,14 +42,17 @@ export function FillGapsExercise({ content }: FillGapsExerciseProps) {
         activeGapId={activeGapId}
         onClearGap={clearGap}
         onSelectGap={setActiveGapId}
-        disabled={isLocked}
       />
 
-      <OptionsPool
-        options={availableOptions}
-        onSelect={selectOption}
-        disabled={!activeGapId || isLocked}
-      />
+      {!canProceed && (
+        <OptionsPool
+          options={availableOptions}
+          onSelect={selectOption}
+          disabled={!activeGapId}
+        />
+      )}
+
+      <ExerciseFeedbackMessage />
     </div>
   );
 }
