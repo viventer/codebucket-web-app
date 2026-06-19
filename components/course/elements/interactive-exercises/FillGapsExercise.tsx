@@ -2,17 +2,23 @@
 
 import { CircleHelp } from "lucide-react";
 
+import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
 import type { FillGapsContent } from "@/schemas/courseSchema";
 
 import { CodePanel } from "./fill-gaps/CodePanel";
 import { OptionsPool } from "./fill-gaps/OptionsPool";
-import { useFillGapsState } from "./fill-gaps/useFillGapsState";
 
 type FillGapsExerciseProps = {
   content: FillGapsContent;
 };
 
 export function FillGapsExercise({ content }: FillGapsExerciseProps) {
+  const { controller, isLocked } = useExerciseSession();
+
+  if (!controller || controller.kind !== "fillGaps") {
+    return null;
+  }
+
   const {
     assignments,
     activeGapId,
@@ -20,13 +26,13 @@ export function FillGapsExercise({ content }: FillGapsExerciseProps) {
     selectOption,
     clearGap,
     setActiveGapId,
-  } = useFillGapsState(content);
+  } = controller;
 
   return (
     <div className="flex flex-col gap-8">
       <div className="flex items-center gap-2">
-        <CircleHelp className="size-5 shrink-0 text-primary" />
-        <h3 className="font-medium">{content.command}</h3>
+        <CircleHelp className="size-5 shrink-0 text-foreground" />
+        <h3 className="text-base font-medium">{content.command}</h3>
       </div>
 
       <CodePanel
@@ -35,12 +41,13 @@ export function FillGapsExercise({ content }: FillGapsExerciseProps) {
         activeGapId={activeGapId}
         onClearGap={clearGap}
         onSelectGap={setActiveGapId}
+        disabled={isLocked}
       />
 
       <OptionsPool
         options={availableOptions}
         onSelect={selectOption}
-        disabled={!activeGapId}
+        disabled={!activeGapId || isLocked}
       />
     </div>
   );

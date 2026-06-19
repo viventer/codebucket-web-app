@@ -4,8 +4,10 @@ import {
   getCourseById,
   getCourseTitle,
   getElementTitle,
+  elementHasHint,
   elementHasMaterials,
 } from "@/lib/courses";
+import { ExerciseSessionProvider } from "@/lib/exercises/ExerciseSessionContext";
 import { mockUser } from "@/lib/mock-user";
 import { getCompletedElementIds, getSectionProgress } from "@/lib/progress";
 import { ElementActionBar } from "@/components/course/element-action-bar";
@@ -89,6 +91,27 @@ export default async function ElementLayout({
     currentCourseId: user.currentCourse,
   };
 
+  const isExercise =
+    currentElement.type === "codeExercise" ||
+    currentElement.type === "interactiveExercise";
+
+  const main = (
+    <main className="mx-auto mt-16 w-[95vw] max-w-[1280px] flex-1 pb-28">
+      {children}
+    </main>
+  );
+
+  const actionBar = (
+    <ElementActionBar
+      type={currentElement.type}
+      title={getElementTitle(currentElement)}
+      prevHref={prevHref}
+      nextHref={nextHref}
+      hasMaterials={elementHasMaterials(currentElement)}
+      hasHint={elementHasHint(currentElement)}
+    />
+  );
+
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <CourseHeader
@@ -101,16 +124,17 @@ export default async function ElementLayout({
         progress={progress}
         account={account}
       />
-      <main className="mx-auto mt-16 w-[95vw] max-w-[1280px] flex-1 pb-28">
-        {children}
-      </main>
-      <ElementActionBar
-        type={currentElement.type}
-        title={getElementTitle(currentElement)}
-        prevHref={prevHref}
-        nextHref={nextHref}
-        hasMaterials={elementHasMaterials(currentElement)}
-      />
+      {isExercise ? (
+        <ExerciseSessionProvider element={currentElement}>
+          {main}
+          {actionBar}
+        </ExerciseSessionProvider>
+      ) : (
+        <>
+          {main}
+          {actionBar}
+        </>
+      )}
     </div>
   );
 }

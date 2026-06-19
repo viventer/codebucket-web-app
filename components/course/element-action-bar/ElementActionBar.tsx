@@ -8,6 +8,7 @@ export function ElementActionBar({
   prevHref,
   nextHref,
   hasMaterials,
+  hasHint,
 }: ElementActionBarProps) {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 flex justify-center px-3 pb-4">
@@ -18,6 +19,7 @@ export function ElementActionBar({
           prevHref={prevHref}
           nextHref={nextHref}
           hasMaterials={hasMaterials}
+          hasHint={hasHint}
         />
       </div>
     </nav>

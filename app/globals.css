@@ -53,6 +53,9 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-feedback-success: var(--feedback-success);
+  --color-feedback-warning: var(--feedback-warning);
+  --color-feedback-destructive: var(--feedback-destructive);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -101,6 +104,9 @@
   --syntax-salmon: #8b5342;
   --syntax-green: #4d7a38;
   --syntax-foreground: #252525;
+  --feedback-success: #4db82e;
+  --feedback-warning: #9ab800;
+  --feedback-destructive: #d4553a;
 }
 
 .dark {
@@ -141,6 +147,9 @@
   --syntax-salmon: #c28270;
   --syntax-green: #87c270;
   --syntax-foreground: #fafafa;
+  --feedback-success: #93ff66;
+  --feedback-warning: #dfff66;
+  --feedback-destructive: #ff8666;
 }
 
 /*
@@ -186,6 +195,9 @@
     --syntax-salmon: #c28270;
     --syntax-green: #87c270;
     --syntax-foreground: #fafafa;
+    --feedback-success: #93ff66;
+    --feedback-warning: #dfff66;
+    --feedback-destructive: #ff8666;
   }
 }
 
@@ -198,5 +210,23 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+@layer utilities {
+  .cn-toast-success {
+    border-color: var(--feedback-success) !important;
+  }
+
+  .cn-toast-warning {
+    border-color: var(--feedback-warning) !important;
+  }
+
+  .cn-toast-error {
+    border-color: var(--feedback-destructive) !important;
+  }
+
+  .cn-toast-info {
+    border-color: var(--accent) !important;
   }
 }

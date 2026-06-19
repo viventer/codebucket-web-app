@@ -1,0 +1,50 @@
+"use client";
+
+import {
+  CheckIcon,
+  InfoIcon,
+  Loader2Icon,
+  OctagonXIcon,
+  TriangleAlertIcon,
+} from "lucide-react";
+import { Toaster as Sonner, type ToasterProps } from "sonner";
+
+const Toaster = ({ ...props }: ToasterProps) => {
+  return (
+    <Sonner
+      theme="system"
+      position="bottom-right"
+      offset="6.5rem"
+      mobileOffset="5.5rem"
+      className="toaster group"
+      icons={{
+        success: <CheckIcon className="size-5 text-feedback-success" />,
+        info: <InfoIcon className="size-5 text-accent" />,
+        warning: <TriangleAlertIcon className="size-5 text-feedback-warning" />,
+        error: <OctagonXIcon className="size-5 text-feedback-destructive" />,
+        loading: <Loader2Icon className="size-5 animate-spin" />,
+      }}
+      style={
+        {
+          "--normal-bg": "var(--popover)",
+          "--normal-text": "var(--popover-foreground)",
+          "--normal-border": "var(--border)",
+          "--border-radius": "var(--radius)",
+        } as React.CSSProperties
+      }
+      toastOptions={{
+        classNames: {
+          toast:
+            "cn-toast border-2 bg-popover text-popover-foreground shadow-lg px-6! py-4! gap-3!",
+          success: "cn-toast-success",
+          info: "cn-toast-info",
+          warning: "cn-toast-warning",
+          error: "cn-toast-error",
+        },
+      }}
+      {...props}
+    />
+  );
+};
+
+export { Toaster };

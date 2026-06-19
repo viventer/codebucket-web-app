@@ -15,6 +15,7 @@ type CodePanelProps = {
   activeGapId: string | null;
   onClearGap: (gapId: string) => void;
   onSelectGap: (gapId: string) => void;
+  disabled?: boolean;
 };
 
 export function CodePanel({
@@ -23,6 +24,7 @@ export function CodePanel({
   activeGapId,
   onClearGap,
   onSelectGap,
+  disabled = false,
 }: CodePanelProps) {
   return (
     <Card className="font-mono text-sm leading-10">
@@ -43,9 +45,9 @@ export function CodePanel({
               <div key={line.id} style={style}>
                 <GapSlot
                   value={assignments[line.id] ?? null}
-                  isActive={activeGapId === line.id}
-                  onSelect={() => onSelectGap(line.id)}
-                  onClear={() => onClearGap(line.id)}
+                  isActive={!disabled && activeGapId === line.id}
+                  onSelect={disabled ? undefined : () => onSelectGap(line.id)}
+                  onClear={disabled ? undefined : () => onClearGap(line.id)}
                 />
               </div>
             );
@@ -58,9 +60,11 @@ export function CodePanel({
             <div key={line.id} style={style}>
               <GapSlot
                 value={closingTag}
-                isActive={activeGapId === line.pairedGapId}
+                isActive={!disabled && activeGapId === line.pairedGapId}
                 onClear={
-                  closingTag ? () => onClearGap(line.pairedGapId) : undefined
+                  disabled || !closingTag
+                    ? undefined
+                    : () => onClearGap(line.pairedGapId)
                 }
               />
             </div>

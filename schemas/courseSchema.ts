@@ -50,6 +50,7 @@ const interactiveExerciseBaseSchema = {
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
   command: z.string().min(1, "Command is required"),
+  hints: z.array(z.string()).optional(),
 };
 
 export const fillGapsLineSchema = z.discriminatedUnion("kind", [

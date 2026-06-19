@@ -39,6 +39,18 @@ export function getElementTitle(element: CourseElement): string {
   return ELEMENT_TYPE_LABELS[element.type];
 }
 
+export function elementHasHint(element: CourseElement): boolean {
+  if (element.type !== "codeExercise" && element.type !== "interactiveExercise") {
+    return false;
+  }
+
+  if (element.type === "codeExercise") {
+    return element.content.hints.length > 0;
+  }
+
+  return (element.content.hints?.length ?? 0) > 0;
+}
+
 export function elementHasMaterials(element: CourseElement): boolean {
   if (
     element.type !== "guidedProject" &&

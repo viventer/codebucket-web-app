@@ -95,6 +95,11 @@
           "id": "arrange-page-structure",
           "type": "interactiveExercise",
           "content": {
+            "hints": [
+              "<html> to tag w którym umieszczamy cały dokument HTML.",
+              "<head> to tag w którym zamieszczamy informacje dla przeglądarki.",
+              "<body> to tag w którym zamieszczamy treść strony."
+            ],
             "title": "Ułóż strukturę strony",
             "description": "Ułóż podstawową strukturę dokumentu HTML, wstawiając brakujące tagi otwierające.",
             "command": "Wybierz odpowiednie tagi, aby uzupełnić strukturę strony.",

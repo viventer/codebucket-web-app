@@ -1,3 +1,6 @@
+"use client";
+
+import { ExerciseCard } from "@/components/course/exercises/ExerciseCard";
 import type { InteractiveExerciseContent } from "@/schemas/courseSchema";
 
 import { ExerciseTypePlaceholder } from "./interactive-exercises/ExerciseTypePlaceholder";
@@ -10,7 +13,11 @@ export function InteractiveExerciseElement({
 }) {
   switch (content.type) {
     case "fillGaps":
-      return <FillGapsExercise content={content} />;
+      return (
+        <ExerciseCard>
+          <FillGapsExercise content={content} />
+        </ExerciseCard>
+      );
     default:
       return <ExerciseTypePlaceholder type={content.type} />;
   }
