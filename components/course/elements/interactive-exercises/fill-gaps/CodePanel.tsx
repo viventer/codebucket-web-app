@@ -5,6 +5,7 @@ import type { FillGapsContent } from "@/schemas/courseSchema";
 import { GapSlot } from "./GapSlot";
 import { getClosingTag } from "./getClosingTag";
 import { HighlightedCode } from "./HighlightedCode";
+import { Card, CardContent } from "@/components/ui/card";
 
 const INDENT_PX = 24;
 
@@ -24,46 +25,48 @@ export function CodePanel({
   onSelectGap,
 }: CodePanelProps) {
   return (
-    <div className="rounded-xl border border-border bg-card p-6 font-mono text-sm leading-10">
-      {content.lines.map((line, index) => {
-        const style = { paddingLeft: line.indent * INDENT_PX };
+    <Card className="font-mono text-sm leading-10">
+      <CardContent>
+        {content.lines.map((line, index) => {
+          const style = { paddingLeft: line.indent * INDENT_PX };
 
-        if (line.kind === "code") {
-          return (
-            <div key={`line-${index}`} style={style}>
-              <HighlightedCode text={line.text} />
-            </div>
-          );
-        }
+          if (line.kind === "code") {
+            return (
+              <div key={`line-${index}`} style={style}>
+                <HighlightedCode text={line.text} language={content.language} />
+              </div>
+            );
+          }
 
-        if (line.kind === "gap") {
+          if (line.kind === "gap") {
+            return (
+              <div key={line.id} style={style}>
+                <GapSlot
+                  value={assignments[line.id] ?? null}
+                  isActive={activeGapId === line.id}
+                  onSelect={() => onSelectGap(line.id)}
+                  onClear={() => onClearGap(line.id)}
+                />
+              </div>
+            );
+          }
+
+          const pairedValue = assignments[line.pairedGapId] ?? null;
+          const closingTag = pairedValue ? getClosingTag(pairedValue) : null;
+
           return (
             <div key={line.id} style={style}>
               <GapSlot
-                value={assignments[line.id] ?? null}
-                isActive={activeGapId === line.id}
-                onSelect={() => onSelectGap(line.id)}
-                onClear={() => onClearGap(line.id)}
+                value={closingTag}
+                isActive={activeGapId === line.pairedGapId}
+                onClear={
+                  closingTag ? () => onClearGap(line.pairedGapId) : undefined
+                }
               />
             </div>
           );
-        }
-
-        const pairedValue = assignments[line.pairedGapId] ?? null;
-        const closingTag = pairedValue ? getClosingTag(pairedValue) : null;
-
-        return (
-          <div key={line.id} style={style}>
-            <GapSlot
-              value={closingTag}
-              isActive={activeGapId === line.pairedGapId}
-              onClear={
-                closingTag ? () => onClearGap(line.pairedGapId) : undefined
-              }
-            />
-          </div>
-        );
-      })}
-    </div>
+        })}
+      </CardContent>
+    </Card>
   );
 }

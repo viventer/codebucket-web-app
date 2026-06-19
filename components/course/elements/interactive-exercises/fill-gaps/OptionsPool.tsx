@@ -10,13 +10,13 @@ type OptionsPoolProps = {
 
 export function OptionsPool({ options, onSelect, disabled }: OptionsPoolProps) {
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="flex flex-wrap gap-3">
       {options.map((option) => (
         <Button
           key={option}
           type="button"
           variant="outline"
-          className="h-12 font-mono text-sm"
+          className="h-8 font-mono text-sm"
           onClick={() => onSelect(option)}
           disabled={disabled}
         >

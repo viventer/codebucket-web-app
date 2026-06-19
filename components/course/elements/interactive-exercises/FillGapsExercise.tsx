@@ -24,9 +24,9 @@ export function FillGapsExercise({ content }: FillGapsExerciseProps) {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex items-center gap-3">
-        <CircleHelp className="size-6 shrink-0 text-primary" />
-        <h3 className="text-lg font-medium">{content.command}</h3>
+      <div className="flex items-center gap-2">
+        <CircleHelp className="size-5 shrink-0 text-primary" />
+        <h3 className="font-medium">{content.command}</h3>
       </div>
 
       <CodePanel

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type GapSlotProps = {
@@ -13,38 +14,38 @@ const slotBaseClass =
   "inline-flex min-h-8 min-w-28 items-center justify-center rounded-lg border border-border bg-card px-3 py-1 font-mono text-sm text-foreground transition-colors";
 
 export function GapSlot({ value, isActive, onSelect, onClear }: GapSlotProps) {
-  const activeClass = isActive ? "ring-2 ring-primary" : undefined;
+  const activeClass = isActive ? "ring-1 ring-accent" : undefined;
 
   if (value) {
     if (onClear) {
       return (
-        <button
-          type="button"
+        <Button
           onClick={onClear}
-          className={cn(
-            slotBaseClass,
-            "min-w-20 hover:bg-secondary/60",
-            activeClass,
-          )}
+          variant="outline"
+          className={cn(slotBaseClass, "min-w-20", activeClass)}
         >
           {value}
-        </button>
+        </Button>
       );
     }
 
     return (
-      <span className={cn(slotBaseClass, "min-w-20", activeClass)}>{value}</span>
+      <span className={cn(slotBaseClass, "min-w-20", activeClass)}>
+        {value}
+      </span>
     );
   }
 
   if (onSelect) {
     return (
-      <button
-        type="button"
+      <Button
+        variant="outline"
         onClick={onSelect}
         className={cn(slotBaseClass, "hover:bg-secondary/40", activeClass)}
         aria-label="Pusta luka"
-      />
+      >
+        {value}
+      </Button>
     );
   }
 

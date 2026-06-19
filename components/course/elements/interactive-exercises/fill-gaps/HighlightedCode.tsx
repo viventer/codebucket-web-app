@@ -1,38 +1,35 @@
-const TAG_CLASS = "text-accent";
-const DOCTYPE_CLASS = "text-muted-foreground";
+"use client";
 
-function highlightHtmlLine(text: string) {
-  if (text.startsWith("<!DOCTYPE")) {
-    return <span className={DOCTYPE_CLASS}>{text}</span>;
-  }
+import { useEffect, useState } from "react";
 
-  const elementMatch = text.match(
-    /^(<[a-zA-Z][\w-]*>)(.*?)(<\/[a-zA-Z][\w-]*>)$/,
-  );
-  if (elementMatch) {
-    const [, openTag, innerText, closeTag] = elementMatch;
-    return (
-      <>
-        <span className={TAG_CLASS}>{openTag}</span>
-        {innerText ? (
-          <span className="text-foreground">{innerText}</span>
-        ) : null}
-        {closeTag ? <span className={TAG_CLASS}>{closeTag}</span> : null}
-      </>
-    );
-  }
-
-  if (text.startsWith("<")) {
-    return <span className={TAG_CLASS}>{text}</span>;
-  }
-
-  return <span className="text-foreground">{text}</span>;
-}
+import { colorizeCode } from "@/lib/monaco/setup";
+import { useCodeTheme } from "@/lib/monaco/use-code-theme";
+import type { Language } from "@/schemas/courseSchema";
 
 type HighlightedCodeProps = {
   text: string;
+  language: Language;
 };
 
-export function HighlightedCode({ text }: HighlightedCodeProps) {
-  return <span>{highlightHtmlLine(text)}</span>;
+export function HighlightedCode({ text, language }: HighlightedCodeProps) {
+  const mode = useCodeTheme();
+  const [html, setHtml] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    void colorizeCode(text, language, mode).then((result) => {
+      if (!cancelled) setHtml(result);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [text, language, mode]);
+
+  if (!html) {
+    return <span className="text-foreground">{text}</span>;
+  }
+
+  return <span dangerouslySetInnerHTML={{ __html: html }} />;
 }
