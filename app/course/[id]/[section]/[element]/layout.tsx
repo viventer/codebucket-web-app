@@ -5,6 +5,7 @@ import {
   getCourseTitle,
   getElementTitle,
   elementHasHint,
+  elementHideInfoOnMobile,
   elementHasMaterials,
 } from "@/lib/courses";
 import { ExerciseSessionProvider } from "@/lib/exercises/ExerciseSessionContext";
@@ -105,6 +106,7 @@ export default async function ElementLayout({
     <ElementActionBar
       type={currentElement.type}
       title={getElementTitle(currentElement)}
+      hideInfoOnMobile={elementHideInfoOnMobile(currentElement)}
       prevHref={prevHref}
       nextHref={nextHref}
       hasMaterials={elementHasMaterials(currentElement)}

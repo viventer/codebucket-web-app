@@ -3,6 +3,7 @@ import type { CourseElement } from "@/schemas/courseSchema";
 export type ElementActionBarProps = {
   type: CourseElement["type"];
   title: string;
+  hideInfoOnMobile?: boolean;
   prevHref: string | null;
   nextHref: string | null;
   hasMaterials: boolean;

@@ -6,11 +6,15 @@ import { ELEMENT_TYPE_ICONS } from "./element-type-icons";
 type ElementInfoProps = {
   type: CourseElement["type"];
   title: string;
+  hideOnMobile?: boolean;
 };
 
-export function ElementInfo({ type, title }: ElementInfoProps) {
+export function ElementInfo({
+  type,
+  title,
+  hideOnMobile = false,
+}: ElementInfoProps) {
   const Icon = ELEMENT_TYPE_ICONS[type];
-  const hideOnMobile = type === "interactiveExercise";
 
   return (
     <div

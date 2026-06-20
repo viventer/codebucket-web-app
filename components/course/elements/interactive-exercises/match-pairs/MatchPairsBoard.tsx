@@ -19,32 +19,33 @@ export function MatchPairsBoard({ controller }: MatchPairsBoardProps) {
   } = controller;
 
   return (
-    <div className="mx-auto grid max-w-2xl grid-cols-2 gap-4 sm:gap-8">
-      <div className="flex flex-col gap-3">
-        {leftItems.map((item) => (
-          <MatchPairItem
-            key={item.id}
-            text={item.text}
-            state={getItemState(item.id)}
-            showErrorFlash={isErrorFlashing(item.id)}
-            isDisabled={matchedPairIds.has(item.pairId)}
-            mono
-            onSelect={() => selectItem("left", item.id)}
-          />
-        ))}
-      </div>
-      <div className="flex flex-col gap-3">
-        {rightItems.map((item) => (
-          <MatchPairItem
-            key={item.id}
-            text={item.text}
-            state={getItemState(item.id)}
-            showErrorFlash={isErrorFlashing(item.id)}
-            isDisabled={matchedPairIds.has(item.pairId)}
-            onSelect={() => selectItem("right", item.id)}
-          />
-        ))}
-      </div>
+    <div className="mx-auto grid w-full grid-cols-2 items-stretch gap-x-4 gap-y-3 sm:gap-y-6 sm:gap-x-8">
+      {leftItems.map((leftItem, index) => {
+        const rightItem = rightItems[index];
+        if (!rightItem) {
+          return null;
+        }
+
+        return (
+          <div key={leftItem.pairId} className="contents">
+            <MatchPairItem
+              text={leftItem.text}
+              state={getItemState(leftItem.id)}
+              showErrorFlash={isErrorFlashing(leftItem.id)}
+              isDisabled={matchedPairIds.has(leftItem.pairId)}
+              mono
+              onSelect={() => selectItem("left", leftItem.id)}
+            />
+            <MatchPairItem
+              text={rightItem.text}
+              state={getItemState(rightItem.id)}
+              showErrorFlash={isErrorFlashing(rightItem.id)}
+              isDisabled={matchedPairIds.has(rightItem.pairId)}
+              onSelect={() => selectItem("right", rightItem.id)}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }

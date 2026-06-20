@@ -1,7 +1,7 @@
 "use client";
 
 import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
-import { feedbackGlowStyle } from "@/lib/exercises/feedback-glow-style";
+import { itemGlowStyleFromExerciseFeedback } from "@/lib/exercises/item-glow-style";
 import type { FillGapsContent } from "@/schemas/courseSchema";
 import { cn } from "@/lib/utils";
 
@@ -37,7 +37,7 @@ export function CodePanel({
         "font-mono text-sm leading-10 transition-shadow duration-300",
         isLocked && "pointer-events-none select-none opacity-80",
       )}
-      style={feedbackGlowStyle(feedback)}
+      style={itemGlowStyleFromExerciseFeedback(feedback)}
     >
       <CardContent>
         {content.lines.map((line, index) => {

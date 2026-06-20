@@ -37,7 +37,8 @@ export function MatchPairItem({
         : state === "selected" || state === "correct"
           ? state
           : "idle";
-  const glowStyle = itemGlowStyle(glowState);
+  const glowStyle =
+    glowState === "idle" ? undefined : itemGlowStyle(glowState);
 
   return (
     <Button
@@ -47,7 +48,7 @@ export function MatchPairItem({
       onClick={isDisabled ? undefined : onSelect}
       style={glowStyle}
       className={cn(
-        "h-auto min-h-12 w-full rounded-lg border bg-card px-4 py-3 text-sm font-normal whitespace-normal text-left transition-[opacity,box-shadow,border-color] duration-300",
+        "h-full min-h-12 w-full rounded-lg border bg-card px-4 py-3 text-sm font-normal whitespace-normal text-left transition-[opacity,box-shadow,border-color] duration-300",
         mono && "font-mono",
         state === "selected" && "border-accent",
         state === "correct" && "border-feedback-success",

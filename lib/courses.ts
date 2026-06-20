@@ -51,6 +51,14 @@ export function elementHasHint(element: CourseElement): boolean {
   return (element.content.hints?.length ?? 0) > 0;
 }
 
+export function elementHideInfoOnMobile(element: CourseElement): boolean {
+  if (element.type !== "interactiveExercise") {
+    return false;
+  }
+
+  return element.content.type !== "matchPairs";
+}
+
 export function elementHasMaterials(element: CourseElement): boolean {
   if (
     element.type !== "guidedProject" &&
