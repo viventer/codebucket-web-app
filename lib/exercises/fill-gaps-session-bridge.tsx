@@ -14,6 +14,7 @@ import { SuccessCelebration } from "@/components/course/exercises/SuccessCelebra
 import { toast } from "@/hooks/use-toast";
 
 import type { getFillGapsExerciseConfig } from "./create-exercise-controller";
+import { EXERCISE_ERROR_FEEDBACK } from "./exercise-feedback-messages";
 import {
   ExerciseSessionContext,
   type ExerciseSessionContextValue,
@@ -74,6 +75,9 @@ export function FillGapsSessionBridge({
 
     if (result === "error") {
       controller.setFeedback("error");
+      toast.error(EXERCISE_ERROR_FEEDBACK.label, {
+        description: EXERCISE_ERROR_FEEDBACK.text,
+      });
       return result;
     }
 

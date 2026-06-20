@@ -221,8 +221,121 @@
           "type": "interactiveExercise",
           "content": {
             "title": "Uzupełnij tagi",
-            "command": "Przeciągnij tagi w odpowiednie miejsca.",
-            "component": ""
+            "description": "Uzupełnij brakujące tagi HTML, aby kod odpowiadał wyglądowi strony z podglądu.",
+            "command": "Wybierz odpowiednie tagi, aby uzupełnić kod strony widocznej obok.",
+            "type": "fillGaps",
+            "language": "html",
+            "hints": [
+              "<br /> to tag break line — łamie linię.",
+              "<hr /> to tag horizontal rule — pozioma linia.",
+              "<p> to tag paragraph — akapit.",
+              "<h> to tag heading — nagłówek (np. h1, h3)."
+            ],
+            "previewHtml": "<h1>Nagłówek</h1><hr /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus distinctio at velit ipsam deleniti veniam a dignissimos molestiae blanditiis laudantium, doloribus tempora suscipit ea. Consequuntur qui ratione expedita vitae maiores.</p><br /><h3>Mniejszy nagłówek</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus distinctio at velit ipsam deleniti veniam a dignissimos molestiae blanditiis laudantium, doloribus tempora suscipit ea. Consequuntur qui ratione expedita vitae maiores.</p>",
+            "lines": [
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  {
+                    "kind": "gap",
+                    "id": "h1-open",
+                    "answer": "<h1>"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "Nagłówek"
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "h1-close",
+                    "pairedGapId": "h1-open"
+                  }
+                ]
+              },
+              {
+                "kind": "gap",
+                "id": "hr",
+                "indent": 0,
+                "answer": "<hr />"
+              },
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  {
+                    "kind": "gap",
+                    "id": "p1-open",
+                    "answer": "<p>"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "Lorem ipsum dolor sit amet consectetur..."
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "p1-close",
+                    "pairedGapId": "p1-open"
+                  }
+                ]
+              },
+              {
+                "kind": "gap",
+                "id": "br",
+                "indent": 0,
+                "answer": "<br />"
+              },
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  {
+                    "kind": "gap",
+                    "id": "h3-open",
+                    "answer": "<h3>"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "Mniejszy nagłówek"
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "h3-close",
+                    "pairedGapId": "h3-open"
+                  }
+                ]
+              },
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  {
+                    "kind": "gap",
+                    "id": "p2-open",
+                    "answer": "<p>"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "Lorem ipsum dolor sit amet consectetur..."
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "p2-close",
+                    "pairedGapId": "p2-open"
+                  }
+                ]
+              }
+            ],
+            "options": [
+              "<h1>",
+              "<heading>",
+              "<hr />",
+              "<br />",
+              "<p>",
+              "<p>",
+              "<h3>",
+              "<h7>"
+            ]
           },
           "order": 8
         },

@@ -64,6 +64,65 @@ export function CodePanel({
             );
           }
 
+          if (line.kind === "group") {
+            return (
+              <div
+                key={`group-${index}`}
+                style={style}
+                className="flex flex-wrap items-center gap-2"
+              >
+                {line.segments.map((segment, segmentIndex) => {
+                  if (segment.kind === "gap") {
+                    return (
+                      <GapSlot
+                        key={segment.id}
+                        value={assignments[segment.id] ?? null}
+                        isActive={!disabled && activeGapId === segment.id}
+                        onSelect={
+                          disabled ? undefined : () => onSelectGap(segment.id)
+                        }
+                        onClear={
+                          disabled ? undefined : () => onClearGap(segment.id)
+                        }
+                      />
+                    );
+                  }
+
+                  if (segment.kind === "text") {
+                    return (
+                      <HighlightedCode
+                        key={`text-${segmentIndex}`}
+                        text={segment.value}
+                        language={content.language}
+                      />
+                    );
+                  }
+
+                  const pairedValue =
+                    assignments[segment.pairedGapId] ?? null;
+                  const closingTag = pairedValue
+                    ? getClosingTag(pairedValue)
+                    : null;
+
+                  return (
+                    <GapSlot
+                      key={segment.id}
+                      value={closingTag}
+                      isActive={
+                        !disabled && activeGapId === segment.pairedGapId
+                      }
+                      onClear={
+                        disabled || !closingTag
+                          ? undefined
+                          : () => onClearGap(segment.pairedGapId)
+                      }
+                    />
+                  );
+                })}
+              </div>
+            );
+          }
+
           const pairedValue = assignments[line.pairedGapId] ?? null;
           const closingTag = pairedValue ? getClosingTag(pairedValue) : null;
 

@@ -10,10 +10,31 @@ import type {
   FillGapsExerciseController,
 } from "./types";
 
+function getGapAnswers(
+  content: FillGapsContent,
+): { id: string; answer: string }[] {
+  const gaps: { id: string; answer: string }[] = [];
+
+  for (const line of content.lines) {
+    if (line.kind === "gap") {
+      gaps.push({ id: line.id, answer: line.answer });
+      continue;
+    }
+
+    if (line.kind === "group") {
+      for (const segment of line.segments) {
+        if (segment.kind === "gap") {
+          gaps.push({ id: segment.id, answer: segment.answer });
+        }
+      }
+    }
+  }
+
+  return gaps;
+}
+
 function getGapIds(content: FillGapsContent): string[] {
-  return content.lines
-    .filter((line) => line.kind === "gap")
-    .map((line) => line.id);
+  return getGapAnswers(content).map((gap) => gap.id);
 }
 
 function getFirstEmptyGapId(
@@ -37,14 +58,14 @@ function evaluateCheck(
   content: FillGapsContent,
   assignments: Record<string, string | null>,
 ): CheckResult {
-  const gapLines = content.lines.filter((line) => line.kind === "gap");
+  const gaps = getGapAnswers(content);
 
-  if (gapLines.some((line) => assignments[line.id] === null)) {
+  if (gaps.some((gap) => assignments[gap.id] === null)) {
     return "warning";
   }
 
-  const allCorrect = gapLines.every(
-    (line) => assignments[line.id] === line.answer,
+  const allCorrect = gaps.every(
+    (gap) => assignments[gap.id] === gap.answer,
   );
 
   return allCorrect ? "success" : "error";
@@ -70,12 +91,15 @@ export function useFillGapsExerciseController(
   const [feedback, setFeedbackState] = useState<ExerciseFeedback>("idle");
 
   const availableOptions = useMemo(() => {
-    const used = new Set(
-      Object.values(assignments).filter(
-        (value): value is string => value !== null,
-      ),
+    const assignedValues = Object.values(assignments).filter(
+      (value): value is string => value !== null,
     );
-    return content.options.filter((option) => !used.has(option));
+    const remaining = [...content.options];
+    for (const value of assignedValues) {
+      const idx = remaining.indexOf(value);
+      if (idx !== -1) remaining.splice(idx, 1);
+    }
+    return remaining;
   }, [assignments, content.options]);
 
   const selectOption = useCallback(
@@ -122,14 +146,12 @@ export function useFillGapsExerciseController(
 
   const applySolution = useCallback(() => {
     const solution: Record<string, string | null> = { ...assignments };
-    for (const line of content.lines) {
-      if (line.kind === "gap") {
-        solution[line.id] = line.answer;
-      }
+    for (const gap of getGapAnswers(content)) {
+      solution[gap.id] = gap.answer;
     }
     setAssignments(solution);
     setActiveGapId(null);
-  }, [assignments, content.lines]);
+  }, [assignments, content]);
 
   const reset = useCallback(() => {
     setAssignments(initialAssignments);

@@ -1,6 +1,37 @@
 import { z } from "zod";
 
-export const languageSchema = z.enum(["javascript", "html", "css"]);
+import {
+  codeExerciseContentSchema,
+  codeSnippetSchema,
+  interactiveExerciseContentSchema,
+} from "./exerciseSchema";
+
+export {
+  codeExerciseContentSchema,
+  codeSnippetSchema,
+  customInteractiveExerciseContentSchema,
+  fillCodeContentSchema,
+  fillGapsContentSchema,
+  fillGapsGroupSegmentSchema,
+  fillGapsLineSchema,
+  interactiveExerciseContentSchema,
+  interactiveExerciseTypeSchema,
+  languageSchema,
+  matchPairSchema,
+  matchPairsContentSchema,
+  selectCorrectContentSchema,
+} from "./exerciseSchema";
+
+export type {
+  CodeExerciseContent,
+  CodeSnippet,
+  FillGapsContent,
+  FillGapsLine,
+  InteractiveExerciseContent,
+  InteractiveExerciseType,
+  Language,
+  MatchPairsContent,
+} from "./exerciseSchema";
 
 export const questionAnswerTypeSchema = z.enum(["code", "image", "text"]);
 export const questionContentTypeSchema = z.enum([
@@ -19,14 +50,6 @@ export const courseElementTypeSchema = z.enum([
   "individualProject",
 ]);
 
-export const interactiveExerciseTypeSchema = z.enum([
-  "fillGaps",
-  "matchPairs",
-  "fillCode",
-  "selectCorrect",
-  "custom",
-]);
-
 export const videoContentSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
@@ -35,93 +58,10 @@ export const videoContentSchema = z.object({
   videoUrl: z.string().min(1, "Video URL is required"),
 });
 
-export const codeSnippetSchema = z.object({
-  language: languageSchema,
-  code: z.string().min(1, "Code is required"),
-});
-
 export const interactiveDemoContentSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
   component: z.string().min(1, "Component is required"),
-});
-
-const interactiveExerciseBaseSchema = {
-  title: z.string().min(1, "Title is required"),
-  description: z.string().min(1, "Description is required"),
-  command: z.string().min(1, "Command is required"),
-  hints: z.array(z.string()).optional(),
-};
-
-export const fillGapsLineSchema = z.discriminatedUnion("kind", [
-  z.object({
-    kind: z.literal("code"),
-    text: z.string(),
-    indent: z.number().min(0),
-  }),
-  z.object({
-    kind: z.literal("gap"),
-    id: z.string().min(1),
-    indent: z.number().min(0),
-    answer: z.string().min(1),
-  }),
-  z.object({
-    kind: z.literal("autoClose"),
-    id: z.string().min(1),
-    indent: z.number().min(0),
-    pairedGapId: z.string().min(1),
-  }),
-]);
-
-export const fillGapsContentSchema = z.object({
-  ...interactiveExerciseBaseSchema,
-  type: z.literal("fillGaps"),
-  language: languageSchema,
-  lines: z.array(fillGapsLineSchema).min(1),
-  options: z.array(z.string().min(1)).min(1),
-});
-
-export const matchPairSchema = z.object({
-  left: z.string().min(1),
-  right: z.string().min(1),
-});
-
-export const matchPairsContentSchema = z.object({
-  ...interactiveExerciseBaseSchema,
-  type: z.literal("matchPairs"),
-  pairs: z.array(matchPairSchema).min(2),
-});
-
-export const fillCodeContentSchema = z.object({
-  ...interactiveExerciseBaseSchema,
-  type: z.literal("fillCode"),
-});
-
-export const selectCorrectContentSchema = z.object({
-  ...interactiveExerciseBaseSchema,
-  type: z.literal("selectCorrect"),
-});
-
-export const customInteractiveExerciseContentSchema = z.object({
-  ...interactiveExerciseBaseSchema,
-  type: z.literal("custom"),
-  component: z.string().min(1, "Component is required"),
-});
-
-export const interactiveExerciseContentSchema = z.discriminatedUnion("type", [
-  fillGapsContentSchema,
-  matchPairsContentSchema,
-  fillCodeContentSchema,
-  selectCorrectContentSchema,
-  customInteractiveExerciseContentSchema,
-]);
-
-export const codeExerciseContentSchema = z.object({
-  command: z.string().min(1, "Command is required"),
-  languages: z.array(languageSchema),
-  starterCode: z.array(codeSnippetSchema),
-  solutionCode: z.array(codeSnippetSchema),
-  hints: z.array(z.string()).min(1, "Hints are required"),
 });
 
 export const questionAnswerSchema = z.object({
@@ -262,23 +202,11 @@ export const courseSchema = z.object({
   updatedAt: z.date(),
 });
 
-export type Language = z.infer<typeof languageSchema>;
 export type QuestionAnswerType = z.infer<typeof questionAnswerTypeSchema>;
 export type QuestionContentType = z.infer<typeof questionContentTypeSchema>;
 export type VideoContent = z.infer<typeof videoContentSchema>;
-export type CodeSnippet = z.infer<typeof codeSnippetSchema>;
-export type CodeExerciseContent = z.infer<typeof codeExerciseContentSchema>;
 export type InteractiveDemoContent = z.infer<
   typeof interactiveDemoContentSchema
->;
-export type InteractiveExerciseType = z.infer<
-  typeof interactiveExerciseTypeSchema
->;
-export type FillGapsLine = z.infer<typeof fillGapsLineSchema>;
-export type FillGapsContent = z.infer<typeof fillGapsContentSchema>;
-export type MatchPairsContent = z.infer<typeof matchPairsContentSchema>;
-export type InteractiveExerciseContent = z.infer<
-  typeof interactiveExerciseContentSchema
 >;
 export type Question = z.infer<typeof questionSchema>;
 export type QuizContent = z.infer<typeof quizContentSchema>;

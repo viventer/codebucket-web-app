@@ -1,0 +1,28 @@
+import type { ExerciseFeedback } from "./types";
+
+export type ExerciseFeedbackMessageContent = {
+  label: string;
+  text: string;
+  colorClass: string;
+};
+
+export const EXERCISE_ERROR_FEEDBACK: ExerciseFeedbackMessageContent = {
+  label: "Ups!",
+  text: "Rozwiązanie jest nieprawidłowe. Spróbuj ponownie.",
+  colorClass: "text-feedback-destructive",
+};
+
+export const EXERCISE_INLINE_FEEDBACK_MESSAGES: Partial<
+  Record<ExerciseFeedback, ExerciseFeedbackMessageContent>
+> = {
+  success: {
+    label: "Sukces!",
+    text: "Zadanie wykonane. Możesz przejść do kolejnego rozdziału.",
+    colorClass: "text-feedback-success",
+  },
+  solution: {
+    label: "Skip!",
+    text: "Zadanie pominięte. Możesz przejść do kolejnego rozdziału.",
+    colorClass: "text-feedback-warning",
+  },
+};

@@ -11,9 +11,9 @@ type OptionsPoolProps = {
 export function OptionsPool({ options, onSelect, disabled }: OptionsPoolProps) {
   return (
     <div className="flex flex-wrap gap-3">
-      {options.map((option) => (
+      {options.map((option, index) => (
         <Button
-          key={option}
+          key={`${option}-${index}`}
           type="button"
           variant="outline"
           className="h-8 font-mono text-sm"
