@@ -1,9 +1,18 @@
-import type { CourseElement, FillGapsContent } from "@/schemas/courseSchema";
+import type {
+  CourseElement,
+  FillGapsContent,
+  MatchPairsContent,
+} from "@/schemas/courseSchema";
 
 export type FillGapsExerciseConfig = {
   kind: "fillGaps";
   content: FillGapsContent;
   hints: string[];
+};
+
+export type MatchPairsExerciseConfig = {
+  kind: "matchPairs";
+  content: MatchPairsContent;
 };
 
 export function getFillGapsExerciseConfig(
@@ -21,6 +30,23 @@ export function getFillGapsExerciseConfig(
     kind: "fillGaps",
     content: element.content,
     hints: element.content.hints ?? [],
+  };
+}
+
+export function getMatchPairsExerciseConfig(
+  element: CourseElement,
+): MatchPairsExerciseConfig | null {
+  if (element.type !== "interactiveExercise") {
+    return null;
+  }
+
+  if (element.content.type !== "matchPairs") {
+    return null;
+  }
+
+  return {
+    kind: "matchPairs",
+    content: element.content,
   };
 }
 

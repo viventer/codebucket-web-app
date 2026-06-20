@@ -81,9 +81,15 @@ export const fillGapsContentSchema = z.object({
   options: z.array(z.string().min(1)).min(1),
 });
 
+export const matchPairSchema = z.object({
+  left: z.string().min(1),
+  right: z.string().min(1),
+});
+
 export const matchPairsContentSchema = z.object({
   ...interactiveExerciseBaseSchema,
   type: z.literal("matchPairs"),
+  pairs: z.array(matchPairSchema).min(2),
 });
 
 export const fillCodeContentSchema = z.object({
@@ -270,6 +276,7 @@ export type InteractiveExerciseType = z.infer<
 >;
 export type FillGapsLine = z.infer<typeof fillGapsLineSchema>;
 export type FillGapsContent = z.infer<typeof fillGapsContentSchema>;
+export type MatchPairsContent = z.infer<typeof matchPairsContentSchema>;
 export type InteractiveExerciseContent = z.infer<
   typeof interactiveExerciseContentSchema
 >;

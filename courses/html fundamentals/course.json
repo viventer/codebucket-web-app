@@ -171,8 +171,27 @@
           "type": "interactiveExercise",
           "content": {
             "title": "Znaczenie tagów w strukturze strony",
-            "command": "Dopasuj tag do opisu.",
-            "component": ""
+            "description": "Dopasuj tag HTML do jego znaczenia w strukturze dokumentu.",
+            "command": "Naciśnij pary.",
+            "type": "matchPairs",
+            "pairs": [
+              {
+                "left": "<head>",
+                "right": "Informacje istotne dla przeglądarki"
+              },
+              {
+                "left": "<body>",
+                "right": "Widoczna zawartość strony"
+              },
+              {
+                "left": "<html>",
+                "right": "Pojemnik na cały kod strony"
+              },
+              {
+                "left": "<!DOCTYPE html>",
+                "right": "Deklaracja typu dokumentu"
+              }
+            ]
           },
           "order": 5
         },

@@ -1,3 +1,5 @@
+import type { MatchPairItemState } from "./item-glow-style";
+
 export type CheckResult = "success" | "error" | "warning";
 
 export type ExerciseFeedback =
@@ -32,3 +34,33 @@ export type FillGapsExerciseController = ExerciseController &
   FillGapsControllerState & {
     kind: "fillGaps";
   };
+
+export type MatchPairsColumn = "left" | "right";
+
+export type MatchPairsItem = {
+  id: string;
+  text: string;
+  pairId: string;
+};
+
+export interface MatchPairsControllerState {
+  leftItems: MatchPairsItem[];
+  rightItems: MatchPairsItem[];
+  selected: { column: MatchPairsColumn; id: string } | null;
+  matchedPairIds: Set<string>;
+  isComplete: boolean;
+  selectItem: (column: MatchPairsColumn, id: string) => void;
+  getItemState: (itemId: string) => MatchPairItemState;
+  isErrorFlashing: (itemId: string) => boolean;
+}
+
+export type MatchPairsExerciseController = ExerciseController &
+  MatchPairsControllerState & {
+    kind: "matchPairs";
+  };
+
+export type ExerciseControllerUnion =
+  | FillGapsExerciseController
+  | MatchPairsExerciseController;
+
+export type ActionBarMode = "check-first" | "back-next-gated";
