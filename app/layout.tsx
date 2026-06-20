@@ -34,7 +34,7 @@ export default function RootLayout({
       lang="pl"
       className={cn(
         userTheme,
-        "h-full",
+        "h-full scrollbar scrollbar-thumb-primary scrollbar-track-card",
         "antialiased",
         "font-sans",
         ubuntu.variable,
