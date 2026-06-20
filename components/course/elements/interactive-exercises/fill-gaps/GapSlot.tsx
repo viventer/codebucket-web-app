@@ -11,7 +11,7 @@ type GapSlotProps = {
 };
 
 const slotBaseClass =
-  "inline-flex min-h-8 min-w-28 items-center justify-center rounded-lg border border-border bg-card px-3 py-1 font-mono text-sm text-foreground transition-colors";
+  "inline-flex h-fit min-w-9 items-center justify-center rounded-md border border-border bg-card px-3 py-0.5 font-mono text-sm text-foreground transition-colors";
 
 export function GapSlot({ value, isActive, onSelect, onClear }: GapSlotProps) {
   const activeClass = isActive ? "ring-1 ring-accent" : undefined;
@@ -19,33 +19,28 @@ export function GapSlot({ value, isActive, onSelect, onClear }: GapSlotProps) {
   if (value) {
     if (onClear) {
       return (
-        <Button
-          onClick={onClear}
-          variant="outline"
-          className={cn(slotBaseClass, "min-w-20", activeClass)}
-        >
-          {value}
-        </Button>
+        <span onClick={onClear} className={cn(slotBaseClass, activeClass)}>
+          {value || <>&nbsp;</>}
+        </span>
       );
     }
 
     return (
-      <span className={cn(slotBaseClass, "min-w-20", activeClass)}>
-        {value}
+      <span className={cn(slotBaseClass, activeClass)}>
+        {value || <>&nbsp;</>}
       </span>
     );
   }
 
   if (onSelect) {
     return (
-      <Button
-        variant="outline"
+      <span
         onClick={onSelect}
-        className={cn(slotBaseClass, "hover:bg-secondary/40", activeClass)}
+        className={cn(slotBaseClass, activeClass)}
         aria-label="Pusta luka"
       >
-        {value}
-      </Button>
+        {value || <>&nbsp;</>}
+      </span>
     );
   }
 
@@ -53,6 +48,8 @@ export function GapSlot({ value, isActive, onSelect, onClear }: GapSlotProps) {
     <span
       className={cn(slotBaseClass, activeClass)}
       aria-label="Pusta luka zamykająca"
-    />
+    >
+      &nbsp;
+    </span>
   );
 }

@@ -32,11 +32,33 @@ function readMtkColorMap(): Map<string, string> {
   return map;
 }
 
+/**
+ * Monaco colorize wraps each line in an outer bare `<span>` (see viewLineRenderer).
+ * After inlining mtk classes, unwrap to avoid redundant nesting.
+ */
+/** Monaco colorize appends `<br/>` after every line, including the last. */
+export function stripTrailingMonacoLineBreak(html: string): string {
+  return html.endsWith("<br/>") ? html.slice(0, -5) : html;
+}
+
+export function unwrapMonacoLineSpans(html: string): string {
+  const linePattern =
+    /^<span>((?:<span[^>]*>[\s\S]*?<\/span>)+)<\/span>$/;
+
+  return html
+    .split("<br/>")
+    .map((line) => {
+      const match = line.match(linePattern);
+      return match?.[1] ?? line;
+    })
+    .join("<br/>");
+}
+
 export function inlineMonacoColorClasses(html: string): string {
   const mtkColors = readMtkColorMap();
   if (mtkColors.size === 0) return html;
 
-  return html.replace(
+  const inlined = html.replace(
     /<span class="([^"]*)">/g,
     (fullMatch, classNames: string) => {
       const mtkClass = classNames
@@ -51,6 +73,8 @@ export function inlineMonacoColorClasses(html: string): string {
       return `<span style="color:${color}">`;
     },
   );
+
+  return unwrapMonacoLineSpans(inlined);
 }
 
 export function highlightHtmlInline(

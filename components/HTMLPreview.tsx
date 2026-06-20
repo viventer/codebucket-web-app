@@ -32,11 +32,10 @@ function buildSrcDoc(
   *, *::before, *::after { box-sizing: border-box; }
   body {
     margin: 0;
-    padding: 1rem;
     background: ${colors.background};
     color: ${colors.color};
     font-family: system-ui, sans-serif;
-    line-height: 1.5;
+    padding: 0 2rem;
   }
 </style>
 </head>
@@ -74,8 +73,8 @@ export function HTMLPreview({
   }, [html]);
 
   return (
-    <Card className={cn("h-full min-h-48 overflow-hidden", className)}>
-      <CardContent className="h-full p-0">
+    <Card className={cn("h-full min-h-48 overflow-hidden p-0", className)}>
+      <CardContent className="h-full p-0 py-2">
         <iframe
           srcDoc={srcDoc}
           sandbox=""

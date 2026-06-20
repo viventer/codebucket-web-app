@@ -222,7 +222,7 @@
           "content": {
             "title": "Uzupełnij tagi",
             "description": "Uzupełnij brakujące tagi HTML, aby kod odpowiadał wyglądowi strony z podglądu.",
-            "command": "Wybierz odpowiednie tagi, aby uzupełnić kod strony widocznej obok.",
+            "command": "Wybierz odpowiednie tagi, aby uzupełnić kod strony widocznej obok/poniżej.",
             "type": "fillGaps",
             "language": "html",
             "hints": [

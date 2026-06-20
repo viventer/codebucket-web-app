@@ -5,6 +5,7 @@ import {
   getColorizeCacheKey,
   highlightCodeInline,
   inlineMonacoColorClasses,
+  stripTrailingMonacoLineBreak,
 } from "./colorize-html";
 import {
   type CodeThemeMode,
@@ -82,6 +83,8 @@ export async function colorizeCode(
   if (!html.includes("style=")) {
     html = await colorizeWithInlineFallback(text, language);
   }
+
+  html = stripTrailingMonacoLineBreak(html);
 
   colorizeCache.set(key, html);
   return html;

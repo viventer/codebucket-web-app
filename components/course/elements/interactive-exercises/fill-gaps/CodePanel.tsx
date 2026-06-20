@@ -34,12 +34,12 @@ export function CodePanel({
   return (
     <Card
       className={cn(
-        "font-mono text-sm leading-10 transition-shadow duration-300",
+        "font-mono text-sm  transition-shadow duration-300",
         isLocked && "pointer-events-none select-none opacity-80",
       )}
       style={itemGlowStyleFromExerciseFeedback(feedback)}
     >
-      <CardContent>
+      <CardContent className="flex flex-col gap-4">
         {content.lines.map((line, index) => {
           const style = { paddingLeft: line.indent * INDENT_PX };
 
@@ -53,7 +53,11 @@ export function CodePanel({
 
           if (line.kind === "gap") {
             return (
-              <div key={line.id} style={style}>
+              <div
+                key={line.id}
+                style={style}
+                className="h-fit flex items-center"
+              >
                 <GapSlot
                   value={assignments[line.id] ?? null}
                   isActive={!disabled && activeGapId === line.id}
@@ -69,7 +73,7 @@ export function CodePanel({
               <div
                 key={`group-${index}`}
                 style={style}
-                className="flex flex-wrap items-center gap-2"
+                className="flex flex-wrap items-center gap-y-1 gap-x-2"
               >
                 {line.segments.map((segment, segmentIndex) => {
                   if (segment.kind === "gap") {
@@ -94,12 +98,12 @@ export function CodePanel({
                         key={`text-${segmentIndex}`}
                         text={segment.value}
                         language={content.language}
+                        className="leading-normal flex items-center"
                       />
                     );
                   }
 
-                  const pairedValue =
-                    assignments[segment.pairedGapId] ?? null;
+                  const pairedValue = assignments[segment.pairedGapId] ?? null;
                   const closingTag = pairedValue
                     ? getClosingTag(pairedValue)
                     : null;
