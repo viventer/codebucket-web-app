@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { CircleCheckIcon, CircleIcon, MenuIcon } from "lucide-react";
 
+import { useCourseNavigationOptional } from "@/lib/course/navigation-transition-context";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -48,6 +49,8 @@ export function CourseNavSheet({
   currentSectionId,
   currentElementId,
 }: CourseNavSheetProps) {
+  const navigation = useCourseNavigationOptional();
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -90,6 +93,9 @@ export function CourseNavSheet({
                           <SheetClose asChild>
                             <Link
                               href={`/course/${courseId}/${section.id}/${element.id}`}
+                              onClick={() =>
+                                navigation?.setNavigationIntent("neutral")
+                              }
                               aria-current={isCurrent ? "page" : undefined}
                               className={cn(
                                 "flex items-center gap-2 rounded-md px-2 py-1.5 text-sm no-underline! transition-colors hover:bg-muted",

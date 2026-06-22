@@ -8,11 +8,10 @@ import {
   elementHideInfoOnMobile,
   elementHasMaterials,
 } from "@/lib/courses";
-import { ExerciseSessionProvider } from "@/lib/exercises/ExerciseSessionContext";
+import { buildCourseNavigationMetadata } from "@/lib/course/build-navigation-metadata";
 import { mockUser } from "@/lib/mock-user";
 import { getCompletedElementIds, getSectionProgress } from "@/lib/progress";
-import { ElementActionBar } from "@/components/course/element-action-bar";
-import { CourseHeader } from "@/components/course/CourseHeader";
+import { CourseElementShell } from "@/components/course/CourseElementShell";
 
 type ElementLayoutProps = {
   children: React.ReactNode;
@@ -64,6 +63,14 @@ export default async function ElementLayout({
     ? `/course/${course.id}/${next.sectionId}/${next.elementId}`
     : null;
 
+  const navigationMetadata = buildCourseNavigationMetadata(
+    course,
+    sectionId,
+    elementId,
+    orderedElements,
+    currentIndex,
+  );
+
   const user = mockUser;
   const completedIds = getCompletedElementIds(user, course.id);
   const progress = getSectionProgress(course, sectionId, user);
@@ -96,47 +103,34 @@ export default async function ElementLayout({
     currentElement.type === "codeExercise" ||
     currentElement.type === "interactiveExercise";
 
-  const main = (
-    <main className="mx-auto mt-8 sm:mt-16 w-[90vw] max-w-[1280px] flex-1 pb-28">
-      {children}
-    </main>
-  );
-
-  const actionBar = (
-    <ElementActionBar
-      type={currentElement.type}
-      title={getElementTitle(currentElement)}
-      hideInfoOnMobile={elementHideInfoOnMobile(currentElement)}
-      prevHref={prevHref}
-      nextHref={nextHref}
-      hasMaterials={elementHasMaterials(currentElement)}
-      hasHint={elementHasHint(currentElement)}
-    />
-  );
-
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <CourseHeader
-        courseId={course.id}
-        courseTitle={course.title}
-        sectionTitle={currentSection.title}
-        sections={sections}
-        currentSectionId={sectionId}
-        currentElementId={elementId}
-        progress={progress}
-        account={account}
-      />
-      {isExercise ? (
-        <ExerciseSessionProvider element={currentElement}>
-          {main}
-          {actionBar}
-        </ExerciseSessionProvider>
-      ) : (
-        <>
-          {main}
-          {actionBar}
-        </>
-      )}
-    </div>
+    <CourseElementShell
+      navigationMetadata={navigationMetadata}
+      headerProps={{
+        courseId: course.id,
+        courseTitle: course.title,
+        sectionTitle: currentSection.title,
+        sections,
+        currentSectionId: sectionId,
+        currentElementId: elementId,
+        progress,
+        account,
+      }}
+      actionBarProps={{
+        type: currentElement.type,
+        title: getElementTitle(currentElement),
+        sectionOrder: currentSection.order,
+        sectionTitle: currentSection.title,
+        hideInfoOnMobile: elementHideInfoOnMobile(currentElement),
+        prevHref,
+        nextHref,
+        hasMaterials: elementHasMaterials(currentElement),
+        hasHint: elementHasHint(currentElement),
+      }}
+      isExercise={isExercise}
+      exerciseElement={currentElement}
+    >
+      {children}
+    </CourseElementShell>
   );
 }

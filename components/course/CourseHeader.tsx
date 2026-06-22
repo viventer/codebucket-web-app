@@ -1,11 +1,11 @@
 import Image from "next/image";
 
 import type { SectionProgress } from "@/lib/progress";
-import { Progress } from "@/components/ui/progress";
 import {
   AccountDialog,
   type AccountCourse,
 } from "@/components/course/AccountDialog";
+import { CourseHeaderProgress } from "@/components/course/CourseHeaderProgress";
 import {
   CourseNavSheet,
   type NavSection,
@@ -62,10 +62,11 @@ export function CourseHeader({
             </p>
 
             <div className="flex items-center gap-2">
-              <Progress value={progress.percent} className="w-24" />
-              <span className="sm:block hidden text-xs whitespace-nowrap text-muted-foreground">
-                {progress.completed} / {progress.total}
-              </span>
+              <CourseHeaderProgress
+                value={progress.percent}
+                completed={progress.completed}
+                total={progress.total}
+              />
             </div>
           </section>
         </div>
