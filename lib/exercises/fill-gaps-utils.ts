@@ -1,0 +1,110 @@
+import type { FillGapsLine } from "@/schemas/courseSchema";
+
+import type { CheckResult } from "./types";
+
+export type FillGapsStageContent = {
+  language: "html" | "css" | "javascript";
+  lines: FillGapsLine[];
+  options: string[];
+};
+
+export function getGapAnswers(
+  content: FillGapsStageContent,
+): { id: string; answer: string }[] {
+  const gaps: { id: string; answer: string }[] = [];
+
+  for (const line of content.lines) {
+    if (line.kind === "gap") {
+      gaps.push({ id: line.id, answer: line.answer });
+      continue;
+    }
+
+    if (line.kind === "group") {
+      for (const segment of line.segments) {
+        if (segment.kind === "gap") {
+          gaps.push({ id: segment.id, answer: segment.answer });
+        }
+      }
+    }
+  }
+
+  return gaps;
+}
+
+export function getGapIds(content: FillGapsStageContent): string[] {
+  return getGapAnswers(content).map((gap) => gap.id);
+}
+
+export function getFirstEmptyGapId(
+  gapIds: string[],
+  assignments: Record<string, string | null>,
+): string | null {
+  return gapIds.find((id) => assignments[id] === null) ?? null;
+}
+
+export function createInitialAssignments(
+  gapIds: string[],
+): Record<string, string | null> {
+  const assignments: Record<string, string | null> = {};
+  for (const id of gapIds) {
+    assignments[id] = null;
+  }
+  return assignments;
+}
+
+export function evaluateFillGapsCheck(
+  content: FillGapsStageContent,
+  assignments: Record<string, string | null>,
+): CheckResult {
+  const gaps = getGapAnswers(content);
+
+  if (gaps.some((gap) => assignments[gap.id] === null)) {
+    return "warning";
+  }
+
+  const allCorrect = gaps.every(
+    (gap) => assignments[gap.id] === gap.answer,
+  );
+
+  return allCorrect ? "success" : "error";
+}
+
+export function getAvailableOptions(
+  content: FillGapsStageContent,
+  assignments: Record<string, string | null>,
+): string[] {
+  const assignedValues = Object.values(assignments).filter(
+    (value): value is string => value !== null,
+  );
+  const remaining = [...content.options];
+  for (const value of assignedValues) {
+    const idx = remaining.indexOf(value);
+    if (idx !== -1) remaining.splice(idx, 1);
+  }
+  return remaining;
+}
+
+export function applyFillGapsSolution(
+  content: FillGapsStageContent,
+  assignments: Record<string, string | null>,
+): Record<string, string | null> {
+  const solution: Record<string, string | null> = { ...assignments };
+  for (const gap of getGapAnswers(content)) {
+    solution[gap.id] = gap.answer;
+  }
+  return solution;
+}
+
+export function getClosingTag(openingTag: string): string {
+  const match = openingTag.match(/^<([a-zA-Z][\w-]*)>$/);
+  if (!match) return openingTag;
+  return `</${match[1]}>`;
+}
+
+export type StageFeedbackTarget = "presentation" | "codePanel";
+
+export function getStageFeedbackTarget(
+  presentationKind: "image" | "preview" | "code",
+): StageFeedbackTarget {
+  return presentationKind === "image" ? "presentation" : "codePanel";
+}

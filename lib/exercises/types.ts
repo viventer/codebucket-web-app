@@ -1,13 +1,25 @@
 import type { MatchPairItemState } from "./item-glow-style";
+import type {
+  MultiStageFillGapsContent,
+  MultiStageFillGapsStage,
+} from "@/schemas/courseSchema";
+
+import type { StageFeedbackTarget } from "./fill-gaps-utils";
 
 export type CheckResult = "success" | "error" | "warning";
 
 export type ExerciseFeedback =
   | "idle"
   | "success"
+  | "stageSuccess"
   | "error"
   | "warning"
   | "solution";
+
+export type StageProgress = {
+  current: number;
+  total: number;
+};
 
 export interface ExerciseController {
   check: () => CheckResult;
@@ -59,8 +71,31 @@ export type MatchPairsExerciseController = ExerciseController &
     kind: "matchPairs";
   };
 
+export interface MultiStageFillGapsControllerState {
+  content: MultiStageFillGapsContent;
+  currentStageIndex: number;
+  currentStage: MultiStageFillGapsStage;
+  stageProgress: StageProgress;
+  feedbackTarget: StageFeedbackTarget;
+  isLastStage: boolean;
+  assignments: Record<string, string | null>;
+  activeGapId: string | null;
+  availableOptions: string[];
+  selectOption: (option: string) => void;
+  clearGap: (gapId: string) => void;
+  setActiveGapId: (gapId: string | null) => void;
+  advanceStage: () => void;
+  goToPreviousStage: () => void;
+}
+
+export type MultiStageFillGapsExerciseController = ExerciseController &
+  MultiStageFillGapsControllerState & {
+    kind: "multiStageFillGaps";
+  };
+
 export type ExerciseControllerUnion =
   | FillGapsExerciseController
+  | MultiStageFillGapsExerciseController
   | MatchPairsExerciseController;
 
-export type ActionBarMode = "check-first" | "back-next-gated";
+export type ActionBarMode = "check-first" | "back-next-gated" | "multi-stage";

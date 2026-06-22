@@ -8,6 +8,7 @@ import {
   getExerciseHints,
   getFillGapsExerciseConfig,
   getMatchPairsExerciseConfig,
+  getMultiStageFillGapsExerciseConfig,
 } from "./create-exercise-controller";
 import {
   EMPTY_SESSION_VALUE,
@@ -16,6 +17,7 @@ import {
 } from "./exercise-session-context-shared";
 import { FillGapsSessionBridge } from "./fill-gaps-session-bridge";
 import { MatchPairsSessionBridge } from "./match-pairs-session-bridge";
+import { MultiStageFillGapsSessionBridge } from "./multi-stage-fill-gaps-session-bridge";
 
 export function ExerciseSessionProvider({
   element,
@@ -26,6 +28,8 @@ export function ExerciseSessionProvider({
 }) {
   const hints = getExerciseHints(element);
   const fillGapsConfig = getFillGapsExerciseConfig(element);
+  const multiStageFillGapsConfig =
+    getMultiStageFillGapsExerciseConfig(element);
   const matchPairsConfig = getMatchPairsExerciseConfig(element);
 
   if (fillGapsConfig) {
@@ -33,6 +37,17 @@ export function ExerciseSessionProvider({
       <FillGapsSessionBridge config={fillGapsConfig} hints={hints}>
         {children}
       </FillGapsSessionBridge>
+    );
+  }
+
+  if (multiStageFillGapsConfig) {
+    return (
+      <MultiStageFillGapsSessionBridge
+        config={multiStageFillGapsConfig}
+        hints={hints}
+      >
+        {children}
+      </MultiStageFillGapsSessionBridge>
     );
   }
 
@@ -63,7 +78,12 @@ export function useExerciseSession(): ExerciseSessionContextValue {
   return context;
 }
 
+export function useExerciseSessionOptional(): ExerciseSessionContextValue | null {
+  return useContext(ExerciseSessionContext);
+}
+
 export type {
   FillGapsExerciseController,
   MatchPairsExerciseController,
+  MultiStageFillGapsExerciseController,
 } from "./types";

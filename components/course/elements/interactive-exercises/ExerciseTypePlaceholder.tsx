@@ -2,6 +2,7 @@ import type { InteractiveExerciseType } from "@/schemas/courseSchema";
 
 const TYPE_LABELS: Record<InteractiveExerciseType, string> = {
   fillGaps: "FillGaps",
+  multiStageFillGaps: "MultiStageFillGaps",
   matchPairs: "MatchPairs",
   fillCode: "FillCode",
   selectCorrect: "SelectCorrect",

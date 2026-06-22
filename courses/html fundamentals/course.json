@@ -365,8 +365,114 @@
           "type": "interactiveExercise",
           "content": {
             "title": "Uzupełnij ścieżkę",
-            "command": "Wpisz ścieżkę do zdjęcia.",
-            "component": ""
+            "description": "Na podstawie struktury plików uzupełnij brakujące atrybuty i ścieżki w tagu img.",
+            "command": "Wybierz odpowiednie fragmenty, aby uzupełnić tag img.",
+            "type": "multiStageFillGaps",
+            "hints": [
+              ".. — przejście do folderu nadrzędnego.",
+              "src — atrybut ze ścieżką do pliku obrazu.",
+              "alt — atrybut z opisem obrazu (tekst alternatywny).",
+              "/ — separator folderów w ścieżce względnej.",
+              "Ścieżka jest liczona od lokalizacji pliku HTML, nie od folderu projektu."
+            ],
+            "stages": [
+              {
+                "language": "html",
+                "presentation": {
+                  "kind": "image",
+                  "imageSrc": "exercises/paths/1.png"
+                },
+                "options": [
+                  "src",
+                  "alt",
+                  "href",
+                  "media",
+                  "zdjęcie.png",
+                  "..",
+                  "pages",
+                  "index.html"
+                ],
+                "lines": [
+                  {
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      { "kind": "text", "value": "<img " },
+                      { "kind": "gap", "id": "s1-attr", "answer": "src" },
+                      { "kind": "text", "value": "=\"" },
+                      { "kind": "gap", "id": "s1-p1", "answer": "media" },
+                      { "kind": "text", "value": "/" },
+                      { "kind": "gap", "id": "s1-p2", "answer": "zdjęcie.png" },
+                      { "kind": "text", "value": "\" alt=\"zdjęcie\" />" }
+                    ]
+                  }
+                ]
+              },
+              {
+                "language": "html",
+                "presentation": {
+                  "kind": "image",
+                  "imageSrc": "exercises/paths/2.png"
+                },
+                "options": [
+                  "src",
+                  "alt",
+                  "href",
+                  "..",
+                  "media",
+                  "zdjęcie.png",
+                  "pages"
+                ],
+                "lines": [
+                  {
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      { "kind": "text", "value": "<img src=\"" },
+                      { "kind": "gap", "id": "s2-p1", "answer": ".." },
+                      { "kind": "text", "value": "/" },
+                      { "kind": "gap", "id": "s2-p2", "answer": "media" },
+                      { "kind": "text", "value": "/" },
+                      { "kind": "gap", "id": "s2-p3", "answer": "zdjęcie.png" },
+                      { "kind": "text", "value": "\" " },
+                      { "kind": "gap", "id": "s2-attr", "answer": "alt" },
+                      { "kind": "text", "value": "=\"zdjęcie\" />" }
+                    ]
+                  }
+                ]
+              },
+              {
+                "language": "html",
+                "presentation": {
+                  "kind": "image",
+                  "imageSrc": "exercises/paths/3.png"
+                },
+                "options": [
+                  "src",
+                  "alt",
+                  "href",
+                  "..",
+                  "zdjęcie.png",
+                  "pages",
+                  "index.html"
+                ],
+                "lines": [
+                  {
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      { "kind": "text", "value": "<img " },
+                      { "kind": "gap", "id": "s3-attr", "answer": "src" },
+                      { "kind": "text", "value": "=\"" },
+                      { "kind": "gap", "id": "s3-p1", "answer": ".." },
+                      { "kind": "text", "value": "/" },
+                      { "kind": "gap", "id": "s3-p2", "answer": "zdjęcie.png" },
+                      { "kind": "text", "value": "\" alt=\"zdjęcie\" />" }
+                    ]
+                  }
+                ]
+              }
+            ]
           },
           "order": 11
         },

@@ -12,6 +12,7 @@ export type ItemGlowState =
 export type ExerciseFeedbackGlowInput =
   | "idle"
   | "success"
+  | "stageSuccess"
   | "error"
   | "warning"
   | "solution";
@@ -47,6 +48,7 @@ export function itemGlowStyleFromExerciseFeedback(
 ): CSSProperties | undefined {
   switch (feedback) {
     case "success":
+    case "stageSuccess":
       return itemGlowStyle("success");
     case "error":
       return itemGlowStyle("error");

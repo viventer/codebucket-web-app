@@ -2,11 +2,18 @@ import type {
   CourseElement,
   FillGapsContent,
   MatchPairsContent,
+  MultiStageFillGapsContent,
 } from "@/schemas/courseSchema";
 
 export type FillGapsExerciseConfig = {
   kind: "fillGaps";
   content: FillGapsContent;
+  hints: string[];
+};
+
+export type MultiStageFillGapsExerciseConfig = {
+  kind: "multiStageFillGaps";
+  content: MultiStageFillGapsContent;
   hints: string[];
 };
 
@@ -28,6 +35,24 @@ export function getFillGapsExerciseConfig(
 
   return {
     kind: "fillGaps",
+    content: element.content,
+    hints: element.content.hints ?? [],
+  };
+}
+
+export function getMultiStageFillGapsExerciseConfig(
+  element: CourseElement,
+): MultiStageFillGapsExerciseConfig | null {
+  if (element.type !== "interactiveExercise") {
+    return null;
+  }
+
+  if (element.content.type !== "multiStageFillGaps") {
+    return null;
+  }
+
+  return {
+    kind: "multiStageFillGaps",
     content: element.content,
     hints: element.content.hints ?? [],
   };

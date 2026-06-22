@@ -103,10 +103,63 @@ export function highlightHtmlInline(
   }
 
   if (text.startsWith("<")) {
-    return `<span style="color:#${colors.cyan}">${escapeHtml(text)}</span>`;
+    return highlightHtmlFragment(text, colors);
+  }
+
+  if (/[<>="]/.test(text)) {
+    return highlightHtmlFragment(text, colors);
   }
 
   return `<span style="color:#${colors.foreground}">${escapeHtml(text)}</span>`;
+}
+
+function highlightHtmlFragment(
+  text: string,
+  colors: SyntaxThemeColorKeys,
+): string {
+  const pattern =
+    /(<\/?[a-zA-Z][\w-]*\s*\/?>)|("[^"]*")|(")|([a-zA-Z][\w-]*)(=)|(\/?>)|([/=])/g;
+
+  let result = "";
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(pattern)) {
+    const matchIndex = match.index ?? 0;
+
+    if (matchIndex > lastIndex) {
+      result += `<span style="color:#${colors.foreground}">${escapeHtml(
+        text.slice(lastIndex, matchIndex),
+      )}</span>`;
+    }
+
+    const [full, tag, string, standaloneQuote, attrName, equals, closing, punct] =
+      match;
+
+    if (tag) {
+      result += `<span style="color:#${colors.cyan}">${escapeHtml(tag)}</span>`;
+    } else if (string || standaloneQuote) {
+      result += `<span style="color:#${colors.salmon}">${escapeHtml(full)}</span>`;
+    } else if (attrName && equals) {
+      result += `<span style="color:#${colors.purple}">${escapeHtml(attrName)}</span>`;
+      result += `<span style="color:#${colors.foreground}">${escapeHtml(equals)}</span>`;
+    } else if (closing) {
+      result += `<span style="color:#${colors.cyan}">${escapeHtml(closing)}</span>`;
+    } else if (punct) {
+      result += `<span style="color:#${colors.foreground}">${escapeHtml(punct)}</span>`;
+    } else {
+      result += escapeHtml(full);
+    }
+
+    lastIndex = matchIndex + full.length;
+  }
+
+  if (lastIndex < text.length) {
+    result += `<span style="color:#${colors.foreground}">${escapeHtml(
+      text.slice(lastIndex),
+    )}</span>`;
+  }
+
+  return result;
 }
 
 export function highlightCodeInline(

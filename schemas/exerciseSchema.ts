@@ -9,6 +9,7 @@ export const codeSnippetSchema = z.object({
 
 export const interactiveExerciseTypeSchema = z.enum([
   "fillGaps",
+  "multiStageFillGaps",
   "matchPairs",
   "fillCode",
   "selectCorrect",
@@ -73,6 +74,39 @@ export const fillGapsContentSchema = z.object({
   previewHtml: z.string().min(1).optional(),
 });
 
+const multiStageFillGapsStageBaseSchema = {
+  language: languageSchema,
+  lines: z.array(fillGapsLineSchema).min(1),
+  options: z.array(z.string().min(1)).min(1),
+  command: z.string().min(1).optional(),
+};
+
+export const multiStageFillGapsStagePresentationSchema =
+  z.discriminatedUnion("kind", [
+    z.object({
+      kind: z.literal("image"),
+      imageSrc: z.string().min(1),
+    }),
+    z.object({
+      kind: z.literal("preview"),
+      previewHtml: z.string().min(1),
+    }),
+    z.object({
+      kind: z.literal("code"),
+    }),
+  ]);
+
+export const multiStageFillGapsStageSchema = z.object({
+  ...multiStageFillGapsStageBaseSchema,
+  presentation: multiStageFillGapsStagePresentationSchema,
+});
+
+export const multiStageFillGapsContentSchema = z.object({
+  ...interactiveExerciseBaseSchema,
+  type: z.literal("multiStageFillGaps"),
+  stages: z.array(multiStageFillGapsStageSchema).min(2),
+});
+
 export const matchPairSchema = z.object({
   left: z.string().min(1),
   right: z.string().min(1),
@@ -102,6 +136,7 @@ export const customInteractiveExerciseContentSchema = z.object({
 
 export const interactiveExerciseContentSchema = z.discriminatedUnion("type", [
   fillGapsContentSchema,
+  multiStageFillGapsContentSchema,
   matchPairsContentSchema,
   fillCodeContentSchema,
   selectCorrectContentSchema,
@@ -123,6 +158,15 @@ export type InteractiveExerciseType = z.infer<
 >;
 export type FillGapsLine = z.infer<typeof fillGapsLineSchema>;
 export type FillGapsContent = z.infer<typeof fillGapsContentSchema>;
+export type MultiStageFillGapsStagePresentation = z.infer<
+  typeof multiStageFillGapsStagePresentationSchema
+>;
+export type MultiStageFillGapsStage = z.infer<
+  typeof multiStageFillGapsStageSchema
+>;
+export type MultiStageFillGapsContent = z.infer<
+  typeof multiStageFillGapsContentSchema
+>;
 export type MatchPairsContent = z.infer<typeof matchPairsContentSchema>;
 export type InteractiveExerciseContent = z.infer<
   typeof interactiveExerciseContentSchema

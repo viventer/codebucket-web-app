@@ -56,14 +56,6 @@ export function elementHideInfoOnMobile(element: CourseElement): boolean {
     return false;
   }
 
-  if (element.content.type === "matchPairs") {
-    return false;
-  }
-
-  if (element.content.type === "fillGaps") {
-    return element.content.previewHtml !== undefined;
-  }
-
   return true;
 }
 

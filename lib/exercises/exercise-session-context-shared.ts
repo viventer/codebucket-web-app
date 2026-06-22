@@ -7,6 +7,7 @@ import type {
   CheckResult,
   ExerciseControllerUnion,
   ExerciseFeedback,
+  StageProgress,
 } from "./types";
 
 export type ExerciseSessionContextValue = {
@@ -17,6 +18,9 @@ export type ExerciseSessionContextValue = {
   canProceed: boolean;
   actionBarMode: ActionBarMode;
   hints: string[];
+  stageProgress: StageProgress | null;
+  canGoBack: boolean;
+  goToPreviousStage: () => void;
   reset: () => void;
   handleCheck: () => CheckResult | null;
   handleProceedAttempt: () => void;
@@ -35,6 +39,9 @@ export const EMPTY_SESSION_VALUE: ExerciseSessionContextValue = {
   canProceed: false,
   actionBarMode: "check-first",
   hints: [],
+  stageProgress: null,
+  canGoBack: false,
+  goToPreviousStage: () => {},
   reset: () => {},
   handleCheck: () => null,
   handleProceedAttempt: () => {},

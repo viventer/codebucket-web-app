@@ -1,24 +1,32 @@
 "use client";
 
-import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
+import { useExerciseSessionOptional } from "@/lib/exercises/ExerciseSessionContext";
 import { itemGlowStyleFromExerciseFeedback } from "@/lib/exercises/item-glow-style";
-import type { FillGapsContent } from "@/schemas/courseSchema";
+import type { FillGapsStageContent } from "@/lib/exercises/fill-gaps-utils";
 import { cn } from "@/lib/utils";
 
 import { Card, CardContent } from "@/components/ui/card";
 
 import { GapSlot } from "./GapSlot";
-import { getClosingTag } from "./getClosingTag";
+import { HighlightedGroupLine } from "./HighlightedGroupLine";
 import { HighlightedCode } from "./HighlightedCode";
+import { getClosingTag } from "@/lib/exercises/fill-gaps-utils";
 
 const INDENT_PX = 24;
 
 type CodePanelProps = {
-  content: FillGapsContent;
+  content:
+    | FillGapsStageContent
+    | {
+        language: FillGapsStageContent["language"];
+        lines: FillGapsStageContent["lines"];
+      };
   assignments: Record<string, string | null>;
   activeGapId: string | null;
   onClearGap: (gapId: string) => void;
   onSelectGap: (gapId: string) => void;
+  showFeedbackGlow?: boolean;
+  isLocked?: boolean;
 };
 
 export function CodePanel({
@@ -27,17 +35,26 @@ export function CodePanel({
   activeGapId,
   onClearGap,
   onSelectGap,
+  showFeedbackGlow = true,
+  isLocked: isLockedProp,
 }: CodePanelProps) {
-  const { feedback, isLocked } = useExerciseSession();
+  const session = useExerciseSessionOptional();
+  const feedback = session?.feedback ?? "idle";
+  const isLocked = isLockedProp ?? session?.isLocked ?? false;
   const disabled = isLocked;
+
+  const glowStyle =
+    showFeedbackGlow && feedback !== "idle"
+      ? itemGlowStyleFromExerciseFeedback(feedback)
+      : undefined;
 
   return (
     <Card
       className={cn(
-        "font-mono text-sm  transition-shadow duration-300",
-        isLocked && "pointer-events-none select-none opacity-80",
+        "font-mono text-sm transition-shadow duration-300 bg-card/30",
+        disabled && "pointer-events-none select-none opacity-80",
       )}
-      style={itemGlowStyleFromExerciseFeedback(feedback)}
+      style={glowStyle}
     >
       <CardContent className="flex flex-col gap-4">
         {content.lines.map((line, index) => {
@@ -73,56 +90,17 @@ export function CodePanel({
               <div
                 key={`group-${index}`}
                 style={style}
-                className="flex flex-wrap items-center gap-y-1 gap-x-2"
+                className="flex flex-wrap items-center"
               >
-                {line.segments.map((segment, segmentIndex) => {
-                  if (segment.kind === "gap") {
-                    return (
-                      <GapSlot
-                        key={segment.id}
-                        value={assignments[segment.id] ?? null}
-                        isActive={!disabled && activeGapId === segment.id}
-                        onSelect={
-                          disabled ? undefined : () => onSelectGap(segment.id)
-                        }
-                        onClear={
-                          disabled ? undefined : () => onClearGap(segment.id)
-                        }
-                      />
-                    );
-                  }
-
-                  if (segment.kind === "text") {
-                    return (
-                      <HighlightedCode
-                        key={`text-${segmentIndex}`}
-                        text={segment.value}
-                        language={content.language}
-                        className="leading-normal flex items-center"
-                      />
-                    );
-                  }
-
-                  const pairedValue = assignments[segment.pairedGapId] ?? null;
-                  const closingTag = pairedValue
-                    ? getClosingTag(pairedValue)
-                    : null;
-
-                  return (
-                    <GapSlot
-                      key={segment.id}
-                      value={closingTag}
-                      isActive={
-                        !disabled && activeGapId === segment.pairedGapId
-                      }
-                      onClear={
-                        disabled || !closingTag
-                          ? undefined
-                          : () => onClearGap(segment.pairedGapId)
-                      }
-                    />
-                  );
-                })}
+                <HighlightedGroupLine
+                  segments={line.segments}
+                  language={content.language}
+                  assignments={assignments}
+                  activeGapId={activeGapId}
+                  disabled={disabled}
+                  onSelectGap={onSelectGap}
+                  onClearGap={onClearGap}
+                />
               </div>
             );
           }

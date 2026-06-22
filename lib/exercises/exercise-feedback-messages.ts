@@ -20,6 +20,11 @@ export const EXERCISE_INLINE_FEEDBACK_MESSAGES: Partial<
     text: "Zadanie wykonane. Możesz przejść do kolejnego rozdziału.",
     colorClass: "text-feedback-success",
   },
+  stageSuccess: {
+    label: "Poprawnie!",
+    text: "Za chwilę przejdziesz do następnego etapu.",
+    colorClass: "text-feedback-success",
+  },
   solution: {
     label: "Skip!",
     text: "Zadanie pominięte. Możesz przejść do kolejnego rozdziału.",
