@@ -502,8 +502,120 @@
           "type": "interactiveExercise",
           "content": {
             "title": "Stwórz listę",
-            "command": "Uzupełnij tagi, aby stworzyć listę jak na obrazku.",
-            "component": ""
+            "description": "Uzupełnij brakujące tagi HTML, aby kod odpowiadał wyglądowi strony z podglądu.",
+            "command": "Wybierz odpowiednie tagi, aby uzupełnić kod strony widocznej obok/poniżej.",
+            "type": "fillGaps",
+            "language": "html",
+            "hints": [
+              "<ul> to unordered list — lista nienumerowana.",
+              "<ol> to ordered list — lista numerowana.",
+              "<li> to list item — element listy."
+            ],
+            "previewHtml": "<h1>Owoce</h1><ul><li>Jabłko</li><li>Banan</li><li>Ananas</li></ul>",
+            "lines": [
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  {
+                    "kind": "gap",
+                    "id": "h1-open",
+                    "answer": "<h1>"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "Owoce"
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "h1-close",
+                    "pairedGapId": "h1-open"
+                  }
+                ]
+              },
+              {
+                "kind": "gap",
+                "id": "ul-open",
+                "indent": 0,
+                "answer": "<ul>"
+              },
+              {
+                "kind": "group",
+                "indent": 1,
+                "segments": [
+                  {
+                    "kind": "gap",
+                    "id": "li1-open",
+                    "answer": "<li>"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "Jabłko"
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "li1-close",
+                    "pairedGapId": "li1-open"
+                  }
+                ]
+              },
+              {
+                "kind": "group",
+                "indent": 1,
+                "segments": [
+                  {
+                    "kind": "gap",
+                    "id": "li2-open",
+                    "answer": "<li>"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "Banan"
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "li2-close",
+                    "pairedGapId": "li2-open"
+                  }
+                ]
+              },
+              {
+                "kind": "group",
+                "indent": 1,
+                "segments": [
+                  {
+                    "kind": "gap",
+                    "id": "li3-open",
+                    "answer": "<li>"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "Ananas"
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "li3-close",
+                    "pairedGapId": "li3-open"
+                  }
+                ]
+              },
+              {
+                "kind": "autoClose",
+                "id": "ul-close",
+                "indent": 0,
+                "pairedGapId": "ul-open"
+              }
+            ],
+            "options": [
+              "<h1>",
+              "<item>",
+              "<ol>",
+              "<ul>",
+              "<li>",
+              "<li>",
+              "<list>",
+              "<li>"
+            ]
           },
           "order": 14
         },

@@ -3,14 +3,13 @@
 import { useExerciseSessionOptional } from "@/lib/exercises/ExerciseSessionContext";
 import { itemGlowStyleFromExerciseFeedback } from "@/lib/exercises/item-glow-style";
 import type { FillGapsStageContent } from "@/lib/exercises/fill-gaps-utils";
+import { getClosingTag } from "@/lib/exercises/fill-gaps-utils";
 import { cn } from "@/lib/utils";
 
 import { Card, CardContent } from "@/components/ui/card";
 
 import { GapSlot } from "./GapSlot";
-import { HighlightedGroupLine } from "./HighlightedGroupLine";
 import { HighlightedCode } from "./HighlightedCode";
-import { getClosingTag } from "@/lib/exercises/fill-gaps-utils";
 
 const INDENT_PX = 24;
 
@@ -90,17 +89,56 @@ export function CodePanel({
               <div
                 key={`group-${index}`}
                 style={style}
-                className="flex flex-wrap items-center"
+                className="flex flex-wrap items-center gap-y-1 gap-x-2"
               >
-                <HighlightedGroupLine
-                  segments={line.segments}
-                  language={content.language}
-                  assignments={assignments}
-                  activeGapId={activeGapId}
-                  disabled={disabled}
-                  onSelectGap={onSelectGap}
-                  onClearGap={onClearGap}
-                />
+                {line.segments.map((segment, segmentIndex) => {
+                  if (segment.kind === "gap") {
+                    return (
+                      <GapSlot
+                        key={segment.id}
+                        value={assignments[segment.id] ?? null}
+                        isActive={!disabled && activeGapId === segment.id}
+                        onSelect={
+                          disabled ? undefined : () => onSelectGap(segment.id)
+                        }
+                        onClear={
+                          disabled ? undefined : () => onClearGap(segment.id)
+                        }
+                      />
+                    );
+                  }
+
+                  if (segment.kind === "text") {
+                    return (
+                      <HighlightedCode
+                        key={`text-${segmentIndex}`}
+                        text={segment.value}
+                        language={content.language}
+                        className="leading-normal flex items-center"
+                      />
+                    );
+                  }
+
+                  const pairedValue = assignments[segment.pairedGapId] ?? null;
+                  const closingTag = pairedValue
+                    ? getClosingTag(pairedValue)
+                    : null;
+
+                  return (
+                    <GapSlot
+                      key={segment.id}
+                      value={closingTag}
+                      isActive={
+                        !disabled && activeGapId === segment.pairedGapId
+                      }
+                      onClear={
+                        disabled || !closingTag
+                          ? undefined
+                          : () => onClearGap(segment.pairedGapId)
+                      }
+                    />
+                  );
+                })}
               </div>
             );
           }
