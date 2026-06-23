@@ -7,30 +7,30 @@ import { useCodeTheme } from "@/lib/monaco/use-code-theme";
 import type { Language } from "@/schemas/courseSchema";
 
 import {
-  buildGroupColorizePlainText,
-  getGroupSegmentRanges,
-  type GroupSegment,
-  type GroupSegmentRange,
-} from "./group-line-utils";
+  buildLineColorizePlainText,
+  getLineSegmentRanges,
+  type CodeLineSegment,
+  type CodeLineSegmentRange,
+} from "./line-segments";
 
-export function useColorizedGroupLine(
-  segments: GroupSegment[],
+export function useColorizedLine(
+  segments: CodeLineSegment[],
   assignments: Record<string, string | null>,
   language: Language,
 ): {
   colorizedHtml: string | null;
-  segmentRanges: GroupSegmentRange[];
+  segmentRanges: CodeLineSegmentRange[];
 } {
   const mode = useCodeTheme();
   const [colorizedHtml, setColorizedHtml] = useState<string | null>(null);
 
   const plainText = useMemo(
-    () => buildGroupColorizePlainText(segments, assignments),
+    () => buildLineColorizePlainText(segments, assignments),
     [assignments, segments],
   );
 
   const segmentRanges = useMemo(
-    () => getGroupSegmentRanges(segments, assignments),
+    () => getLineSegmentRanges(segments, assignments),
     [assignments, segments],
   );
 

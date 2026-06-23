@@ -4,60 +4,56 @@ import { useMemo } from "react";
 
 import { getClosingTag } from "@/lib/exercises/fill-gaps-utils";
 import { sliceColorizedHtml } from "@/lib/monaco/slice-colorized-html";
-import { cn } from "@/lib/utils";
+import type { Language } from "@/schemas/courseSchema";
 
 import { GapSlot } from "../fill-gaps/GapSlot";
 import { GapInputSlot } from "./GapInputSlot";
-import type { GroupSegment } from "./group-line-utils";
-import { useColorizedGroupLine } from "./use-colorized-group-line";
+import type { CodeLineSegment } from "./line-segments";
+import { useColorizedLine } from "./use-colorized-line";
 
-type GroupLineRowProps = {
-  segments: GroupSegment[];
+const gapSpacingClass = "mx-1";
+
+type CodeLineRowProps = {
+  segments: CodeLineSegment[];
   assignments: Record<string, string | null>;
   activeGapId: string | null;
-  language: "html" | "css" | "javascript";
+  language: Language;
   disabled: boolean;
-  gapSpacingClass: string;
   onUpdateGap: (gapId: string, value: string) => void;
   onFocusGap: (gapId: string) => void;
 };
 
-function ColorizedSegment({
+function ColorizedText({
   html,
   fallback,
-  className,
 }: {
   html: string | null;
   fallback: string;
-  className?: string;
 }) {
   if (html) {
     return (
       <span
-        className={cn("inline leading-normal", className)}
+        className="inline leading-normal"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     );
   }
 
   return (
-    <span className={cn("inline text-foreground leading-normal", className)}>
-      {fallback}
-    </span>
+    <span className="inline text-foreground leading-normal">{fallback}</span>
   );
 }
 
-export function GroupLineRow({
+export function CodeLineRow({
   segments,
   assignments,
   activeGapId,
   language,
   disabled,
-  gapSpacingClass,
   onUpdateGap,
   onFocusGap,
-}: GroupLineRowProps) {
-  const { colorizedHtml, segmentRanges } = useColorizedGroupLine(
+}: CodeLineRowProps) {
+  const { colorizedHtml, segmentRanges } = useColorizedLine(
     segments,
     assignments,
     language,
@@ -96,7 +92,7 @@ export function GroupLineRow({
 
         if (segment.kind === "text") {
           return (
-            <ColorizedSegment
+            <ColorizedText
               key={`text-${segmentIndex}`}
               html={slicedHtml}
               fallback={segment.value}
