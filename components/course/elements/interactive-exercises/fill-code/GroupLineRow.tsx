@@ -113,7 +113,7 @@ export function GroupLineRow({
             value={closingTag}
             isActive={!disabled && activeGapId === segment.pairedGapId}
             className={gapSpacingClass}
-            colorizedHtml={slicedHtml}
+            colorizedHtml={closingTag ? slicedHtml : null}
           />
         );
       })}

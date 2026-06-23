@@ -12,17 +12,6 @@ export type GroupSegmentRange = {
   plainEnd: number;
 };
 
-function getPairedGapAnswer(
-  segments: GroupSegment[],
-  pairedGapId: string,
-): string | null {
-  const pairedGap = segments.find(
-    (segment) => segment.kind === "gap" && segment.id === pairedGapId,
-  );
-
-  return pairedGap && pairedGap.kind === "gap" ? pairedGap.answer : null;
-}
-
 export function getGroupSegmentPlainText(
   segment: GroupSegment,
   segments: GroupSegment[],
@@ -37,12 +26,7 @@ export function getGroupSegmentPlainText(
   }
 
   const pairedValue = assignments[segment.pairedGapId] ?? null;
-  if (pairedValue) {
-    return getClosingTag(pairedValue);
-  }
-
-  const pairedAnswer = getPairedGapAnswer(segments, segment.pairedGapId);
-  return pairedAnswer ? getClosingTag(pairedAnswer) : "";
+  return pairedValue ? getClosingTag(pairedValue) : "";
 }
 
 export function buildGroupColorizePlainText(
