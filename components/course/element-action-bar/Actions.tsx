@@ -58,9 +58,5 @@ export function Actions({
   hasMaterials,
   hasHint,
 }: ElementActionsProps) {
-  return (
-    <div className="flex w-fit flex-1 items-center justify-end gap-2 sm:justify-start">
-      {renderActions(type, prevHref, nextHref, hasMaterials, hasHint)}
-    </div>
-  );
+  return renderActions(type, prevHref, nextHref, hasMaterials, hasHint);
 }

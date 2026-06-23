@@ -13,16 +13,17 @@ type AnimatedActionBarContentProps = {
   children: ReactNode;
   contentKey: string;
   direction: "forward" | "back" | "neutral";
+  fullWidth?: boolean;
 };
 
 function AnimatedActionBarContent({
   children,
   contentKey,
   direction,
+  fullWidth = false,
 }: AnimatedActionBarContentProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
-  const enterX =
-    direction === "forward" ? 8 : direction === "back" ? -8 : 0;
+  const enterX = direction === "forward" ? 8 : direction === "back" ? -8 : 0;
 
   return (
     <motion.div
@@ -32,8 +33,11 @@ function AnimatedActionBarContent({
         x: prefersReducedMotion ? 0 : enterX,
       }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: prefersReducedMotion ? 0 : 0.25, ease: "easeOut" }}
-      className="min-w-0"
+      transition={{
+        duration: prefersReducedMotion ? 0 : 0.25,
+        ease: "easeOut",
+      }}
+      className={cn("min-w-0", fullWidth && "w-full sm:w-auto")}
     >
       {children}
     </motion.div>
@@ -45,6 +49,7 @@ type AnimatedActionBarShellProps = {
   actions: ReactNode;
   infoKey: string;
   actionsKey: string;
+  hideInfoOnMobile?: boolean;
 };
 
 export function AnimatedActionBarShell({
@@ -52,6 +57,7 @@ export function AnimatedActionBarShell({
   actions,
   infoKey,
   actionsKey,
+  hideInfoOnMobile = false,
 }: AnimatedActionBarShellProps) {
   const { transitionState } = useCourseNavigation();
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -87,16 +93,23 @@ export function AnimatedActionBarShell({
               }
             : { boxShadow: "0 0 0 0 transparent" }
         }
-        transition={{ duration: prefersReducedMotion ? 0 : 0.8, ease: "easeOut" }}
+        transition={{
+          duration: prefersReducedMotion ? 0 : 0.8,
+          ease: "easeOut",
+        }}
         className={cn(
-          "mx-auto flex w-[90vw] max-w-[1280px] items-center justify-between gap-4 rounded-xl border bg-background/70 px-4! py-3 backdrop-blur",
+          "mx-auto flex w-[90vw] max-w-[1280px] items-center justify-between rounded-xl border bg-background/70 px-4! py-3 backdrop-blur",
           borderPulse && "border-primary/40",
         )}
       >
         <AnimatedActionBarContent contentKey={infoKey} direction={direction}>
           {info}
         </AnimatedActionBarContent>
-        <AnimatedActionBarContent contentKey={actionsKey} direction={direction}>
+        <AnimatedActionBarContent
+          contentKey={actionsKey}
+          direction={direction}
+          fullWidth={hideInfoOnMobile}
+        >
           {actions}
         </AnimatedActionBarContent>
       </motion.div>

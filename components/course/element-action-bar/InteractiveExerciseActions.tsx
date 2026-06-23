@@ -27,5 +27,11 @@ export function InteractiveExerciseActions({
     return <GatedBackNextActions prevHref={prevHref} nextHref={nextHref} />;
   }
 
-  return <ExerciseActions nextHref={nextHref} hasHint={hasHint} />;
+  return (
+    <ExerciseActions
+      prevHref={prevHref}
+      nextHref={nextHref}
+      hasHint={hasHint}
+    />
+  );
 }

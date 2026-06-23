@@ -11,13 +11,13 @@ import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
 
 import { ActionBarButtonLabel } from "./ActionBarButtonLabel";
 
-type MultiStageExerciseSecondaryActionsProps = {
+type ExerciseSecondaryActionsProps = {
   hasHint?: boolean;
 };
 
-export function MultiStageExerciseSecondaryActions({
+export function ExerciseSecondaryActions({
   hasHint,
-}: MultiStageExerciseSecondaryActionsProps) {
+}: ExerciseSecondaryActionsProps) {
   const {
     controller,
     isLocked,

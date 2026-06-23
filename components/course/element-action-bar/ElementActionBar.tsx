@@ -1,5 +1,7 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+
 import { Actions } from "./Actions";
 import {
   AnimatedActionBarShell,
@@ -25,6 +27,7 @@ export function ElementActionBar({
     <AnimatedActionBarShell
       infoKey={infoKey}
       actionsKey={actionsKey}
+      hideInfoOnMobile={hideInfoOnMobile}
       info={
         <ExerciseActionBarInfo
           type={type}
@@ -35,7 +38,12 @@ export function ElementActionBar({
         />
       }
       actions={
-        <div className="flex w-fit flex-1 items-center justify-end gap-2 sm:justify-start">
+        <div
+          className={cn(
+            "flex w-fit flex-1 items-center justify-end gap-2 sm:justify-start",
+            hideInfoOnMobile && "w-full sm:w-fit",
+          )}
+        >
           <Actions
             type={type}
             prevHref={prevHref}

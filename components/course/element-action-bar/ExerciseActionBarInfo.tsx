@@ -57,12 +57,12 @@ export function ExerciseActionBarInfo({
   return (
     <div
       className={cn(
-        "flex min-w-0 items-center gap-2",
+        "flex min-w-0 items-center gap-2 w-full",
         hideOnMobile && "hidden sm:flex",
       )}
     >
       <Icon className="size-5 shrink-0 text-primary" />
-      <div className="min-w-0">
+      <div className="min-w-0 w-full">
         <AnimatePresence mode="wait" initial={false}>
           {showSectionBadge ? (
             <motion.p
