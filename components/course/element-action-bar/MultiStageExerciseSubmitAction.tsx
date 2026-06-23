@@ -10,19 +10,17 @@ import { NavButton } from "./NavButton";
 
 type MultiStageExerciseSubmitActionProps = {
   nextHref: string | null;
-  isNextSectionChange: boolean;
 };
 
 export function MultiStageExerciseSubmitAction({
   nextHref,
-  isNextSectionChange,
 }: MultiStageExerciseSubmitActionProps) {
   const { controller, canProceed, isLocked, handleCheck } = useExerciseSession();
   const hasController = controller !== null;
 
   if (canProceed) {
     return (
-      <NavButton href={nextHref} crossesSection={isNextSectionChange}>
+      <NavButton href={nextHref}>
         <ActionBarButtonLabel label="Przejdź dalej" icon={ChevronRightIcon} />
       </NavButton>
     );

@@ -56,10 +56,10 @@ export function AnimatedActionBarShell({
   const { transitionState } = useCourseNavigation();
   const prefersReducedMotion = usePrefersReducedMotion();
   const [borderPulse, setBorderPulse] = useState(false);
-  const { direction, isSectionBoundary, boundaryKey } = transitionState;
+  const { direction, showSectionOverlay, boundaryKey } = transitionState;
 
   useEffect(() => {
-    if (!isSectionBoundary || boundaryKey.length === 0) {
+    if (!showSectionOverlay || boundaryKey.length === 0) {
       setBorderPulse(false);
       return;
     }
@@ -71,7 +71,7 @@ export function AnimatedActionBarShell({
     }, 800);
 
     return () => window.clearTimeout(timeout);
-  }, [boundaryKey, isSectionBoundary]);
+  }, [boundaryKey, showSectionOverlay]);
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 flex justify-center px-3 pb-4">

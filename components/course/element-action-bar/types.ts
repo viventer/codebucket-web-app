@@ -8,23 +8,19 @@ export type ElementActionBarProps = {
   hideInfoOnMobile?: boolean;
   prevHref: string | null;
   nextHref: string | null;
-  isNextSectionChange: boolean;
   hasMaterials: boolean;
   hasHint?: boolean;
 };
 
-export type NavigationLinkDirection = "forward" | "back" | "neutral";
-
 export type ElementActionsProps = Pick<
   ElementActionBarProps,
-  "type" | "prevHref" | "nextHref" | "isNextSectionChange" | "hasMaterials" | "hasHint"
+  "type" | "prevHref" | "nextHref" | "hasMaterials" | "hasHint"
 >;
 
 export type NavButtonProps = {
   href: string | null;
   children: React.ReactNode;
   variant?: "default" | "ghost" | "outline";
-  crossesSection?: boolean;
 };
 
 export type PlaceholderButtonProps = {

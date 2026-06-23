@@ -12,14 +12,9 @@ import { NavButton } from "./NavButton";
 type BackNextActionsProps = {
   prevHref: string | null;
   nextHref: string | null;
-  isNextSectionChange: boolean;
 };
 
-export function BackNextActions({
-  prevHref,
-  nextHref,
-  isNextSectionChange,
-}: BackNextActionsProps) {
+export function BackNextActions({ prevHref, nextHref }: BackNextActionsProps) {
   const router = useRouter();
   const navigation = useCourseNavigationOptional();
 
@@ -39,7 +34,7 @@ export function BackNextActions({
           <ActionBarButtonLabel label="Cofnij" icon={ChevronLeftIcon} />
         </Button>
       )}
-      <NavButton href={nextHref} crossesSection={isNextSectionChange}>
+      <NavButton href={nextHref}>
         <ActionBarButtonLabel label="Przejdź dalej" icon={ChevronRightIcon} />
       </NavButton>
     </div>

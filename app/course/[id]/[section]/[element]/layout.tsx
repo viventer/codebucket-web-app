@@ -10,7 +10,11 @@ import {
 } from "@/lib/courses";
 import { buildCourseNavigationMetadata } from "@/lib/course/build-navigation-metadata";
 import { mockUser } from "@/lib/mock-user";
-import { getCompletedElementIds, getSectionProgress } from "@/lib/progress";
+import {
+  getCompletedElementIds,
+  getSectionProgress,
+  getSectionsCompleted,
+} from "@/lib/progress";
 import { CourseElementShell } from "@/components/course/CourseElementShell";
 
 type ElementLayoutProps = {
@@ -73,6 +77,7 @@ export default async function ElementLayout({
 
   const user = mockUser;
   const completedIds = getCompletedElementIds(user, course.id);
+  const sectionsCompleted = getSectionsCompleted(user, course.id);
   const progress = getSectionProgress(course, sectionId, user);
 
   const sections = [...course.sections]
@@ -106,6 +111,7 @@ export default async function ElementLayout({
   return (
     <CourseElementShell
       navigationMetadata={navigationMetadata}
+      sectionsCompleted={sectionsCompleted}
       headerProps={{
         courseId: course.id,
         courseTitle: course.title,
@@ -124,7 +130,6 @@ export default async function ElementLayout({
         hideInfoOnMobile: elementHideInfoOnMobile(currentElement),
         prevHref,
         nextHref,
-        isNextSectionChange: navigationMetadata.isNextSectionChange,
         hasMaterials: elementHasMaterials(currentElement),
         hasHint: elementHasHint(currentElement),
       }}

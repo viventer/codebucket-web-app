@@ -13,7 +13,6 @@ import {
   DEFAULT_TRANSITION_STATE,
   type CourseNavigationMetadata,
   type NavigationDirection,
-  type NavigationIntentOptions,
   type NavigationTransitionState,
 } from "./navigation-transition-types";
 
@@ -29,11 +28,10 @@ type PendingSectionSnapshot = {
 
 type CourseNavigationContextValue = {
   metadata: CourseNavigationMetadata;
+  sectionsCompleted: string[];
   transitionState: NavigationTransitionState;
-  setNavigationIntent: (
-    direction: NavigationDirection,
-    options?: NavigationIntentOptions,
-  ) => void;
+  setNavigationIntent: (direction: NavigationDirection) => void;
+  beginSectionTransition: () => void;
 };
 
 const CourseNavigationContext =
@@ -41,13 +39,11 @@ const CourseNavigationContext =
 
 type CourseNavigationProviderProps = {
   metadata: CourseNavigationMetadata;
+  sectionsCompleted: string[];
   children: ReactNode;
 };
 
 let lastKnownPathname: string | null = null;
-let lastKnownSectionId: string | null = null;
-let lastKnownSectionTitle: string | null = null;
-let lastKnownSectionOrder: number | null = null;
 let pendingSectionSnapshot: PendingSectionSnapshot | null = null;
 let activeTransitionState: NavigationTransitionState = DEFAULT_TRANSITION_STATE;
 
@@ -55,26 +51,23 @@ function resolveDirection(
   intent: NavigationDirection,
   previousIndex: number,
   currentIndex: number,
-  isSectionBoundary: boolean,
 ): NavigationDirection {
   if (intent !== "neutral") {
     return intent;
   }
 
-  if (previousIndex >= 0 && currentIndex >= 0) {
-    const indexDelta = currentIndex - previousIndex;
-
-    if (indexDelta === 1) {
-      return "forward";
-    }
-
-    if (indexDelta === -1) {
-      return "back";
-    }
+  if (previousIndex < 0 || currentIndex < 0) {
+    return "neutral";
   }
 
-  if (isSectionBoundary) {
+  const indexDelta = currentIndex - previousIndex;
+
+  if (indexDelta === 1) {
     return "forward";
+  }
+
+  if (indexDelta === -1) {
+    return "back";
   }
 
   return "neutral";
@@ -143,9 +136,6 @@ function buildSectionTransitionState(
 
 function computeTransitionState(
   previousPathname: string,
-  previousSectionId: string | null,
-  previousSectionTitle: string | null,
-  previousSectionOrder: number | null,
   pathname: string,
   metadata: CourseNavigationMetadata,
   intent: NavigationDirection,
@@ -154,31 +144,38 @@ function computeTransitionState(
     (item) => item.path === previousPathname,
   );
 
-  const isSectionBoundary = Boolean(
-    previousSectionId && previousSectionId !== metadata.currentSection.id,
-  );
-
   const direction = resolveDirection(
     intent,
     previousIndex,
     metadata.currentIndex,
-    isSectionBoundary,
   );
 
   return {
     direction,
-    isSectionBoundary,
-    showSectionOverlay: direction === "forward" && isSectionBoundary,
-    completedSectionTitle: previousSectionTitle ?? "",
-    completedSectionOrder: previousSectionOrder ?? 0,
-    sectionOverlayTitle: metadata.currentSection.title,
-    sectionOverlayOrder: metadata.currentSection.order,
+    isSectionBoundary: false,
+    showSectionOverlay: false,
+    completedSectionTitle: "",
+    completedSectionOrder: 0,
+    sectionOverlayTitle: "",
+    sectionOverlayOrder: 0,
     boundaryKey: pathname,
   };
 }
 
+function storeSectionSnapshot(snapshot: PendingSectionSnapshot) {
+  pendingSectionSnapshot = snapshot;
+
+  if (typeof window !== "undefined") {
+    window.sessionStorage.setItem(
+      PENDING_SECTION_SNAPSHOT_KEY,
+      JSON.stringify(snapshot),
+    );
+  }
+}
+
 export function CourseNavigationProvider({
   metadata,
+  sectionsCompleted,
   children,
 }: CourseNavigationProviderProps) {
   const pathname = usePathname();
@@ -197,9 +194,6 @@ export function CourseNavigationProvider({
     } else {
       activeTransitionState = computeTransitionState(
         lastKnownPathname,
-        lastKnownSectionId,
-        lastKnownSectionTitle,
-        lastKnownSectionOrder,
         pathname,
         metadata,
         storedIntent,
@@ -211,44 +205,30 @@ export function CourseNavigationProvider({
   }
 
   lastKnownPathname = pathname;
-  lastKnownSectionId = metadata.currentSection.id;
-  lastKnownSectionTitle = metadata.currentSection.title;
-  lastKnownSectionOrder = metadata.currentSection.order;
 
-  const setNavigationIntent = useCallback(
-    (direction: NavigationDirection, options?: NavigationIntentOptions) => {
-      if (typeof window !== "undefined") {
-        window.sessionStorage.setItem(NAVIGATION_INTENT_STORAGE_KEY, direction);
-      }
+  const setNavigationIntent = useCallback((direction: NavigationDirection) => {
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(NAVIGATION_INTENT_STORAGE_KEY, direction);
+    }
+  }, []);
 
-      if (!options?.crossesSection) {
-        return;
-      }
+  const beginSectionTransition = useCallback(() => {
+    const currentMetadata = metadataRef.current;
 
-      const currentMetadata = metadataRef.current;
-      const snapshot: PendingSectionSnapshot = {
-        completedSectionTitle: currentMetadata.currentSection.title,
-        completedSectionOrder: currentMetadata.currentSection.order,
-        sectionOverlayTitle: currentMetadata.nextSection?.title ?? "",
-        sectionOverlayOrder: currentMetadata.nextSection?.order ?? 0,
-      };
-
-      pendingSectionSnapshot = snapshot;
-
-      if (typeof window !== "undefined") {
-        window.sessionStorage.setItem(
-          PENDING_SECTION_SNAPSHOT_KEY,
-          JSON.stringify(snapshot),
-        );
-      }
-    },
-    [],
-  );
+    storeSectionSnapshot({
+      completedSectionTitle: currentMetadata.currentSection.title,
+      completedSectionOrder: currentMetadata.currentSection.order,
+      sectionOverlayTitle: currentMetadata.nextSection?.title ?? "",
+      sectionOverlayOrder: currentMetadata.nextSection?.order ?? 0,
+    });
+  }, []);
 
   const value: CourseNavigationContextValue = {
     metadata,
+    sectionsCompleted,
     transitionState: activeTransitionState,
     setNavigationIntent,
+    beginSectionTransition,
   };
 
   return (
@@ -278,9 +258,6 @@ export function useCourseNavigationOptional():
 
 export function resetNavigationTransitionStateForTests() {
   lastKnownPathname = null;
-  lastKnownSectionId = null;
-  lastKnownSectionTitle = null;
-  lastKnownSectionOrder = null;
   pendingSectionSnapshot = null;
   activeTransitionState = DEFAULT_TRANSITION_STATE;
 }

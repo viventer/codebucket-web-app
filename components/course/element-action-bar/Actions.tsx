@@ -14,46 +14,28 @@ function renderActions(
   type: CourseElement["type"],
   prevHref: string | null,
   nextHref: string | null,
-  isNextSectionChange: boolean,
   hasMaterials: boolean,
   hasHint?: boolean,
 ) {
   switch (type) {
     case "video":
     case "interactiveDemo":
-      return (
-        <BackNextActions
-          prevHref={prevHref}
-          nextHref={nextHref}
-          isNextSectionChange={isNextSectionChange}
-        />
-      );
+      return <BackNextActions prevHref={prevHref} nextHref={nextHref} />;
     case "guidedProject":
       return (
         <>
-          <BackNextActions
-            prevHref={prevHref}
-            nextHref={nextHref}
-            isNextSectionChange={isNextSectionChange}
-          />
+          <BackNextActions prevHref={prevHref} nextHref={nextHref} />
           {hasMaterials && <DownloadMaterialsButton />}
         </>
       );
     case "individualProject":
-      return (
-        <ProjectActions
-          nextHref={nextHref}
-          isNextSectionChange={isNextSectionChange}
-          hasMaterials={hasMaterials}
-        />
-      );
+      return <ProjectActions nextHref={nextHref} hasMaterials={hasMaterials} />;
     case "codeExercise":
     case "interactiveExercise":
       return (
         <InteractiveExerciseActions
           prevHref={prevHref}
           nextHref={nextHref}
-          isNextSectionChange={isNextSectionChange}
           hasHint={hasHint}
         />
       );
@@ -73,20 +55,12 @@ export function Actions({
   type,
   prevHref,
   nextHref,
-  isNextSectionChange,
   hasMaterials,
   hasHint,
 }: ElementActionsProps) {
   return (
     <div className="flex w-fit flex-1 items-center justify-end gap-2 sm:justify-start">
-      {renderActions(
-        type,
-        prevHref,
-        nextHref,
-        isNextSectionChange,
-        hasMaterials,
-        hasHint,
-      )}
+      {renderActions(type, prevHref, nextHref, hasMaterials, hasHint)}
     </div>
   );
 }

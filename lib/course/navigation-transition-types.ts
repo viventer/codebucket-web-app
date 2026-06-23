@@ -43,7 +43,3 @@ export const DEFAULT_TRANSITION_STATE: NavigationTransitionState = {
   sectionOverlayOrder: 0,
   boundaryKey: "",
 };
-
-export type NavigationIntentOptions = {
-  crossesSection?: boolean;
-};

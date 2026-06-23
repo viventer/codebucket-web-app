@@ -13,13 +13,11 @@ import { NavButton } from "./NavButton";
 type GatedBackNextActionsProps = {
   prevHref: string | null;
   nextHref: string | null;
-  isNextSectionChange: boolean;
 };
 
 export function GatedBackNextActions({
   prevHref,
   nextHref,
-  isNextSectionChange,
 }: GatedBackNextActionsProps) {
   const router = useRouter();
   const navigation = useCourseNavigationOptional();
@@ -42,7 +40,7 @@ export function GatedBackNextActions({
         </Button>
       )}
       {canProceed ? (
-        <NavButton href={nextHref} crossesSection={isNextSectionChange}>
+        <NavButton href={nextHref}>
           <ActionBarButtonLabel label="Przejdź dalej" icon={ChevronRightIcon} />
         </NavButton>
       ) : (

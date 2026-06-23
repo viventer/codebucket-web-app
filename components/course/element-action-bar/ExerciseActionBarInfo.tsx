@@ -37,8 +37,7 @@ export function ExerciseActionBarInfo({
 
   useEffect(() => {
     const shouldShowBadge =
-      transitionState.direction === "forward" &&
-      transitionState.isSectionBoundary &&
+      transitionState.showSectionOverlay &&
       transitionState.boundaryKey.length > 0;
 
     if (!shouldShowBadge) {
@@ -53,11 +52,7 @@ export function ExerciseActionBarInfo({
     }, SECTION_BADGE_VISIBLE_MS);
 
     return () => window.clearTimeout(timeout);
-  }, [
-    transitionState.boundaryKey,
-    transitionState.direction,
-    transitionState.isSectionBoundary,
-  ]);
+  }, [transitionState.boundaryKey, transitionState.showSectionOverlay]);
 
   return (
     <div

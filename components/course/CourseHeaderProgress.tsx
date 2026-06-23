@@ -24,7 +24,10 @@ export function CourseHeaderProgress({
   const [pulseActive, setPulseActive] = useState(false);
 
   useEffect(() => {
-    if (!transitionState.isSectionBoundary || transitionState.boundaryKey.length === 0) {
+    if (
+      !transitionState.showSectionOverlay ||
+      transitionState.boundaryKey.length === 0
+    ) {
       setPulseActive(false);
       return;
     }
@@ -36,10 +39,7 @@ export function CourseHeaderProgress({
     }, 800);
 
     return () => window.clearTimeout(timeout);
-  }, [
-    transitionState.boundaryKey,
-    transitionState.isSectionBoundary,
-  ]);
+  }, [transitionState.boundaryKey, transitionState.showSectionOverlay]);
 
   return (
     <div className="flex items-center gap-2">

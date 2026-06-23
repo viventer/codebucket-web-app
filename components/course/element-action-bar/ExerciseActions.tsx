@@ -16,15 +16,10 @@ import { NavButton } from "./NavButton";
 
 type ExerciseActionsProps = {
   nextHref: string | null;
-  isNextSectionChange: boolean;
   hasHint?: boolean;
 };
 
-export function ExerciseActions({
-  nextHref,
-  isNextSectionChange,
-  hasHint,
-}: ExerciseActionsProps) {
+export function ExerciseActions({ nextHref, hasHint }: ExerciseActionsProps) {
   const {
     controller,
     canProceed,
@@ -55,7 +50,7 @@ export function ExerciseActions({
         <ActionBarButtonLabel label="Reset" icon={RotateCcwIcon} />
       </Button>
       {canProceed ? (
-        <NavButton href={nextHref} crossesSection={isNextSectionChange}>
+        <NavButton href={nextHref}>
           <ActionBarButtonLabel label="Przejdź dalej" icon={ChevronRightIcon} />
         </NavButton>
       ) : (

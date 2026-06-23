@@ -11,17 +11,28 @@ export function NavButton({
   href,
   children,
   variant = "default",
-  crossesSection = false,
 }: NavButtonProps) {
   const router = useRouter();
   const navigation = useCourseNavigationOptional();
 
   const handleNavigate = () => {
-    if (!href) {
+    if (!href || !navigation) {
       return;
     }
 
-    navigation?.setNavigationIntent("forward", { crossesSection });
+    const { metadata, sectionsCompleted, setNavigationIntent, beginSectionTransition } =
+      navigation;
+
+    setNavigationIntent("forward");
+
+    const shouldShowSectionTransition =
+      metadata.isNextSectionChange &&
+      !sectionsCompleted.includes(metadata.currentSection.id);
+
+    if (shouldShowSectionTransition) {
+      beginSectionTransition();
+    }
+
     router.push(href);
   };
 

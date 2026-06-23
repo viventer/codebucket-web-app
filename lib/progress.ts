@@ -15,6 +15,14 @@ export function getCompletedElementIds(
   return new Set(progress?.elementsCompleted ?? []);
 }
 
+export function getSectionsCompleted(
+  user: User,
+  courseId: string,
+): string[] {
+  const progress = user.courseProgress.find((p) => p.courseId === courseId);
+  return progress?.sectionsCompleted ?? [];
+}
+
 export function getSectionProgress(
   course: Course,
   sectionId: string,

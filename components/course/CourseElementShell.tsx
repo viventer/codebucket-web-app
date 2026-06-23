@@ -15,6 +15,7 @@ import {
 
 type CourseElementShellProps = {
   navigationMetadata: CourseNavigationMetadata;
+  sectionsCompleted: string[];
   headerProps: CourseHeaderProps;
   actionBarProps: ElementActionBarProps;
   isExercise: boolean;
@@ -24,6 +25,7 @@ type CourseElementShellProps = {
 
 export function CourseElementShell({
   navigationMetadata,
+  sectionsCompleted,
   headerProps,
   actionBarProps,
   isExercise,
@@ -40,7 +42,10 @@ export function CourseElementShell({
   );
 
   return (
-    <CourseNavigationProvider metadata={navigationMetadata}>
+    <CourseNavigationProvider
+      metadata={navigationMetadata}
+      sectionsCompleted={sectionsCompleted}
+    >
       <div className="flex min-h-screen flex-col bg-background text-foreground">
         <SectionTransitionOverlay />
         <CourseHeader {...headerProps} />
