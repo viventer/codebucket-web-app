@@ -7,8 +7,7 @@ import { ExerciseFeedbackMessage } from "@/components/course/exercises/ExerciseF
 import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
 import type { MultiStageFillGapsContent } from "@/schemas/courseSchema";
 
-import { CodePanel } from "./fill-gaps/CodePanel";
-import { OptionsPool } from "./fill-gaps/OptionsPool";
+import { FillGapsWorkspace } from "./FillGapsWorkspace";
 import {
   StagePresentation,
   StagePreviewPanel,
@@ -19,51 +18,6 @@ import {
 type MultiStageFillGapsExerciseProps = {
   content: MultiStageFillGapsContent;
 };
-
-function FillGapsWorkspace({
-  stage,
-  assignments,
-  activeGapId,
-  availableOptions,
-  selectOption,
-  clearGap,
-  setActiveGapId,
-  showOptionsPool,
-  isLocked,
-}: {
-  stage: MultiStageFillGapsContent["stages"][number];
-  assignments: Record<string, string | null>;
-  activeGapId: string | null;
-  availableOptions: string[];
-  selectOption: (option: string) => void;
-  clearGap: (gapId: string) => void;
-  setActiveGapId: (gapId: string | null) => void;
-  showOptionsPool: boolean;
-  isLocked: boolean;
-}) {
-  return (
-    <div className="flex flex-col gap-4 sm:gap-8">
-      <CodePanel
-        content={stage}
-        assignments={assignments}
-        activeGapId={activeGapId}
-        onClearGap={clearGap}
-        onSelectGap={setActiveGapId}
-        isLocked={isLocked}
-      />
-
-      <ExerciseFeedbackMessage />
-
-      {showOptionsPool && (
-        <OptionsPool
-          options={availableOptions}
-          onSelect={selectOption}
-          disabled={!activeGapId}
-        />
-      )}
-    </div>
-  );
-}
 
 export function MultiStageFillGapsExercise({
   content,
@@ -91,17 +45,24 @@ export function MultiStageFillGapsExercise({
   const hasTopPresentation = stageHasTopPresentation(currentStage.presentation);
   const usesPreviewLayout = stageUsesPreviewLayout(currentStage.presentation);
 
-  const workspaceProps = {
-    stage: currentStage,
-    assignments,
-    activeGapId,
-    availableOptions,
-    selectOption,
-    clearGap,
-    setActiveGapId,
-    showOptionsPool: !canProceed,
-    isLocked,
-  };
+  const workspace = (
+    <div className="flex flex-col gap-4 sm:gap-8">
+      <FillGapsWorkspace
+        language={currentStage.language}
+        lines={currentStage.lines}
+        assignments={assignments}
+        activeGapId={activeGapId}
+        availableOptions={availableOptions}
+        selectOption={selectOption}
+        clearGap={clearGap}
+        setActiveGapId={setActiveGapId}
+        showOptionsPool={!canProceed}
+        isLocked={isLocked}
+      />
+
+      <ExerciseFeedbackMessage />
+    </div>
+  );
 
   return (
     <div className="flex flex-col gap-4 sm:gap-8">
@@ -118,7 +79,7 @@ export function MultiStageFillGapsExercise({
         >
           {usesPreviewLayout ? (
             <div className="grid gap-4 sm:gap-8 lg:grid-cols-2">
-              <FillGapsWorkspace {...workspaceProps} />
+              {workspace}
               <StagePreviewPanel presentation={currentStage.presentation} />
             </div>
           ) : (
@@ -130,7 +91,7 @@ export function MultiStageFillGapsExercise({
                 />
               )}
 
-              <FillGapsWorkspace {...workspaceProps} />
+              {workspace}
             </>
           )}
         </motion.div>

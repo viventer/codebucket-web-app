@@ -5,52 +5,11 @@ import { ExerciseFeedbackMessage } from "@/components/course/exercises/ExerciseF
 import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
 import type { FillGapsContent } from "@/schemas/courseSchema";
 
-import { CodePanel } from "./fill-gaps/CodePanel";
-import { OptionsPool } from "./fill-gaps/OptionsPool";
+import { FillGapsWorkspace } from "./FillGapsWorkspace";
 
 type FillGapsExerciseProps = {
   content: FillGapsContent;
 };
-
-function FillGapsWorkspace({
-  content,
-  assignments,
-  activeGapId,
-  availableOptions,
-  selectOption,
-  clearGap,
-  setActiveGapId,
-  showOptionsPool,
-}: {
-  content: FillGapsContent;
-  assignments: Record<string, string | null>;
-  activeGapId: string | null;
-  availableOptions: string[];
-  selectOption: (option: string) => void;
-  clearGap: (gapId: string) => void;
-  setActiveGapId: (gapId: string | null) => void;
-  showOptionsPool: boolean;
-}) {
-  return (
-    <>
-      <CodePanel
-        content={content}
-        assignments={assignments}
-        activeGapId={activeGapId}
-        onClearGap={clearGap}
-        onSelectGap={setActiveGapId}
-      />
-
-      {showOptionsPool && (
-        <OptionsPool
-          options={availableOptions}
-          onSelect={selectOption}
-          disabled={!activeGapId}
-        />
-      )}
-    </>
-  );
-}
 
 export function FillGapsExercise({ content }: FillGapsExerciseProps) {
   const { controller, canProceed } = useExerciseSession();
@@ -68,16 +27,19 @@ export function FillGapsExercise({ content }: FillGapsExerciseProps) {
     setActiveGapId,
   } = controller;
 
-  const workspaceProps = {
-    content,
-    assignments,
-    activeGapId,
-    availableOptions,
-    selectOption,
-    clearGap,
-    setActiveGapId,
-    showOptionsPool: !canProceed,
-  };
+  const workspace = (
+    <FillGapsWorkspace
+      language={content.language}
+      lines={content.lines}
+      assignments={assignments}
+      activeGapId={activeGapId}
+      availableOptions={availableOptions}
+      selectOption={selectOption}
+      clearGap={clearGap}
+      setActiveGapId={setActiveGapId}
+      showOptionsPool={!canProceed}
+    />
+  );
 
   return (
     <div className="flex flex-col gap-4 sm:gap-8">
@@ -85,13 +47,11 @@ export function FillGapsExercise({ content }: FillGapsExerciseProps) {
 
       {content.previewHtml ? (
         <div className="grid gap-4 sm:gap-8 lg:grid-cols-2">
-          <div className="flex flex-col gap-4 sm:gap-8">
-            <FillGapsWorkspace {...workspaceProps} />
-          </div>
+          <div className="flex flex-col gap-4 sm:gap-8">{workspace}</div>
           <HTMLPreview html={content.previewHtml} className="min-h-64 lg:min-h-80" />
         </div>
       ) : (
-        <FillGapsWorkspace {...workspaceProps} />
+        workspace
       )}
 
       <ExerciseFeedbackMessage />

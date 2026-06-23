@@ -5,7 +5,7 @@ import { ExerciseFeedbackMessage } from "@/components/course/exercises/ExerciseF
 import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
 import type { FillCodeContent } from "@/schemas/courseSchema";
 
-import { FillCodeCodePanel } from "./fill-code/FillCodeCodePanel";
+import { GapLinesPanel } from "./gap-lines/GapLinesPanel";
 
 type FillCodeExerciseProps = {
   content: FillCodeContent;
@@ -21,12 +21,15 @@ export function FillCodeExercise({ content }: FillCodeExerciseProps) {
   const { assignments, activeGapId, updateGap, setActiveGapId } = controller;
 
   const codePanel = (
-    <FillCodeCodePanel
-      content={content}
+    <GapLinesPanel
+      gapMode="input"
+      language={content.language}
+      lines={content.lines}
       assignments={assignments}
       activeGapId={activeGapId}
       onUpdateGap={updateGap}
       onFocusGap={setActiveGapId}
+      className="max-w-[90vw]"
     />
   );
 

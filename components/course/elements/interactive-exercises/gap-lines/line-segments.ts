@@ -79,3 +79,11 @@ export function getLineSegmentRanges(
 
   return ranges;
 }
+
+function getLineKey(line: FillGapsLine, index: number): string {
+  if (line.kind === "code") return `code-${index}`;
+  if (line.kind === "group") return `group-${index}`;
+  return line.id;
+}
+
+export { getLineKey };
