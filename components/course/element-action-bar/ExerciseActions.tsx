@@ -16,10 +16,15 @@ import { NavButton } from "./NavButton";
 
 type ExerciseActionsProps = {
   nextHref: string | null;
+  isNextSectionChange: boolean;
   hasHint?: boolean;
 };
 
-export function ExerciseActions({ nextHref, hasHint }: ExerciseActionsProps) {
+export function ExerciseActions({
+  nextHref,
+  isNextSectionChange,
+  hasHint,
+}: ExerciseActionsProps) {
   const {
     controller,
     canProceed,
@@ -33,7 +38,7 @@ export function ExerciseActions({ nextHref, hasHint }: ExerciseActionsProps) {
   const hasController = controller !== null;
 
   return (
-    <div className="flex gap-2 items-center justify-around sm:justify-end w-full">
+    <div className="flex w-full items-center justify-around gap-2 sm:justify-end">
       {hasHint && (
         <Button variant="ghost" onClick={showHintDialog} disabled={isLocked}>
           <ActionBarButtonLabel label="Wskazówka" icon={LightbulbIcon} />
@@ -50,7 +55,7 @@ export function ExerciseActions({ nextHref, hasHint }: ExerciseActionsProps) {
         <ActionBarButtonLabel label="Reset" icon={RotateCcwIcon} />
       </Button>
       {canProceed ? (
-        <NavButton href={nextHref}>
+        <NavButton href={nextHref} crossesSection={isNextSectionChange}>
           <ActionBarButtonLabel label="Przejdź dalej" icon={ChevronRightIcon} />
         </NavButton>
       ) : (

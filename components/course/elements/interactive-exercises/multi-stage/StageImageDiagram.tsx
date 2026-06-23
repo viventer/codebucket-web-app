@@ -26,7 +26,7 @@ export function StageImageDiagram({
       alt=""
       width={640}
       height={360}
-      className="h-fit max-h-64 w-fit max-w-xl object-contain"
+      className="h-fit max-h-64 w-fit max-w-full  sm:max-w-xl object-contain"
       unoptimized
     />
   );

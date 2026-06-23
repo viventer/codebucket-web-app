@@ -124,6 +124,7 @@ export default async function ElementLayout({
         hideInfoOnMobile: elementHideInfoOnMobile(currentElement),
         prevHref,
         nextHref,
+        isNextSectionChange: navigationMetadata.isNextSectionChange,
         hasMaterials: elementHasMaterials(currentElement),
         hasHint: elementHasHint(currentElement),
       }}

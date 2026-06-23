@@ -7,10 +7,15 @@ import { PlaceholderButton } from "./PlaceholderButton";
 
 type ProjectActionsProps = {
   nextHref: string | null;
+  isNextSectionChange: boolean;
   hasMaterials: boolean;
 };
 
-export function ProjectActions({ nextHref, hasMaterials }: ProjectActionsProps) {
+export function ProjectActions({
+  nextHref,
+  isNextSectionChange,
+  hasMaterials,
+}: ProjectActionsProps) {
   return (
     <>
       {hasMaterials && <DownloadMaterialsButton />}
@@ -20,7 +25,7 @@ export function ProjectActions({ nextHref, hasMaterials }: ProjectActionsProps) 
       <PlaceholderButton variant="ghost">
         <ActionBarButtonLabel label="Rozwiązanie" icon={EyeIcon} />
       </PlaceholderButton>
-      <NavButton href={nextHref}>
+      <NavButton href={nextHref} crossesSection={isNextSectionChange}>
         <ActionBarButtonLabel label="Zrobione" icon={CheckIcon} />
       </NavButton>
     </>

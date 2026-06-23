@@ -59,7 +59,7 @@ export function AnimatedActionBarShell({
   const { direction, isSectionBoundary, boundaryKey } = transitionState;
 
   useEffect(() => {
-    if (prefersReducedMotion || !isSectionBoundary || boundaryKey.length === 0) {
+    if (!isSectionBoundary || boundaryKey.length === 0) {
       setBorderPulse(false);
       return;
     }
@@ -71,13 +71,13 @@ export function AnimatedActionBarShell({
     }, 800);
 
     return () => window.clearTimeout(timeout);
-  }, [boundaryKey, isSectionBoundary, prefersReducedMotion]);
+  }, [boundaryKey, isSectionBoundary]);
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 flex justify-center px-3 pb-4">
       <motion.div
         animate={
-          borderPulse
+          borderPulse && !prefersReducedMotion
             ? {
                 boxShadow: [
                   "0 0 0 0 transparent",
@@ -87,7 +87,7 @@ export function AnimatedActionBarShell({
               }
             : { boxShadow: "0 0 0 0 transparent" }
         }
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.8, ease: "easeOut" }}
         className={cn(
           "mx-auto flex w-[90vw] max-w-[1280px] items-center justify-between gap-4 rounded-xl border bg-background/70 px-4! py-3 backdrop-blur",
           borderPulse && "border-primary/40",

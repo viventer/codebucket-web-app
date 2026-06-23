@@ -7,6 +7,7 @@ import { CourseNavigationProvider } from "@/lib/course/navigation-transition-con
 import { ExerciseSessionProvider } from "@/lib/exercises/ExerciseSessionContext";
 import type { CourseElement } from "@/schemas/courseSchema";
 import { CourseHeader, type CourseHeaderProps } from "@/components/course/CourseHeader";
+import { SectionTransitionOverlay } from "@/components/course/SectionTransitionOverlay";
 import {
   ElementActionBar,
   type ElementActionBarProps,
@@ -41,6 +42,7 @@ export function CourseElementShell({
   return (
     <CourseNavigationProvider metadata={navigationMetadata}>
       <div className="flex min-h-screen flex-col bg-background text-foreground">
+        <SectionTransitionOverlay />
         <CourseHeader {...headerProps} />
         {isExercise ? (
           <ExerciseSessionProvider element={exerciseElement}>

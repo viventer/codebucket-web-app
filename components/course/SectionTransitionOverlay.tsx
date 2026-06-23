@@ -1,64 +1,95 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
+import { PartyPopperIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { useCourseNavigation } from "@/lib/course/navigation-transition-context";
 import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
 
-const OVERLAY_VISIBLE_MS = 800;
+const OVERLAY_VISIBLE_MS = 2500;
 
 export function SectionTransitionOverlay() {
   const { transitionState } = useCourseNavigation();
   const prefersReducedMotion = usePrefersReducedMotion();
-  const [visible, setVisible] = useState(false);
+  const [dismissedBoundaryKey, setDismissedBoundaryKey] = useState<
+    string | null
+  >(null);
+
+  const shouldShow =
+    transitionState.showSectionOverlay &&
+    transitionState.boundaryKey.length > 0 &&
+    dismissedBoundaryKey !== transitionState.boundaryKey;
 
   useEffect(() => {
-    if (!transitionState.showSectionOverlay || prefersReducedMotion) {
-      setVisible(false);
+    if (!shouldShow) {
       return;
     }
 
-    setVisible(true);
-
     const timeout = window.setTimeout(() => {
-      setVisible(false);
+      setDismissedBoundaryKey(transitionState.boundaryKey);
     }, OVERLAY_VISIBLE_MS);
 
     return () => window.clearTimeout(timeout);
-  }, [
-    prefersReducedMotion,
-    transitionState.boundaryKey,
-    transitionState.showSectionOverlay,
-  ]);
+  }, [shouldShow, transitionState.boundaryKey]);
 
-  if (!visible) {
+  if (!shouldShow) {
     return null;
   }
+
+  const backdropTransition = prefersReducedMotion
+    ? { duration: 0 }
+    : { duration: 0.2 };
+  const cardTransition = prefersReducedMotion
+    ? { duration: 0 }
+    : { duration: 0.35, ease: "easeOut" as const };
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={transitionState.boundaryKey}
-        className="pointer-events-none fixed inset-0 z-30 flex items-center justify-center"
-        initial={{ opacity: 0 }}
+        className="pointer-events-none fixed inset-0 z-60 flex items-center justify-center bg-background/60 backdrop-blur-sm"
+        initial={{ opacity: prefersReducedMotion ? 1 : 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.25 }}
+        exit={{ opacity: prefersReducedMotion ? 1 : 0 }}
+        transition={backdropTransition}
       >
         <motion.div
-          className="rounded-2xl border bg-background/95 px-8 py-6 text-center shadow-lg backdrop-blur-sm"
-          initial={{ opacity: 0, y: 16, scale: 0.96 }}
+          className="mx-4 w-full max-w-md rounded-2xl border bg-background px-8 py-7 text-center shadow-xl"
+          initial={{
+            opacity: prefersReducedMotion ? 1 : 0,
+            y: prefersReducedMotion ? 0 : 24,
+            scale: prefersReducedMotion ? 1 : 0.94,
+          }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -8, scale: 0.98 }}
-          transition={{ duration: 0.3 }}
+          exit={{
+            opacity: prefersReducedMotion ? 1 : 0,
+            y: prefersReducedMotion ? 0 : -16,
+            scale: prefersReducedMotion ? 1 : 0.96,
+          }}
+          transition={cardTransition}
         >
-          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            Sekcja {transitionState.sectionOverlayOrder}
+          <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-full bg-feedback-success/15">
+            <PartyPopperIcon className="size-7 text-feedback-success" />
+          </div>
+          <p className="text-xl font-semibold text-foreground">Gratulacje!</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Ukończyłeś sekcję{" "}
+            <span className="font-medium text-foreground">
+              {transitionState.completedSectionTitle}
+            </span>
           </p>
-          <p className="mt-2 text-xl font-semibold text-foreground">
-            {transitionState.sectionOverlayTitle}
-          </p>
+          <div className="mt-6 border-t pt-5">
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Następna sekcja
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Sekcja {transitionState.sectionOverlayOrder}
+            </p>
+            <p className="mt-1 text-xl font-semibold text-foreground">
+              {transitionState.sectionOverlayTitle}
+            </p>
+          </div>
         </motion.div>
       </motion.div>
     </AnimatePresence>

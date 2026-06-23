@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { useCourseNavigationOptional } from "@/lib/course/navigation-transition-context";
@@ -13,29 +13,36 @@ import { NavButton } from "./NavButton";
 type GatedBackNextActionsProps = {
   prevHref: string | null;
   nextHref: string | null;
+  isNextSectionChange: boolean;
 };
 
 export function GatedBackNextActions({
   prevHref,
   nextHref,
+  isNextSectionChange,
 }: GatedBackNextActionsProps) {
+  const router = useRouter();
   const navigation = useCourseNavigationOptional();
   const { canProceed, handleProceedAttempt } = useExerciseSession();
+
+  const handleBack = () => {
+    if (!prevHref) {
+      return;
+    }
+
+    navigation?.setNavigationIntent("back");
+    router.push(prevHref);
+  };
 
   return (
     <div className="flex w-full items-center justify-end gap-2">
       {prevHref && (
-        <Button variant="ghost" asChild>
-          <Link
-            href={prevHref}
-            onClick={() => navigation?.setNavigationIntent("back")}
-          >
-            <ActionBarButtonLabel label="Cofnij" icon={ChevronLeftIcon} />
-          </Link>
+        <Button variant="ghost" onClick={handleBack}>
+          <ActionBarButtonLabel label="Cofnij" icon={ChevronLeftIcon} />
         </Button>
       )}
       {canProceed ? (
-        <NavButton href={nextHref}>
+        <NavButton href={nextHref} crossesSection={isNextSectionChange}>
           <ActionBarButtonLabel label="Przejdź dalej" icon={ChevronRightIcon} />
         </NavButton>
       ) : (

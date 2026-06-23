@@ -16,6 +16,7 @@ export function ElementActionBar({
   hideInfoOnMobile = false,
   prevHref,
   nextHref,
+  isNextSectionChange,
   hasMaterials,
   hasHint,
 }: ElementActionBarProps) {
@@ -40,6 +41,7 @@ export function ElementActionBar({
             type={type}
             prevHref={prevHref}
             nextHref={nextHref}
+            isNextSectionChange={isNextSectionChange}
             hasMaterials={hasMaterials}
             hasHint={hasHint}
           />

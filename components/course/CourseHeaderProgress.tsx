@@ -24,11 +24,7 @@ export function CourseHeaderProgress({
   const [pulseActive, setPulseActive] = useState(false);
 
   useEffect(() => {
-    if (
-      prefersReducedMotion ||
-      !transitionState.isSectionBoundary ||
-      transitionState.boundaryKey.length === 0
-    ) {
+    if (!transitionState.isSectionBoundary || transitionState.boundaryKey.length === 0) {
       setPulseActive(false);
       return;
     }
@@ -41,7 +37,6 @@ export function CourseHeaderProgress({
 
     return () => window.clearTimeout(timeout);
   }, [
-    prefersReducedMotion,
     transitionState.boundaryKey,
     transitionState.isSectionBoundary,
   ]);
@@ -50,7 +45,7 @@ export function CourseHeaderProgress({
     <div className="flex items-center gap-2">
       <motion.div
         animate={
-          pulseActive
+          pulseActive && !prefersReducedMotion
             ? {
                 scale: [1, 1.06, 1],
                 boxShadow: [
@@ -61,7 +56,7 @@ export function CourseHeaderProgress({
               }
             : { scale: 1, boxShadow: "0 0 0 0 transparent" }
         }
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.8, ease: "easeOut" }}
         className={cn("rounded-full p-0.5", pulseActive && "bg-primary/5")}
       >
         <Progress value={value} className="w-24" />

@@ -37,7 +37,6 @@ export function ExerciseActionBarInfo({
 
   useEffect(() => {
     const shouldShowBadge =
-      !prefersReducedMotion &&
       transitionState.direction === "forward" &&
       transitionState.isSectionBoundary &&
       transitionState.boundaryKey.length > 0;
@@ -55,7 +54,6 @@ export function ExerciseActionBarInfo({
 
     return () => window.clearTimeout(timeout);
   }, [
-    prefersReducedMotion,
     transitionState.boundaryKey,
     transitionState.direction,
     transitionState.isSectionBoundary,
@@ -77,7 +75,7 @@ export function ExerciseActionBarInfo({
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
               className="truncate text-sm font-medium text-primary"
             >
               Sekcja {sectionOrder} · {sectionTitle}
@@ -88,7 +86,7 @@ export function ExerciseActionBarInfo({
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
               className="truncate text-sm font-medium text-foreground"
             >
               {title}
