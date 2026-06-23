@@ -85,6 +85,14 @@ export function highlightHtmlInline(
     return `<span style="color:#${colors.cyan}">${escapeHtml(text)}</span>`;
   }
 
+  if (/^[<>/]$/.test(text)) {
+    return `<span style="color:#${colors.cyan}">${escapeHtml(text)}</span>`;
+  }
+
+  if (text.startsWith("</")) {
+    return `<span style="color:#${colors.cyan}">${escapeHtml(text)}</span>`;
+  }
+
   const elementMatch = text.match(
     /^(<[a-zA-Z][\w-]*>)(.*?)(<\/[a-zA-Z][\w-]*>)$/,
   );

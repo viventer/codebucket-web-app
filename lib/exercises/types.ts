@@ -47,6 +47,18 @@ export type FillGapsExerciseController = ExerciseController &
     kind: "fillGaps";
   };
 
+export interface FillCodeControllerState {
+  assignments: Record<string, string | null>;
+  activeGapId: string | null;
+  updateGap: (gapId: string, value: string) => void;
+  setActiveGapId: (gapId: string | null) => void;
+}
+
+export type FillCodeExerciseController = ExerciseController &
+  FillCodeControllerState & {
+    kind: "fillCode";
+  };
+
 export type MatchPairsColumn = "left" | "right";
 
 export type MatchPairsItem = {
@@ -95,6 +107,7 @@ export type MultiStageFillGapsExerciseController = ExerciseController &
 
 export type ExerciseControllerUnion =
   | FillGapsExerciseController
+  | FillCodeExerciseController
   | MultiStageFillGapsExerciseController
   | MatchPairsExerciseController;
 

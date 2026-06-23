@@ -1,5 +1,6 @@
 import type {
   CourseElement,
+  FillCodeContent,
   FillGapsContent,
   MatchPairsContent,
   MultiStageFillGapsContent,
@@ -8,6 +9,12 @@ import type {
 export type FillGapsExerciseConfig = {
   kind: "fillGaps";
   content: FillGapsContent;
+  hints: string[];
+};
+
+export type FillCodeExerciseConfig = {
+  kind: "fillCode";
+  content: FillCodeContent;
   hints: string[];
 };
 
@@ -35,6 +42,24 @@ export function getFillGapsExerciseConfig(
 
   return {
     kind: "fillGaps",
+    content: element.content,
+    hints: element.content.hints ?? [],
+  };
+}
+
+export function getFillCodeExerciseConfig(
+  element: CourseElement,
+): FillCodeExerciseConfig | null {
+  if (element.type !== "interactiveExercise") {
+    return null;
+  }
+
+  if (element.content.type !== "fillCode") {
+    return null;
+  }
+
+  return {
+    kind: "fillCode",
     content: element.content,
     hints: element.content.hints ?? [],
   };

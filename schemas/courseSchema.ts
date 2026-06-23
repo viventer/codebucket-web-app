@@ -28,6 +28,7 @@ export {
 export type {
   CodeExerciseContent,
   CodeSnippet,
+  FillCodeContent,
   FillGapsContent,
   FillGapsLine,
   MultiStageFillGapsContent,

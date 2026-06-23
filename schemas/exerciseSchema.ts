@@ -121,6 +121,9 @@ export const matchPairsContentSchema = z.object({
 export const fillCodeContentSchema = z.object({
   ...interactiveExerciseBaseSchema,
   type: z.literal("fillCode"),
+  language: languageSchema,
+  lines: z.array(fillGapsLineSchema).min(1),
+  previewHtml: z.string().min(1).optional(),
 });
 
 export const selectCorrectContentSchema = z.object({
@@ -168,6 +171,7 @@ export type MultiStageFillGapsContent = z.infer<
   typeof multiStageFillGapsContentSchema
 >;
 export type MatchPairsContent = z.infer<typeof matchPairsContentSchema>;
+export type FillCodeContent = z.infer<typeof fillCodeContentSchema>;
 export type InteractiveExerciseContent = z.infer<
   typeof interactiveExerciseContentSchema
 >;

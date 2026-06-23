@@ -634,9 +634,160 @@
           "id": "reproduce-table",
           "type": "interactiveExercise",
           "content": {
+            "type": "fillCode",
             "title": "Odwzoruj tabelę",
-            "command": "Uzupełnij tagi, aby odwzorować tabelę jak na obrazku.",
-            "component": ""
+            "command": "Wpisz w luki brakujące tagi i atrybuty, aby kod odpowiadał tabeli z podglądu.",
+            "language": "html",
+            "hints": [
+              "<table> otacza całą tabelę.",
+              "<tr> to wiersz tabeli.",
+              "<th> to komórka nagłówkowa.",
+              "Możliwe wartości align to: left, center, right."
+            ],
+            "previewHtml": "<table border=\"1\"><tr><th>Nazwa</th><th>Opis</th><th>Cena</th></tr><tr align=\"center\"><td>Pakiet Gold</td><td>Ten plan to tylko wabik, wybierz droższy.</td><td>690 zł/miesiąc</td></tr><tr align=\"center\"><td>Pakiet Platinium</td><td>Ekskluzywny dostęp!</td><td>990 zł/miesiąc</td></tr></table>",
+            "lines": [
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  { "kind": "text", "value": "<" },
+                  { "kind": "gap", "id": "table", "answer": "table" },
+                  { "kind": "text", "value": " " },
+                  { "kind": "gap", "id": "border", "answer": "border" },
+                  { "kind": "text", "value": "=\"1\">" }
+                ]
+              },
+              {
+                "kind": "group",
+                "indent": 1,
+                "segments": [
+                  { "kind": "text", "value": "<" },
+                  { "kind": "gap", "id": "tr-header", "answer": "tr" },
+                  { "kind": "text", "value": ">" }
+                ]
+              },
+              {
+                "kind": "group",
+                "indent": 2,
+                "segments": [
+                  { "kind": "text", "value": "<" },
+                  { "kind": "gap", "id": "th-1", "answer": "th" },
+                  { "kind": "text", "value": ">" },
+                  { "kind": "text", "value": "Nazwa" },
+                  {
+                    "kind": "autoClose",
+                    "id": "th-1-close",
+                    "pairedGapId": "th-1"
+                  }
+                ]
+              },
+              {
+                "kind": "group",
+                "indent": 2,
+                "segments": [
+                  { "kind": "text", "value": "<" },
+                  { "kind": "gap", "id": "th-2", "answer": "th" },
+                  { "kind": "text", "value": ">" },
+                  { "kind": "text", "value": "Opis" },
+                  {
+                    "kind": "autoClose",
+                    "id": "th-2-close",
+                    "pairedGapId": "th-2"
+                  }
+                ]
+              },
+              {
+                "kind": "group",
+                "indent": 2,
+                "segments": [
+                  { "kind": "text", "value": "<" },
+                  { "kind": "gap", "id": "th-3", "answer": "th" },
+                  { "kind": "text", "value": ">" },
+                  { "kind": "text", "value": "Cena" },
+                  {
+                    "kind": "autoClose",
+                    "id": "th-3-close",
+                    "pairedGapId": "th-3"
+                  }
+                ]
+              },
+              {
+                "kind": "autoClose",
+                "id": "tr-header-close",
+                "indent": 1,
+                "pairedGapId": "tr-header"
+              },
+              {
+                "kind": "group",
+                "indent": 1,
+                "segments": [
+                  { "kind": "text", "value": "<" },
+                  { "kind": "gap", "id": "tr-row-1", "answer": "tr" },
+                  { "kind": "text", "value": " align=\"" },
+                  { "kind": "gap", "id": "align-1", "answer": "center" },
+                  { "kind": "text", "value": "\">" }
+                ]
+              },
+              {
+                "kind": "code",
+                "text": "<td>Pakiet Gold</td>",
+                "indent": 2
+              },
+              {
+                "kind": "code",
+                "text": "<td>Ten plan to tylko wabik, wybierz droższy.</td>",
+                "indent": 2
+              },
+              {
+                "kind": "code",
+                "text": "<td>690 zł/miesiąc</td>",
+                "indent": 2
+              },
+              {
+                "kind": "autoClose",
+                "id": "tr-row-1-close",
+                "indent": 1,
+                "pairedGapId": "tr-row-1"
+              },
+              {
+                "kind": "group",
+                "indent": 1,
+                "segments": [
+                  { "kind": "text", "value": "<" },
+                  { "kind": "gap", "id": "tr-row-2", "answer": "tr" },
+                  { "kind": "text", "value": " align=\"" },
+                  { "kind": "gap", "id": "align-2", "answer": "center" },
+                  { "kind": "text", "value": "\">" }
+                ]
+              },
+              {
+                "kind": "code",
+                "text": "<td>Pakiet Platinium</td>",
+                "indent": 2
+              },
+              {
+                "kind": "code",
+                "text": "<td>Ekskluzywny dostęp!</td>",
+                "indent": 2
+              },
+              {
+                "kind": "code",
+                "text": "<td>990 zł/miesiąc</td>",
+                "indent": 2
+              },
+              {
+                "kind": "autoClose",
+                "id": "tr-row-2-close",
+                "indent": 1,
+                "pairedGapId": "tr-row-2"
+              },
+              {
+                "kind": "autoClose",
+                "id": "table-close",
+                "indent": 0,
+                "pairedGapId": "table"
+              }
+            ]
           },
           "order": 16
         },

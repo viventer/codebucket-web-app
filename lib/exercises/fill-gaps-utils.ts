@@ -2,14 +2,17 @@ import type { FillGapsLine } from "@/schemas/courseSchema";
 
 import type { CheckResult } from "./types";
 
-export type FillGapsStageContent = {
+export type GapLinesContent = {
   language: "html" | "css" | "javascript";
   lines: FillGapsLine[];
+};
+
+export type FillGapsStageContent = GapLinesContent & {
   options: string[];
 };
 
 export function getGapAnswers(
-  content: FillGapsStageContent,
+  content: GapLinesContent,
 ): { id: string; answer: string }[] {
   const gaps: { id: string; answer: string }[] = [];
 
@@ -31,7 +34,7 @@ export function getGapAnswers(
   return gaps;
 }
 
-export function getGapIds(content: FillGapsStageContent): string[] {
+export function getGapIds(content: GapLinesContent): string[] {
   return getGapAnswers(content).map((gap) => gap.id);
 }
 
@@ -53,7 +56,7 @@ export function createInitialAssignments(
 }
 
 export function evaluateFillGapsCheck(
-  content: FillGapsStageContent,
+  content: GapLinesContent,
   assignments: Record<string, string | null>,
 ): CheckResult {
   const gaps = getGapAnswers(content);
@@ -85,7 +88,7 @@ export function getAvailableOptions(
 }
 
 export function applyFillGapsSolution(
-  content: FillGapsStageContent,
+  content: GapLinesContent,
   assignments: Record<string, string | null>,
 ): Record<string, string | null> {
   const solution: Record<string, string | null> = { ...assignments };
@@ -96,9 +99,13 @@ export function applyFillGapsSolution(
 }
 
 export function getClosingTag(openingTag: string): string {
-  const match = openingTag.match(/^<([a-zA-Z][\w-]*)>$/);
-  if (!match) return openingTag;
-  return `</${match[1]}>`;
+  const fullTagMatch = openingTag.match(/^<([a-zA-Z][\w-]*)>$/);
+  if (fullTagMatch) return `</${fullTagMatch[1]}>`;
+
+  const tagNameMatch = openingTag.match(/^([a-zA-Z][\w-]*)$/);
+  if (tagNameMatch) return `</${tagNameMatch[1]}>`;
+
+  return openingTag;
 }
 
 export type StageFeedbackTarget = "presentation" | "codePanel";
