@@ -750,36 +750,9 @@
                 "pairedGapId": "tr-row-1"
               },
               {
-                "kind": "group",
-                "indent": 1,
-                "segments": [
-                  { "kind": "text", "value": "<" },
-                  { "kind": "gap", "id": "tr-row-2", "answer": "tr" },
-                  { "kind": "text", "value": " align=\"" },
-                  { "kind": "gap", "id": "align-2", "answer": "center" },
-                  { "kind": "text", "value": "\">" }
-                ]
-              },
-              {
                 "kind": "code",
-                "text": "<td>Pakiet Platinium</td>",
-                "indent": 2
-              },
-              {
-                "kind": "code",
-                "text": "<td>Ekskluzywny dostęp!</td>",
-                "indent": 2
-              },
-              {
-                "kind": "code",
-                "text": "<td>990 zł/miesiąc</td>",
-                "indent": 2
-              },
-              {
-                "kind": "autoClose",
-                "id": "tr-row-2-close",
-                "indent": 1,
-                "pairedGapId": "tr-row-2"
+                "text": "...",
+                "indent": 1
               },
               {
                 "kind": "autoClose",
