@@ -861,7 +861,7 @@
             "type": "fillGaps",
             "language": "html",
             "hints": [
-              "Atrybut for w tagu label wskazuje id powiązanego pola.",
+              "Atrybut for w tagu label wskazuje na id powiązanego pola.",
               "Wartość atrybutu for musi być taka sama jak wartość atrybutu id w input.",
               "Dzięki połączeniu kliknięcie w etykietę aktywuje pole formularza."
             ],
@@ -943,9 +943,63 @@
           "id": "grouping-radiobuttons",
           "type": "interactiveExercise",
           "content": {
+            "type": "fillCode",
             "title": "Grupowanie radiobutton'ów",
-            "command": "Dodaj name i value, żeby nie dało się wybrać dwóch na raz.",
-            "component": ""
+            "description": "Uzupełnij brakujące atrybuty, aby pogrupować przyciski radio i umożliwić wybór tylko jednej opcji.",
+            "command": "Wpisz w luki brakujące atrybuty, aby kod odpowiadał podglądowi.",
+            "language": "html",
+            "hints": [
+              "type=\"radio\" tworzy przycisk wyboru jednej opcji.",
+              "Atrybut name grupuje przyciski radio — te same name oznacza jedną grupę.",
+              "Atrybut value określa wartość wysyłaną na serwer."
+            ],
+            "previewHtml": "<h2>Wybierz płeć</h2><input type=\"radio\" name=\"plec\" value=\"mezczyzna\" id=\"mezczyzna\"><label for=\"mezczyzna\">Mężczyzna</label><br /><input type=\"radio\" name=\"plec\" value=\"kobieta\" id=\"kobieta\"><label for=\"kobieta\">Kobieta</label>",
+            "lines": [
+              {
+                "kind": "code",
+                "text": "<h2>Wybierz płeć</h2>",
+                "indent": 0
+              },
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  { "kind": "text", "value": "<input type=\"" },
+                  { "kind": "gap", "id": "radio-type-1", "answer": "radio" },
+                  { "kind": "text", "value": "\" " },
+                  { "kind": "gap", "id": "name-attr-1", "answer": "name" },
+                  { "kind": "text", "value": "=\"plec\" " },
+                  { "kind": "gap", "id": "value-attr-1", "answer": "value" },
+                  {
+                    "kind": "text",
+                    "value": "=\"mezczyzna\" id=\"mezczyzna\">"
+                  }
+                ]
+              },
+              {
+                "kind": "code",
+                "text": "<label for=\"mezczyzna\">Mężczyzna</label>",
+                "indent": 0
+              },
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  { "kind": "text", "value": "<input type=\"" },
+                  { "kind": "gap", "id": "radio-type-2", "answer": "radio" },
+                  { "kind": "text", "value": "\" " },
+                  { "kind": "gap", "id": "name-attr-2", "answer": "name" },
+                  { "kind": "text", "value": "=\"plec\" " },
+                  { "kind": "gap", "id": "value-attr-2", "answer": "value" },
+                  { "kind": "text", "value": "=\"kobieta\" id=\"kobieta\">" }
+                ]
+              },
+              {
+                "kind": "code",
+                "text": "<label for=\"kobieta\">Kobieta</label>",
+                "indent": 0
+              }
+            ]
           },
           "order": 7
         },
@@ -964,9 +1018,71 @@
           "id": "create-select-list",
           "type": "interactiveExercise",
           "content": {
+            "type": "fillGaps",
             "title": "Stwórz listę wyboru",
-            "command": "Uzupełnij braki, aby stworzyć listę wyboru jak na obrazku.",
-            "component": ""
+            "description": "Uzupełnij brakujące tagi i atrybuty, aby stworzyć listę rozwijaną z trzema opcjami.",
+            "command": "Wybierz odpowiednie fragmenty, aby uzupełnić kod listy wyboru.",
+            "language": "html",
+            "hints": [
+              "<select> tworzy listę rozwijaną do wyboru jednej opcji.",
+              "<option> definiuje pojedynczą opcję na liście.",
+              "Atrybut value określa wartość wysyłaną na serwer po wybraniu opcji."
+            ],
+            "previewHtml": "<label for=\"material\">Wybierz materiał wiadra</label><br /><select id=\"material\"><option value=\"metal\">metal</option><option value=\"plastik\">plastik</option><option value=\"papier\">papier</option></select>",
+            "lines": [
+              {
+                "kind": "code",
+                "text": "<label for=\"material\">Wybierz materiał wiadra</label>",
+                "indent": 0
+              },
+              {
+                "kind": "code",
+                "text": "<br />",
+                "indent": 0
+              },
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  { "kind": "text", "value": "<" },
+                  { "kind": "gap", "id": "select-open", "answer": "select" },
+                  { "kind": "text", "value": " id=\"material\">" }
+                ]
+              },
+              {
+                "kind": "group",
+                "indent": 1,
+                "segments": [
+                  { "kind": "text", "value": "<" },
+                  { "kind": "gap", "id": "option-1", "answer": "option" },
+                  { "kind": "text", "value": " " },
+                  { "kind": "gap", "id": "value-1", "answer": "value" },
+                  { "kind": "text", "value": "=\"metal\">metal</option>" }
+                ]
+              },
+              {
+                "kind": "code",
+                "text": "...",
+                "indent": 1
+              },
+              {
+                "kind": "autoClose",
+                "id": "select-close",
+                "indent": 0,
+                "pairedGapId": "select-open"
+              }
+            ],
+            "options": [
+              "select",
+              "option",
+              "value",
+              "input",
+              "opt",
+              "name",
+              "id",
+              "item",
+              "options"
+            ]
           },
           "order": 9
         },
