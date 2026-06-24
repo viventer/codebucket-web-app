@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 
+import { useShuffledItems } from "@/lib/shuffle";
 import type { FillGapsContent } from "@/schemas/courseSchema";
 
 import {
@@ -36,10 +37,13 @@ export function useFillGapsExerciseController(
   );
   const [hasAttemptedCheck, setHasAttemptedCheck] = useState(false);
   const [feedback, setFeedbackState] = useState<ExerciseFeedback>("idle");
+  const [shuffleToken, setShuffleToken] = useState(0);
+
+  const optionOrder = useShuffledItems(content.options, shuffleToken);
 
   const availableOptions = useMemo(
-    () => getAvailableOptions(content, assignments),
-    [assignments, content],
+    () => getAvailableOptions({ ...content, options: optionOrder }, assignments),
+    [assignments, content, optionOrder],
   );
 
   const selectOption = useCallback(
@@ -94,6 +98,7 @@ export function useFillGapsExerciseController(
     setActiveGapId(gapIds[0] ?? null);
     setHasAttemptedCheck(false);
     setFeedbackState("idle");
+    setShuffleToken((token) => token + 1);
   }, [gapIds, initialAssignments]);
 
   const getHints = useCallback(() => hints, [hints]);

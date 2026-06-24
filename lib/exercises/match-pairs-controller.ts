@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useState } from "react";
 
 import type { MatchPairItemState } from "@/lib/exercises/item-glow-style";
+import { useShuffledItems } from "@/lib/shuffle";
 import type { MatchPairsContent } from "@/schemas/courseSchema";
 
 import type {
@@ -25,47 +26,6 @@ export type MatchPairSelection = {
   column: MatchPairColumn;
   id: string;
 };
-
-function hashString(value: string): number {
-  let hash = 0;
-  for (let i = 0; i < value.length; i += 1) {
-    hash = (Math.imul(31, hash) + value.charCodeAt(i)) | 0;
-  }
-  return hash >>> 0;
-}
-
-function createSeededRandom(seed: number): () => number {
-  let state = seed || 1;
-  return () => {
-    state = (Math.imul(1664525, state) + 1013904223) >>> 0;
-    return state / 0x1_0000_0000;
-  };
-}
-
-function shuffleItemsSeeded<T>(items: T[], seed: string): T[] {
-  const next = [...items];
-  const random = createSeededRandom(hashString(seed));
-
-  for (let i = next.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(random() * (i + 1));
-    [next[i], next[j]] = [next[j]!, next[i]!];
-  }
-
-  return next;
-}
-
-function shuffleItemsRandom<T>(items: T[]): T[] {
-  const next = [...items];
-  for (let i = next.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [next[i], next[j]] = [next[j]!, next[i]!];
-  }
-  return next;
-}
-
-function getRightColumnShuffleSeed(content: MatchPairsContent): string {
-  return `${content.title}:${content.pairs.map((pair) => pair.right).join("|")}`;
-}
 
 function buildItems(
   content: MatchPairsContent,
@@ -92,21 +52,26 @@ function createInitialItemStates(
 export function useMatchPairsExerciseController(
   content: MatchPairsContent,
 ): MatchPairsExerciseController {
-  const leftItems = useMemo(() => buildItems(content, "left"), [content]);
-  const shuffleSeed = getRightColumnShuffleSeed(content);
-  const initialRightItems = useMemo(
-    () => shuffleItemsSeeded(buildItems(content, "right"), shuffleSeed),
-    [content, shuffleSeed],
+  const leftSourceItems = useMemo(
+    () => buildItems(content, "left"),
+    [content],
+  );
+  const rightSourceItems = useMemo(
+    () => buildItems(content, "right"),
+    [content],
   );
 
-  const [rightItems, setRightItems] = useState(initialRightItems);
+  const [shuffleToken, setShuffleToken] = useState(0);
+  const leftItems = useShuffledItems(leftSourceItems, shuffleToken);
+  const rightItems = useShuffledItems(rightSourceItems, shuffleToken);
+
   const [selected, setSelected] = useState<MatchPairSelection | null>(null);
   const [matchedPairIds, setMatchedPairIds] = useState<Set<string>>(
     () => new Set(),
   );
   const [itemStates, setItemStates] = useState<
     Record<string, MatchPairItemState>
-  >(() => createInitialItemStates(leftItems, initialRightItems));
+  >(() => createInitialItemStates(leftSourceItems, rightSourceItems));
   const [errorFlashIds, setErrorFlashIds] = useState<Set<string>>(
     () => new Set(),
   );
@@ -255,15 +220,14 @@ export function useMatchPairsExerciseController(
   const applySolution = useCallback(() => {}, []);
 
   const reset = useCallback(() => {
-    const shuffledRight = shuffleItemsRandom(buildItems(content, "right"));
-    setRightItems(shuffledRight);
+    setShuffleToken((token) => token + 1);
     setSelected(null);
     setMatchedPairIds(new Set());
     setErrorFlashIds(new Set());
-    setItemStates(createInitialItemStates(leftItems, shuffledRight));
+    setItemStates(createInitialItemStates(leftSourceItems, rightSourceItems));
     setFeedbackState("idle");
     setIsComplete(false);
-  }, [content, leftItems]);
+  }, [leftSourceItems, rightSourceItems]);
 
   const getHints = useCallback(() => [], []);
 

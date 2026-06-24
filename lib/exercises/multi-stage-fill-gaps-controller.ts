@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 
+import { useShuffledItems } from "@/lib/shuffle";
 import type { MultiStageFillGapsContent } from "@/schemas/courseSchema";
 
 import {
@@ -52,9 +53,17 @@ export function useMultiStageFillGapsExerciseController(
   const [stageStates, setStageStates] = useState<StageState[]>(() =>
     createAllStageStates(content),
   );
+  const [shuffleTokens, setShuffleTokens] = useState<number[]>(() =>
+    content.stages.map(() => 0),
+  );
 
   const currentStage = content.stages[currentStageIndex]!;
   const currentState = stageStates[currentStageIndex]!;
+  const currentShuffleToken = shuffleTokens[currentStageIndex] ?? 0;
+  const optionOrder = useShuffledItems(
+    currentStage.options,
+    currentShuffleToken,
+  );
   const totalStages = content.stages.length;
   const isLastStage = currentStageIndex === totalStages - 1;
 
@@ -69,8 +78,12 @@ export function useMultiStageFillGapsExerciseController(
   const feedbackTarget = getStageFeedbackTarget(currentStage.presentation.kind);
 
   const availableOptions = useMemo(
-    () => getAvailableOptions(currentStage, currentState.assignments),
-    [currentStage, currentState.assignments],
+    () =>
+      getAvailableOptions(
+        { ...currentStage, options: optionOrder },
+        currentState.assignments,
+      ),
+    [currentStage, currentState.assignments, optionOrder],
   );
 
   const updateCurrentStageState = useCallback(
@@ -172,6 +185,11 @@ export function useMultiStageFillGapsExerciseController(
     setStageStates((prev) => {
       const next = [...prev];
       next[currentStageIndex] = createStageState(content, currentStageIndex);
+      return next;
+    });
+    setShuffleTokens((prev) => {
+      const next = [...prev];
+      next[currentStageIndex] = (next[currentStageIndex] ?? 0) + 1;
       return next;
     });
   }, [content, currentStageIndex]);
