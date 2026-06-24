@@ -1,6 +1,6 @@
 "use client";
 
-import { HTMLPreview } from "@/components/HTMLPreview";
+import { HTMLPreview } from "@/components/html-preview/HTMLPreview";
 import { ExerciseFeedbackMessage } from "@/components/course/exercises/ExerciseFeedbackMessage";
 import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
 import type { FillGapsContent } from "@/schemas/courseSchema";
@@ -48,7 +48,10 @@ export function FillGapsExercise({ content }: FillGapsExerciseProps) {
       {content.previewHtml ? (
         <div className="grid gap-4 sm:gap-8 lg:grid-cols-2">
           <div className="flex flex-col gap-4 sm:gap-8">{workspace}</div>
-          <HTMLPreview html={content.previewHtml} className="min-h-64 lg:min-h-80" />
+          <HTMLPreview
+            html={content.previewHtml}
+            className="min-h-64 lg:min-h-80"
+          />
         </div>
       ) : (
         workspace

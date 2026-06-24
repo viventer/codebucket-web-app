@@ -1,6 +1,6 @@
 "use client";
 
-import { HTMLPreview } from "@/components/HTMLPreview";
+import { HTMLPreview } from "@/components/html-preview/HTMLPreview";
 import { ExerciseFeedbackMessage } from "@/components/course/exercises/ExerciseFeedbackMessage";
 import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
 import type { FillCodeContent } from "@/schemas/courseSchema";

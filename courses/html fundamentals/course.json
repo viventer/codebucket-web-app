@@ -856,9 +856,54 @@
           "type": "interactiveExercise",
           "content": {
             "title": "Połącz etykietę z polem formularza",
-            "description": "Połącz tagi input i label.",
-            "command": "",
-            "component": ""
+            "description": "Uzupełnij brakujące atrybuty, aby połączyć etykietę z polem formularza.",
+            "command": "Wybierz odpowiednie fragmenty, aby połączyć tag label z tagiem input.",
+            "type": "fillGaps",
+            "language": "html",
+            "hints": [
+              "Atrybut for w tagu label wskazuje id powiązanego pola.",
+              "Wartość atrybutu for musi być taka sama jak wartość atrybutu id w input.",
+              "Dzięki połączeniu kliknięcie w etykietę aktywuje pole formularza."
+            ],
+            "previewHtml": "<label for=\"username\">Nazwa użytkownika: </label><input id=\"username\">",
+            "lines": [
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  { "kind": "text", "value": "<label " },
+                  { "kind": "gap", "id": "label-attr", "answer": "for" },
+                  { "kind": "text", "value": "=\"" },
+                  {
+                    "kind": "gap",
+                    "id": "label-for-value",
+                    "answer": "username"
+                  },
+                  { "kind": "text", "value": "\">" },
+                  { "kind": "text", "value": "Nazwa użytkownika" },
+                  { "kind": "text", "value": "</label>" }
+                ]
+              },
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  { "kind": "text", "value": "<input " },
+                  { "kind": "gap", "id": "input-attr", "answer": "id" },
+                  { "kind": "text", "value": "=\"username\">" }
+                ]
+              }
+            ],
+            "options": [
+              "for",
+              "id",
+              "username",
+              "name",
+              "href",
+              "type",
+              "label",
+              "class"
+            ]
           },
           "order": 3
         },

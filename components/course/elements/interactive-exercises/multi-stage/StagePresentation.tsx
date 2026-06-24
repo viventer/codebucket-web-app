@@ -1,6 +1,6 @@
 "use client";
 
-import { HTMLPreview } from "@/components/HTMLPreview";
+import { HTMLPreview } from "@/components/html-preview/HTMLPreview";
 import type { MultiStageFillGapsStagePresentation } from "@/schemas/courseSchema";
 
 import { StageImageDiagram } from "./StageImageDiagram";
@@ -16,10 +16,7 @@ export function StagePresentation({
 }: StagePresentationProps) {
   if (presentation.kind === "image") {
     return (
-      <StageImageDiagram
-        courseId={courseId}
-        imageSrc={presentation.imageSrc}
-      />
+      <StageImageDiagram courseId={courseId} imageSrc={presentation.imageSrc} />
     );
   }
 
