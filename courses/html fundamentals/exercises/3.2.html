@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: ubuntu, sans-serif;
+        background-color: #191919;
+        color: #f5f5f5;
+      }
+
+      header {
+        padding: 1rem 2rem;
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+
+      .site-top {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      nav {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-around;
+        padding: 0.5rem 0.75rem;
+        background-color: rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      nav a {
+        color: #f5f5f5;
+        text-decoration: none;
+      }
+
+      nav a:hover {
+        text-decoration: underline;
+      }
+
+      main {
+        margin: 4rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 2rem;
+        width: 1280px;
+        max-width: 80%;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 0.5rem;
+      }
+
+      section img {
+        width: 100px;
+      }
+
+      @media (max-width: 500px) {
+        section {
+          flex-direction: column;
+        }
+      }
+
+      footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background-color: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        padding: 1rem 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site-top">
+      <header>
+        <h1>Blog o wiadrach</h1>
+      </header>
+      <nav>
+        <a>Metalowe</a>
+        <a>Plastikowe</a>
+        <a>O blogu</a>
+      </nav>
+    </div>
+    <main>
+      <section>
+        <img
+          src="../media/exercises/semanticTags/metalowe.png"
+          alt="Metalowe wiadro"
+        />
+        <div>
+          <h2>Metalowe wiadra</h2>
+          <p>
+            Metalowe wiadra są wytrzymałe, odporne na uszkodzenia i sprawdzają
+            się przy cięższych pracach ogrodowych oraz w warsztacie.
+          </p>
+        </div>
+      </section>
+      <section>
+        <img
+          src="../media/exercises/semanticTags/plastikowe.png"
+          alt="Plastikowe wiadro"
+        />
+        <div>
+          <h2>Plastikowe wiadra</h2>
+          <p>
+            Plastikowe wiadra są lekkie, tanie i wygodne do codziennego
+            sprzątania oraz prania.
+          </p>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>© 2026 Blog o wiadrach</p>
+    </footer>
+  </body>
+</html>

@@ -52,15 +52,15 @@ export function HTMLPreview({
   return (
     <Card
       ref={containerRef}
-      className={cn("h-full min-h-48 overflow-hidden p-0", className)}
+      className={cn("h-full min-h-96 overflow-hidden p-0", className)}
     >
-      <CardContent className="h-full p-0 py-2">
+      <CardContent className="h-full p-0">
         <iframe
           key={`${html}-${refreshKey}`}
           srcDoc={srcDoc}
           sandbox=""
           title={title}
-          className="block h-full min-h-48 w-full border-0 bg-card"
+          className="block h-full min-h-96 w-full border-0 bg-card"
         />
       </CardContent>
     </Card>

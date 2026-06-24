@@ -25,8 +25,14 @@ type GapLinesPanelBaseProps = {
 
 export type GapLinesPanelProps = GapLinesPanelBaseProps &
   (
-    | Pick<CodeLineRowProps & { gapMode: "input" }, "gapMode" | "onUpdateGap" | "onFocusGap">
-    | Pick<CodeLineRowProps & { gapMode: "select" }, "gapMode" | "onSelectGap" | "onClearGap">
+    | Pick<
+        CodeLineRowProps & { gapMode: "input" },
+        "gapMode" | "onUpdateGap" | "onFocusGap"
+      >
+    | Pick<
+        CodeLineRowProps & { gapMode: "select" },
+        "gapMode" | "onSelectGap" | "onClearGap"
+      >
   );
 
 export function GapLinesPanel({
@@ -52,7 +58,7 @@ export function GapLinesPanel({
   return (
     <Card
       className={cn(
-        "font-mono text-sm transition-shadow duration-300 bg-card/30 overflow-auto",
+        "font-mono text-sm transition-shadow duration-300 bg-card/30 overflow-auto max-w-[90vw]",
         disabled && "pointer-events-none select-none opacity-80",
         className,
       )}

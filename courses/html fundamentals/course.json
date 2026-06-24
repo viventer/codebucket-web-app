@@ -1127,9 +1127,146 @@
           "id": "complete-semantic-tags",
           "type": "interactiveExercise",
           "content": {
+            "type": "fillGaps",
             "title": "Uzupełnij semantyczne tagi",
-            "command": "Uzupełnij braki, aby stworzyć semantyczną strukturę strony jak na obrazku.",
-            "component": ""
+            "command": "Wybierz odpowiednie tagi semantyczne, aby uzupełnić strukturę strony widocznej obok/poniżej.",
+            "language": "html",
+            "hints": [
+              "<header> - nagłówek",
+              "<nav> - nawigacja",
+              "<main> - główna treść",
+              "<section> - sekcja",
+              "<footer> - stopka"
+            ],
+            "previewHtml": "<style>body{padding:0}*{padding:0;margin:0;box-sizing:border-box}.site-top{position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}header{padding:1rem 2rem;background-color:color-mix(in oklch,currentColor 15%,transparent)}nav{display:flex;gap:1rem;justify-content:space-around;padding:.5rem .75rem;background-color:color-mix(in oklch,currentColor 8%,transparent);border-bottom:1px solid color-mix(in oklch,currentColor 30%,transparent)}nav a{color:inherit;text-decoration:none}main{margin:4rem 0;display:flex;flex-direction:column;gap:2rem}section{display:flex;align-items:center;gap:1rem;padding:1rem 2rem;width:1280px;max-width:80%;margin:0 auto;background:color-mix(in oklch,currentColor 5%,transparent);border:1px solid color-mix(in oklch,currentColor 30%,transparent);border-radius:.5rem}section img{width:100px}@media (max-width:500px){section{flex-direction:column}}footer{position:fixed;bottom:0;left:0;right:0;z-index:100;background-color:color-mix(in oklch,currentColor 15%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:1rem 2rem}</style><div class=\"site-top\"><header><h1>Blog o wiadrach</h1></header><nav><a>Metalowe</a><a>Plastikowe</a><a>O blogu</a></nav></div><main><section><img src=\"/api/course-assets/html-fundamentals/exercises/semanticTags/metalowe.png\" alt=\"Metalowe wiadro\" /><div><h2>Metalowe wiadra</h2><p>Metalowe wiadra są wytrzymałe, odporne na uszkodzenia i sprawdzają się przy cięższych pracach ogrodowych oraz w warsztacie.</p></div></section><section><img src=\"/api/course-assets/html-fundamentals/exercises/semanticTags/plastikowe.png\" alt=\"Plastikowe wiadro\" /><div><h2>Plastikowe wiadra</h2><p>Plastikowe wiadra są lekkie, tanie i wygodne do codziennego sprzątania oraz prania.</p></div></section></main><footer><p>© 2026 Blog o wiadrach</p></footer>",
+            "lines": [
+              {
+                "kind": "gap",
+                "id": "header-open",
+                "indent": 0,
+                "answer": "<header>"
+              },
+              {
+                "kind": "code",
+                "text": "<h1>Blog o wiadrach</h1>",
+                "indent": 1
+              },
+              {
+                "kind": "autoClose",
+                "id": "header-close",
+                "indent": 0,
+                "pairedGapId": "header-open"
+              },
+              {
+                "kind": "gap",
+                "id": "nav-open",
+                "indent": 0,
+                "answer": "<nav>"
+              },
+              {
+                "kind": "code",
+                "text": "<a>Metalowe</a>",
+                "indent": 1
+              },
+              {
+                "kind": "code",
+                "text": "<a>Plastikowe</a>",
+                "indent": 1
+              },
+              {
+                "kind": "code",
+                "text": "<a>O blogu</a>",
+                "indent": 1
+              },
+              {
+                "kind": "autoClose",
+                "id": "nav-close",
+                "indent": 0,
+                "pairedGapId": "nav-open"
+              },
+              {
+                "kind": "gap",
+                "id": "main-open",
+                "indent": 0,
+                "answer": "<main>"
+              },
+              {
+                "kind": "gap",
+                "id": "section-open",
+                "indent": 1,
+                "answer": "<section>"
+              },
+              {
+                "kind": "code",
+                "text": "<img src=\"media/metalowe.png\" alt=\"Metalowe wiadro\" />",
+                "indent": 2
+              },
+              {
+                "kind": "code",
+                "text": "<div>",
+                "indent": 2
+              },
+              {
+                "kind": "code",
+                "text": "<h2>Metalowe wiadra</h2>",
+                "indent": 3
+              },
+              {
+                "kind": "code",
+                "text": "<p>Metalowe wiadra są wytrzymałe i...</p>",
+                "indent": 3
+              },
+              {
+                "kind": "code",
+                "text": "</div>",
+                "indent": 2
+              },
+              {
+                "kind": "autoClose",
+                "id": "section-close",
+                "indent": 1,
+                "pairedGapId": "section-open"
+              },
+              {
+                "kind": "code",
+                "text": "...",
+                "indent": 1
+              },
+              {
+                "kind": "autoClose",
+                "id": "main-close",
+                "indent": 0,
+                "pairedGapId": "main-open"
+              },
+              {
+                "kind": "gap",
+                "id": "footer-open",
+                "indent": 0,
+                "answer": "<footer>"
+              },
+              {
+                "kind": "code",
+                "text": "<p>© 2026 Blog o wiadrach</p>",
+                "indent": 1
+              },
+              {
+                "kind": "autoClose",
+                "id": "footer-close",
+                "indent": 0,
+                "pairedGapId": "footer-open"
+              }
+            ],
+            "options": [
+              "<header>",
+              "<nav>",
+              "<main>",
+              "<section>",
+              "<footer>",
+              "<div>",
+              "<aside>",
+              "<head>",
+              "<container>"
+            ]
           },
           "order": 2
         },
