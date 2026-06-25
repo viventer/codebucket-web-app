@@ -108,6 +108,36 @@
                 "correctAnswerId": 1
               },
               {
+                "type": "selectCorrect",
+                "question": "Czym jest znacznik (tag) HTML?",
+                "answers": [
+                  {
+                    "id": 1,
+                    "type": "text",
+                    "content": "Elementem języka HTML, który określa znaczenie lub funkcję fragmentu strony internetowej."
+                  },
+                  {
+                    "id": 2,
+                    "type": "text",
+                    "content": "Instrukcją określającą wygląd elementu na stronie internetowej.",
+                    "explanation": "Reguła CSS definiuje wygląd elementu, nie tag HTML."
+                  },
+                  {
+                    "id": 3,
+                    "type": "text",
+                    "content": "Elementem strony pozwalającym na interakcję z użytkownikiem.",
+                    "explanation": ""
+                  },
+                  {
+                    "id": 4,
+                    "type": "text",
+                    "content": "Mechanizmem odpowiadającym za działanie strony internetowej w przeglądarce.",
+                    "explanation": "Tag HTML definiuje elementy strony, a nie jej działanie."
+                  }
+                ],
+                "correctAnswerId": 1
+              },
+              {
                 "type": "fillGaps",
                 "command": "Ułóż tag akapitu z podaną treścią.",
                 "language": "html",
@@ -146,36 +176,6 @@
                     ]
                   }
                 ]
-              },
-              {
-                "type": "selectCorrect",
-                "question": "Czym jest znacznik (tag) HTML?",
-                "answers": [
-                  {
-                    "id": 1,
-                    "type": "text",
-                    "content": "Elementem języka HTML, który określa znaczenie lub funkcję fragmentu strony internetowej."
-                  },
-                  {
-                    "id": 2,
-                    "type": "text",
-                    "content": "Instrukcją określającą wygląd elementu na stronie internetowej.",
-                    "explanation": "Reguła CSS definiuje wygląd elementu, nie tag HTML."
-                  },
-                  {
-                    "id": 3,
-                    "type": "text",
-                    "content": "Elementem strony pozwalającym na interakcję z użytkownikiem.",
-                    "explanation": ""
-                  },
-                  {
-                    "id": 4,
-                    "type": "text",
-                    "content": "Mechanizmem odpowiadającym za działanie strony internetowej w przeglądarce.",
-                    "explanation": "Tag HTML definiuje elementy strony, a nie jej działanie."
-                  }
-                ],
-                "correctAnswerId": 1
               }
             ]
           }
