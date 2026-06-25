@@ -70,7 +70,7 @@ export function SelectCorrectAnswerButton({
           onClick={disabled ? undefined : onSelect}
           style={glowStyle}
           className={cn(
-            "h-auto min-h-12 w-full rounded-lg border bg-card px-4 py-3 text-sm font-normal whitespace-normal text-left transition-[box-shadow,border-color] duration-300",
+            "h-auto min-h-12 w-full rounded-lg border bg-card px-4 py-3 text-sm font-normal whitespace-normal transition-[box-shadow,border-color] duration-300",
             visualState === "correct" && "border-feedback-success",
             visualState === "incorrect" && "border-feedback-destructive",
             disabled && "pointer-events-none",
