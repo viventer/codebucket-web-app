@@ -1,9 +1,9 @@
 "use client";
 
-import { CheckIcon, ChevronRightIcon } from "lucide-react";
+import { ChevronRightIcon, CheckIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
+import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
 
 import { ActionBarButtonLabel } from "./ActionBarButtonLabel";
 import { NavButton } from "./NavButton";
@@ -15,14 +15,40 @@ type MultiStageExerciseSubmitActionProps = {
 export function MultiStageExerciseSubmitAction({
   nextHref,
 }: MultiStageExerciseSubmitActionProps) {
-  const { controller, canProceed, isLocked, handleCheck } = useExerciseSession();
+  const {
+    controller,
+    canProceed,
+    canProceedStage,
+    isLocked,
+    handleCheck,
+    handleProceedAttempt,
+    currentStageActionBarVariant,
+    advanceCurrentStage,
+  } = useExerciseSession();
   const hasController = controller !== null;
+  const isGatedStage = currentStageActionBarVariant === "gated";
 
   if (canProceed) {
     return (
       <NavButton href={nextHref}>
         <ActionBarButtonLabel label="Przejdź dalej" icon={ChevronRightIcon} />
       </NavButton>
+    );
+  }
+
+  if (canProceedStage) {
+    return (
+      <Button onClick={advanceCurrentStage}>
+        <ActionBarButtonLabel label="Przejdź dalej" icon={ChevronRightIcon} />
+      </Button>
+    );
+  }
+
+  if (isGatedStage) {
+    return (
+      <Button className="opacity-50" onClick={handleProceedAttempt}>
+        <ActionBarButtonLabel label="Przejdź dalej" icon={ChevronRightIcon} />
+      </Button>
     );
   }
 

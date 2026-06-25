@@ -5,35 +5,33 @@ import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react
 import { SuccessCelebration } from "@/components/course/exercises/SuccessCelebration";
 import { toast } from "@/hooks/use-toast";
 
-import type { getMatchPairsExerciseConfig } from "./create-exercise-controller";
+import type { getSelectCorrectExerciseConfig } from "../shared/create-exercise-controller";
 import {
   ExerciseSessionContext,
   type ExerciseSessionContextValue,
-} from "./exercise-session-context-shared";
-import { useMatchPairsExerciseController } from "./match-pairs-controller";
-import { useCelebrationAutoDismiss } from "./use-celebration-auto-dismiss";
+} from "../shared/exercise-session-context-shared";
+import { useSelectCorrectExerciseController } from "./select-correct-controller";
+import { useCelebrationAutoDismiss } from "../shared/use-celebration-auto-dismiss";
 
-type MatchPairsSessionBridgeProps = {
-  config: NonNullable<ReturnType<typeof getMatchPairsExerciseConfig>>;
+type SelectCorrectSessionBridgeProps = {
+  config: NonNullable<ReturnType<typeof getSelectCorrectExerciseConfig>>;
   children: ReactNode;
 };
 
-export function MatchPairsSessionBridge({
+export function SelectCorrectSessionBridge({
   config,
   children,
-}: MatchPairsSessionBridgeProps) {
-  const controller = useMatchPairsExerciseController(config.content);
+}: SelectCorrectSessionBridgeProps) {
+  const controller = useSelectCorrectExerciseController(config.content);
   const [showCelebration, setShowCelebration] = useState(false);
 
-  const { feedback } = controller;
-
   useEffect(() => {
-    if (feedback !== "success") {
+    if (controller.phase !== "correct") {
       return;
     }
 
     setShowCelebration(true);
-  }, [feedback]);
+  }, [controller.phase]);
 
   const dismissCelebration = useCallback(() => {
     setShowCelebration(false);
@@ -45,13 +43,13 @@ export function MatchPairsSessionBridge({
     toast.warning("Wykonaj ćwiczenie, zanim przejdziesz dalej.");
   }, []);
 
-  const isLocked = feedback === "success";
-  const canProceed = isLocked;
+  const isLocked = controller.isComplete;
+  const canProceed = controller.isComplete;
 
   const value = useMemo<ExerciseSessionContextValue>(
     () => ({
       controller,
-      feedback,
+      feedback: controller.feedback,
       showCelebration,
       isLocked,
       canProceed,
@@ -60,20 +58,16 @@ export function MatchPairsSessionBridge({
       stageProgress: null,
       canGoBack: false,
       goToPreviousStage: () => {},
-      reset: () => {},
+      reset: () => controller.reset(),
       handleCheck: () => null,
       handleProceedAttempt,
       tryShowSolution: () => {},
       showHintDialog: () => {},
+      currentStageActionBarVariant: "gated",
+      advanceCurrentStage: () => {},
+      canProceedStage: false,
     }),
-    [
-      controller,
-      feedback,
-      handleProceedAttempt,
-      isLocked,
-      canProceed,
-      showCelebration,
-    ],
+    [controller, handleProceedAttempt, isLocked, canProceed, showCelebration],
   );
 
   return (

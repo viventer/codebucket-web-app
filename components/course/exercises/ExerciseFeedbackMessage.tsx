@@ -2,8 +2,8 @@
 
 import { AnimatePresence, motion } from "motion/react";
 
-import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
-import { EXERCISE_INLINE_FEEDBACK_MESSAGES } from "@/lib/exercises/exercise-feedback-messages";
+import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
+import { EXERCISE_INLINE_FEEDBACK_MESSAGES } from "@/lib/exercises/shared/exercise-feedback-messages";
 import { cn } from "@/lib/utils";
 
 export function ExerciseFeedbackMessage() {

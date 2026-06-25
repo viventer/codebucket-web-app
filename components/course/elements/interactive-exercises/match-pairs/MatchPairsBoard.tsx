@@ -1,6 +1,6 @@
 "use client";
 
-import type { MatchPairsExerciseController } from "@/lib/exercises/types";
+import type { MatchPairsExerciseController } from "@/lib/exercises/shared/types";
 
 import { MatchPairItem } from "./MatchPairItem";
 

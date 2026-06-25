@@ -9,7 +9,7 @@ export const codeSnippetSchema = z.object({
 
 export const interactiveExerciseTypeSchema = z.enum([
   "fillGaps",
-  "multiStageFillGaps",
+  "multiStage",
   "matchPairs",
   "fillCode",
   "selectCorrect",
@@ -74,37 +74,92 @@ export const fillGapsContentSchema = z.object({
   previewHtml: z.string().min(1).optional(),
 });
 
-const multiStageFillGapsStageBaseSchema = {
+export const multiStageStagePresentationSchema = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("image"),
+    imageSrc: z.string().min(1),
+  }),
+  z.object({
+    kind: z.literal("preview"),
+    previewHtml: z.string().min(1),
+  }),
+  z.object({
+    kind: z.literal("code"),
+  }),
+]);
+
+export const selectCorrectAnswerTypeSchema = z.enum(["text", "code", "image"]);
+
+export const selectCorrectAnswerSchema = z.object({
+  id: z
+    .number()
+    .min(1, "Answer id must be between 1 and 4")
+    .max(4, "Answer id must be between 1 and 4"),
+  type: selectCorrectAnswerTypeSchema.default("text"),
+  content: z.string().min(1, "Answer content is required"),
+  explanation: z.string().optional(),
+});
+
+export const selectCorrectPromptSchema = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("image"),
+    imageSrc: z.string().min(1),
+  }),
+  z.object({
+    kind: z.literal("code"),
+    language: languageSchema,
+    code: z.string().min(1),
+  }),
+  z.object({
+    kind: z.literal("preview"),
+    previewHtml: z.string().min(1),
+  }),
+]);
+
+export const selectCorrectFieldsSchema = {
+  question: z.string().min(1, "Question is required"),
+  prompt: selectCorrectPromptSchema.optional(),
+  answers: z
+    .array(selectCorrectAnswerSchema)
+    .min(3, "At least three answers are required")
+    .max(4, "At most four answers are allowed"),
+  correctAnswerId: z
+    .number()
+    .min(1, "Correct answer id must be between 1 and 4")
+    .max(4, "Correct answer id must be between 1 and 4"),
+};
+
+export const selectCorrectContentSchema = z.object({
+  ...interactiveExerciseBaseSchema,
+  type: z.literal("selectCorrect"),
+  ...selectCorrectFieldsSchema,
+});
+
+export const selectCorrectStageSchema = z.object({
+  type: z.literal("selectCorrect"),
+  command: z.string().min(1).optional(),
+  ...selectCorrectFieldsSchema,
+});
+
+export const fillGapsStageSchema = z.object({
+  type: z.literal("fillGaps"),
+  command: z.string().min(1).optional(),
   language: languageSchema,
   lines: z.array(fillGapsLineSchema).min(1),
   options: z.array(z.string().min(1)).min(1),
-  command: z.string().min(1).optional(),
-};
-
-export const multiStageFillGapsStagePresentationSchema =
-  z.discriminatedUnion("kind", [
-    z.object({
-      kind: z.literal("image"),
-      imageSrc: z.string().min(1),
-    }),
-    z.object({
-      kind: z.literal("preview"),
-      previewHtml: z.string().min(1),
-    }),
-    z.object({
-      kind: z.literal("code"),
-    }),
-  ]);
-
-export const multiStageFillGapsStageSchema = z.object({
-  ...multiStageFillGapsStageBaseSchema,
-  presentation: multiStageFillGapsStagePresentationSchema,
+  presentation: multiStageStagePresentationSchema.optional(),
+  typography: z.enum(["default", "large"]).optional(),
 });
 
-export const multiStageFillGapsContentSchema = z.object({
+export const multiStageStageSchema = z.discriminatedUnion("type", [
+  selectCorrectStageSchema,
+  fillGapsStageSchema,
+]);
+
+export const multiStageContentSchema = z.object({
   ...interactiveExerciseBaseSchema,
-  type: z.literal("multiStageFillGaps"),
-  stages: z.array(multiStageFillGapsStageSchema).min(2),
+  type: z.literal("multiStage"),
+  stages: z.array(multiStageStageSchema).min(2),
 });
 
 export const matchPairSchema = z.object({
@@ -126,11 +181,6 @@ export const fillCodeContentSchema = z.object({
   previewHtml: z.string().min(1).optional(),
 });
 
-export const selectCorrectContentSchema = z.object({
-  ...interactiveExerciseBaseSchema,
-  type: z.literal("selectCorrect"),
-});
-
 export const customInteractiveExerciseContentSchema = z.object({
   ...interactiveExerciseBaseSchema,
   type: z.literal("custom"),
@@ -139,7 +189,7 @@ export const customInteractiveExerciseContentSchema = z.object({
 
 export const interactiveExerciseContentSchema = z.discriminatedUnion("type", [
   fillGapsContentSchema,
-  multiStageFillGapsContentSchema,
+  multiStageContentSchema,
   matchPairsContentSchema,
   fillCodeContentSchema,
   selectCorrectContentSchema,
@@ -161,15 +211,19 @@ export type InteractiveExerciseType = z.infer<
 >;
 export type FillGapsLine = z.infer<typeof fillGapsLineSchema>;
 export type FillGapsContent = z.infer<typeof fillGapsContentSchema>;
-export type MultiStageFillGapsStagePresentation = z.infer<
-  typeof multiStageFillGapsStagePresentationSchema
+export type MultiStageStagePresentation = z.infer<
+  typeof multiStageStagePresentationSchema
 >;
-export type MultiStageFillGapsStage = z.infer<
-  typeof multiStageFillGapsStageSchema
+export type SelectCorrectAnswerType = z.infer<
+  typeof selectCorrectAnswerTypeSchema
 >;
-export type MultiStageFillGapsContent = z.infer<
-  typeof multiStageFillGapsContentSchema
->;
+export type SelectCorrectAnswer = z.infer<typeof selectCorrectAnswerSchema>;
+export type SelectCorrectPrompt = z.infer<typeof selectCorrectPromptSchema>;
+export type SelectCorrectContent = z.infer<typeof selectCorrectContentSchema>;
+export type SelectCorrectStage = z.infer<typeof selectCorrectStageSchema>;
+export type FillGapsStage = z.infer<typeof fillGapsStageSchema>;
+export type MultiStageStage = z.infer<typeof multiStageStageSchema>;
+export type MultiStageContent = z.infer<typeof multiStageContentSchema>;
 export type MatchPairsContent = z.infer<typeof matchPairsContentSchema>;
 export type FillCodeContent = z.infer<typeof fillCodeContentSchema>;
 export type InteractiveExerciseContent = z.infer<

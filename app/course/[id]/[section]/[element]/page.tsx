@@ -6,7 +6,6 @@ import { GuidedProjectElement } from "@/components/course/elements/GuidedProject
 import { IndividualProjectElement } from "@/components/course/elements/IndividualProjectElement";
 import { InteractiveDemoElement } from "@/components/course/elements/InteractiveDemoElement";
 import { InteractiveExerciseElement } from "@/components/course/elements/InteractiveExerciseElement";
-import { QuizElement } from "@/components/course/elements/QuizElement";
 import { VideoElement } from "@/components/course/elements/VideoElement";
 
 type CourseElementPageProps = {
@@ -36,8 +35,6 @@ export default async function CourseElementPage({
       return <InteractiveExerciseElement content={element.content} />;
     case "interactiveDemo":
       return <InteractiveDemoElement content={element.content} />;
-    case "quiz":
-      return <QuizElement content={element.content} />;
     case "guidedProject":
       return <GuidedProjectElement content={element.content} />;
     case "individualProject":

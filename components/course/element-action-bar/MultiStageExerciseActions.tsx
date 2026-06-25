@@ -1,6 +1,7 @@
 "use client";
 
-import { MultiStageExerciseBackAction } from "./MultiStageExerciseBackAction";
+import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
+
 import { ExerciseSecondaryActions } from "./ExerciseSecondaryActions";
 import { MultiStageExerciseSubmitAction } from "./MultiStageExerciseSubmitAction";
 
@@ -13,13 +14,13 @@ export function MultiStageExerciseActions({
   nextHref,
   hasHint,
 }: MultiStageExerciseActionsProps) {
+  const { currentStageActionBarVariant } = useExerciseSession();
+  const isGatedStage = currentStageActionBarVariant === "gated";
+
   return (
     <div className="flex w-full items-center justify-around gap-2 sm:w-auto sm:justify-end">
-      <ExerciseSecondaryActions hasHint={hasHint} />
-      <div className="flex items-center gap-1">
-        <MultiStageExerciseBackAction />
-        <MultiStageExerciseSubmitAction nextHref={nextHref} />
-      </div>
+      {!isGatedStage && <ExerciseSecondaryActions hasHint={hasHint} />}
+      <MultiStageExerciseSubmitAction nextHref={nextHref} />
     </div>
   );
 }

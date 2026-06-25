@@ -11,15 +11,20 @@ export function shuffleArray<T>(items: readonly T[]): T[] {
   return next;
 }
 
+function getItemsDependencyKey<T>(items: readonly T[]): string {
+  return JSON.stringify(items);
+}
+
 export function useShuffledItems<T>(
   items: readonly T[],
   shuffleToken: number,
 ): T[] {
+  const itemsKey = getItemsDependencyKey(items);
   const [order, setOrder] = useState<T[]>(() => [...items]);
 
   useEffect(() => {
     setOrder(shuffleArray(items));
-  }, [items, shuffleToken]);
+  }, [itemsKey, shuffleToken]);
 
   return order;
 }

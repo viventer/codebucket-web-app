@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 import type { CourseNavigationMetadata } from "@/lib/course/navigation-transition-types";
 import { CourseNavigationProvider } from "@/lib/course/navigation-transition-context";
-import { ExerciseSessionProvider } from "@/lib/exercises/ExerciseSessionContext";
+import { ExerciseSessionProvider } from "@/lib/exercises/session/ExerciseSessionContext";
 import type { CourseElement } from "@/schemas/courseSchema";
 import {
   CourseHeader,

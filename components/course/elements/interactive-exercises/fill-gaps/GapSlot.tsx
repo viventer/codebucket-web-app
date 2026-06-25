@@ -12,7 +12,7 @@ type GapSlotProps = {
 };
 
 const slotBaseClass =
-  "inline-flex h-fit min-w-9 items-center justify-center rounded-md border border-border bg-card px-3 py-0.5 font-mono text-sm text-foreground transition-colors";
+  "inline-flex h-fit min-w-9 items-center justify-center rounded-md border border-border bg-card px-3 py-0.5 font-mono text-inherit text-foreground transition-colors";
 
 function SlotContent({
   value,
@@ -36,22 +36,23 @@ export function GapSlot({
   className,
   colorizedHtml,
 }: GapSlotProps) {
-  const activeClass = isActive ? "ring-1 ring-accent" : undefined;
+  const slotClass = cn(
+    slotBaseClass,
+    isActive && "ring-1 ring-accent",
+    className,
+  );
 
   if (value) {
     if (onClear) {
       return (
-        <span
-          onClick={onClear}
-          className={cn(slotBaseClass, activeClass, className)}
-        >
+        <span onClick={onClear} className={slotClass}>
           <SlotContent value={value} colorizedHtml={colorizedHtml} />
         </span>
       );
     }
 
     return (
-      <span className={cn(slotBaseClass, activeClass, className)}>
+      <span className={slotClass}>
         <SlotContent value={value} colorizedHtml={colorizedHtml} />
       </span>
     );
@@ -59,21 +60,14 @@ export function GapSlot({
 
   if (onSelect) {
     return (
-      <span
-        onClick={onSelect}
-        className={cn(slotBaseClass, activeClass, className)}
-        aria-label="Pusta luka"
-      >
+      <span onClick={onSelect} className={slotClass} aria-label="Pusta luka">
         <SlotContent value={value} colorizedHtml={colorizedHtml} />
       </span>
     );
   }
 
   return (
-    <span
-      className={cn(slotBaseClass, activeClass, className)}
-      aria-label="Pusta luka zamykająca"
-    >
+    <span className={slotClass} aria-label="Pusta luka zamykająca">
       <SlotContent value={value} colorizedHtml={colorizedHtml} />
     </span>
   );

@@ -4,22 +4,24 @@ import { useContext, type ReactNode } from "react";
 
 import type { CourseElement } from "@/schemas/courseSchema";
 
+import { FillCodeSessionBridge } from "../fill-code/fill-code-session-bridge";
+import { FillGapsSessionBridge } from "../fill-gaps/fill-gaps-session-bridge";
+import { MatchPairsSessionBridge } from "../match-pairs/match-pairs-session-bridge";
+import { MultiStageSessionBridge } from "../multi-stage/multi-stage-session-bridge";
+import { SelectCorrectSessionBridge } from "../select-correct/select-correct-session-bridge";
 import {
   getExerciseHints,
   getFillCodeExerciseConfig,
   getFillGapsExerciseConfig,
   getMatchPairsExerciseConfig,
-  getMultiStageFillGapsExerciseConfig,
-} from "./create-exercise-controller";
+  getMultiStageExerciseConfig,
+  getSelectCorrectExerciseConfig,
+} from "../shared/create-exercise-controller";
 import {
   EMPTY_SESSION_VALUE,
   ExerciseSessionContext,
   type ExerciseSessionContextValue,
-} from "./exercise-session-context-shared";
-import { FillCodeSessionBridge } from "./fill-code-session-bridge";
-import { FillGapsSessionBridge } from "./fill-gaps-session-bridge";
-import { MatchPairsSessionBridge } from "./match-pairs-session-bridge";
-import { MultiStageFillGapsSessionBridge } from "./multi-stage-fill-gaps-session-bridge";
+} from "../shared/exercise-session-context-shared";
 
 export function ExerciseSessionProvider({
   element,
@@ -31,9 +33,9 @@ export function ExerciseSessionProvider({
   const hints = getExerciseHints(element);
   const fillGapsConfig = getFillGapsExerciseConfig(element);
   const fillCodeConfig = getFillCodeExerciseConfig(element);
-  const multiStageFillGapsConfig =
-    getMultiStageFillGapsExerciseConfig(element);
+  const multiStageConfig = getMultiStageExerciseConfig(element);
   const matchPairsConfig = getMatchPairsExerciseConfig(element);
+  const selectCorrectConfig = getSelectCorrectExerciseConfig(element);
 
   if (fillGapsConfig) {
     return (
@@ -51,14 +53,11 @@ export function ExerciseSessionProvider({
     );
   }
 
-  if (multiStageFillGapsConfig) {
+  if (multiStageConfig) {
     return (
-      <MultiStageFillGapsSessionBridge
-        config={multiStageFillGapsConfig}
-        hints={hints}
-      >
+      <MultiStageSessionBridge config={multiStageConfig} hints={hints}>
         {children}
-      </MultiStageFillGapsSessionBridge>
+      </MultiStageSessionBridge>
     );
   }
 
@@ -67,6 +66,14 @@ export function ExerciseSessionProvider({
       <MatchPairsSessionBridge config={matchPairsConfig}>
         {children}
       </MatchPairsSessionBridge>
+    );
+  }
+
+  if (selectCorrectConfig) {
+    return (
+      <SelectCorrectSessionBridge config={selectCorrectConfig}>
+        {children}
+      </SelectCorrectSessionBridge>
     );
   }
 
@@ -97,5 +104,6 @@ export type {
   FillCodeExerciseController,
   FillGapsExerciseController,
   MatchPairsExerciseController,
-  MultiStageFillGapsExerciseController,
-} from "./types";
+  MultiStageExerciseController,
+  SelectCorrectExerciseController,
+} from "../shared/types";

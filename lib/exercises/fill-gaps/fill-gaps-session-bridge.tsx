@@ -13,15 +13,15 @@ import { ExerciseSolutionDialog } from "@/components/course/exercises/ExerciseSo
 import { SuccessCelebration } from "@/components/course/exercises/SuccessCelebration";
 import { toast } from "@/hooks/use-toast";
 
-import type { getFillGapsExerciseConfig } from "./create-exercise-controller";
-import { EXERCISE_ERROR_FEEDBACK } from "./exercise-feedback-messages";
+import type { getFillGapsExerciseConfig } from "../shared/create-exercise-controller";
+import { EXERCISE_ERROR_FEEDBACK } from "../shared/exercise-feedback-messages";
 import {
   ExerciseSessionContext,
   type ExerciseSessionContextValue,
-} from "./exercise-session-context-shared";
+} from "../shared/exercise-session-context-shared";
 import { useFillGapsExerciseController } from "./fill-gaps-controller";
-import type { CheckResult } from "./types";
-import { useCelebrationAutoDismiss } from "./use-celebration-auto-dismiss";
+import type { CheckResult } from "../shared/types";
+import { useCelebrationAutoDismiss } from "../shared/use-celebration-auto-dismiss";
 
 const TRANSIENT_FEEDBACK_MS = 3000;
 
@@ -131,6 +131,9 @@ export function FillGapsSessionBridge({
       handleProceedAttempt,
       tryShowSolution,
       showHintDialog: () => setHintOpen(true),
+      currentStageActionBarVariant: null,
+      advanceCurrentStage: () => {},
+      canProceedStage: false,
     }),
     [
       controller,

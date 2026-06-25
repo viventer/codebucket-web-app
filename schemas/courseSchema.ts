@@ -14,15 +14,20 @@ export {
   fillGapsContentSchema,
   fillGapsGroupSegmentSchema,
   fillGapsLineSchema,
-  multiStageFillGapsContentSchema,
-  multiStageFillGapsStagePresentationSchema,
-  multiStageFillGapsStageSchema,
+  fillGapsStageSchema,
+  multiStageContentSchema,
+  multiStageStagePresentationSchema,
+  multiStageStageSchema,
   interactiveExerciseContentSchema,
   interactiveExerciseTypeSchema,
   languageSchema,
   matchPairSchema,
   matchPairsContentSchema,
+  selectCorrectAnswerSchema,
+  selectCorrectAnswerTypeSchema,
   selectCorrectContentSchema,
+  selectCorrectPromptSchema,
+  selectCorrectStageSchema,
 } from "./exerciseSchema";
 
 export type {
@@ -31,28 +36,26 @@ export type {
   FillCodeContent,
   FillGapsContent,
   FillGapsLine,
-  MultiStageFillGapsContent,
-  MultiStageFillGapsStage,
-  MultiStageFillGapsStagePresentation,
+  FillGapsStage,
+  MultiStageContent,
+  MultiStageStage,
+  MultiStageStagePresentation,
+  SelectCorrectAnswer,
+  SelectCorrectAnswerType,
+  SelectCorrectContent,
+  SelectCorrectPrompt,
+  SelectCorrectStage,
   InteractiveExerciseContent,
   InteractiveExerciseType,
   Language,
   MatchPairsContent,
 } from "./exerciseSchema";
 
-export const questionAnswerTypeSchema = z.enum(["code", "image", "text"]);
-export const questionContentTypeSchema = z.enum([
-  "code",
-  "image",
-  "video",
-  "textOnly",
-]);
 export const courseElementTypeSchema = z.enum([
   "video",
   "codeExercise",
   "interactiveExercise",
   "interactiveDemo",
-  "quiz",
   "guidedProject",
   "individualProject",
 ]);
@@ -69,36 +72,6 @@ export const interactiveDemoContentSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
   component: z.string().min(1, "Component is required"),
-});
-
-export const questionAnswerSchema = z.object({
-  id: z
-    .number()
-    .min(1, "Answer id must be between 1 and 4")
-    .max(4, "Answer id must be between 1 and 4"),
-  type: questionAnswerTypeSchema,
-  content: z.string().or(codeSnippetSchema),
-  explanation: z.string().optional(),
-});
-
-export const questionSchema = z.object({
-  text: z.string().min(1, "Question text is required"),
-  contentType: questionContentTypeSchema,
-  content: z.string().optional(),
-  order: z.number().min(0, "Order must be greater than 0"),
-  correctAnswerId: z
-    .number()
-    .min(1, "Correct answer id must be between 1 and 4")
-    .max(4, "Correct answer id must be between 1 and 4"),
-  answers: z
-    .array(questionAnswerSchema)
-    .length(4, "The question must contain four answers"),
-});
-
-export const quizContentSchema = z.object({
-  questions: z
-    .array(questionSchema)
-    .min(1, "Quiz must contain at least one question"),
 });
 
 export const guidedProjectContentSchema = z.object({
@@ -143,11 +116,6 @@ export const courseElementSchema = z.discriminatedUnion("type", [
     ...elementBase,
     type: z.literal("interactiveDemo"),
     content: interactiveDemoContentSchema,
-  }),
-  z.object({
-    ...elementBase,
-    type: z.literal("quiz"),
-    content: quizContentSchema,
   }),
   z.object({
     ...elementBase,
@@ -209,14 +177,10 @@ export const courseSchema = z.object({
   updatedAt: z.date(),
 });
 
-export type QuestionAnswerType = z.infer<typeof questionAnswerTypeSchema>;
-export type QuestionContentType = z.infer<typeof questionContentTypeSchema>;
 export type VideoContent = z.infer<typeof videoContentSchema>;
 export type InteractiveDemoContent = z.infer<
   typeof interactiveDemoContentSchema
 >;
-export type Question = z.infer<typeof questionSchema>;
-export type QuizContent = z.infer<typeof quizContentSchema>;
 export type GuidedProjectContent = z.infer<typeof guidedProjectContentSchema>;
 export type IndividualProjectContent = z.infer<
   typeof individualProjectContentSchema

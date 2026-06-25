@@ -2,7 +2,7 @@
 
 import { HTMLPreview } from "@/components/html-preview/HTMLPreview";
 import { ExerciseFeedbackMessage } from "@/components/course/exercises/ExerciseFeedbackMessage";
-import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
+import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
 import type { FillCodeContent } from "@/schemas/courseSchema";
 
 import { GapLinesPanel } from "./gap-lines/GapLinesPanel";

@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import type { MatchPairItemState } from "@/lib/exercises/item-glow-style";
+import type { MatchPairItemState } from "../shared/item-glow-style";
 import { useShuffledItems } from "@/lib/shuffle";
 import type { MatchPairsContent } from "@/schemas/courseSchema";
 
@@ -10,7 +10,7 @@ import type {
   CheckResult,
   ExerciseFeedback,
   MatchPairsExerciseController,
-} from "./types";
+} from "../shared/types";
 
 const ERROR_FLASH_MS = 600;
 

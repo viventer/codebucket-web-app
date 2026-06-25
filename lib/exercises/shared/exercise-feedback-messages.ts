@@ -25,6 +25,11 @@ export const EXERCISE_INLINE_FEEDBACK_MESSAGES: Partial<
     text: "Za chwilę przejdziesz do następnego etapu.",
     colorClass: "text-feedback-success",
   },
+  stageSolution: {
+    label: "Skip!",
+    text: "Zadanie pominięte. Za chwilę przejdziesz do następnego etapu.",
+    colorClass: "text-feedback-warning",
+  },
   solution: {
     label: "Skip!",
     text: "Zadanie pominięte. Możesz przejść do kolejnego rozdziału.",

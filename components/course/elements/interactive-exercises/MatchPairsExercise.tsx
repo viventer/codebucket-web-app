@@ -1,7 +1,7 @@
 "use client";
 
 import { ExerciseFeedbackMessage } from "@/components/course/exercises/ExerciseFeedbackMessage";
-import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
+import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
 import type { MatchPairsContent } from "@/schemas/courseSchema";
 
 import { MatchPairsBoard } from "./match-pairs/MatchPairsBoard";

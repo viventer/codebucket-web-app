@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { useCourseNavigationOptional } from "@/lib/course/navigation-transition-context";
-import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
+import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
 
 import { ActionBarButtonLabel } from "./ActionBarButtonLabel";
 import { NavButton } from "./NavButton";

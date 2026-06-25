@@ -1,10 +1,16 @@
 import type { MatchPairItemState } from "./item-glow-style";
 import type {
-  MultiStageFillGapsContent,
-  MultiStageFillGapsStage,
+  MultiStageContent,
+  MultiStageStage,
+  SelectCorrectContent,
 } from "@/schemas/courseSchema";
 
-import type { StageFeedbackTarget } from "./fill-gaps-utils";
+import type {
+  SelectCorrectAnswerVisualState,
+  SelectCorrectPersistedState,
+  SelectCorrectPhase,
+} from "../select-correct/select-correct-state";
+import type { StageFeedbackTarget } from "../fill-gaps/fill-gaps-utils";
 
 export type CheckResult = "success" | "error" | "warning";
 
@@ -12,6 +18,7 @@ export type ExerciseFeedback =
   | "idle"
   | "success"
   | "stageSuccess"
+  | "stageSolution"
   | "error"
   | "warning"
   | "solution";
@@ -20,6 +27,8 @@ export type StageProgress = {
   current: number;
   total: number;
 };
+
+export type StageActionBarVariant = "gated" | "check";
 
 export interface ExerciseController {
   check: () => CheckResult;
@@ -83,32 +92,52 @@ export type MatchPairsExerciseController = ExerciseController &
     kind: "matchPairs";
   };
 
-export interface MultiStageFillGapsControllerState {
-  content: MultiStageFillGapsContent;
+export interface SelectCorrectControllerState {
+  content: SelectCorrectContent;
+  shuffledAnswers: { id: number; content: string }[];
+  selectedAnswerId: number | null;
+  phase: SelectCorrectPhase;
+  isLocked: boolean;
+  isComplete: boolean;
+  selectAnswer: (answerId: number) => void;
+  getAnswerVisualState: (answerId: number) => SelectCorrectAnswerVisualState;
+  getWrongExplanation: () => string | null;
+}
+
+export type SelectCorrectExerciseController = ExerciseController &
+  SelectCorrectControllerState & {
+    kind: "selectCorrect";
+  };
+
+export interface MultiStageControllerState {
+  content: MultiStageContent;
   currentStageIndex: number;
-  currentStage: MultiStageFillGapsStage;
+  currentStage: MultiStageStage;
   stageProgress: StageProgress;
   feedbackTarget: StageFeedbackTarget;
   isLastStage: boolean;
-  assignments: Record<string, string | null>;
-  activeGapId: string | null;
-  availableOptions: string[];
-  selectOption: (option: string) => void;
-  clearGap: (gapId: string) => void;
-  setActiveGapId: (gapId: string | null) => void;
+  currentStageActionBarVariant: StageActionBarVariant;
+  isCurrentStageComplete: boolean;
+  selectCorrectPersisted: SelectCorrectPersistedState | null;
+  shuffledSelectCorrectAnswers: { id: number; content: string }[];
+  selectAnswer: (answerId: number) => void;
+  getAnswerVisualState: (answerId: number) => SelectCorrectAnswerVisualState;
+  getWrongExplanation: () => string | null;
   advanceStage: () => void;
   goToPreviousStage: () => void;
 }
 
-export type MultiStageFillGapsExerciseController = ExerciseController &
-  MultiStageFillGapsControllerState & {
-    kind: "multiStageFillGaps";
+export type MultiStageExerciseController = ExerciseController &
+  FillGapsControllerState &
+  MultiStageControllerState & {
+    kind: "multiStage";
   };
 
 export type ExerciseControllerUnion =
   | FillGapsExerciseController
   | FillCodeExerciseController
-  | MultiStageFillGapsExerciseController
-  | MatchPairsExerciseController;
+  | MultiStageExerciseController
+  | MatchPairsExerciseController
+  | SelectCorrectExerciseController;
 
 export type ActionBarMode = "check-first" | "back-next-gated" | "multi-stage";

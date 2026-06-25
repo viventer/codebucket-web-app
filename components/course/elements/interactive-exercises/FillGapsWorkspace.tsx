@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import type { FillGapsLine, Language } from "@/schemas/courseSchema";
 
 import { GapLinesPanel } from "./gap-lines/GapLinesPanel";
@@ -16,6 +17,7 @@ type FillGapsWorkspaceProps = {
   setActiveGapId: (gapId: string | null) => void;
   showOptionsPool: boolean;
   isLocked?: boolean;
+  typography?: "default" | "large";
 };
 
 export function FillGapsWorkspace({
@@ -29,7 +31,10 @@ export function FillGapsWorkspace({
   setActiveGapId,
   showOptionsPool,
   isLocked,
+  typography = "default",
 }: FillGapsWorkspaceProps) {
+  const isLarge = typography === "large";
+
   return (
     <>
       <GapLinesPanel
@@ -41,14 +46,21 @@ export function FillGapsWorkspace({
         onSelectGap={setActiveGapId}
         onClearGap={clearGap}
         isLocked={isLocked}
+        typography={typography}
       />
 
       {showOptionsPool && (
-        <OptionsPool
-          options={availableOptions}
-          onSelect={selectOption}
-          disabled={!activeGapId}
-        />
+        <div
+          className={cn(
+            isLarge && "font-mono text-xl sm:text-2xl [&_button]:h-auto [&_button]:px-4 [&_button]:py-2",
+          )}
+        >
+          <OptionsPool
+            options={availableOptions}
+            onSelect={selectOption}
+            disabled={!activeGapId}
+          />
+        </div>
       )}
     </>
   );

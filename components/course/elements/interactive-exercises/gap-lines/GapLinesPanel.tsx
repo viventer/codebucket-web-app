@@ -1,8 +1,8 @@
 "use client";
 
-import { useExerciseSessionOptional } from "@/lib/exercises/ExerciseSessionContext";
-import { itemGlowStyleFromExerciseFeedback } from "@/lib/exercises/item-glow-style";
-import type { GapLinesContent } from "@/lib/exercises/fill-gaps-utils";
+import { useExerciseSessionOptional } from "@/lib/exercises/session/ExerciseSessionContext";
+import { itemGlowStyleFromExerciseFeedback } from "@/lib/exercises/shared/item-glow-style";
+import type { GapLinesContent } from "@/lib/exercises/fill-gaps/fill-gaps-utils";
 import { cn } from "@/lib/utils";
 import type { FillGapsLine, Language } from "@/schemas/courseSchema";
 
@@ -20,6 +20,7 @@ type GapLinesPanelBaseProps = {
   activeGapId: string | null;
   showFeedbackGlow?: boolean;
   isLocked?: boolean;
+  typography?: "default" | "large";
   className?: string;
 };
 
@@ -42,6 +43,7 @@ export function GapLinesPanel({
   activeGapId,
   showFeedbackGlow = true,
   isLocked: isLockedProp,
+  typography = "default",
   className,
   ...gapProps
 }: GapLinesPanelProps) {
@@ -58,7 +60,8 @@ export function GapLinesPanel({
   return (
     <Card
       className={cn(
-        "font-mono text-sm transition-shadow duration-300 bg-card/30 overflow-auto max-w-[90vw]",
+        "font-mono transition-shadow duration-300 bg-card/30 overflow-auto max-w-[90vw]",
+        typography === "large" ? "text-xl sm:text-2xl" : "text-sm",
         disabled && "pointer-events-none select-none opacity-80",
         className,
       )}

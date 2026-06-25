@@ -9,12 +9,12 @@ import {
   createInitialAssignments,
   evaluateFillGapsCheck,
   getGapIds,
-} from "./fill-gaps-utils";
+} from "../fill-gaps/fill-gaps-utils";
 import type {
   CheckResult,
   ExerciseFeedback,
   FillCodeExerciseController,
-} from "./types";
+} from "../shared/types";
 
 export function useFillCodeExerciseController(
   content: FillCodeContent,

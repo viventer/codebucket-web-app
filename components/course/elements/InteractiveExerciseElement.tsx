@@ -6,7 +6,8 @@ import { ExerciseTypePlaceholder } from "./interactive-exercises/ExerciseTypePla
 import { FillCodeExercise } from "./interactive-exercises/FillCodeExercise";
 import { FillGapsExercise } from "./interactive-exercises/FillGapsExercise";
 import { MatchPairsExercise } from "./interactive-exercises/MatchPairsExercise";
-import { MultiStageFillGapsExercise } from "./interactive-exercises/MultiStageFillGapsExercise";
+import { MultiStageExercise } from "./interactive-exercises/MultiStageExercise";
+import { SelectCorrectExercise } from "./interactive-exercises/SelectCorrectExercise";
 
 export function InteractiveExerciseElement({
   content,
@@ -18,10 +19,12 @@ export function InteractiveExerciseElement({
       return <FillGapsExercise content={content} />;
     case "fillCode":
       return <FillCodeExercise content={content} />;
-    case "multiStageFillGaps":
-      return <MultiStageFillGapsExercise content={content} />;
+    case "multiStage":
+      return <MultiStageExercise content={content} />;
     case "matchPairs":
       return <MatchPairsExercise content={content} />;
+    case "selectCorrect":
+      return <SelectCorrectExercise content={content} />;
     default:
       return <ExerciseTypePlaceholder type={content.type} />;
   }

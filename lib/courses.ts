@@ -27,7 +27,6 @@ const ELEMENT_TYPE_LABELS: Record<CourseElement["type"], string> = {
   codeExercise: "Ćwiczenie",
   interactiveExercise: "Ćwiczenie",
   interactiveDemo: "Demonstracja",
-  quiz: "Quiz",
   guidedProject: "Projekt",
   individualProject: "Projekt indywidualny",
 };

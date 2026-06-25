@@ -1,6 +1,6 @@
 import type { FillGapsLine } from "@/schemas/courseSchema";
 
-import type { CheckResult } from "./types";
+import type { CheckResult } from "../shared/types";
 
 export type GapLinesContent = {
   language: "html" | "css" | "javascript";

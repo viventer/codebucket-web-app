@@ -4,8 +4,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { useParams } from "next/navigation";
 
 import { ExerciseFeedbackMessage } from "@/components/course/exercises/ExerciseFeedbackMessage";
-import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
-import type { MultiStageFillGapsContent } from "@/schemas/courseSchema";
+import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
+import type { MultiStageContent } from "@/schemas/courseSchema";
 
 import { FillGapsWorkspace } from "./FillGapsWorkspace";
 import {
@@ -14,19 +14,18 @@ import {
   stageHasTopPresentation,
   stageUsesPreviewLayout,
 } from "./multi-stage/StagePresentation";
+import { SelectCorrectAnswers } from "./select-correct/SelectCorrectAnswers";
 
-type MultiStageFillGapsExerciseProps = {
-  content: MultiStageFillGapsContent;
+type MultiStageExerciseProps = {
+  content: MultiStageContent;
 };
 
-export function MultiStageFillGapsExercise({
-  content,
-}: MultiStageFillGapsExerciseProps) {
+export function MultiStageExercise({ content }: MultiStageExerciseProps) {
   const params = useParams<{ id: string }>();
   const courseId = params.id;
   const { controller, canProceed, isLocked } = useExerciseSession();
 
-  if (!controller || controller.kind !== "multiStageFillGaps") {
+  if (!controller || controller.kind !== "multiStage") {
     return null;
   }
 
@@ -39,11 +38,53 @@ export function MultiStageFillGapsExercise({
     selectOption,
     clearGap,
     setActiveGapId,
+    selectCorrectPersisted,
+    shuffledSelectCorrectAnswers,
+    selectAnswer,
+    getAnswerVisualState,
+    getWrongExplanation,
   } = controller;
 
   const stageCommand = currentStage.command ?? content.command;
-  const hasTopPresentation = stageHasTopPresentation(currentStage.presentation);
-  const usesPreviewLayout = stageUsesPreviewLayout(currentStage.presentation);
+
+  if (currentStage.type === "selectCorrect") {
+    const persisted = selectCorrectPersisted ?? {
+      selectedAnswerId: null,
+      phase: "idle" as const,
+    };
+
+    return (
+      <div className="flex flex-col gap-4 sm:gap-8">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStageIndex}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25 }}
+          >
+            <SelectCorrectAnswers
+              question={currentStage.question}
+              answers={shuffledSelectCorrectAnswers}
+              prompt={currentStage.prompt}
+              isLocked={persisted.selectedAnswerId !== null || isLocked}
+              selectAnswer={selectAnswer}
+              getAnswerVisualState={getAnswerVisualState}
+              getWrongExplanation={getWrongExplanation}
+              selectedAnswerId={persisted.selectedAnswerId}
+              phase={persisted.phase}
+            />
+            <ExerciseFeedbackMessage />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    );
+  }
+
+  const presentation = currentStage.presentation ?? { kind: "code" as const };
+  const hasTopPresentation = stageHasTopPresentation(presentation);
+  const usesPreviewLayout = stageUsesPreviewLayout(presentation);
+  const typography = currentStage.typography ?? "default";
 
   const workspace = (
     <div className="flex flex-col gap-4 sm:gap-8">
@@ -58,6 +99,7 @@ export function MultiStageFillGapsExercise({
         setActiveGapId={setActiveGapId}
         showOptionsPool={!canProceed}
         isLocked={isLocked}
+        typography={typography}
       />
 
       <ExerciseFeedbackMessage />
@@ -80,14 +122,14 @@ export function MultiStageFillGapsExercise({
           {usesPreviewLayout ? (
             <div className="grid gap-4 sm:gap-8 lg:grid-cols-2">
               {workspace}
-              <StagePreviewPanel presentation={currentStage.presentation} />
+              <StagePreviewPanel presentation={presentation} />
             </div>
           ) : (
             <>
               {hasTopPresentation && (
                 <StagePresentation
                   courseId={courseId}
-                  presentation={currentStage.presentation}
+                  presentation={presentation}
                 />
               )}
 

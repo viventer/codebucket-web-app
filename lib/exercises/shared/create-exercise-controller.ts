@@ -3,7 +3,8 @@ import type {
   FillCodeContent,
   FillGapsContent,
   MatchPairsContent,
-  MultiStageFillGapsContent,
+  MultiStageContent,
+  SelectCorrectContent,
 } from "@/schemas/courseSchema";
 
 export type FillGapsExerciseConfig = {
@@ -18,15 +19,20 @@ export type FillCodeExerciseConfig = {
   hints: string[];
 };
 
-export type MultiStageFillGapsExerciseConfig = {
-  kind: "multiStageFillGaps";
-  content: MultiStageFillGapsContent;
+export type MultiStageExerciseConfig = {
+  kind: "multiStage";
+  content: MultiStageContent;
   hints: string[];
 };
 
 export type MatchPairsExerciseConfig = {
   kind: "matchPairs";
   content: MatchPairsContent;
+};
+
+export type SelectCorrectExerciseConfig = {
+  kind: "selectCorrect";
+  content: SelectCorrectContent;
 };
 
 export function getFillGapsExerciseConfig(
@@ -65,19 +71,19 @@ export function getFillCodeExerciseConfig(
   };
 }
 
-export function getMultiStageFillGapsExerciseConfig(
+export function getMultiStageExerciseConfig(
   element: CourseElement,
-): MultiStageFillGapsExerciseConfig | null {
+): MultiStageExerciseConfig | null {
   if (element.type !== "interactiveExercise") {
     return null;
   }
 
-  if (element.content.type !== "multiStageFillGaps") {
+  if (element.content.type !== "multiStage") {
     return null;
   }
 
   return {
-    kind: "multiStageFillGaps",
+    kind: "multiStage",
     content: element.content,
     hints: element.content.hints ?? [],
   };
@@ -96,6 +102,23 @@ export function getMatchPairsExerciseConfig(
 
   return {
     kind: "matchPairs",
+    content: element.content,
+  };
+}
+
+export function getSelectCorrectExerciseConfig(
+  element: CourseElement,
+): SelectCorrectExerciseConfig | null {
+  if (element.type !== "interactiveExercise") {
+    return null;
+  }
+
+  if (element.content.type !== "selectCorrect") {
+    return null;
+  }
+
+  return {
+    kind: "selectCorrect",
     content: element.content,
   };
 }

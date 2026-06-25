@@ -1,5 +1,5 @@
 import type { FillGapsLine } from "@/schemas/courseSchema";
-import { getClosingTag } from "@/lib/exercises/fill-gaps-utils";
+import { getClosingTag } from "@/lib/exercises/fill-gaps/fill-gaps-utils";
 
 export type CodeLineSegment =
   | { kind: "text"; value: string }

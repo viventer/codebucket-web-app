@@ -17,7 +17,7 @@ import type {
   CheckResult,
   ExerciseFeedback,
   FillGapsExerciseController,
-} from "./types";
+} from "../shared/types";
 
 export function useFillGapsExerciseController(
   content: FillGapsContent,

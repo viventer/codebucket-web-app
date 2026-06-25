@@ -1,12 +1,8 @@
-import { ChevronRightIcon } from "lucide-react";
-
 import type { CourseElement } from "@/schemas/courseSchema";
 
-import { ActionBarButtonLabel } from "./ActionBarButtonLabel";
 import { BackNextActions } from "./BackNextActions";
 import { DownloadMaterialsButton } from "./DownloadMaterialsButton";
 import { InteractiveExerciseActions } from "./InteractiveExerciseActions";
-import { PlaceholderButton } from "./PlaceholderButton";
 import { ProjectActions } from "./ProjectActions";
 import type { ElementActionsProps } from "./types";
 
@@ -38,15 +34,6 @@ function renderActions(
           nextHref={nextHref}
           hasHint={hasHint}
         />
-      );
-    case "quiz":
-      return (
-        <PlaceholderButton variant="ghost">
-          <ActionBarButtonLabel
-            label="Następne pytanie"
-            icon={ChevronRightIcon}
-          />
-        </PlaceholderButton>
       );
   }
 }

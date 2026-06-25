@@ -7,6 +7,7 @@ import type {
   CheckResult,
   ExerciseControllerUnion,
   ExerciseFeedback,
+  StageActionBarVariant,
   StageProgress,
 } from "./types";
 
@@ -26,6 +27,9 @@ export type ExerciseSessionContextValue = {
   handleProceedAttempt: () => void;
   tryShowSolution: () => void;
   showHintDialog: () => void;
+  currentStageActionBarVariant: StageActionBarVariant | null;
+  advanceCurrentStage: () => void;
+  canProceedStage: boolean;
 };
 
 export const ExerciseSessionContext =
@@ -47,4 +51,7 @@ export const EMPTY_SESSION_VALUE: ExerciseSessionContextValue = {
   handleProceedAttempt: () => {},
   tryShowSolution: () => {},
   showHintDialog: () => {},
+  currentStageActionBarVariant: null,
+  advanceCurrentStage: () => {},
+  canProceedStage: false,
 };

@@ -2,7 +2,6 @@ import {
   CodeIcon,
   FileVideoIcon,
   FolderGitIcon,
-  ListChecksIcon,
   MonitorPlayIcon,
   MousePointerClickIcon,
   UserIcon,
@@ -16,7 +15,6 @@ export const ELEMENT_TYPE_ICONS: Record<CourseElement["type"], LucideIcon> = {
   codeExercise: CodeIcon,
   interactiveExercise: MousePointerClickIcon,
   interactiveDemo: MonitorPlayIcon,
-  quiz: ListChecksIcon,
   guidedProject: FolderGitIcon,
   individualProject: UserIcon,
 };

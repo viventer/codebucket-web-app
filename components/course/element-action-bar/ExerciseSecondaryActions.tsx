@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
+import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
 
 import { ActionBarButtonLabel } from "./ActionBarButtonLabel";
 

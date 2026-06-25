@@ -1,6 +1,6 @@
 "use client";
 
-import { useExerciseSession } from "@/lib/exercises/ExerciseSessionContext";
+import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
 
 import { ExerciseActions } from "./ExerciseActions";
 import { GatedBackNextActions } from "./GatedBackNextActions";

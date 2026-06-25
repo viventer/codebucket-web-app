@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   itemGlowStyle,
   type MatchPairItemState,
-} from "@/lib/exercises/item-glow-style";
+} from "@/lib/exercises/shared/item-glow-style";
 import { cn } from "@/lib/utils";
 
 type MatchPairItemProps = {

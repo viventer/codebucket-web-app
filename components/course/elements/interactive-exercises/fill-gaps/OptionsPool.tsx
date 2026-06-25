@@ -16,7 +16,7 @@ export function OptionsPool({ options, onSelect, disabled }: OptionsPoolProps) {
           key={`${option}-${index}`}
           type="button"
           variant="outline"
-          className="h-8 font-mono text-sm"
+          className="h-8 font-mono text-[length:inherit]"
           onClick={() => onSelect(option)}
           disabled={disabled}
         >

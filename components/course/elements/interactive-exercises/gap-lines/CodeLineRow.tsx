@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { getClosingTag } from "@/lib/exercises/fill-gaps-utils";
+import { getClosingTag } from "@/lib/exercises/fill-gaps/fill-gaps-utils";
 import { sliceColorizedHtml } from "@/lib/monaco/slice-colorized-html";
 import type { Language } from "@/schemas/courseSchema";
 
