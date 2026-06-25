@@ -102,7 +102,7 @@
                     "id": 4,
                     "type": "text",
                     "content": "Do edycji kodu strony internetowej napisanej w języku CSS.",
-                    "explanation": "CSS to osobny język — HTML opisuje strukturę i treść strony."
+                    "explanation": "CSS to osobny język — HTML określa strukturę i treść strony."
                   }
                 ],
                 "correctAnswerId": 1
@@ -112,13 +112,7 @@
                 "command": "Ułóż tag akapitu z podaną treścią.",
                 "language": "html",
                 "typography": "large",
-                "options": [
-                  "<p",
-                  ">",
-                  "siema",
-                  "</",
-                  "p>"
-                ],
+                "options": ["<p", ">", "siema", "</", "p>"],
                 "lines": [
                   {
                     "kind": "group",
@@ -160,25 +154,25 @@
                   {
                     "id": 1,
                     "type": "text",
-                    "content": "Element otaczający fragment treści strony i określający jego znaczenie"
+                    "content": "Elementem języka HTML, który określa znaczenie lub funkcję fragmentu strony internetowej."
                   },
                   {
                     "id": 2,
                     "type": "text",
-                    "content": "Reguła CSS definiująca wygląd elementu",
-                    "explanation": "To opis selektora CSS, nie tagu HTML."
+                    "content": "Instrukcją określającą wygląd elementu na stronie internetowej.",
+                    "explanation": "Reguła CSS definiuje wygląd elementu, nie tag HTML."
                   },
                   {
                     "id": 3,
                     "type": "text",
-                    "content": "Funkcja JavaScript modyfikująca DOM",
-                    "explanation": "Tagi HTML to statyczna struktura dokumentu, nie kod JS."
+                    "content": "Elementem strony pozwalającym na interakcję z użytkownikiem.",
+                    "explanation": ""
                   },
                   {
                     "id": 4,
                     "type": "text",
-                    "content": "Komentarz w kodzie strony",
-                    "explanation": "Komentarze to <!-- ... -->, a tagi otaczają widoczną treść."
+                    "content": "Mechanizmem odpowiadającym za działanie strony internetowej w przeglądarce.",
+                    "explanation": "Tag HTML definiuje elementy strony, a nie jej działanie."
                   }
                 ],
                 "correctAnswerId": 1
@@ -1074,9 +1068,7 @@
           "order": 19
         }
       ],
-      "cheatsheets": [
-        ""
-      ]
+      "cheatsheets": [""]
     },
     {
       "id": "forms",
@@ -1453,9 +1445,7 @@
           "order": 10
         }
       ],
-      "cheatsheets": [
-        ""
-      ]
+      "cheatsheets": [""]
     },
     {
       "id": "summary",
@@ -1648,9 +1638,7 @@
     "nextSteps": {
       "heading": "Co dalej?",
       "subheading": "Zacznij naukę CSS",
-      "recommendedCourseIds": [
-        "css-basics"
-      ]
+      "recommendedCourseIds": ["css-basics"]
     }
   },
   "createdAt": "2026-06-17T00:00:00.000Z",
