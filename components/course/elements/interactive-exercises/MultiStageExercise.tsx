@@ -54,30 +54,29 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
     };
 
     return (
-      <div className="flex flex-col gap-4 sm:gap-8">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentStageIndex}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25 }}
-          >
-            <SelectCorrectAnswers
-              question={currentStage.question}
-              answers={shuffledSelectCorrectAnswers}
-              prompt={currentStage.prompt}
-              isLocked={persisted.selectedAnswerId !== null || isLocked}
-              selectAnswer={selectAnswer}
-              getAnswerVisualState={getAnswerVisualState}
-              getWrongExplanation={getWrongExplanation}
-              selectedAnswerId={persisted.selectedAnswerId}
-              phase={persisted.phase}
-            />
-            <ExerciseFeedbackMessage />
-          </motion.div>
-        </AnimatePresence>
-      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStageIndex}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -12 }}
+          transition={{ duration: 0.25 }}
+          className="flex flex-col gap-4 sm:gap-8"
+        >
+          <SelectCorrectAnswers
+            question={currentStage.question}
+            answers={shuffledSelectCorrectAnswers}
+            prompt={currentStage.prompt}
+            isLocked={persisted.selectedAnswerId !== null || isLocked}
+            selectAnswer={selectAnswer}
+            getAnswerVisualState={getAnswerVisualState}
+            getWrongExplanation={getWrongExplanation}
+            selectedAnswerId={persisted.selectedAnswerId}
+            phase={persisted.phase}
+          />
+          <ExerciseFeedbackMessage />
+        </motion.div>
+      </AnimatePresence>
     );
   }
 
