@@ -19,9 +19,13 @@ export type ExerciseFeedback =
   | "success"
   | "stageSuccess"
   | "stageSolution"
+  | "stageWrongFirst"
+  | "stageWrongRetry"
   | "error"
   | "warning"
   | "solution";
+
+export type MultiStageFlowPhase = "main" | "retry";
 
 export type StageProgress = {
   current: number;
@@ -115,7 +119,9 @@ export interface MultiStageControllerState {
   currentStage: MultiStageStage;
   stageProgress: StageProgress;
   feedbackTarget: StageFeedbackTarget;
+  flowPhase: MultiStageFlowPhase;
   isLastStage: boolean;
+  isExerciseComplete: boolean;
   currentStageActionBarVariant: StageActionBarVariant;
   isCurrentStageComplete: boolean;
   selectCorrectPersisted: SelectCorrectPersistedState | null;

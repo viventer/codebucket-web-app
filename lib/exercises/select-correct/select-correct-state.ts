@@ -6,10 +6,13 @@ export type SelectCorrectInput = {
   correctAnswerId: number;
 };
 
+export type SelectCorrectAttempt = "first" | "retry";
+
 export type SelectCorrectPhase =
   | "idle"
   | "correct"
   | "wrongPending"
+  | "wrongDeferred"
   | "wrongResolved";
 
 export type SelectCorrectAnswerVisualState =
@@ -21,19 +24,33 @@ export type SelectCorrectAnswerVisualState =
 export type SelectCorrectPersistedState = {
   selectedAnswerId: number | null;
   phase: SelectCorrectPhase;
+  attempt: SelectCorrectAttempt;
 };
 
 export function createInitialSelectCorrectState(): SelectCorrectPersistedState {
   return {
     selectedAnswerId: null,
     phase: "idle",
+    attempt: "first",
+  };
+}
+
+export function createInitialSelectCorrectRetryState(): SelectCorrectPersistedState {
+  return {
+    selectedAnswerId: null,
+    phase: "idle",
+    attempt: "retry",
   };
 }
 
 export function isSelectCorrectComplete(
   state: SelectCorrectPersistedState,
 ): boolean {
-  return state.phase === "correct" || state.phase === "wrongResolved";
+  return (
+    state.phase === "correct" ||
+    state.phase === "wrongDeferred" ||
+    state.phase === "wrongResolved"
+  );
 }
 
 export function isSelectCorrectLocked(
@@ -53,14 +70,29 @@ export function applySelectCorrectAnswer(
 
   if (answerId === correctAnswerId) {
     return {
+      ...state,
       selectedAnswerId: answerId,
       phase: "correct",
     };
   }
 
   return {
+    ...state,
     selectedAnswerId: answerId,
     phase: "wrongPending",
+  };
+}
+
+export function deferSelectCorrectWrongAnswer(
+  state: SelectCorrectPersistedState,
+): SelectCorrectPersistedState {
+  if (state.phase !== "wrongPending" || state.attempt !== "first") {
+    return state;
+  }
+
+  return {
+    ...state,
+    phase: "wrongDeferred",
   };
 }
 
@@ -94,7 +126,9 @@ export function getSelectCorrectAnswerVisualState(
   }
 
   if (answerId === state.selectedAnswerId) {
-    return state.phase === "wrongPending" || state.phase === "wrongResolved"
+    return state.phase === "wrongPending" ||
+      state.phase === "wrongDeferred" ||
+      state.phase === "wrongResolved"
       ? "incorrect"
       : "idle";
   }
@@ -114,7 +148,11 @@ export function getSelectCorrectWrongExplanation(
     return null;
   }
 
-  if (state.phase !== "wrongPending" && state.phase !== "wrongResolved") {
+  if (
+    state.phase !== "wrongPending" &&
+    state.phase !== "wrongDeferred" &&
+    state.phase !== "wrongResolved"
+  ) {
     return null;
   }
 

@@ -28,6 +28,8 @@ export type SelectCorrectStageState = {
   kind: "selectCorrect";
   selectCorrect: SelectCorrectPersistedState;
   feedback: ExerciseFeedback;
+  firstAttemptWrong: boolean;
+  retryCompleted: boolean;
 };
 
 export type StageState = FillGapsStageState | SelectCorrectStageState;
@@ -52,6 +54,8 @@ export function createStageState(stage: MultiStageStage): StageState {
     kind: "selectCorrect",
     selectCorrect: createInitialSelectCorrectState(),
     feedback: "idle",
+    firstAttemptWrong: false,
+    retryCompleted: false,
   };
 }
 

@@ -46,7 +46,11 @@ export function SelectCorrectAnswers({
     if (phase === "correct") {
       return "success" as const;
     }
-    if (phase === "wrongPending" || phase === "wrongResolved") {
+    if (
+      phase === "wrongPending" ||
+      phase === "wrongDeferred" ||
+      phase === "wrongResolved"
+    ) {
       return "error" as const;
     }
     return null;

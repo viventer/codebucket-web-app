@@ -15,6 +15,7 @@ import {
 } from "../fill-gaps/fill-gaps-utils";
 import {
   applySelectCorrectAnswer,
+  createInitialSelectCorrectRetryState,
   getSelectCorrectAnswerVisualState,
   getSelectCorrectWrongExplanation,
   isSelectCorrectComplete,
@@ -23,6 +24,7 @@ import type {
   CheckResult,
   ExerciseFeedback,
   MultiStageExerciseController,
+  MultiStageFlowPhase,
   StageProgress,
 } from "../shared/types";
 
@@ -31,11 +33,13 @@ import {
   createStageState,
   EMPTY_FILL_GAPS_OPTIONS,
   EMPTY_SELECT_CORRECT_ANSWERS,
+  type SelectCorrectStageState,
   type StageState,
 } from "./stage-state";
 import {
   deriveHasAttemptedCheck,
   deriveIsCurrentStageComplete,
+  deriveIsExerciseComplete,
   deriveMultiStageFeedback,
 } from "./stage-view";
 import {
@@ -44,6 +48,14 @@ import {
   isSelectCorrectStage,
 } from "./stage-utils";
 import { useMultiStageWrongAnswerTimeout } from "./use-wrong-answer-timeout";
+
+function prepareRetryStageState(state: SelectCorrectStageState): SelectCorrectStageState {
+  return {
+    ...state,
+    selectCorrect: createInitialSelectCorrectRetryState(),
+    feedback: "idle",
+  };
+}
 
 export function useMultiStageExerciseController(
   content: MultiStageContent,
@@ -56,11 +68,18 @@ export function useMultiStageExerciseController(
   const [shuffleTokens, setShuffleTokens] = useState<number[]>(() =>
     content.stages.map(() => 0),
   );
+  const [flowPhase, setFlowPhase] = useState<MultiStageFlowPhase>("main");
+  const [retryQueue, setRetryQueue] = useState<number[]>([]);
+  const [retryQueueIndex, setRetryQueueIndex] = useState(0);
 
   const currentStage = content.stages[currentStageIndex]!;
   const currentState = stageStates[currentStageIndex]!;
   const totalStages = content.stages.length;
-  const isLastStage = currentStageIndex === totalStages - 1;
+  const isLastMainStage = currentStageIndex === totalStages - 1;
+  const isLastStage =
+    flowPhase === "retry"
+      ? retryQueueIndex === retryQueue.length - 1
+      : isLastMainStage && retryQueue.length === 0;
   const currentStageActionBarVariant = getStageActionBarVariant(currentStage);
 
   const fillGapsStage =
@@ -85,13 +104,19 @@ export function useMultiStageExerciseController(
     currentState.kind === "selectCorrect" ? currentShuffleToken : 0,
   );
 
-  const stageProgress = useMemo<StageProgress>(
-    () => ({
+  const stageProgress = useMemo<StageProgress>(() => {
+    if (flowPhase === "retry") {
+      return {
+        current: retryQueueIndex + 1,
+        total: retryQueue.length,
+      };
+    }
+
+    return {
       current: currentStageIndex + 1,
       total: totalStages,
-    }),
-    [currentStageIndex, totalStages],
-  );
+    };
+  }, [currentStageIndex, flowPhase, retryQueue.length, retryQueueIndex, totalStages]);
 
   const feedbackTarget =
     fillGapsStage?.presentation
@@ -118,7 +143,43 @@ export function useMultiStageExerciseController(
     currentStageIndex,
     currentState,
     setStageStates,
+    setRetryQueue,
   );
+
+  const enterRetryStage = useCallback(
+    (stageIndex: number, queueIndex: number) => {
+      setFlowPhase("retry");
+      setRetryQueueIndex(queueIndex);
+      setCurrentStageIndex(stageIndex);
+
+      setStageStates((prev) => {
+        const next = [...prev];
+        const stageState = next[stageIndex];
+        if (stageState?.kind !== "selectCorrect") {
+          return prev;
+        }
+
+        next[stageIndex] = prepareRetryStageState(stageState);
+        return next;
+      });
+
+      setShuffleTokens((prev) => {
+        const next = [...prev];
+        next[stageIndex] = (next[stageIndex] ?? 0) + 1;
+        return next;
+      });
+    },
+    [],
+  );
+
+  const startRetryPhase = useCallback(() => {
+    const firstRetryStage = retryQueue[0];
+    if (firstRetryStage === undefined) {
+      return;
+    }
+
+    enterRetryStage(firstRetryStage, 0);
+  }, [enterRetryStage, retryQueue]);
 
   const updateCurrentStageState = useCallback(
     (updater: (state: StageState) => StageState) => {
@@ -142,13 +203,21 @@ export function useMultiStageExerciseController(
           return state;
         }
 
+        const selectCorrect = applySelectCorrectAnswer(
+          state.selectCorrect,
+          answerId,
+          selectCorrectStage.correctAnswerId,
+        );
+
+        const retryCompleted =
+          selectCorrect.attempt === "retry" && selectCorrect.phase === "correct"
+            ? true
+            : state.retryCompleted;
+
         return {
           ...state,
-          selectCorrect: applySelectCorrectAnswer(
-            state.selectCorrect,
-            answerId,
-            selectCorrectStage.correctAnswerId,
-          ),
+          selectCorrect,
+          retryCompleted,
         };
       });
     },
@@ -291,40 +360,48 @@ export function useMultiStageExerciseController(
 
   const reset = useCallback(() => {
     clearWrongAnswerTimeout();
-
-    setStageStates((prev) => {
-      const next = [...prev];
-      next[currentStageIndex] = createStageState(content.stages[currentStageIndex]!);
-      return next;
-    });
-
-    if (currentState.kind === "fillGaps" || currentState.kind === "selectCorrect") {
-      setShuffleTokens((prev) => {
-        const next = [...prev];
-        next[currentStageIndex] = (next[currentStageIndex] ?? 0) + 1;
-        return next;
-      });
-    }
-  }, [
-    clearWrongAnswerTimeout,
-    content.stages,
-    currentStageIndex,
-    currentState.kind,
-  ]);
+    setCurrentStageIndex(0);
+    setStageStates(createAllStageStates(content));
+    setShuffleTokens(content.stages.map(() => 0));
+    setFlowPhase("main");
+    setRetryQueue([]);
+    setRetryQueueIndex(0);
+  }, [clearWrongAnswerTimeout, content]);
 
   const advanceStage = useCallback(() => {
-    if (isLastStage) {
+    if (flowPhase === "retry") {
+      if (retryQueueIndex < retryQueue.length - 1) {
+        const nextQueueIndex = retryQueueIndex + 1;
+        const nextStageIndex = retryQueue[nextQueueIndex]!;
+        enterRetryStage(nextStageIndex, nextQueueIndex);
+      }
       return;
     }
-    setCurrentStageIndex((index) => index + 1);
-  }, [isLastStage]);
+
+    if (currentStageIndex < totalStages - 1) {
+      setCurrentStageIndex((index) => index + 1);
+      return;
+    }
+
+    if (retryQueue.length > 0) {
+      startRetryPhase();
+    }
+  }, [
+    currentStageIndex,
+    enterRetryStage,
+    flowPhase,
+    retryQueue,
+    retryQueueIndex,
+    startRetryPhase,
+    totalStages,
+  ]);
 
   const goToPreviousStage = useCallback(() => {
-    if (currentStageIndex === 0) {
+    if (flowPhase === "retry" || currentStageIndex === 0) {
       return;
     }
     setCurrentStageIndex((index) => index - 1);
-  }, [currentStageIndex]);
+  }, [currentStageIndex, flowPhase]);
 
   const getHints = useCallback(() => hints, [hints]);
 
@@ -336,7 +413,28 @@ export function useMultiStageExerciseController(
     [currentState],
   );
 
-  const feedback = deriveMultiStageFeedback(currentState, selectCorrectPersisted);
+  const isExerciseComplete = useMemo(() => {
+    if (retryQueue.length > 0) {
+      const allRetriesDone = retryQueue.every((stageIndex) => {
+        const stageState = stageStates[stageIndex];
+        return (
+          stageState?.kind === "selectCorrect" && stageState.retryCompleted
+        );
+      });
+
+      if (!allRetriesDone) {
+        return false;
+      }
+    }
+
+    return deriveIsExerciseComplete(stageStates);
+  }, [retryQueue, stageStates]);
+
+  const feedback = deriveMultiStageFeedback(
+    currentState,
+    selectCorrectPersisted,
+    isLastStage,
+  );
 
   const hasAttemptedCheck = deriveHasAttemptedCheck(
     currentState,
@@ -377,7 +475,9 @@ export function useMultiStageExerciseController(
     currentStage,
     stageProgress,
     feedbackTarget,
+    flowPhase,
     isLastStage,
+    isExerciseComplete,
     currentStageActionBarVariant,
     isCurrentStageComplete,
     assignments: fillGapsAssignments,

@@ -25,8 +25,19 @@ import { useCelebrationAutoDismiss } from "../shared/use-celebration-auto-dismis
 import { useMultiStageExerciseController } from "./multi-stage-controller";
 
 const TRANSIENT_FEEDBACK_MS = 3000;
-const STAGE_ADVANCE_AFTER_CORRECT_MS = 2000;
-const STAGE_ADVANCE_AFTER_WRONG_MS = 5000;
+const STAGE_ADVANCE_AFTER_CORRECT_MS = 1500;
+const STAGE_ADVANCE_AFTER_WRONG_MS = 4000;
+
+function persistStageCompletionFeedback(
+  setFeedback: (feedback: ExerciseFeedback) => void,
+  feedback: ExerciseFeedback | null,
+) {
+  if (feedback === "stageSuccess") {
+    setFeedback("success");
+  } else if (feedback === "stageSolution") {
+    setFeedback("solution");
+  }
+}
 
 type MultiStageSessionBridgeProps = {
   config: NonNullable<ReturnType<typeof getMultiStageExerciseConfig>>;
@@ -72,6 +83,12 @@ export function MultiStageSessionBridge({
     return () => window.clearTimeout(timeout);
   }, [feedback, clearTransientFeedback]);
 
+  useEffect(() => {
+    if (controller.flowPhase === "retry") {
+      autoAdvancedStagesRef.current.clear();
+    }
+  }, [controller.flowPhase]);
+
   const dismissCelebration = useCallback(() => {
     setShowCelebration(false);
   }, []);
@@ -93,8 +110,8 @@ export function MultiStageSessionBridge({
       }
       setShowCelebration(false);
       advanceTimeoutRef.current = window.setTimeout(() => {
+        persistStageCompletionFeedback(controller.setFeedback, advanceFeedback);
         advanceStage();
-        controller.setFeedback("idle");
         advanceTimeoutRef.current = null;
       }, delayMs);
     },
@@ -112,11 +129,12 @@ export function MultiStageSessionBridge({
     }
 
     const phase = controller.selectCorrectPersisted?.phase;
-    const delayMs =
-      phase === "wrongResolved"
-        ? STAGE_ADVANCE_AFTER_WRONG_MS
-        : STAGE_ADVANCE_AFTER_CORRECT_MS;
-    const advanceFeedback = phase === "wrongResolved" ? null : "stageSuccess";
+    const isWrongAdvance =
+      phase === "wrongDeferred" || phase === "wrongResolved";
+    const delayMs = isWrongAdvance
+      ? STAGE_ADVANCE_AFTER_WRONG_MS
+      : STAGE_ADVANCE_AFTER_CORRECT_MS;
+    const advanceFeedback = isWrongAdvance ? null : "stageSuccess";
 
     scheduleMiddleStageAdvance(advanceFeedback, delayMs);
   }, [
@@ -133,6 +151,7 @@ export function MultiStageSessionBridge({
       controller.currentStageActionBarVariant !== "gated" ||
       !controller.isLastStage ||
       !controller.isCurrentStageComplete ||
+      !controller.isExerciseComplete ||
       controller.feedback !== "success"
     ) {
       return;
@@ -143,6 +162,7 @@ export function MultiStageSessionBridge({
     controller.currentStageActionBarVariant,
     controller.feedback,
     controller.isCurrentStageComplete,
+    controller.isExerciseComplete,
     controller.isLastStage,
   ]);
 
@@ -231,11 +251,11 @@ export function MultiStageSessionBridge({
       return;
     }
 
+    persistStageCompletionFeedback(controller.setFeedback, feedback);
     autoAdvancedStagesRef.current.add(controller.currentStageIndex);
     advanceStage();
-    controller.setFeedback("idle");
     setShowCelebration(false);
-  }, [advanceStage, clearAdvanceTimeout, controller, isLastStage]);
+  }, [advanceStage, clearAdvanceTimeout, controller, feedback, isLastStage]);
 
   const goToPreviousStage = useCallback(() => {
     clearAdvanceTimeout();
@@ -249,11 +269,11 @@ export function MultiStageSessionBridge({
     feedback === "stageSolution" ||
     (isLastStage && (feedback === "success" || feedback === "solution"));
 
-  const canProceed = isLastStage
-    ? isGatedStage
-      ? controller.isCurrentStageComplete
-      : feedback === "success" || feedback === "solution"
-    : false;
+  const canProceed =
+    isLastStage &&
+    controller.isExerciseComplete &&
+    controller.isCurrentStageComplete &&
+    (isGatedStage ? true : feedback === "success" || feedback === "solution");
 
   const canProceedStage =
     !isLastStage &&
@@ -261,7 +281,10 @@ export function MultiStageSessionBridge({
       feedback === "stageSolution" ||
       controller.isCurrentStageComplete);
 
-  const canGoBack = controller.currentStageIndex > 0 && !isLocked;
+  const canGoBack =
+    controller.flowPhase === "main" &&
+    controller.currentStageIndex > 0 &&
+    !isLocked;
 
   const value = useMemo<ExerciseSessionContextValue>(
     () => ({

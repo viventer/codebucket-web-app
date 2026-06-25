@@ -14,6 +14,8 @@ export type ExerciseFeedbackGlowInput =
   | "success"
   | "stageSuccess"
   | "stageSolution"
+  | "stageWrongFirst"
+  | "stageWrongRetry"
   | "error"
   | "warning"
   | "solution";
@@ -52,6 +54,8 @@ export function itemGlowStyleFromExerciseFeedback(
     case "stageSuccess":
       return itemGlowStyle("success");
     case "error":
+    case "stageWrongFirst":
+    case "stageWrongRetry":
       return itemGlowStyle("error");
     case "stageSolution":
     case "solution":

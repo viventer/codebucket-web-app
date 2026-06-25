@@ -6,6 +6,14 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 <!-- END:nextjs-agent-rules -->
 
+# React Compiler
+
+When working with React 19+ and modern Next.js versions, prefer patterns compatible with React Compiler.
+
+Do not introduce manual memoization unless there is a clear reason.
+
+If you use useMemo, useCallback, or React.memo, briefly justify the decision in comments or in the explanation.
+
 # CodeBucket
 
 ## Product

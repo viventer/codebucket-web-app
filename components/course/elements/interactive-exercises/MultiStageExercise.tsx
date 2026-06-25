@@ -32,6 +32,7 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
   const {
     currentStage,
     currentStageIndex,
+    flowPhase,
     assignments,
     activeGapId,
     availableOptions,
@@ -51,18 +52,24 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
     const persisted = selectCorrectPersisted ?? {
       selectedAnswerId: null,
       phase: "idle" as const,
+      attempt: "first" as const,
     };
 
     return (
       <AnimatePresence mode="wait">
         <motion.div
-          key={currentStageIndex}
+          key={`${currentStageIndex}-${flowPhase}`}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.25 }}
           className="flex flex-col gap-4 sm:gap-8"
         >
+          {flowPhase === "retry" && (
+            <p className="text-sm font-medium text-muted-foreground">
+              Ponowna próba
+            </p>
+          )}
           <SelectCorrectAnswers
             question={currentStage.question}
             answers={shuffledSelectCorrectAnswers}
