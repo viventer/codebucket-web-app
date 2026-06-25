@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { buildSrcDoc, useThemeColors } from "@/components/html-preview/helpers";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,10 +18,7 @@ export function HTMLPreview({
   title = "Podgląd HTML",
 }: HTMLPreviewProps) {
   const themeColors = useThemeColors();
-  const srcDoc = useMemo(
-    () => buildSrcDoc(html, themeColors),
-    [html, themeColors],
-  );
+  const srcDoc = buildSrcDoc(html, themeColors);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const hasRefreshedOnVisibleRef = useRef(false);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import { SuccessCelebration } from "@/components/course/exercises/SuccessCelebration";
 import { toast } from "@/hooks/use-toast";
@@ -35,49 +35,39 @@ export function MatchPairsSessionBridge({
     setShowCelebration(true);
   }, [feedback]);
 
-  const dismissCelebration = useCallback(() => {
+  function dismissCelebration() {
     setShowCelebration(false);
-  }, []);
+  }
 
   useCelebrationAutoDismiss(showCelebration, dismissCelebration);
 
-  const handleProceedAttempt = useCallback(() => {
+  function handleProceedAttempt() {
     toast.warning("Wykonaj ćwiczenie, zanim przejdziesz dalej.");
-  }, []);
+  }
 
   const isLocked = feedback === "success";
   const canProceed = isLocked;
 
-  const value = useMemo<ExerciseSessionContextValue>(
-    () => ({
-      controller,
-      feedback,
-      showCelebration,
-      isLocked,
-      canProceed,
-      actionBarMode: "back-next-gated",
-      hints: [],
-      stageProgress: null,
-      canGoBack: false,
-      goToPreviousStage: () => {},
-      reset: () => {},
-      handleCheck: () => null,
-      handleProceedAttempt,
-      tryShowSolution: () => {},
-      showHintDialog: () => {},
-      currentStageActionBarVariant: "gated",
-      advanceCurrentStage: () => {},
-      canProceedStage: false,
-    }),
-    [
-      controller,
-      feedback,
-      handleProceedAttempt,
-      isLocked,
-      canProceed,
-      showCelebration,
-    ],
-  );
+  const value: ExerciseSessionContextValue = {
+    controller,
+    feedback,
+    showCelebration,
+    isLocked,
+    canProceed,
+    actionBarMode: "back-next-gated",
+    hints: [],
+    stageProgress: null,
+    canGoBack: false,
+    goToPreviousStage: () => {},
+    reset: () => {},
+    handleCheck: () => null,
+    handleProceedAttempt,
+    tryShowSolution: () => {},
+    showHintDialog: () => {},
+    currentStageActionBarVariant: "gated",
+    advanceCurrentStage: () => {},
+    canProceedStage: false,
+  };
 
   return (
     <ExerciseSessionContext.Provider value={value}>

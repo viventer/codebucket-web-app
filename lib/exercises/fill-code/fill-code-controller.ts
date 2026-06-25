@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 
 import type { FillCodeContent } from "@/schemas/courseSchema";
 
@@ -20,12 +20,8 @@ export function useFillCodeExerciseController(
   content: FillCodeContent,
   hints: string[],
 ): FillCodeExerciseController {
-  const gapIds = useMemo(() => getGapIds(content), [content]);
-
-  const initialAssignments = useMemo(
-    () => createInitialAssignments(gapIds),
-    [gapIds],
-  );
+  const gapIds = getGapIds(content);
+  const initialAssignments = createInitialAssignments(gapIds);
 
   const [assignments, setAssignments] =
     useState<Record<string, string | null>>(initialAssignments);
@@ -35,44 +31,46 @@ export function useFillCodeExerciseController(
   const [hasAttemptedCheck, setHasAttemptedCheck] = useState(false);
   const [feedback, setFeedbackState] = useState<ExerciseFeedback>("idle");
 
-  const updateGap = useCallback((gapId: string, value: string) => {
+  function updateGap(gapId: string, value: string) {
     setAssignments((prev) => ({
       ...prev,
       [gapId]: value === "" ? null : value,
     }));
-  }, []);
+  }
 
-  const markAttempted = useCallback(() => {
+  function markAttempted() {
     setHasAttemptedCheck(true);
-  }, []);
+  }
 
-  const setFeedback = useCallback((next: ExerciseFeedback) => {
+  function setFeedback(next: ExerciseFeedback) {
     setFeedbackState(next);
-  }, []);
+  }
 
-  const clearTransientFeedback = useCallback(() => {
+  function clearTransientFeedback() {
     setFeedbackState((current) =>
       current === "error" || current === "warning" ? "idle" : current,
     );
-  }, []);
+  }
 
-  const check = useCallback((): CheckResult => {
+  function check(): CheckResult {
     return evaluateFillGapsCheck(content, assignments);
-  }, [assignments, content]);
+  }
 
-  const applySolution = useCallback(() => {
+  function applySolution() {
     setAssignments(applyFillGapsSolution(content, assignments));
     setActiveGapId(null);
-  }, [assignments, content]);
+  }
 
-  const reset = useCallback(() => {
+  function reset() {
     setAssignments(initialAssignments);
     setActiveGapId(gapIds[0] ?? null);
     setHasAttemptedCheck(false);
     setFeedbackState("idle");
-  }, [gapIds, initialAssignments]);
+  }
 
-  const getHints = useCallback(() => hints, [hints]);
+  function getHints() {
+    return hints;
+  }
 
   return {
     kind: "fillCode",

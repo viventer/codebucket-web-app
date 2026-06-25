@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { ExerciseHintDialog } from "@/components/course/exercises/ExerciseHintDialog";
 import { ExerciseSolutionDialog } from "@/components/course/exercises/ExerciseSolutionDialog";
@@ -60,16 +53,16 @@ export function MultiStageSessionBridge({
   const { feedback, clearTransientFeedback, isLastStage, advanceStage } =
     controller;
 
-  const clearAdvanceTimeout = useCallback(() => {
+  function clearAdvanceTimeout() {
     if (advanceTimeoutRef.current !== null) {
       window.clearTimeout(advanceTimeoutRef.current);
       advanceTimeoutRef.current = null;
     }
-  }, []);
+  }
 
   useEffect(() => {
     return clearAdvanceTimeout;
-  }, [clearAdvanceTimeout]);
+  }, []);
 
   useEffect(() => {
     if (feedback !== "error" && feedback !== "warning") {
@@ -89,34 +82,31 @@ export function MultiStageSessionBridge({
     }
   }, [controller.flowPhase]);
 
-  const dismissCelebration = useCallback(() => {
+  function dismissCelebration() {
     setShowCelebration(false);
-  }, []);
+  }
 
   useCelebrationAutoDismiss(showCelebration, dismissCelebration);
 
-  const scheduleMiddleStageAdvance = useCallback(
-    (
-      advanceFeedback: ExerciseFeedback | null = "stageSuccess",
-      delayMs: number = STAGE_ADVANCE_AFTER_CORRECT_MS,
-    ) => {
-      if (isLastStage || advanceTimeoutRef.current !== null) {
-        return;
-      }
+  function scheduleMiddleStageAdvance(
+    advanceFeedback: ExerciseFeedback | null = "stageSuccess",
+    delayMs: number = STAGE_ADVANCE_AFTER_CORRECT_MS,
+  ) {
+    if (isLastStage || advanceTimeoutRef.current !== null) {
+      return;
+    }
 
-      autoAdvancedStagesRef.current.add(controller.currentStageIndex);
-      if (advanceFeedback !== null) {
-        controller.setFeedback(advanceFeedback);
-      }
-      setShowCelebration(false);
-      advanceTimeoutRef.current = window.setTimeout(() => {
-        persistStageCompletionFeedback(controller.setFeedback, advanceFeedback);
-        advanceStage();
-        advanceTimeoutRef.current = null;
-      }, delayMs);
-    },
-    [advanceStage, controller, isLastStage],
-  );
+    autoAdvancedStagesRef.current.add(controller.currentStageIndex);
+    if (advanceFeedback !== null) {
+      controller.setFeedback(advanceFeedback);
+    }
+    setShowCelebration(false);
+    advanceTimeoutRef.current = window.setTimeout(() => {
+      persistStageCompletionFeedback(controller.setFeedback, advanceFeedback);
+      advanceStage();
+      advanceTimeoutRef.current = null;
+    }, delayMs);
+  }
 
   useEffect(() => {
     if (
@@ -143,7 +133,6 @@ export function MultiStageSessionBridge({
     controller.isCurrentStageComplete,
     controller.selectCorrectPersisted?.phase,
     isLastStage,
-    scheduleMiddleStageAdvance,
   ]);
 
   useEffect(() => {
@@ -166,7 +155,7 @@ export function MultiStageSessionBridge({
     controller.isLastStage,
   ]);
 
-  const handleCheck = useCallback((): CheckResult | null => {
+  function handleCheck(): CheckResult | null {
     controller.markAttempted();
     const result = controller.check();
 
@@ -194,38 +183,33 @@ export function MultiStageSessionBridge({
     controller.setFeedback("warning");
     toast.warning("Dokończ zadanie przed sprawdzeniem.");
     return result;
-  }, [
-    clearAdvanceTimeout,
-    controller,
-    isLastStage,
-    scheduleMiddleStageAdvance,
-  ]);
+  }
 
-  const handleProceedAttempt = useCallback(() => {
+  function handleProceedAttempt() {
     if (controller.currentStageActionBarVariant === "gated") {
       toast.warning("Wykonaj ćwiczenie, zanim przejdziesz dalej.");
       return;
     }
     handleCheck();
-  }, [controller.currentStageActionBarVariant, handleCheck]);
+  }
 
-  const resetExercise = useCallback(() => {
+  function resetExercise() {
     clearAdvanceTimeout();
     autoAdvancedStagesRef.current.clear();
     controller.reset();
     setShowCelebration(false);
     toast.info("Zadanie zostało przywrócone do stanu początkowego.");
-  }, [clearAdvanceTimeout, controller]);
+  }
 
-  const tryShowSolution = useCallback(() => {
+  function tryShowSolution() {
     if (!controller.hasAttemptedCheck) {
       toast.warning("Spróbuj najpierw wykonać zadanie samodzielnie.");
       return;
     }
     setSolutionOpen(true);
-  }, [controller.hasAttemptedCheck]);
+  }
 
-  const confirmSolution = useCallback(() => {
+  function confirmSolution() {
     clearAdvanceTimeout();
     controller.applySolution();
     setSolutionOpen(false);
@@ -238,14 +222,9 @@ export function MultiStageSessionBridge({
     }
 
     scheduleMiddleStageAdvance("stageSolution");
-  }, [
-    clearAdvanceTimeout,
-    controller,
-    isLastStage,
-    scheduleMiddleStageAdvance,
-  ]);
+  }
 
-  const advanceCurrentStage = useCallback(() => {
+  function advanceCurrentStage() {
     clearAdvanceTimeout();
     if (isLastStage) {
       return;
@@ -255,13 +234,13 @@ export function MultiStageSessionBridge({
     autoAdvancedStagesRef.current.add(controller.currentStageIndex);
     advanceStage();
     setShowCelebration(false);
-  }, [advanceStage, clearAdvanceTimeout, controller, feedback, isLastStage]);
+  }
 
-  const goToPreviousStage = useCallback(() => {
+  function goToPreviousStage() {
     clearAdvanceTimeout();
     controller.goToPreviousStage();
     setShowCelebration(false);
-  }, [clearAdvanceTimeout, controller]);
+  }
 
   const isGatedStage = controller.currentStageActionBarVariant === "gated";
   const isLocked =
@@ -286,45 +265,26 @@ export function MultiStageSessionBridge({
     controller.currentStageIndex > 0 &&
     !isLocked;
 
-  const value = useMemo<ExerciseSessionContextValue>(
-    () => ({
-      controller,
-      feedback,
-      showCelebration,
-      isLocked,
-      canProceed,
-      actionBarMode: "multi-stage",
-      hints: isGatedStage ? [] : hints,
-      stageProgress: controller.stageProgress,
-      canGoBack,
-      goToPreviousStage,
-      reset: resetExercise,
-      handleCheck,
-      handleProceedAttempt,
-      tryShowSolution: isGatedStage ? () => {} : tryShowSolution,
-      showHintDialog: isGatedStage ? () => {} : () => setHintOpen(true),
-      currentStageActionBarVariant: controller.currentStageActionBarVariant,
-      advanceCurrentStage,
-      canProceedStage,
-    }),
-    [
-      controller,
-      feedback,
-      handleCheck,
-      handleProceedAttempt,
-      hints,
-      isGatedStage,
-      isLocked,
-      canProceed,
-      canProceedStage,
-      canGoBack,
-      goToPreviousStage,
-      showCelebration,
-      tryShowSolution,
-      resetExercise,
-      advanceCurrentStage,
-    ],
-  );
+  const value: ExerciseSessionContextValue = {
+    controller,
+    feedback,
+    showCelebration,
+    isLocked,
+    canProceed,
+    actionBarMode: "multi-stage",
+    hints: isGatedStage ? [] : hints,
+    stageProgress: controller.stageProgress,
+    canGoBack,
+    goToPreviousStage,
+    reset: resetExercise,
+    handleCheck,
+    handleProceedAttempt,
+    tryShowSolution: isGatedStage ? () => {} : tryShowSolution,
+    showHintDialog: isGatedStage ? () => {} : () => setHintOpen(true),
+    currentStageActionBarVariant: controller.currentStageActionBarVariant,
+    advanceCurrentStage,
+    canProceedStage,
+  };
 
   return (
     <ExerciseSessionContext.Provider value={value}>

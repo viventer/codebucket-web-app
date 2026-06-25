@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { colorizeCode } from "@/lib/monaco/setup";
 import { useCodeTheme } from "@/lib/monaco/use-code-theme";
@@ -24,15 +24,8 @@ export function useColorizedLine(
   const mode = useCodeTheme();
   const [colorizedHtml, setColorizedHtml] = useState<string | null>(null);
 
-  const plainText = useMemo(
-    () => buildLineColorizePlainText(segments, assignments),
-    [assignments, segments],
-  );
-
-  const segmentRanges = useMemo(
-    () => getLineSegmentRanges(segments, assignments),
-    [assignments, segments],
-  );
+  const plainText = buildLineColorizePlainText(segments, assignments);
+  const segmentRanges = getLineSegmentRanges(segments, assignments);
 
   useEffect(() => {
     let cancelled = false;

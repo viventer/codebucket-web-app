@@ -1,7 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
-
 import { getClosingTag } from "@/lib/exercises/fill-gaps/fill-gaps-utils";
 import { sliceColorizedHtml } from "@/lib/monaco/slice-colorized-html";
 import type { Language } from "@/schemas/courseSchema";
@@ -72,9 +70,8 @@ export function CodeLineRow(props: CodeLineRowProps) {
     language,
   );
 
-  const rangeByIndex = useMemo(
-    () => new Map(segmentRanges.map((range) => [range.segmentIndex, range])),
-    [segmentRanges],
+  const rangeByIndex = new Map(
+    segmentRanges.map((range) => [range.segmentIndex, range]),
   );
 
   return (

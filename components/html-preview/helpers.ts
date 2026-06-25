@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 
 import { mockUser } from "@/lib/mock-user";
 
@@ -76,7 +76,7 @@ export function useThemeColors(): ThemeColors {
     getServerThemeSnapshot,
   );
 
-  return useMemo(() => parseThemeSnapshot(snapshot), [snapshot]);
+  return parseThemeSnapshot(snapshot);
 }
 
 export function buildSrcDoc(html: string, colors: ThemeColors): string {

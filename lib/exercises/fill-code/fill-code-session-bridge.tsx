@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import { ExerciseHintDialog } from "@/components/course/exercises/ExerciseHintDialog";
 import { ExerciseSolutionDialog } from "@/components/course/exercises/ExerciseSolutionDialog";
@@ -55,13 +49,13 @@ export function FillCodeSessionBridge({
     return () => window.clearTimeout(timeout);
   }, [feedback, clearTransientFeedback]);
 
-  const dismissCelebration = useCallback(() => {
+  function dismissCelebration() {
     setShowCelebration(false);
-  }, []);
+  }
 
   useCelebrationAutoDismiss(showCelebration, dismissCelebration);
 
-  const handleCheck = useCallback((): CheckResult | null => {
+  function handleCheck(): CheckResult | null {
     controller.markAttempted();
     const result = controller.check();
 
@@ -84,70 +78,56 @@ export function FillCodeSessionBridge({
     controller.setFeedback("warning");
     toast.warning("Dokończ zadanie przed sprawdzeniem.");
     return result;
-  }, [controller]);
+  }
 
-  const handleProceedAttempt = useCallback(() => {
+  function handleProceedAttempt() {
     handleCheck();
-  }, [handleCheck]);
+  }
 
-  const resetExercise = useCallback(() => {
+  function resetExercise() {
     controller.reset();
     setShowCelebration(false);
     toast.info("Zadanie zostało przywrócone do stanu początkowego.");
-  }, [controller]);
+  }
 
-  const tryShowSolution = useCallback(() => {
+  function tryShowSolution() {
     if (!controller.hasAttemptedCheck) {
       toast.warning("Spróbuj najpierw wykonać zadanie samodzielnie.");
       return;
     }
     setSolutionOpen(true);
-  }, [controller.hasAttemptedCheck]);
+  }
 
-  const confirmSolution = useCallback(() => {
+  function confirmSolution() {
     controller.applySolution();
     controller.setFeedback("solution");
     setSolutionOpen(false);
     toast.success("Poprawna odpowiedź została wstawiona.");
-  }, [controller]);
+  }
 
   const isLocked = feedback === "success" || feedback === "solution";
   const canProceed = isLocked;
 
-  const value = useMemo<ExerciseSessionContextValue>(
-    () => ({
-      controller,
-      feedback,
-      showCelebration,
-      isLocked,
-      canProceed,
-      actionBarMode: "check-first",
-      hints,
-      stageProgress: null,
-      canGoBack: false,
-      goToPreviousStage: () => {},
-      reset: resetExercise,
-      handleCheck,
-      handleProceedAttempt,
-      tryShowSolution,
-      showHintDialog: () => setHintOpen(true),
-      currentStageActionBarVariant: null,
-      advanceCurrentStage: () => {},
-      canProceedStage: false,
-    }),
-    [
-      controller,
-      feedback,
-      handleCheck,
-      handleProceedAttempt,
-      hints,
-      isLocked,
-      canProceed,
-      showCelebration,
-      tryShowSolution,
-      resetExercise,
-    ],
-  );
+  const value: ExerciseSessionContextValue = {
+    controller,
+    feedback,
+    showCelebration,
+    isLocked,
+    canProceed,
+    actionBarMode: "check-first",
+    hints,
+    stageProgress: null,
+    canGoBack: false,
+    goToPreviousStage: () => {},
+    reset: resetExercise,
+    handleCheck,
+    handleProceedAttempt,
+    tryShowSolution,
+    showHintDialog: () => setHintOpen(true),
+    currentStageActionBarVariant: null,
+    advanceCurrentStage: () => {},
+    canProceedStage: false,
+  };
 
   return (
     <ExerciseSessionContext.Provider value={value}>

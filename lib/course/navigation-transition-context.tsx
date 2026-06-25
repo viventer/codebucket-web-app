@@ -1,13 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useRef,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useRef, type ReactNode } from "react";
 
 import {
   DEFAULT_TRANSITION_STATE,
@@ -203,13 +197,13 @@ export function CourseNavigationProvider({
 
   lastKnownPathname = pathname;
 
-  const setNavigationIntent = useCallback((direction: NavigationDirection) => {
+  function setNavigationIntent(direction: NavigationDirection) {
     if (typeof window !== "undefined") {
       window.sessionStorage.setItem(NAVIGATION_INTENT_STORAGE_KEY, direction);
     }
-  }, []);
+  }
 
-  const beginSectionTransition = useCallback(() => {
+  function beginSectionTransition() {
     const currentMetadata = metadataRef.current;
 
     storeOverlaySnapshot({
@@ -217,9 +211,9 @@ export function CourseNavigationProvider({
       completedTitle: currentMetadata.currentSection.title,
       nextTitle: currentMetadata.nextSection?.title ?? "",
     });
-  }, []);
+  }
 
-  const beginExerciseTransition = useCallback(() => {
+  function beginExerciseTransition() {
     const currentMetadata = metadataRef.current;
 
     storeOverlaySnapshot({
@@ -227,7 +221,7 @@ export function CourseNavigationProvider({
       completedTitle: currentMetadata.currentElement.title,
       nextTitle: currentMetadata.nextElement?.title ?? "",
     });
-  }, []);
+  }
 
   const value: CourseNavigationContextValue = {
     metadata,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useShuffledItems } from "@/lib/shuffle";
 import type { SelectCorrectContent } from "@/schemas/courseSchema";
@@ -55,71 +55,63 @@ export function useSelectCorrectExerciseController(
     };
   }, [state.phase]);
 
-  const selectAnswer = useCallback(
-    (answerId: number) => {
-      setState((current) =>
-        applySelectCorrectAnswer(current, answerId, content.correctAnswerId),
-      );
-    },
-    [content.correctAnswerId],
-  );
+  function selectAnswer(answerId: number) {
+    setState((current) =>
+      applySelectCorrectAnswer(current, answerId, content.correctAnswerId),
+    );
+  }
 
-  const getAnswerVisualState = useCallback(
-    (answerId: number) =>
-      getSelectCorrectAnswerVisualState(
-        state,
-        answerId,
-        content.correctAnswerId,
-      ),
-    [content.correctAnswerId, state],
-  );
+  function getAnswerVisualState(answerId: number) {
+    return getSelectCorrectAnswerVisualState(
+      state,
+      answerId,
+      content.correctAnswerId,
+    );
+  }
 
-  const getWrongExplanation = useCallback(
-    () =>
-      getSelectCorrectWrongExplanation(
-        state,
-        content.answers,
-        content.correctAnswerId,
-      ),
-    [content.answers, content.correctAnswerId, state],
-  );
+  function getWrongExplanation() {
+    return getSelectCorrectWrongExplanation(
+      state,
+      content.answers,
+      content.correctAnswerId,
+    );
+  }
 
-  const reset = useCallback(() => {
+  function reset() {
     if (timeoutRef.current !== null) {
       window.clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
     setState(createInitialSelectCorrectState());
     setShuffleToken((token) => token + 1);
-  }, []);
+  }
 
   const isLocked = isSelectCorrectLocked(state);
   const isComplete = isSelectCorrectComplete(state);
   const phase = state.phase;
 
-  const feedback = useMemo<ExerciseFeedback>(() => {
-    if (phase === "correct") {
-      return "success";
-    }
-    if (phase === "wrongPending" || phase === "wrongResolved") {
-      return "error";
-    }
-    return "idle";
-  }, [phase]);
+  let feedback: ExerciseFeedback = "idle";
+  if (phase === "correct") {
+    feedback = "success";
+  } else if (phase === "wrongPending" || phase === "wrongResolved") {
+    feedback = "error";
+  }
 
-  const check = useCallback((): CheckResult => {
+  function check(): CheckResult {
     return isComplete ? "success" : "warning";
-  }, [isComplete]);
+  }
 
-  const applySolution = useCallback(() => {}, []);
+  function applySolution() {}
 
-  const getHints = useCallback(() => [], []);
+  function getHints() {
+    return [];
+  }
 
-  const markAttempted = useCallback(() => {}, []);
+  function markAttempted() {}
 
-  const setFeedback = useCallback(() => {}, []);
+  function setFeedback() {}
 
-  const clearTransientFeedback = useCallback(() => {}, []);
+  function clearTransientFeedback() {}
 
   return {
     kind: "selectCorrect",

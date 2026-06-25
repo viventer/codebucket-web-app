@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 
 import { useShuffledItems } from "@/lib/shuffle";
 import type { FillGapsContent } from "@/schemas/courseSchema";
@@ -23,12 +23,8 @@ export function useFillGapsExerciseController(
   content: FillGapsContent,
   hints: string[],
 ): FillGapsExerciseController {
-  const gapIds = useMemo(() => getGapIds(content), [content]);
-
-  const initialAssignments = useMemo(
-    () => createInitialAssignments(gapIds),
-    [gapIds],
-  );
+  const gapIds = getGapIds(content);
+  const initialAssignments = createInitialAssignments(gapIds);
 
   const [assignments, setAssignments] =
     useState<Record<string, string | null>>(initialAssignments);
@@ -41,67 +37,66 @@ export function useFillGapsExerciseController(
 
   const optionOrder = useShuffledItems(content.options, shuffleToken);
 
-  const availableOptions = useMemo(
-    () => getAvailableOptions({ ...content, options: optionOrder }, assignments),
-    [assignments, content, optionOrder],
+  const availableOptions = getAvailableOptions(
+    { ...content, options: optionOrder },
+    assignments,
   );
 
-  const selectOption = useCallback(
-    (option: string) => {
-      if (!activeGapId) return;
+  function selectOption(option: string) {
+    if (!activeGapId) return;
 
-      setAssignments((prev) => {
-        const next = {
-          ...prev,
-          [activeGapId]: option,
-        };
-        setActiveGapId(getFirstEmptyGapId(gapIds, next));
-        return next;
-      });
-    },
-    [activeGapId, gapIds],
-  );
+    setAssignments((prev) => {
+      const next = {
+        ...prev,
+        [activeGapId]: option,
+      };
+      setActiveGapId(getFirstEmptyGapId(gapIds, next));
+      return next;
+    });
+  }
 
-  const clearGap = useCallback((gapId: string) => {
+  function clearGap(gapId: string) {
     setAssignments((prev) => ({
       ...prev,
       [gapId]: null,
     }));
     setActiveGapId(gapId);
-  }, []);
+  }
 
-  const markAttempted = useCallback(() => {
+  function markAttempted() {
     setHasAttemptedCheck(true);
-  }, []);
+  }
 
-  const setFeedback = useCallback((next: ExerciseFeedback) => {
+  function setFeedback(next: ExerciseFeedback) {
     setFeedbackState(next);
-  }, []);
+  }
 
-  const clearTransientFeedback = useCallback(() => {
+  function clearTransientFeedback() {
     setFeedbackState((current) =>
       current === "error" || current === "warning" ? "idle" : current,
     );
-  }, []);
+  }
 
-  const check = useCallback((): CheckResult => {
+  function check(): CheckResult {
     return evaluateFillGapsCheck(content, assignments);
-  }, [assignments, content]);
+  }
 
-  const applySolution = useCallback(() => {
+  function applySolution() {
     setAssignments(applyFillGapsSolution(content, assignments));
     setActiveGapId(null);
-  }, [assignments, content]);
+  }
 
-  const reset = useCallback(() => {
+  function reset() {
     setAssignments(initialAssignments);
     setActiveGapId(gapIds[0] ?? null);
     setHasAttemptedCheck(false);
     setFeedbackState("idle");
     setShuffleToken((token) => token + 1);
-  }, [gapIds, initialAssignments]);
+  }
 
-  const getHints = useCallback(() => hints, [hints]);
+  function getHints() {
+    return hints;
+  }
 
   return {
     kind: "fillGaps",

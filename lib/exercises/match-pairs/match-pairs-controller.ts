@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 
 import type { MatchPairItemState } from "../shared/item-glow-style";
 import { useShuffledItems } from "@/lib/shuffle";
@@ -52,14 +52,8 @@ function createInitialItemStates(
 export function useMatchPairsExerciseController(
   content: MatchPairsContent,
 ): MatchPairsExerciseController {
-  const leftSourceItems = useMemo(
-    () => buildItems(content, "left"),
-    [content],
-  );
-  const rightSourceItems = useMemo(
-    () => buildItems(content, "right"),
-    [content],
-  );
+  const leftSourceItems = buildItems(content, "left");
+  const rightSourceItems = buildItems(content, "right");
 
   const [shuffleToken, setShuffleToken] = useState(0);
   const leftItems = useShuffledItems(leftSourceItems, shuffleToken);
@@ -78,12 +72,9 @@ export function useMatchPairsExerciseController(
   const [feedback, setFeedbackState] = useState<ExerciseFeedback>("idle");
   const [isComplete, setIsComplete] = useState(false);
 
-  const allItems = useMemo(
-    () => [...leftItems, ...rightItems],
-    [leftItems, rightItems],
-  );
+  const allItems = [...leftItems, ...rightItems];
 
-  const flashError = useCallback((ids: string[]) => {
+  function flashError(ids: string[]) {
     setErrorFlashIds((prev) => new Set([...prev, ...ids]));
 
     window.setTimeout(() => {
@@ -95,131 +86,117 @@ export function useMatchPairsExerciseController(
         return next;
       });
     }, ERROR_FLASH_MS);
-  }, []);
+  }
 
-  const getItemById = useCallback(
-    (column: MatchPairColumn, id: string): MatchPairItem | undefined => {
-      const items = column === "left" ? leftItems : rightItems;
-      return items.find((item) => item.id === id);
-    },
-    [leftItems, rightItems],
-  );
+  function getItemById(
+    column: MatchPairColumn,
+    id: string,
+  ): MatchPairItem | undefined {
+    const items = column === "left" ? leftItems : rightItems;
+    return items.find((item) => item.id === id);
+  }
 
-  const isItemMatched = useCallback(
-    (itemId: string): boolean => {
-      const item = allItems.find((entry) => entry.id === itemId);
-      return item ? matchedPairIds.has(item.pairId) : false;
-    },
-    [allItems, matchedPairIds],
-  );
+  function isItemMatched(itemId: string): boolean {
+    const item = allItems.find((entry) => entry.id === itemId);
+    return item ? matchedPairIds.has(item.pairId) : false;
+  }
 
-  const selectItem = useCallback(
-    (column: MatchPairColumn, id: string) => {
-      if (isComplete) {
-        return;
-      }
+  function selectItem(column: MatchPairColumn, id: string) {
+    if (isComplete) {
+      return;
+    }
 
-      if (isItemMatched(id)) {
-        return;
-      }
+    if (isItemMatched(id)) {
+      return;
+    }
 
-      if (!selected) {
-        setSelected({ column, id });
-        setItemStates((prev) => ({
-          ...prev,
-          [id]: "selected",
-        }));
-        return;
-      }
+    if (!selected) {
+      setSelected({ column, id });
+      setItemStates((prev) => ({
+        ...prev,
+        [id]: "selected",
+      }));
+      return;
+    }
 
-      if (selected.column === column) {
-        setItemStates((prev) => {
-          const next = { ...prev };
-          if (prev[selected.id] === "selected") {
-            next[selected.id] = "idle";
-          }
-          next[id] = "selected";
-          return next;
-        });
-        setSelected({ column, id });
-        return;
-      }
-
-      const firstItem = getItemById(selected.column, selected.id);
-      const secondItem = getItemById(column, id);
-
-      if (!firstItem || !secondItem) {
-        return;
-      }
-
-      const isCorrect = firstItem.pairId === secondItem.pairId;
-
-      if (isCorrect) {
-        const nextMatched = new Set(matchedPairIds);
-        nextMatched.add(firstItem.pairId);
-
-        setMatchedPairIds(nextMatched);
-        setSelected(null);
-        setItemStates((prev) => ({
-          ...prev,
-          [firstItem.id]: "correct",
-          [secondItem.id]: "correct",
-        }));
-
-        if (nextMatched.size === content.pairs.length) {
-          setIsComplete(true);
-          setFeedbackState("success");
+    if (selected.column === column) {
+      setItemStates((prev) => {
+        const next = { ...prev };
+        if (prev[selected.id] === "selected") {
+          next[selected.id] = "idle";
         }
+        next[id] = "selected";
+        return next;
+      });
+      setSelected({ column, id });
+      return;
+    }
 
-        window.setTimeout(() => {
-          setItemStates((prev) => ({
-            ...prev,
-            [firstItem.id]: "matched",
-            [secondItem.id]: "matched",
-          }));
-        }, 300);
+    const firstItem = getItemById(selected.column, selected.id);
+    const secondItem = getItemById(column, id);
 
-        return;
-      }
+    if (!firstItem || !secondItem) {
+      return;
+    }
 
+    const isCorrect = firstItem.pairId === secondItem.pairId;
+
+    if (isCorrect) {
+      const nextMatched = new Set(matchedPairIds);
+      nextMatched.add(firstItem.pairId);
+
+      setMatchedPairIds(nextMatched);
       setSelected(null);
       setItemStates((prev) => ({
         ...prev,
-        [firstItem.id]: "idle",
-        [secondItem.id]: "idle",
+        [firstItem.id]: "correct",
+        [secondItem.id]: "correct",
       }));
-      flashError([firstItem.id, secondItem.id]);
-    },
-    [
-      content.pairs.length,
-      flashError,
-      getItemById,
-      isComplete,
-      isItemMatched,
-      matchedPairIds,
-      selected,
-    ],
-  );
 
-  const markAttempted = useCallback(() => {}, []);
+      if (nextMatched.size === content.pairs.length) {
+        setIsComplete(true);
+        setFeedbackState("success");
+      }
 
-  const setFeedback = useCallback((next: ExerciseFeedback) => {
+      window.setTimeout(() => {
+        setItemStates((prev) => ({
+          ...prev,
+          [firstItem.id]: "matched",
+          [secondItem.id]: "matched",
+        }));
+      }, 300);
+
+      return;
+    }
+
+    setSelected(null);
+    setItemStates((prev) => ({
+      ...prev,
+      [firstItem.id]: "idle",
+      [secondItem.id]: "idle",
+    }));
+    flashError([firstItem.id, secondItem.id]);
+  }
+
+  function markAttempted() {}
+
+  function setFeedback(next: ExerciseFeedback) {
     setFeedbackState(next);
-  }, []);
+  }
 
-  const clearTransientFeedback = useCallback(() => {
+  function clearTransientFeedback() {
     setFeedbackState((current) =>
       current === "error" || current === "warning" ? "idle" : current,
     );
-  }, []);
+  }
 
-  const check = useCallback((): CheckResult => {
+  function check(): CheckResult {
     return matchedPairIds.size === content.pairs.length ? "success" : "warning";
-  }, [content.pairs.length, matchedPairIds.size]);
+  }
 
-  const applySolution = useCallback(() => {}, []);
+  function applySolution() {}
 
-  const reset = useCallback(() => {
+  function reset() {
     setShuffleToken((token) => token + 1);
     setSelected(null);
     setMatchedPairIds(new Set());
@@ -227,27 +204,25 @@ export function useMatchPairsExerciseController(
     setItemStates(createInitialItemStates(leftSourceItems, rightSourceItems));
     setFeedbackState("idle");
     setIsComplete(false);
-  }, [leftSourceItems, rightSourceItems]);
+  }
 
-  const getHints = useCallback(() => [], []);
+  function getHints() {
+    return [];
+  }
 
-  const getItemState = useCallback(
-    (itemId: string): MatchPairItemState => {
-      if (matchedPairIds.size > 0) {
-        const item = allItems.find((entry) => entry.id === itemId);
-        if (item && matchedPairIds.has(item.pairId)) {
-          return itemStates[itemId] ?? "matched";
-        }
+  function getItemState(itemId: string): MatchPairItemState {
+    if (matchedPairIds.size > 0) {
+      const item = allItems.find((entry) => entry.id === itemId);
+      if (item && matchedPairIds.has(item.pairId)) {
+        return itemStates[itemId] ?? "matched";
       }
-      return itemStates[itemId] ?? "idle";
-    },
-    [allItems, itemStates, matchedPairIds],
-  );
+    }
+    return itemStates[itemId] ?? "idle";
+  }
 
-  const isErrorFlashing = useCallback(
-    (itemId: string) => errorFlashIds.has(itemId),
-    [errorFlashIds],
-  );
+  function isErrorFlashing(itemId: string) {
+    return errorFlashIds.has(itemId);
+  }
 
   return {
     kind: "matchPairs",

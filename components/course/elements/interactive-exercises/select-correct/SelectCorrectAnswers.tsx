@@ -2,7 +2,6 @@
 
 import { motion } from "motion/react";
 import { useParams } from "next/navigation";
-import { useMemo } from "react";
 
 import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
 import type {
@@ -45,19 +44,16 @@ export function SelectCorrectAnswers({
   const courseId = params.id;
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  const listAnimationKey = useMemo(() => {
-    if (phase === "correct") {
-      return "success" as const;
-    }
-    if (
-      phase === "wrongPending" ||
-      phase === "wrongDeferred" ||
-      phase === "wrongResolved"
-    ) {
-      return "error" as const;
-    }
-    return null;
-  }, [phase]);
+  let listAnimationKey: "success" | "error" | null = null;
+  if (phase === "correct") {
+    listAnimationKey = "success";
+  } else if (
+    phase === "wrongPending" ||
+    phase === "wrongDeferred" ||
+    phase === "wrongResolved"
+  ) {
+    listAnimationKey = "error";
+  }
 
   const wrongExplanation = getWrongExplanation();
 

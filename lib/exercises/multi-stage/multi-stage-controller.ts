@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 
 import { useShuffledItems } from "@/lib/shuffle";
 import type { MultiStageContent } from "@/schemas/courseSchema";
@@ -30,7 +30,6 @@ import type {
 
 import {
   createAllStageStates,
-  createStageState,
   EMPTY_FILL_GAPS_OPTIONS,
   EMPTY_SELECT_CORRECT_ANSWERS,
   type SelectCorrectStageState,
@@ -104,19 +103,16 @@ export function useMultiStageExerciseController(
     currentState.kind === "selectCorrect" ? currentShuffleToken : 0,
   );
 
-  const stageProgress = useMemo<StageProgress>(() => {
-    if (flowPhase === "retry") {
-      return {
-        current: retryQueueIndex + 1,
-        total: retryQueue.length,
-      };
-    }
-
-    return {
-      current: currentStageIndex + 1,
-      total: totalStages,
-    };
-  }, [currentStageIndex, flowPhase, retryQueue.length, retryQueueIndex, totalStages]);
+  const stageProgress: StageProgress =
+    flowPhase === "retry"
+      ? {
+          current: retryQueueIndex + 1,
+          total: retryQueue.length,
+        }
+      : {
+          current: currentStageIndex + 1,
+          total: totalStages,
+        };
 
   const feedbackTarget =
     fillGapsStage?.presentation
@@ -128,16 +124,12 @@ export function useMultiStageExerciseController(
   const fillGapsActiveGapId =
     currentState.kind === "fillGaps" ? currentState.activeGapId : null;
 
-  const availableOptions = useMemo(
-    () =>
-      fillGapsStage
-        ? getAvailableOptions(
-            { ...fillGapsStage, options: optionOrder },
-            fillGapsAssignments,
-          )
-        : [],
-    [fillGapsAssignments, fillGapsStage, optionOrder],
-  );
+  const availableOptions = fillGapsStage
+    ? getAvailableOptions(
+        { ...fillGapsStage, options: optionOrder },
+        fillGapsAssignments,
+      )
+    : [];
 
   const { clearWrongAnswerTimeout } = useMultiStageWrongAnswerTimeout(
     currentStageIndex,
@@ -146,148 +138,130 @@ export function useMultiStageExerciseController(
     setRetryQueue,
   );
 
-  const enterRetryStage = useCallback(
-    (stageIndex: number, queueIndex: number) => {
-      setFlowPhase("retry");
-      setRetryQueueIndex(queueIndex);
-      setCurrentStageIndex(stageIndex);
+  function enterRetryStage(stageIndex: number, queueIndex: number) {
+    setFlowPhase("retry");
+    setRetryQueueIndex(queueIndex);
+    setCurrentStageIndex(stageIndex);
 
-      setStageStates((prev) => {
-        const next = [...prev];
-        const stageState = next[stageIndex];
-        if (stageState?.kind !== "selectCorrect") {
-          return prev;
-        }
+    setStageStates((prev) => {
+      const next = [...prev];
+      const stageState = next[stageIndex];
+      if (stageState?.kind !== "selectCorrect") {
+        return prev;
+      }
 
-        next[stageIndex] = prepareRetryStageState(stageState);
-        return next;
-      });
+      next[stageIndex] = prepareRetryStageState(stageState);
+      return next;
+    });
 
-      setShuffleTokens((prev) => {
-        const next = [...prev];
-        next[stageIndex] = (next[stageIndex] ?? 0) + 1;
-        return next;
-      });
-    },
-    [],
-  );
+    setShuffleTokens((prev) => {
+      const next = [...prev];
+      next[stageIndex] = (next[stageIndex] ?? 0) + 1;
+      return next;
+    });
+  }
 
-  const startRetryPhase = useCallback(() => {
+  function startRetryPhase() {
     const firstRetryStage = retryQueue[0];
     if (firstRetryStage === undefined) {
       return;
     }
 
     enterRetryStage(firstRetryStage, 0);
-  }, [enterRetryStage, retryQueue]);
+  }
 
-  const updateCurrentStageState = useCallback(
-    (updater: (state: StageState) => StageState) => {
-      setStageStates((prev) => {
-        const next = [...prev];
-        next[currentStageIndex] = updater(prev[currentStageIndex]!);
-        return next;
-      });
-    },
-    [currentStageIndex],
-  );
+  function updateCurrentStageState(updater: (state: StageState) => StageState) {
+    setStageStates((prev) => {
+      const next = [...prev];
+      next[currentStageIndex] = updater(prev[currentStageIndex]!);
+      return next;
+    });
+  }
 
-  const selectAnswer = useCallback(
-    (answerId: number) => {
-      if (!selectCorrectStage || currentState.kind !== "selectCorrect") {
-        return;
+  function selectAnswer(answerId: number) {
+    if (!selectCorrectStage || currentState.kind !== "selectCorrect") {
+      return;
+    }
+
+    updateCurrentStageState((state) => {
+      if (state.kind !== "selectCorrect") {
+        return state;
       }
 
-      updateCurrentStageState((state) => {
-        if (state.kind !== "selectCorrect") {
-          return state;
-        }
+      const selectCorrect = applySelectCorrectAnswer(
+        state.selectCorrect,
+        answerId,
+        selectCorrectStage.correctAnswerId,
+      );
 
-        const selectCorrect = applySelectCorrectAnswer(
-          state.selectCorrect,
-          answerId,
-          selectCorrectStage.correctAnswerId,
-        );
+      const retryCompleted =
+        selectCorrect.attempt === "retry" && selectCorrect.phase === "correct"
+          ? true
+          : state.retryCompleted;
 
-        const retryCompleted =
-          selectCorrect.attempt === "retry" && selectCorrect.phase === "correct"
-            ? true
-            : state.retryCompleted;
+      return {
+        ...state,
+        selectCorrect,
+        retryCompleted,
+      };
+    });
+  }
 
-        return {
-          ...state,
-          selectCorrect,
-          retryCompleted,
-        };
-      });
-    },
-    [currentState.kind, selectCorrectStage, updateCurrentStageState],
-  );
+  function selectOption(option: string) {
+    if (!fillGapsStage || currentState.kind !== "fillGaps") {
+      return;
+    }
 
-  const selectOption = useCallback(
-    (option: string) => {
-      if (!fillGapsStage || currentState.kind !== "fillGaps") {
-        return;
+    const gapIds = getGapIds(fillGapsStage);
+    updateCurrentStageState((state) => {
+      if (state.kind !== "fillGaps" || !state.activeGapId) {
+        return state;
       }
 
-      const gapIds = getGapIds(fillGapsStage);
-      updateCurrentStageState((state) => {
-        if (state.kind !== "fillGaps" || !state.activeGapId) {
-          return state;
-        }
+      const assignments = {
+        ...state.assignments,
+        [state.activeGapId]: option,
+      };
 
-        const assignments = {
+      return {
+        ...state,
+        assignments,
+        activeGapId: getFirstEmptyGapId(gapIds, assignments),
+      };
+    });
+  }
+
+  function clearGap(gapId: string) {
+    updateCurrentStageState((state) => {
+      if (state.kind !== "fillGaps") {
+        return state;
+      }
+
+      return {
+        ...state,
+        assignments: {
           ...state.assignments,
-          [state.activeGapId]: option,
-        };
+          [gapId]: null,
+        },
+        activeGapId: gapId,
+      };
+    });
+  }
 
-        return {
-          ...state,
-          assignments,
-          activeGapId: getFirstEmptyGapId(gapIds, assignments),
-        };
-      });
-    },
-    [currentState.kind, fillGapsStage, updateCurrentStageState],
-  );
+  function setActiveGapId(gapId: string | null) {
+    updateCurrentStageState((state) => {
+      if (state.kind !== "fillGaps") {
+        return state;
+      }
 
-  const clearGap = useCallback(
-    (gapId: string) => {
-      updateCurrentStageState((state) => {
-        if (state.kind !== "fillGaps") {
-          return state;
-        }
+      return {
+        ...state,
+        activeGapId: gapId,
+      };
+    });
+  }
 
-        return {
-          ...state,
-          assignments: {
-            ...state.assignments,
-            [gapId]: null,
-          },
-          activeGapId: gapId,
-        };
-      });
-    },
-    [updateCurrentStageState],
-  );
-
-  const setActiveGapId = useCallback(
-    (gapId: string | null) => {
-      updateCurrentStageState((state) => {
-        if (state.kind !== "fillGaps") {
-          return state;
-        }
-
-        return {
-          ...state,
-          activeGapId: gapId,
-        };
-      });
-    },
-    [updateCurrentStageState],
-  );
-
-  const markAttempted = useCallback(() => {
+  function markAttempted() {
     updateCurrentStageState((state) => {
       if (state.kind !== "fillGaps") {
         return state;
@@ -298,19 +272,16 @@ export function useMultiStageExerciseController(
         hasAttemptedCheck: true,
       };
     });
-  }, [updateCurrentStageState]);
+  }
 
-  const setFeedback = useCallback(
-    (next: ExerciseFeedback) => {
-      updateCurrentStageState((state) => ({
-        ...state,
-        feedback: next,
-      }));
-    },
-    [updateCurrentStageState],
-  );
+  function setFeedback(next: ExerciseFeedback) {
+    updateCurrentStageState((state) => ({
+      ...state,
+      feedback: next,
+    }));
+  }
 
-  const clearTransientFeedback = useCallback(() => {
+  function clearTransientFeedback() {
     updateCurrentStageState((state) => {
       if (state.kind !== "fillGaps") {
         return state;
@@ -324,9 +295,9 @@ export function useMultiStageExerciseController(
             : state.feedback,
       };
     });
-  }, [updateCurrentStageState]);
+  }
 
-  const check = useCallback((): CheckResult => {
+  function check(): CheckResult {
     if (currentState.kind === "selectCorrect") {
       return isSelectCorrectComplete(currentState.selectCorrect)
         ? "success"
@@ -338,9 +309,9 @@ export function useMultiStageExerciseController(
     }
 
     return "warning";
-  }, [currentState, fillGapsStage]);
+  }
 
-  const applySolution = useCallback(() => {
+  function applySolution() {
     if (!fillGapsStage || currentState.kind !== "fillGaps") {
       return;
     }
@@ -356,9 +327,9 @@ export function useMultiStageExerciseController(
         activeGapId: null,
       };
     });
-  }, [currentState.kind, fillGapsStage, updateCurrentStageState]);
+  }
 
-  const reset = useCallback(() => {
+  function reset() {
     clearWrongAnswerTimeout();
     setCurrentStageIndex(0);
     setStageStates(createAllStageStates(content));
@@ -366,9 +337,9 @@ export function useMultiStageExerciseController(
     setFlowPhase("main");
     setRetryQueue([]);
     setRetryQueueIndex(0);
-  }, [clearWrongAnswerTimeout, content]);
+  }
 
-  const advanceStage = useCallback(() => {
+  function advanceStage() {
     if (flowPhase === "retry") {
       if (retryQueueIndex < retryQueue.length - 1) {
         const nextQueueIndex = retryQueueIndex + 1;
@@ -386,49 +357,37 @@ export function useMultiStageExerciseController(
     if (retryQueue.length > 0) {
       startRetryPhase();
     }
-  }, [
-    currentStageIndex,
-    enterRetryStage,
-    flowPhase,
-    retryQueue,
-    retryQueueIndex,
-    startRetryPhase,
-    totalStages,
-  ]);
+  }
 
-  const goToPreviousStage = useCallback(() => {
+  function goToPreviousStage() {
     if (flowPhase === "retry" || currentStageIndex === 0) {
       return;
     }
     setCurrentStageIndex((index) => index - 1);
-  }, [currentStageIndex, flowPhase]);
+  }
 
-  const getHints = useCallback(() => hints, [hints]);
+  function getHints() {
+    return hints;
+  }
 
   const selectCorrectPersisted =
     currentState.kind === "selectCorrect" ? currentState.selectCorrect : null;
 
-  const isCurrentStageComplete = useMemo(
-    () => deriveIsCurrentStageComplete(currentState),
-    [currentState],
-  );
+  const isCurrentStageComplete = deriveIsCurrentStageComplete(currentState);
 
-  const isExerciseComplete = useMemo(() => {
-    if (retryQueue.length > 0) {
-      const allRetriesDone = retryQueue.every((stageIndex) => {
-        const stageState = stageStates[stageIndex];
-        return (
-          stageState?.kind === "selectCorrect" && stageState.retryCompleted
-        );
-      });
+  let isExerciseComplete = deriveIsExerciseComplete(stageStates);
+  if (retryQueue.length > 0) {
+    const allRetriesDone = retryQueue.every((stageIndex) => {
+      const stageState = stageStates[stageIndex];
+      return (
+        stageState?.kind === "selectCorrect" && stageState.retryCompleted
+      );
+    });
 
-      if (!allRetriesDone) {
-        return false;
-      }
+    if (!allRetriesDone) {
+      isExerciseComplete = false;
     }
-
-    return deriveIsExerciseComplete(stageStates);
-  }, [retryQueue, stageStates]);
+  }
 
   const feedback = deriveMultiStageFeedback(
     currentState,
@@ -441,22 +400,19 @@ export function useMultiStageExerciseController(
     selectCorrectPersisted,
   );
 
-  const getAnswerVisualState = useCallback(
-    (answerId: number) => {
-      if (!selectCorrectStage || !selectCorrectPersisted) {
-        return "idle" as const;
-      }
+  function getAnswerVisualState(answerId: number) {
+    if (!selectCorrectStage || !selectCorrectPersisted) {
+      return "idle" as const;
+    }
 
-      return getSelectCorrectAnswerVisualState(
-        selectCorrectPersisted,
-        answerId,
-        selectCorrectStage.correctAnswerId,
-      );
-    },
-    [selectCorrectPersisted, selectCorrectStage],
-  );
+    return getSelectCorrectAnswerVisualState(
+      selectCorrectPersisted,
+      answerId,
+      selectCorrectStage.correctAnswerId,
+    );
+  }
 
-  const getWrongExplanation = useCallback(() => {
+  function getWrongExplanation() {
     if (!selectCorrectStage || !selectCorrectPersisted) {
       return null;
     }
@@ -466,7 +422,7 @@ export function useMultiStageExerciseController(
       selectCorrectStage.answers,
       selectCorrectStage.correctAnswerId,
     );
-  }, [selectCorrectPersisted, selectCorrectStage]);
+  }
 
   return {
     kind: "multiStage",
