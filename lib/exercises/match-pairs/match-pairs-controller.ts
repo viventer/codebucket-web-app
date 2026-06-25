@@ -12,6 +12,14 @@ import type {
   MatchPairsExerciseController,
 } from "../shared/types";
 
+import {
+  buildMatchPairItems,
+  createInitialMatchPairItemStates,
+  getMatchPairItemById,
+  getMatchPairItemState,
+  isMatchPairsComplete,
+} from "./match-pairs-state";
+
 const ERROR_FLASH_MS = 600;
 
 export type MatchPairColumn = "left" | "right";
@@ -27,33 +35,11 @@ export type MatchPairSelection = {
   id: string;
 };
 
-function buildItems(
-  content: MatchPairsContent,
-  column: MatchPairColumn,
-): MatchPairItem[] {
-  return content.pairs.map((pair, index) => ({
-    id: `${column}-${index}`,
-    text: column === "left" ? pair.left : pair.right,
-    pairId: `pair-${index}`,
-  }));
-}
-
-function createInitialItemStates(
-  leftItems: MatchPairItem[],
-  rightItems: MatchPairItem[],
-): Record<string, MatchPairItemState> {
-  const states: Record<string, MatchPairItemState> = {};
-  for (const item of [...leftItems, ...rightItems]) {
-    states[item.id] = "idle";
-  }
-  return states;
-}
-
 export function useMatchPairsExerciseController(
   content: MatchPairsContent,
 ): MatchPairsExerciseController {
-  const leftSourceItems = buildItems(content, "left");
-  const rightSourceItems = buildItems(content, "right");
+  const leftSourceItems = buildMatchPairItems(content, "left");
+  const rightSourceItems = buildMatchPairItems(content, "right");
 
   const [shuffleToken, setShuffleToken] = useState(0);
   const leftItems = useShuffledItems(leftSourceItems, shuffleToken);
@@ -65,7 +51,7 @@ export function useMatchPairsExerciseController(
   );
   const [itemStates, setItemStates] = useState<
     Record<string, MatchPairItemState>
-  >(() => createInitialItemStates(leftSourceItems, rightSourceItems));
+  >(() => createInitialMatchPairItemStates(leftSourceItems, rightSourceItems));
   const [errorFlashIds, setErrorFlashIds] = useState<Set<string>>(
     () => new Set(),
   );
@@ -86,14 +72,6 @@ export function useMatchPairsExerciseController(
         return next;
       });
     }, ERROR_FLASH_MS);
-  }
-
-  function getItemById(
-    column: MatchPairColumn,
-    id: string,
-  ): MatchPairItem | undefined {
-    const items = column === "left" ? leftItems : rightItems;
-    return items.find((item) => item.id === id);
   }
 
   function isItemMatched(itemId: string): boolean {
@@ -132,8 +110,14 @@ export function useMatchPairsExerciseController(
       return;
     }
 
-    const firstItem = getItemById(selected.column, selected.id);
-    const secondItem = getItemById(column, id);
+    const firstItem = getMatchPairItemById(
+      selected.column === "left" ? leftItems : rightItems,
+      selected.id,
+    );
+    const secondItem = getMatchPairItemById(
+      column === "left" ? leftItems : rightItems,
+      id,
+    );
 
     if (!firstItem || !secondItem) {
       return;
@@ -153,7 +137,7 @@ export function useMatchPairsExerciseController(
         [secondItem.id]: "correct",
       }));
 
-      if (nextMatched.size === content.pairs.length) {
+      if (isMatchPairsComplete(nextMatched, content.pairs.length)) {
         setIsComplete(true);
         setFeedbackState("success");
       }
@@ -191,7 +175,9 @@ export function useMatchPairsExerciseController(
   }
 
   function check(): CheckResult {
-    return matchedPairIds.size === content.pairs.length ? "success" : "warning";
+    return isMatchPairsComplete(matchedPairIds, content.pairs.length)
+      ? "success"
+      : "warning";
   }
 
   function applySolution() {}
@@ -201,7 +187,7 @@ export function useMatchPairsExerciseController(
     setSelected(null);
     setMatchedPairIds(new Set());
     setErrorFlashIds(new Set());
-    setItemStates(createInitialItemStates(leftSourceItems, rightSourceItems));
+    setItemStates(createInitialMatchPairItemStates(leftSourceItems, rightSourceItems));
     setFeedbackState("idle");
     setIsComplete(false);
   }
@@ -211,13 +197,12 @@ export function useMatchPairsExerciseController(
   }
 
   function getItemState(itemId: string): MatchPairItemState {
-    if (matchedPairIds.size > 0) {
-      const item = allItems.find((entry) => entry.id === itemId);
-      if (item && matchedPairIds.has(item.pairId)) {
-        return itemStates[itemId] ?? "matched";
-      }
-    }
-    return itemStates[itemId] ?? "idle";
+    return getMatchPairItemState(
+      itemId,
+      allItems,
+      matchedPairIds,
+      itemStates,
+    );
   }
 
   function isErrorFlashing(itemId: string) {

@@ -8,6 +8,7 @@ import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionConte
 import type { MultiStageContent } from "@/schemas/courseSchema";
 
 import { FillGapsWorkspace } from "./FillGapsWorkspace";
+import { MatchPairsBoard } from "./match-pairs/MatchPairsBoard";
 import {
   StagePresentation,
   StagePreviewPanel,
@@ -47,6 +48,28 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
   } = controller;
 
   const stageCommand = currentStage.command ?? content.command;
+
+  if (currentStage.type === "matchPairs") {
+    return (
+      <div className="flex flex-col gap-4 sm:gap-8">
+        <h3 className="text-base font-medium">{stageCommand}</h3>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${currentStageIndex}-${flowPhase}`}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25 }}
+            className="flex flex-col gap-4 sm:gap-8"
+          >
+            <MatchPairsBoard controller={controller} />
+            <ExerciseFeedbackMessage />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    );
+  }
 
   if (currentStage.type === "selectCorrect") {
     const persisted = selectCorrectPersisted ?? {

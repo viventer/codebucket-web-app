@@ -19,7 +19,7 @@ export const mockUser: User = {
         "what-is-html",
         "first-website",
         "page-structure",
-        "arrange-page-structure",
+        "html-structure",
       ],
     },
   ],

@@ -14,6 +14,12 @@ import {
   getStageFeedbackTarget,
 } from "../fill-gaps/fill-gaps-utils";
 import {
+  buildMatchPairItems,
+  getMatchPairItemById,
+  getMatchPairItemState,
+  isMatchPairsComplete,
+} from "../match-pairs/match-pairs-state";
+import {
   applySelectCorrectAnswer,
   createInitialSelectCorrectRetryState,
   getSelectCorrectAnswerVisualState,
@@ -44,9 +50,15 @@ import {
 import {
   getStageActionBarVariant,
   isFillGapsStage,
+  isMatchPairsStage,
   isSelectCorrectStage,
 } from "./stage-utils";
 import { useMultiStageWrongAnswerTimeout } from "./use-wrong-answer-timeout";
+
+const MATCH_PAIRS_ERROR_FLASH_MS = 600;
+
+const EMPTY_MATCH_PAIRS_ITEMS: readonly { id: string; text: string; pairId: string }[] =
+  [];
 
 function prepareRetryStageState(state: SelectCorrectStageState): SelectCorrectStageState {
   return {
@@ -86,6 +98,11 @@ export function useMultiStageExerciseController(
       ? currentStage
       : null;
 
+  const matchPairsStage =
+    currentState.kind === "matchPairs" && isMatchPairsStage(currentStage)
+      ? currentStage
+      : null;
+
   const selectCorrectStage =
     currentState.kind === "selectCorrect" && isSelectCorrectStage(currentStage)
       ? currentStage
@@ -102,6 +119,24 @@ export function useMultiStageExerciseController(
     selectCorrectStage?.answers ?? EMPTY_SELECT_CORRECT_ANSWERS,
     currentState.kind === "selectCorrect" ? currentShuffleToken : 0,
   );
+
+  const matchPairsLeftSource = matchPairsStage
+    ? buildMatchPairItems(matchPairsStage, "left")
+    : EMPTY_MATCH_PAIRS_ITEMS;
+  const matchPairsRightSource = matchPairsStage
+    ? buildMatchPairItems(matchPairsStage, "right")
+    : EMPTY_MATCH_PAIRS_ITEMS;
+
+  const leftItems = useShuffledItems(
+    matchPairsLeftSource,
+    currentState.kind === "matchPairs" ? currentShuffleToken : 0,
+  );
+  const rightItems = useShuffledItems(
+    matchPairsRightSource,
+    currentState.kind === "matchPairs" ? currentShuffleToken : 0,
+  );
+
+  const matchPairsAllItems = [...leftItems, ...rightItems];
 
   const stageProgress: StageProgress =
     flowPhase === "retry"
@@ -176,6 +211,181 @@ export function useMultiStageExerciseController(
       next[currentStageIndex] = updater(prev[currentStageIndex]!);
       return next;
     });
+  }
+
+  function selectItem(column: "left" | "right", id: string) {
+    if (!matchPairsStage || currentState.kind !== "matchPairs") {
+      return;
+    }
+
+    if (currentState.isComplete) {
+      return;
+    }
+
+    const item = matchPairsAllItems.find((entry) => entry.id === id);
+    if (item && currentState.matchedPairIds.has(item.pairId)) {
+      return;
+    }
+
+    if (!currentState.selected) {
+      updateCurrentStageState((state) => {
+        if (state.kind !== "matchPairs") {
+          return state;
+        }
+
+        return {
+          ...state,
+          selected: { column, id },
+          itemStates: {
+            ...state.itemStates,
+            [id]: "selected",
+          },
+        };
+      });
+      return;
+    }
+
+    if (currentState.selected.column === column) {
+      updateCurrentStageState((state) => {
+        if (state.kind !== "matchPairs") {
+          return state;
+        }
+
+        const nextItemStates = { ...state.itemStates };
+        if (state.itemStates[state.selected!.id] === "selected") {
+          nextItemStates[state.selected!.id] = "idle";
+        }
+        nextItemStates[id] = "selected";
+
+        return {
+          ...state,
+          selected: { column, id },
+          itemStates: nextItemStates,
+        };
+      });
+      return;
+    }
+
+    const firstItem = getMatchPairItemById(
+      currentState.selected.column === "left" ? leftItems : rightItems,
+      currentState.selected.id,
+    );
+    const secondItem = getMatchPairItemById(
+      column === "left" ? leftItems : rightItems,
+      id,
+    );
+
+    if (!firstItem || !secondItem) {
+      return;
+    }
+
+    const isCorrect = firstItem.pairId === secondItem.pairId;
+
+    if (isCorrect) {
+      const nextMatched = new Set(currentState.matchedPairIds);
+      nextMatched.add(firstItem.pairId);
+      const allMatched = isMatchPairsComplete(
+        nextMatched,
+        matchPairsStage.pairs.length,
+      );
+
+      updateCurrentStageState((state) => {
+        if (state.kind !== "matchPairs") {
+          return state;
+        }
+
+        return {
+          ...state,
+          matchedPairIds: nextMatched,
+          selected: null,
+          isComplete: allMatched,
+          feedback: allMatched ? "success" : state.feedback,
+          itemStates: {
+            ...state.itemStates,
+            [firstItem.id]: "correct",
+            [secondItem.id]: "correct",
+          },
+        };
+      });
+
+      window.setTimeout(() => {
+        updateCurrentStageState((state) => {
+          if (state.kind !== "matchPairs") {
+            return state;
+          }
+
+          return {
+            ...state,
+            itemStates: {
+              ...state.itemStates,
+              [firstItem.id]: "matched",
+              [secondItem.id]: "matched",
+            },
+          };
+        });
+      }, 300);
+
+      return;
+    }
+
+    updateCurrentStageState((state) => {
+      if (state.kind !== "matchPairs") {
+        return state;
+      }
+
+      const nextErrorFlashIds = new Set(state.errorFlashIds);
+      nextErrorFlashIds.add(firstItem.id);
+      nextErrorFlashIds.add(secondItem.id);
+
+      return {
+        ...state,
+        selected: null,
+        errorFlashIds: nextErrorFlashIds,
+        itemStates: {
+          ...state.itemStates,
+          [firstItem.id]: "idle",
+          [secondItem.id]: "idle",
+        },
+      };
+    });
+
+    window.setTimeout(() => {
+      updateCurrentStageState((state) => {
+        if (state.kind !== "matchPairs") {
+          return state;
+        }
+
+        const nextErrorFlashIds = new Set(state.errorFlashIds);
+        nextErrorFlashIds.delete(firstItem.id);
+        nextErrorFlashIds.delete(secondItem.id);
+
+        return {
+          ...state,
+          errorFlashIds: nextErrorFlashIds,
+        };
+      });
+    }, MATCH_PAIRS_ERROR_FLASH_MS);
+  }
+
+  function getItemState(itemId: string) {
+    if (currentState.kind !== "matchPairs") {
+      return "idle" as const;
+    }
+
+    return getMatchPairItemState(
+      itemId,
+      matchPairsAllItems,
+      currentState.matchedPairIds,
+      currentState.itemStates,
+    );
+  }
+
+  function isErrorFlashing(itemId: string) {
+    if (currentState.kind !== "matchPairs") {
+      return false;
+    }
+
+    return currentState.errorFlashIds.has(itemId);
   }
 
   function selectAnswer(answerId: number) {
@@ -304,6 +514,10 @@ export function useMultiStageExerciseController(
         : "warning";
     }
 
+    if (currentState.kind === "matchPairs") {
+      return currentState.isComplete ? "success" : "warning";
+    }
+
     if (currentState.kind === "fillGaps" && fillGapsStage) {
       return evaluateFillGapsCheck(fillGapsStage, currentState.assignments);
     }
@@ -424,6 +638,15 @@ export function useMultiStageExerciseController(
     );
   }
 
+  const matchPairsSelected =
+    currentState.kind === "matchPairs" ? currentState.selected : null;
+  const matchPairsMatchedPairIds =
+    currentState.kind === "matchPairs"
+      ? currentState.matchedPairIds
+      : new Set<string>();
+  const matchPairsIsComplete =
+    currentState.kind === "matchPairs" ? currentState.isComplete : false;
+
   return {
     kind: "multiStage",
     content,
@@ -442,6 +665,14 @@ export function useMultiStageExerciseController(
     selectOption,
     clearGap,
     setActiveGapId,
+    leftItems,
+    rightItems,
+    selected: matchPairsSelected,
+    matchedPairIds: matchPairsMatchedPairIds,
+    isComplete: matchPairsIsComplete,
+    selectItem,
+    getItemState,
+    isErrorFlashing,
     selectCorrectPersisted,
     shuffledSelectCorrectAnswers,
     selectAnswer,

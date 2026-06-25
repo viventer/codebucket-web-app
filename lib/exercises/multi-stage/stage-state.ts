@@ -1,14 +1,24 @@
-import type { FillGapsStage, MultiStageContent, MultiStageStage } from "@/schemas/courseSchema";
+import type {
+  FillGapsStage,
+  MatchPairsStage,
+  MultiStageContent,
+  MultiStageStage,
+} from "@/schemas/courseSchema";
 
 import {
   createInitialAssignments,
   getGapIds,
 } from "../fill-gaps/fill-gaps-utils";
 import {
+  buildMatchPairItems,
+  createInitialMatchPairItemStates,
+} from "../match-pairs/match-pairs-state";
+import {
   createInitialSelectCorrectState,
   type SelectCorrectPersistedState,
 } from "../select-correct/select-correct-state";
-import type { ExerciseFeedback } from "../shared/types";
+import type { MatchPairItemState } from "../shared/item-glow-style";
+import type { ExerciseFeedback, MatchPairSelection } from "../shared/types";
 
 export const EMPTY_FILL_GAPS_OPTIONS: readonly string[] = [];
 export const EMPTY_SELECT_CORRECT_ANSWERS: readonly {
@@ -32,7 +42,20 @@ export type SelectCorrectStageState = {
   retryCompleted: boolean;
 };
 
-export type StageState = FillGapsStageState | SelectCorrectStageState;
+export type MatchPairsStageState = {
+  kind: "matchPairs";
+  selected: MatchPairSelection | null;
+  matchedPairIds: Set<string>;
+  itemStates: Record<string, MatchPairItemState>;
+  errorFlashIds: Set<string>;
+  isComplete: boolean;
+  feedback: ExerciseFeedback;
+};
+
+export type StageState =
+  | FillGapsStageState
+  | SelectCorrectStageState
+  | MatchPairsStageState;
 
 export function createFillGapsStageState(stage: FillGapsStage): FillGapsStageState {
   const gapIds = getGapIds(stage);
@@ -45,9 +68,30 @@ export function createFillGapsStageState(stage: FillGapsStage): FillGapsStageSta
   };
 }
 
+export function createMatchPairsStageState(
+  stage: MatchPairsStage,
+): MatchPairsStageState {
+  const leftItems = buildMatchPairItems(stage, "left");
+  const rightItems = buildMatchPairItems(stage, "right");
+
+  return {
+    kind: "matchPairs",
+    selected: null,
+    matchedPairIds: new Set(),
+    itemStates: createInitialMatchPairItemStates(leftItems, rightItems),
+    errorFlashIds: new Set(),
+    isComplete: false,
+    feedback: "idle",
+  };
+}
+
 export function createStageState(stage: MultiStageStage): StageState {
   if (stage.type === "fillGaps") {
     return createFillGapsStageState(stage);
+  }
+
+  if (stage.type === "matchPairs") {
+    return createMatchPairsStageState(stage);
   }
 
   return {

@@ -1,11 +1,11 @@
 "use client";
 
-import type { MatchPairsExerciseController } from "@/lib/exercises/shared/types";
+import type { MatchPairsControllerState } from "@/lib/exercises/shared/types";
 
 import { MatchPairItem } from "./MatchPairItem";
 
 type MatchPairsBoardProps = {
-  controller: MatchPairsExerciseController;
+  controller: MatchPairsControllerState;
 };
 
 export function MatchPairsBoard({ controller }: MatchPairsBoardProps) {

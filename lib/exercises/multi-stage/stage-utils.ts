@@ -1,5 +1,6 @@
 import type {
   FillGapsStage,
+  MatchPairsStage,
   MultiStageStage,
   SelectCorrectStage,
 } from "@/schemas/courseSchema";
@@ -16,8 +17,14 @@ export function isSelectCorrectStage(
   return stage.type === "selectCorrect";
 }
 
+export function isMatchPairsStage(
+  stage: MultiStageStage,
+): stage is MatchPairsStage {
+  return stage.type === "matchPairs";
+}
+
 export function getStageActionBarVariant(
   stage: MultiStageStage,
 ): StageActionBarVariant {
-  return stage.type === "selectCorrect" ? "gated" : "check";
+  return stage.type === "fillGaps" ? "check" : "gated";
 }

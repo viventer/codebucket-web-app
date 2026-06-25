@@ -151,20 +151,27 @@ export const fillGapsStageSchema = z.object({
   typography: z.enum(["default", "large"]).optional(),
 });
 
+export const matchPairSchema = z.object({
+  left: z.string().min(1),
+  right: z.string().min(1),
+});
+
+export const matchPairsStageSchema = z.object({
+  type: z.literal("matchPairs"),
+  command: z.string().min(1).optional(),
+  pairs: z.array(matchPairSchema).min(2),
+});
+
 export const multiStageStageSchema = z.discriminatedUnion("type", [
   selectCorrectStageSchema,
   fillGapsStageSchema,
+  matchPairsStageSchema,
 ]);
 
 export const multiStageContentSchema = z.object({
   ...interactiveExerciseBaseSchema,
   type: z.literal("multiStage"),
   stages: z.array(multiStageStageSchema).min(2),
-});
-
-export const matchPairSchema = z.object({
-  left: z.string().min(1),
-  right: z.string().min(1),
 });
 
 export const matchPairsContentSchema = z.object({
@@ -222,6 +229,7 @@ export type SelectCorrectPrompt = z.infer<typeof selectCorrectPromptSchema>;
 export type SelectCorrectContent = z.infer<typeof selectCorrectContentSchema>;
 export type SelectCorrectStage = z.infer<typeof selectCorrectStageSchema>;
 export type FillGapsStage = z.infer<typeof fillGapsStageSchema>;
+export type MatchPairsStage = z.infer<typeof matchPairsStageSchema>;
 export type MultiStageStage = z.infer<typeof multiStageStageSchema>;
 export type MultiStageContent = z.infer<typeof multiStageContentSchema>;
 export type MatchPairsContent = z.infer<typeof matchPairsContentSchema>;

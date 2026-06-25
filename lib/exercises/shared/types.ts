@@ -74,6 +74,11 @@ export type FillCodeExerciseController = ExerciseController &
 
 export type MatchPairsColumn = "left" | "right";
 
+export type MatchPairSelection = {
+  column: MatchPairsColumn;
+  id: string;
+};
+
 export type MatchPairsItem = {
   id: string;
   text: string;
@@ -83,7 +88,7 @@ export type MatchPairsItem = {
 export interface MatchPairsControllerState {
   leftItems: MatchPairsItem[];
   rightItems: MatchPairsItem[];
-  selected: { column: MatchPairsColumn; id: string } | null;
+  selected: MatchPairSelection | null;
   matchedPairIds: Set<string>;
   isComplete: boolean;
   selectItem: (column: MatchPairsColumn, id: string) => void;
@@ -135,6 +140,7 @@ export interface MultiStageControllerState {
 
 export type MultiStageExerciseController = ExerciseController &
   FillGapsControllerState &
+  MatchPairsControllerState &
   MultiStageControllerState & {
     kind: "multiStage";
   };

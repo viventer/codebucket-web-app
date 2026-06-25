@@ -205,112 +205,111 @@
           "order": 4
         },
         {
-          "id": "arrange-page-structure",
+          "id": "html-structure",
           "type": "interactiveExercise",
           "content": {
+            "title": "Struktura HTML",
+            "description": "Dopasuj tagi HTML do ich znaczenia, a następnie ułóż podstawową strukturę dokumentu.",
+            "command": "Naciśnij pary.",
+            "type": "multiStage",
             "hints": [
               "<html> to tag w którym umieszczamy cały dokument HTML.",
               "<head> to tag w którym zamieszczamy informacje dla przeglądarki.",
               "<body> to tag w którym zamieszczamy treść strony."
             ],
-            "title": "Ułóż strukturę strony",
-            "description": "Ułóż podstawową strukturę dokumentu HTML, wstawiając brakujące tagi otwierające.",
-            "command": "Wybierz odpowiednie tagi, aby uzupełnić strukturę strony.",
-            "type": "fillGaps",
-            "language": "html",
-            "lines": [
+            "stages": [
               {
-                "kind": "gap",
-                "id": "doctype-gap",
-                "indent": 0,
-                "answer": "<!DOCTYPE html>"
+                "type": "matchPairs",
+                "command": "Naciśnij pary.",
+                "pairs": [
+                  {
+                    "left": "<head>",
+                    "right": "Informacje istotne dla przeglądarki"
+                  },
+                  {
+                    "left": "<body>",
+                    "right": "Widoczna zawartość strony"
+                  },
+                  {
+                    "left": "<html>",
+                    "right": "Pojemnik na cały kod strony"
+                  },
+                  {
+                    "left": "<!DOCTYPE html>",
+                    "right": "Deklaracja typu dokumentu"
+                  }
+                ]
               },
               {
-                "kind": "gap",
-                "id": "html-open",
-                "indent": 0,
-                "answer": "<html>"
-              },
-              {
-                "kind": "gap",
-                "id": "head-open",
-                "indent": 1,
-                "answer": "<head>"
-              },
-              {
-                "kind": "code",
-                "text": "<title>tytuł strony</title>",
-                "indent": 2
-              },
-              {
-                "kind": "autoClose",
-                "id": "head-close",
-                "indent": 1,
-                "pairedGapId": "head-open"
-              },
-              {
-                "kind": "gap",
-                "id": "body-open",
-                "indent": 1,
-                "answer": "<body>"
-              },
-              {
-                "kind": "code",
-                "text": "<h1>siema</h1>",
-                "indent": 2
-              },
-              {
-                "kind": "autoClose",
-                "id": "body-close",
-                "indent": 1,
-                "pairedGapId": "body-open"
-              },
-              {
-                "kind": "autoClose",
-                "id": "html-close",
-                "indent": 0,
-                "pairedGapId": "html-open"
+                "type": "fillGaps",
+                "command": "Wybierz odpowiednie tagi, aby uzupełnić strukturę strony.",
+                "language": "html",
+                "lines": [
+                  {
+                    "kind": "gap",
+                    "id": "doctype-gap",
+                    "indent": 0,
+                    "answer": "<!DOCTYPE html>"
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "html-open",
+                    "indent": 0,
+                    "answer": "<html>"
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "head-open",
+                    "indent": 1,
+                    "answer": "<head>"
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<title>tytuł strony</title>",
+                    "indent": 2
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "head-close",
+                    "indent": 1,
+                    "pairedGapId": "head-open"
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "body-open",
+                    "indent": 1,
+                    "answer": "<body>"
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<h1>siema</h1>",
+                    "indent": 2
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "body-close",
+                    "indent": 1,
+                    "pairedGapId": "body-open"
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "html-close",
+                    "indent": 0,
+                    "pairedGapId": "html-open"
+                  }
+                ],
+                "options": [
+                  "<html>",
+                  "<body>",
+                  "<head>",
+                  "<content>",
+                  "<header>",
+                  "<!DOCTYPE html>"
+                ]
               }
-            ],
-            "options": [
-              "<html>",
-              "<body>",
-              "<head>",
-              "<content>",
-              "<header>",
-              "<!DOCTYPE html>"
             ]
           },
           "order": 5
-        },
-        {
-          "id": "tags-meaning-in-structure",
-          "type": "interactiveExercise",
-          "content": {
-            "title": "Znaczenie tagów w strukturze strony",
-            "description": "Dopasuj tag HTML do jego znaczenia w strukturze dokumentu.",
-            "command": "Naciśnij pary.",
-            "type": "matchPairs",
-            "pairs": [
-              {
-                "left": "<head>",
-                "right": "Informacje istotne dla przeglądarki"
-              },
-              {
-                "left": "<body>",
-                "right": "Widoczna zawartość strony"
-              },
-              {
-                "left": "<html>",
-                "right": "Pojemnik na cały kod strony"
-              },
-              {
-                "left": "<!DOCTYPE html>",
-                "right": "Deklaracja typu dokumentu"
-              }
-            ]
-          },
-          "order": 6
         },
         {
           "id": "live-server-basic-tags",
@@ -320,7 +319,7 @@
             "duration": 3,
             "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d"
           },
-          "order": 7
+          "order": 6
         },
         {
           "id": "buckets-website-prettier",
@@ -331,7 +330,7 @@
             "starterCode": [],
             "finalCode": []
           },
-          "order": 8
+          "order": 7
         },
         {
           "id": "complete-tags",
@@ -454,7 +453,7 @@
               "<h7>"
             ]
           },
-          "order": 9
+          "order": 8
         },
         {
           "id": "song",
@@ -464,7 +463,7 @@
             "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
             "sampleSolution": []
           },
-          "order": 10
+          "order": 9
         },
         {
           "id": "images",
@@ -475,7 +474,7 @@
             "starterCode": [],
             "finalCode": []
           },
-          "order": 11
+          "order": 10
         },
         {
           "id": "complete-path",
@@ -673,7 +672,7 @@
               }
             ]
           },
-          "order": 12
+          "order": 11
         },
         {
           "id": "comments",
@@ -683,7 +682,7 @@
             "duration": 1,
             "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d"
           },
-          "order": 13
+          "order": 12
         },
         {
           "id": "lists-emmet",
@@ -694,7 +693,7 @@
             "starterCode": [],
             "finalCode": []
           },
-          "order": 14
+          "order": 13
         },
         {
           "id": "create-list",
@@ -816,7 +815,7 @@
               "<li>"
             ]
           },
-          "order": 15
+          "order": 14
         },
         {
           "id": "tables",
@@ -827,7 +826,7 @@
             "starterCode": [],
             "finalCode": []
           },
-          "order": 16
+          "order": 15
         },
         {
           "id": "reproduce-table",
@@ -1044,7 +1043,7 @@
               }
             ]
           },
-          "order": 17
+          "order": 16
         },
         {
           "id": "video-audio",
@@ -1055,7 +1054,7 @@
             "starterCode": [],
             "finalCode": []
           },
-          "order": 18
+          "order": 17
         },
         {
           "id": "use-knowledge-in-practice",
@@ -1065,7 +1064,7 @@
             "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
             "sampleSolution": []
           },
-          "order": 19
+          "order": 18
         }
       ],
       "cheatsheets": [""]

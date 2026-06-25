@@ -21,6 +21,10 @@ export function isStageSatisfied(state: StageState): boolean {
     return isFillGapsStagePassed(state.feedback);
   }
 
+  if (state.kind === "matchPairs") {
+    return state.isComplete;
+  }
+
   if (state.kind === "selectCorrect") {
     if (
       state.selectCorrect.attempt === "retry" &&
@@ -53,6 +57,10 @@ export function deriveIsCurrentStageComplete(state: StageState): boolean {
     return isFillGapsStagePassed(state.feedback);
   }
 
+  if (state.kind === "matchPairs") {
+    return state.isComplete;
+  }
+
   return false;
 }
 
@@ -61,7 +69,7 @@ export function deriveMultiStageFeedback(
   selectCorrectPersisted: SelectCorrectPersistedState | null,
   isLastStage: boolean,
 ): ExerciseFeedback {
-  if (state.kind === "fillGaps") {
+  if (state.kind === "fillGaps" || state.kind === "matchPairs") {
     return state.feedback;
   }
 
