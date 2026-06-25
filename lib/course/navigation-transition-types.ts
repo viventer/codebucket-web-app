@@ -1,4 +1,8 @@
+import type { CourseElement } from "@/schemas/courseSchema";
+
 export type NavigationDirection = "forward" | "back" | "neutral";
+
+export type TransitionOverlayVariant = "section" | "exercise";
 
 export type CourseNavigationItem = {
   sectionId: string;
@@ -12,10 +16,18 @@ export type CourseSectionRef = {
   order: number;
 };
 
+export type CourseElementNavRef = {
+  id: string;
+  title: string;
+  type: CourseElement["type"];
+};
+
 export type CourseNavigationMetadata = {
   items: CourseNavigationItem[];
   currentIndex: number;
   currentSection: CourseSectionRef;
+  currentElement: CourseElementNavRef;
+  nextElement: { id: string; title: string } | null;
   prevSection: CourseSectionRef | null;
   nextSection: CourseSectionRef | null;
   isNextSectionChange: boolean;
@@ -24,22 +36,18 @@ export type CourseNavigationMetadata = {
 
 export type NavigationTransitionState = {
   direction: NavigationDirection;
-  isSectionBoundary: boolean;
-  showSectionOverlay: boolean;
-  completedSectionTitle: string;
-  completedSectionOrder: number;
-  sectionOverlayTitle: string;
-  sectionOverlayOrder: number;
+  showTransitionOverlay: boolean;
+  overlayVariant: TransitionOverlayVariant | null;
+  overlayCompletedTitle: string;
+  overlayNextTitle: string;
   boundaryKey: string;
 };
 
 export const DEFAULT_TRANSITION_STATE: NavigationTransitionState = {
   direction: "neutral",
-  isSectionBoundary: false,
-  showSectionOverlay: false,
-  completedSectionTitle: "",
-  completedSectionOrder: 0,
-  sectionOverlayTitle: "",
-  sectionOverlayOrder: 0,
+  showTransitionOverlay: false,
+  overlayVariant: null,
+  overlayCompletedTitle: "",
+  overlayNextTitle: "",
   boundaryKey: "",
 };

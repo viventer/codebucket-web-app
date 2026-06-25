@@ -37,7 +37,7 @@ export function ExerciseActionBarInfo({
 
   useEffect(() => {
     const shouldShowBadge =
-      transitionState.showSectionOverlay &&
+      transitionState.showTransitionOverlay &&
       transitionState.boundaryKey.length > 0;
 
     if (!shouldShowBadge) {
@@ -52,7 +52,7 @@ export function ExerciseActionBarInfo({
     }, SECTION_BADGE_VISIBLE_MS);
 
     return () => window.clearTimeout(timeout);
-  }, [transitionState.boundaryKey, transitionState.showSectionOverlay]);
+  }, [transitionState.boundaryKey, transitionState.showTransitionOverlay]);
 
   return (
     <div

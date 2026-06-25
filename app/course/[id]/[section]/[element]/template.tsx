@@ -5,24 +5,24 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 import {
-  SECTION_OVERLAY_EXIT_MS,
-  SECTION_OVERLAY_VISIBLE_MS,
-} from "@/components/course/SectionTransitionOverlay";
+  TRANSITION_OVERLAY_EXIT_MS,
+  TRANSITION_OVERLAY_VISIBLE_MS,
+} from "@/components/course/CourseTransitionOverlay";
 import { useCourseNavigation } from "@/lib/course/navigation-transition-context";
 import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
 
-const SECTION_CONTENT_DELAY_MS =
-  SECTION_OVERLAY_VISIBLE_MS + SECTION_OVERLAY_EXIT_MS;
+const TRANSITION_CONTENT_DELAY_MS =
+  TRANSITION_OVERLAY_VISIBLE_MS + TRANSITION_OVERLAY_EXIT_MS;
 
 function getContentMotionValues(
   direction: "forward" | "back" | "neutral",
-  showSectionOverlay: boolean,
+  showTransitionOverlay: boolean,
 ) {
-  if (showSectionOverlay) {
+  if (showTransitionOverlay) {
     return {
       enterY: 24,
       duration: 0.45,
-      delay: SECTION_CONTENT_DELAY_MS / 1000,
+      delay: TRANSITION_CONTENT_DELAY_MS / 1000,
     };
   }
 
@@ -59,32 +59,32 @@ export default function CourseElementTemplate({
   const pathname = usePathname();
   const { transitionState } = useCourseNavigation();
   const prefersReducedMotion = usePrefersReducedMotion();
-  const { direction, showSectionOverlay } = transitionState;
-  const motionValues = getContentMotionValues(direction, showSectionOverlay);
-  const useReducedSectionTransition =
-    prefersReducedMotion && showSectionOverlay;
+  const { direction, showTransitionOverlay } = transitionState;
+  const motionValues = getContentMotionValues(direction, showTransitionOverlay);
+  const useReducedTransition =
+    prefersReducedMotion && showTransitionOverlay;
 
   return (
     <motion.div
       key={pathname}
       initial={{
-        opacity: useReducedSectionTransition || !prefersReducedMotion ? 0 : 1,
+        opacity: useReducedTransition || !prefersReducedMotion ? 0 : 1,
         y:
-          prefersReducedMotion && !showSectionOverlay
+          prefersReducedMotion && !showTransitionOverlay
             ? 0
-            : useReducedSectionTransition
+            : useReducedTransition
               ? 0
               : motionValues.enterY,
       }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
         duration:
-          prefersReducedMotion && !showSectionOverlay
+          prefersReducedMotion && !showTransitionOverlay
             ? 0
-            : useReducedSectionTransition
+            : useReducedTransition
               ? 0
               : motionValues.duration,
-        delay: showSectionOverlay
+        delay: showTransitionOverlay
           ? motionValues.delay
           : prefersReducedMotion
             ? 0

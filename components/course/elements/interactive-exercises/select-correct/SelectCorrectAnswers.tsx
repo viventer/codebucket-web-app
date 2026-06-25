@@ -14,8 +14,10 @@ import type { SelectCorrectPrompt } from "@/schemas/courseSchema";
 import { SelectCorrectAnswerButton } from "./SelectCorrectAnswerButton";
 import { SelectCorrectPromptContent } from "./SelectCorrectPrompt";
 import { selectCorrectListSuccessVariants } from "./select-correct-animations";
+import { RotateCcwIcon } from "lucide-react";
 
 type SelectCorrectAnswersProps = {
+  flowPhase: "first" | "retry";
   question: string;
   answers: { id: number; content: string }[];
   prompt?: SelectCorrectPrompt;
@@ -28,6 +30,7 @@ type SelectCorrectAnswersProps = {
 };
 
 export function SelectCorrectAnswers({
+  flowPhase,
   question,
   answers,
   prompt,
@@ -60,7 +63,15 @@ export function SelectCorrectAnswers({
 
   const content = (
     <div className="flex flex-col gap-4 sm:gap-6">
-      <p className="text-base font-medium">{question}</p>
+      <div className="flex flex-col gap-1">
+        {flowPhase === "retry" && (
+          <div className="flex items-center gap-2 text-sm font-light text text-feedback-warning">
+            <RotateCcwIcon className="size-4" />
+            <p>Ponowna próba</p>
+          </div>
+        )}
+        <p className="text-base font-medium">{question}</p>
+      </div>
 
       {prompt && (
         <SelectCorrectPromptContent courseId={courseId} prompt={prompt} />

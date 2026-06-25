@@ -10,7 +10,7 @@ import {
   CourseHeader,
   type CourseHeaderProps,
 } from "@/components/course/CourseHeader";
-import { SectionTransitionOverlay } from "@/components/course/SectionTransitionOverlay";
+import { CourseTransitionOverlay } from "@/components/course/CourseTransitionOverlay";
 import {
   ElementActionBar,
   type ElementActionBarProps,
@@ -19,6 +19,7 @@ import {
 type CourseElementShellProps = {
   navigationMetadata: CourseNavigationMetadata;
   sectionsCompleted: string[];
+  elementsCompleted: string[];
   headerProps: CourseHeaderProps;
   actionBarProps: ElementActionBarProps;
   isExercise: boolean;
@@ -29,6 +30,7 @@ type CourseElementShellProps = {
 export function CourseElementShell({
   navigationMetadata,
   sectionsCompleted,
+  elementsCompleted,
   headerProps,
   actionBarProps,
   isExercise,
@@ -48,9 +50,10 @@ export function CourseElementShell({
     <CourseNavigationProvider
       metadata={navigationMetadata}
       sectionsCompleted={sectionsCompleted}
+      elementsCompleted={elementsCompleted}
     >
       <div className="flex min-h-screen flex-col bg-background text-foreground">
-        <SectionTransitionOverlay />
+        <CourseTransitionOverlay />
         <CourseHeader {...headerProps} />
         {isExercise ? (
           <ExerciseSessionProvider element={exerciseElement}>

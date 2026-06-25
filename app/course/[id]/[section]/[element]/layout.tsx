@@ -67,16 +67,32 @@ export default async function ElementLayout({
     ? `/course/${course.id}/${next.sectionId}/${next.elementId}`
     : null;
 
+  let nextElement: { id: string; title: string } | null = null;
+  if (next) {
+    const nextSection = course.sections.find((s) => s.id === next.sectionId);
+    const nextEl = nextSection?.elements.find((e) => e.id === next.elementId);
+    if (nextEl) {
+      nextElement = { id: nextEl.id, title: getElementTitle(nextEl) };
+    }
+  }
+
   const navigationMetadata = buildCourseNavigationMetadata(
     course,
     sectionId,
     elementId,
     orderedElements,
     currentIndex,
+    {
+      id: currentElement.id,
+      title: getElementTitle(currentElement),
+      type: currentElement.type,
+    },
+    nextElement,
   );
 
   const user = mockUser;
   const completedIds = getCompletedElementIds(user, course.id);
+  const elementsCompleted = Array.from(completedIds);
   const sectionsCompleted = getSectionsCompleted(user, course.id);
   const progress = getSectionProgress(course, sectionId, user);
 
@@ -112,6 +128,7 @@ export default async function ElementLayout({
     <CourseElementShell
       navigationMetadata={navigationMetadata}
       sectionsCompleted={sectionsCompleted}
+      elementsCompleted={elementsCompleted}
       headerProps={{
         courseId: course.id,
         courseTitle: course.title,

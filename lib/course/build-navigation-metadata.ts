@@ -1,6 +1,9 @@
 import type { Course } from "@/schemas/courseSchema";
 
-import type { CourseNavigationMetadata } from "./navigation-transition-types";
+import type {
+  CourseElementNavRef,
+  CourseNavigationMetadata,
+} from "./navigation-transition-types";
 
 type OrderedElementRef = {
   sectionId: string;
@@ -13,6 +16,8 @@ export function buildCourseNavigationMetadata(
   elementId: string,
   orderedElements: OrderedElementRef[],
   currentIndex: number,
+  currentElement: CourseElementNavRef,
+  nextElement: { id: string; title: string } | null,
 ): CourseNavigationMetadata {
   const currentSection = course.sections.find((section) => section.id === sectionId);
   if (!currentSection) {
@@ -50,6 +55,8 @@ export function buildCourseNavigationMetadata(
       title: currentSection.title,
       order: currentSection.order,
     },
+    currentElement,
+    nextElement,
     prevSection: prev ? getSectionRef(prev.sectionId) : null,
     nextSection: next ? getSectionRef(next.sectionId) : null,
     isNextSectionChange: next ? next.sectionId !== sectionId : false,

@@ -20,8 +20,14 @@ export function NavButton({
       return;
     }
 
-    const { metadata, sectionsCompleted, setNavigationIntent, beginSectionTransition } =
-      navigation;
+    const {
+      metadata,
+      sectionsCompleted,
+      elementsCompleted,
+      setNavigationIntent,
+      beginSectionTransition,
+      beginExerciseTransition,
+    } = navigation;
 
     setNavigationIntent("forward");
 
@@ -29,8 +35,23 @@ export function NavButton({
       metadata.isNextSectionChange &&
       !sectionsCompleted.includes(metadata.currentSection.id);
 
+    const isExercise =
+      metadata.currentElement.type === "codeExercise" ||
+      metadata.currentElement.type === "interactiveExercise";
+
+    const isFirstExerciseCompletion = !elementsCompleted.includes(
+      metadata.currentElement.id,
+    );
+
     if (shouldShowSectionTransition) {
       beginSectionTransition();
+    } else if (
+      isExercise &&
+      isFirstExerciseCompletion &&
+      !metadata.isNextSectionChange &&
+      metadata.nextElement !== null
+    ) {
+      beginExerciseTransition();
     }
 
     router.push(href);

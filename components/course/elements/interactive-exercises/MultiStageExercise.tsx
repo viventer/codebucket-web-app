@@ -65,11 +65,6 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
           transition={{ duration: 0.25 }}
           className="flex flex-col gap-4 sm:gap-8"
         >
-          {flowPhase === "retry" && (
-            <p className="text-sm font-medium text-muted-foreground">
-              Ponowna próba
-            </p>
-          )}
           <SelectCorrectAnswers
             question={currentStage.question}
             answers={shuffledSelectCorrectAnswers}
@@ -80,6 +75,7 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
             getWrongExplanation={getWrongExplanation}
             selectedAnswerId={persisted.selectedAnswerId}
             phase={persisted.phase}
+            flowPhase={flowPhase as "first" | "retry"}
           />
           <ExerciseFeedbackMessage />
         </motion.div>

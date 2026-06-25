@@ -14,24 +14,26 @@ import {
   type CourseNavigationMetadata,
   type NavigationDirection,
   type NavigationTransitionState,
+  type TransitionOverlayVariant,
 } from "./navigation-transition-types";
 
 const NAVIGATION_INTENT_STORAGE_KEY = "course-navigation-intent";
-const PENDING_SECTION_SNAPSHOT_KEY = "course-navigation-section-snapshot";
+const PENDING_OVERLAY_SNAPSHOT_KEY = "course-navigation-overlay-snapshot";
 
-type PendingSectionSnapshot = {
-  completedSectionTitle: string;
-  completedSectionOrder: number;
-  sectionOverlayTitle: string;
-  sectionOverlayOrder: number;
+type PendingOverlaySnapshot = {
+  variant: TransitionOverlayVariant;
+  completedTitle: string;
+  nextTitle: string;
 };
 
 type CourseNavigationContextValue = {
   metadata: CourseNavigationMetadata;
   sectionsCompleted: string[];
+  elementsCompleted: string[];
   transitionState: NavigationTransitionState;
   setNavigationIntent: (direction: NavigationDirection) => void;
   beginSectionTransition: () => void;
+  beginExerciseTransition: () => void;
 };
 
 const CourseNavigationContext =
@@ -40,11 +42,12 @@ const CourseNavigationContext =
 type CourseNavigationProviderProps = {
   metadata: CourseNavigationMetadata;
   sectionsCompleted: string[];
+  elementsCompleted: string[];
   children: ReactNode;
 };
 
 let lastKnownPathname: string | null = null;
-let pendingSectionSnapshot: PendingSectionSnapshot | null = null;
+let pendingOverlaySnapshot: PendingOverlaySnapshot | null = null;
 let activeTransitionState: NavigationTransitionState = DEFAULT_TRANSITION_STATE;
 
 function resolveDirection(
@@ -80,30 +83,26 @@ function readStoredIntent(): NavigationDirection | null {
 
   const stored = window.sessionStorage.getItem(NAVIGATION_INTENT_STORAGE_KEY);
 
-  if (
-    stored === "forward" ||
-    stored === "back" ||
-    stored === "neutral"
-  ) {
+  if (stored === "forward" || stored === "back" || stored === "neutral") {
     return stored;
   }
 
   return null;
 }
 
-function readStoredSectionSnapshot(): PendingSectionSnapshot | null {
+function readStoredOverlaySnapshot(): PendingOverlaySnapshot | null {
   if (typeof window === "undefined") {
     return null;
   }
 
-  const stored = window.sessionStorage.getItem(PENDING_SECTION_SNAPSHOT_KEY);
+  const stored = window.sessionStorage.getItem(PENDING_OVERLAY_SNAPSHOT_KEY);
 
   if (!stored) {
     return null;
   }
 
   try {
-    return JSON.parse(stored) as PendingSectionSnapshot;
+    return JSON.parse(stored) as PendingOverlaySnapshot;
   } catch {
     return null;
   }
@@ -115,21 +114,19 @@ function clearStoredNavigationFlags() {
   }
 
   window.sessionStorage.removeItem(NAVIGATION_INTENT_STORAGE_KEY);
-  window.sessionStorage.removeItem(PENDING_SECTION_SNAPSHOT_KEY);
+  window.sessionStorage.removeItem(PENDING_OVERLAY_SNAPSHOT_KEY);
 }
 
-function buildSectionTransitionState(
+function buildOverlayTransitionState(
   pathname: string,
-  snapshot: PendingSectionSnapshot,
+  snapshot: PendingOverlaySnapshot,
 ): NavigationTransitionState {
   return {
     direction: "forward",
-    isSectionBoundary: true,
-    showSectionOverlay: true,
-    completedSectionTitle: snapshot.completedSectionTitle,
-    completedSectionOrder: snapshot.completedSectionOrder,
-    sectionOverlayTitle: snapshot.sectionOverlayTitle,
-    sectionOverlayOrder: snapshot.sectionOverlayOrder,
+    showTransitionOverlay: true,
+    overlayVariant: snapshot.variant,
+    overlayCompletedTitle: snapshot.completedTitle,
+    overlayNextTitle: snapshot.nextTitle,
     boundaryKey: pathname,
   };
 }
@@ -152,22 +149,20 @@ function computeTransitionState(
 
   return {
     direction,
-    isSectionBoundary: false,
-    showSectionOverlay: false,
-    completedSectionTitle: "",
-    completedSectionOrder: 0,
-    sectionOverlayTitle: "",
-    sectionOverlayOrder: 0,
+    showTransitionOverlay: false,
+    overlayVariant: null,
+    overlayCompletedTitle: "",
+    overlayNextTitle: "",
     boundaryKey: pathname,
   };
 }
 
-function storeSectionSnapshot(snapshot: PendingSectionSnapshot) {
-  pendingSectionSnapshot = snapshot;
+function storeOverlaySnapshot(snapshot: PendingOverlaySnapshot) {
+  pendingOverlaySnapshot = snapshot;
 
   if (typeof window !== "undefined") {
     window.sessionStorage.setItem(
-      PENDING_SECTION_SNAPSHOT_KEY,
+      PENDING_OVERLAY_SNAPSHOT_KEY,
       JSON.stringify(snapshot),
     );
   }
@@ -176,6 +171,7 @@ function storeSectionSnapshot(snapshot: PendingSectionSnapshot) {
 export function CourseNavigationProvider({
   metadata,
   sectionsCompleted,
+  elementsCompleted,
   children,
 }: CourseNavigationProviderProps) {
   const pathname = usePathname();
@@ -184,10 +180,11 @@ export function CourseNavigationProvider({
 
   if (lastKnownPathname !== null && pathname !== lastKnownPathname) {
     const storedIntent = readStoredIntent() ?? "neutral";
-    const storedSnapshot = pendingSectionSnapshot ?? readStoredSectionSnapshot();
+    const storedSnapshot =
+      pendingOverlaySnapshot ?? readStoredOverlaySnapshot();
 
     if (storedSnapshot) {
-      activeTransitionState = buildSectionTransitionState(
+      activeTransitionState = buildOverlayTransitionState(
         pathname,
         storedSnapshot,
       );
@@ -200,7 +197,7 @@ export function CourseNavigationProvider({
       );
     }
 
-    pendingSectionSnapshot = null;
+    pendingOverlaySnapshot = null;
     clearStoredNavigationFlags();
   }
 
@@ -215,20 +212,31 @@ export function CourseNavigationProvider({
   const beginSectionTransition = useCallback(() => {
     const currentMetadata = metadataRef.current;
 
-    storeSectionSnapshot({
-      completedSectionTitle: currentMetadata.currentSection.title,
-      completedSectionOrder: currentMetadata.currentSection.order,
-      sectionOverlayTitle: currentMetadata.nextSection?.title ?? "",
-      sectionOverlayOrder: currentMetadata.nextSection?.order ?? 0,
+    storeOverlaySnapshot({
+      variant: "section",
+      completedTitle: currentMetadata.currentSection.title,
+      nextTitle: currentMetadata.nextSection?.title ?? "",
+    });
+  }, []);
+
+  const beginExerciseTransition = useCallback(() => {
+    const currentMetadata = metadataRef.current;
+
+    storeOverlaySnapshot({
+      variant: "exercise",
+      completedTitle: currentMetadata.currentElement.title,
+      nextTitle: currentMetadata.nextElement?.title ?? "",
     });
   }, []);
 
   const value: CourseNavigationContextValue = {
     metadata,
     sectionsCompleted,
+    elementsCompleted,
     transitionState: activeTransitionState,
     setNavigationIntent,
     beginSectionTransition,
+    beginExerciseTransition,
   };
 
   return (
@@ -250,14 +258,12 @@ export function useCourseNavigation(): CourseNavigationContextValue {
   return context;
 }
 
-export function useCourseNavigationOptional():
-  | CourseNavigationContextValue
-  | null {
+export function useCourseNavigationOptional(): CourseNavigationContextValue | null {
   return useContext(CourseNavigationContext);
 }
 
 export function resetNavigationTransitionStateForTests() {
   lastKnownPathname = null;
-  pendingSectionSnapshot = null;
+  pendingOverlaySnapshot = null;
   activeTransitionState = DEFAULT_TRANSITION_STATE;
 }
