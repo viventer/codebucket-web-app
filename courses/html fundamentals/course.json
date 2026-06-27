@@ -1332,12 +1332,168 @@
           "order": 1
         },
         {
-          "id": "form-field-types",
+          "id": "login-form",
           "type": "interactiveExercise",
           "content": {
-            "title": "Typy pól formularza",
-            "command": "Dopasuj typ do opisu.",
-            "component": ""
+            "type": "fillCode",
+            "title": "Formularz logowania",
+            "description": "Uzupełnij typy pól, atrybut placeholder i wartość przycisku, aby stworzyć formularz logowania.",
+            "command": "Wpisz w luki brakujące typy pól, atrybuty i wartości, aby kod odpowiadał podglądowi.",
+            "language": "html",
+            "hints": [
+              "type=\"text\" tworzy zwykłe pole tekstowe.",
+              "type=\"email\" tworzy pole na adres e-mail.",
+              "type=\"password\" ukrywa wpisywane znaki.",
+              "type=\"submit\" tworzy przycisk wysłania formularza.",
+              "Atrybut placeholder wyświetla podpowiedź w pustym polu.",
+              "Atrybut value określa tekst wyświetlany na przycisku."
+            ],
+            "previewHtml": "<form><label for=\"username\">Nazwa użytkownika:</label><input type=\"text\" placeholder=\"janek123\" id=\"username\"><br /><label for=\"email\">Email:</label><input type=\"email\" placeholder=\"janek123@mail.pl\" id=\"email\"><br /><label for=\"password\">Hasło:</label><input type=\"password\" id=\"password\"><br /><input type=\"submit\" value=\"Zaloguj się\"></form>",
+            "lines": [
+              {
+                "kind": "code",
+                "text": "<form>",
+                "indent": 0
+              },
+              {
+                "kind": "code",
+                "text": "<label for=\"username\">Nazwa użytkownika:</label>",
+                "indent": 0
+              },
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  {
+                    "kind": "text",
+                    "value": "<input type=\""
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "username-type",
+                    "answer": "text"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "\" "
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "username-placeholder-attr",
+                    "answer": "placeholder"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "=\"janek123\" id=\"username\">"
+                  }
+                ]
+              },
+              {
+                "kind": "code",
+                "text": "<br />",
+                "indent": 0
+              },
+              {
+                "kind": "code",
+                "text": "<label for=\"email\">Email:</label>",
+                "indent": 0
+              },
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  {
+                    "kind": "text",
+                    "value": "<input type=\""
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "email-type",
+                    "answer": "email"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "\" "
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "email-placeholder-attr",
+                    "answer": "placeholder"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "=\"janek123@mail.pl\" id=\"email\">"
+                  }
+                ]
+              },
+              {
+                "kind": "code",
+                "text": "<br />",
+                "indent": 0
+              },
+              {
+                "kind": "code",
+                "text": "<label for=\"password\">Hasło:</label>",
+                "indent": 0
+              },
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  {
+                    "kind": "text",
+                    "value": "<input type=\""
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "password-type",
+                    "answer": "password"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "\" id=\"password\">"
+                  }
+                ]
+              },
+              {
+                "kind": "code",
+                "text": "<br />",
+                "indent": 0
+              },
+              {
+                "kind": "group",
+                "indent": 0,
+                "segments": [
+                  {
+                    "kind": "text",
+                    "value": "<input type=\""
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "submit-type",
+                    "answer": "submit"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "\" value=\""
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "submit-value",
+                    "answer": "Zaloguj się"
+                  },
+                  {
+                    "kind": "text",
+                    "value": "\">"
+                  }
+                ]
+              },
+              {
+                "kind": "code",
+                "text": "</form>",
+                "indent": 0
+              }
+            ]
           },
           "order": 2
         },
