@@ -40,6 +40,11 @@ export const EXERCISE_INLINE_FEEDBACK_MESSAGES: Partial<
     text: "Poprawna odpowiedź została podświetlona.",
     colorClass: "text-feedback-destructive",
   },
+  stageCloseCall: {
+    label: "Było blisko!",
+    text: "Poprawne odpowiedzi zostały podświetlone na zielono, niepoprawne na czerwono, a brakujące na żółto.",
+    colorClass: "text-feedback-warning",
+  },
   solution: {
     label: "Skip!",
     text: "Zadanie pominięte. Możesz przejść do kolejnego rozdziału.",

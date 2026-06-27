@@ -30,6 +30,8 @@ export {
   selectCorrectContentSchema,
   selectCorrectPromptSchema,
   selectCorrectStageSchema,
+  chooseMatchingItemSchema,
+  chooseMatchingStageSchema,
 } from "./exerciseSchema";
 
 export type {
@@ -49,6 +51,8 @@ export type {
   SelectCorrectContent,
   SelectCorrectPrompt,
   SelectCorrectStage,
+  ChooseMatchingItem,
+  ChooseMatchingStage,
   InteractiveExerciseContent,
   InteractiveExerciseType,
   Language,

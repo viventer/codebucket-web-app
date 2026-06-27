@@ -150,8 +150,8 @@
 
 2. [E]
 
-- [Sc] Po co korzystamy z semantycznych tagów?
-- [Mp] Połącz tag z elementem strony
+- [Sc] Po co korzystamy z semantycznych tagów HTML?
+- [Cm] Wybierz semantyczne tagi
 - [Fg] Uzupełnij semantyczne tagi
 
 ## 12. Podsumowanie kursu

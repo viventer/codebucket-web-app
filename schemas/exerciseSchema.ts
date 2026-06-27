@@ -171,8 +171,34 @@ export const fillCodeStageSchema = z.object({
   typography: z.enum(["default", "large"]).optional(),
 });
 
+export const chooseMatchingItemSchema = z.object({
+  id: z.number().min(1),
+  content: z.string().min(1),
+});
+
+export const chooseMatchingStageSchema = z
+  .object({
+    type: z.literal("chooseMatching"),
+    command: z.string().min(1).optional(),
+    items: z.array(chooseMatchingItemSchema).min(2),
+    correctItemIds: z.array(z.number().min(1)).min(1),
+  })
+  .superRefine((data, ctx) => {
+    const itemIds = new Set(data.items.map((item) => item.id));
+    for (const correctId of data.correctItemIds) {
+      if (!itemIds.has(correctId)) {
+        ctx.addIssue({
+          code: "custom",
+          message: `correctItemIds contains unknown id: ${correctId}`,
+          path: ["correctItemIds"],
+        });
+      }
+    }
+  });
+
 export const multiStageStageSchema = z.discriminatedUnion("type", [
   selectCorrectStageSchema,
+  chooseMatchingStageSchema,
   fillGapsStageSchema,
   matchPairsStageSchema,
   fillCodeStageSchema,
@@ -241,6 +267,8 @@ export type SelectCorrectStage = z.infer<typeof selectCorrectStageSchema>;
 export type FillGapsStage = z.infer<typeof fillGapsStageSchema>;
 export type MatchPairsStage = z.infer<typeof matchPairsStageSchema>;
 export type FillCodeStage = z.infer<typeof fillCodeStageSchema>;
+export type ChooseMatchingItem = z.infer<typeof chooseMatchingItemSchema>;
+export type ChooseMatchingStage = z.infer<typeof chooseMatchingStageSchema>;
 export type MultiStageStage = z.infer<typeof multiStageStageSchema>;
 export type MultiStageContent = z.infer<typeof multiStageContentSchema>;
 export type MatchPairsContent = z.infer<typeof matchPairsContentSchema>;

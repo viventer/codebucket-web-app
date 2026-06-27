@@ -17,6 +17,7 @@ import {
   stageUsesPreviewLayout,
 } from "./multi-stage/StagePresentation";
 import { SelectCorrectAnswers } from "./select-correct/SelectCorrectAnswers";
+import { ChooseMatchingGrid } from "./choose-matching/ChooseMatchingGrid";
 
 type MultiStageExerciseProps = {
   content: MultiStageContent;
@@ -47,6 +48,10 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
     selectAnswer,
     getAnswerVisualState,
     getWrongExplanation,
+    chooseMatchingPersisted,
+    shuffledChooseMatchingItems,
+    toggleChooseMatchingItem,
+    getChooseMatchingItemVisualState,
   } = controller;
 
   const stageCommand = currentStage.command ?? content.command;
@@ -103,6 +108,36 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
             flowPhase={flowPhase as "first" | "retry"}
           />
           <ExerciseFeedbackMessage />
+        </motion.div>
+      </AnimatePresence>
+    );
+  }
+
+  if (currentStage.type === "chooseMatching") {
+    const persisted = chooseMatchingPersisted ?? {
+      selectedIds: [],
+      phase: "idle" as const,
+      attempt: "first" as const,
+    };
+    const stageCommand = currentStage.command ?? content.command;
+
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`${currentStageIndex}-${flowPhase}`}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -12 }}
+          transition={{ duration: 0.25 }}
+        >
+          <ChooseMatchingGrid
+            command={stageCommand}
+            items={shuffledChooseMatchingItems}
+            flowPhase={flowPhase}
+            isLocked={persisted.phase !== "idle" || isLocked}
+            toggleItem={toggleChooseMatchingItem}
+            getItemVisualState={getChooseMatchingItemVisualState}
+          />
         </motion.div>
       </AnimatePresence>
     );

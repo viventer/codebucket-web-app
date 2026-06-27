@@ -173,6 +173,13 @@ export function MultiStageSessionBridge({
     clearAdvanceTimeout();
 
     if (result === "error") {
+      if (controller.currentStage.type === "chooseMatching") {
+        if (!isLastStage) {
+          scheduleMiddleStageAdvance(null, STAGE_ADVANCE_AFTER_WRONG_MS);
+        }
+        return result;
+      }
+
       controller.setFeedback("error");
       toast.error(EXERCISE_ERROR_FEEDBACK.label, {
         description: EXERCISE_ERROR_FEEDBACK.text,
@@ -246,13 +253,18 @@ export function MultiStageSessionBridge({
   const isLocked =
     feedback === "stageSuccess" ||
     feedback === "stageSolution" ||
+    feedback === "stageCloseCall" ||
     (isLastStage && (feedback === "success" || feedback === "solution"));
 
   const canProceed =
     isLastStage &&
     controller.isExerciseComplete &&
     controller.isCurrentStageComplete &&
-    (isGatedStage ? true : feedback === "success" || feedback === "solution");
+    (isGatedStage
+      ? true
+      : feedback === "success" ||
+        feedback === "solution" ||
+        feedback === "stageCloseCall");
 
   const canProceedStage =
     !isLastStage &&

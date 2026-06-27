@@ -104,9 +104,9 @@
   --syntax-salmon: #8b5342;
   --syntax-green: #4d7a38;
   --syntax-foreground: #252525;
-  --feedback-success: #4db82e;
-  --feedback-warning: #9ab800;
-  --feedback-destructive: #d4553a;
+  --feedback-success: #93ff66;
+  --feedback-warning: #ffed00;
+  --feedback-destructive: #ff8666;
 }
 
 .dark {

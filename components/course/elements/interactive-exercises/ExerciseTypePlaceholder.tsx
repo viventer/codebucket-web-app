@@ -13,7 +13,9 @@ type ExerciseTypePlaceholderProps = {
   type: InteractiveExerciseType;
 };
 
-export function ExerciseTypePlaceholder({ type }: ExerciseTypePlaceholderProps) {
+export function ExerciseTypePlaceholder({
+  type,
+}: ExerciseTypePlaceholderProps) {
   return (
     <div className="flex min-h-48 items-center justify-center rounded-xl border border-dashed text-muted-foreground">
       {TYPE_LABELS[type]}

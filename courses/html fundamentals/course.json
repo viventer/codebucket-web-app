@@ -124,8 +124,8 @@
                   {
                     "id": 3,
                     "type": "text",
-                    "content": "Elementem strony pozwalającym na interakcję z użytkownikiem.",
-                    "explanation": ""
+                    "content": "Komponentem strony internetowej tworzonym w JavaScript.",
+                    "explanation": "Tagi HTML nie są tworzone w JavaScript."
                   },
                   {
                     "id": 4,
@@ -1566,96 +1566,96 @@
                   "previewHtml": "<h2>Wybierz płeć</h2><input type=\"radio\" name=\"plec\" value=\"mezczyzna\" id=\"mezczyzna\"><label for=\"mezczyzna\">Mężczyzna</label><br /><input type=\"radio\" name=\"plec\" value=\"kobieta\" id=\"kobieta\"><label for=\"kobieta\">Kobieta</label>"
                 },
                 "lines": [
-              {
-                "kind": "code",
-                "text": "<h2>Wybierz płeć</h2>",
-                "indent": 0
-              },
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
                   {
-                    "kind": "text",
-                    "value": "<input type=\""
+                    "kind": "code",
+                    "text": "<h2>Wybierz płeć</h2>",
+                    "indent": 0
                   },
                   {
-                    "kind": "gap",
-                    "id": "radio-type-1",
-                    "answer": "radio"
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<input type=\""
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "radio-type-1",
+                        "answer": "radio"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "\" "
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "name-attr-1",
+                        "answer": "name"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "=\"plec\" "
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "value-attr-1",
+                        "answer": "value"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "=\"mezczyzna\" id=\"mezczyzna\">"
+                      }
+                    ]
                   },
                   {
-                    "kind": "text",
-                    "value": "\" "
+                    "kind": "code",
+                    "text": "<label for=\"mezczyzna\">Mężczyzna</label>",
+                    "indent": 0
                   },
                   {
-                    "kind": "gap",
-                    "id": "name-attr-1",
-                    "answer": "name"
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<input type=\""
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "radio-type-2",
+                        "answer": "radio"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "\" "
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "name-attr-2",
+                        "answer": "name"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "=\"plec\" "
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "value-attr-2",
+                        "answer": "value"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "=\"kobieta\" id=\"kobieta\">"
+                      }
+                    ]
                   },
                   {
-                    "kind": "text",
-                    "value": "=\"plec\" "
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "value-attr-1",
-                    "answer": "value"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "=\"mezczyzna\" id=\"mezczyzna\">"
+                    "kind": "code",
+                    "text": "<label for=\"kobieta\">Kobieta</label>",
+                    "indent": 0
                   }
                 ]
-              },
-              {
-                "kind": "code",
-                "text": "<label for=\"mezczyzna\">Mężczyzna</label>",
-                "indent": 0
-              },
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
-                  {
-                    "kind": "text",
-                    "value": "<input type=\""
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "radio-type-2",
-                    "answer": "radio"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "\" "
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "name-attr-2",
-                    "answer": "name"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "=\"plec\" "
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "value-attr-2",
-                    "answer": "value"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "=\"kobieta\" id=\"kobieta\">"
-                  }
-                ]
-              },
-              {
-                "kind": "code",
-                "text": "<label for=\"kobieta\">Kobieta</label>",
-                "indent": 0
-              }
-            ]
               }
             ]
           },
@@ -1808,10 +1808,10 @@
           "id": "complete-semantic-tags",
           "type": "interactiveExercise",
           "content": {
-            "type": "fillGaps",
+            "type": "multiStage",
             "title": "Uzupełnij semantyczne tagi",
-            "command": "Wybierz odpowiednie tagi semantyczne, aby uzupełnić strukturę strony widocznej obok/poniżej.",
-            "language": "html",
+            "description": "Sprawdź, po co używamy tagów semantycznych, wybierz właściwe tagi i uzupełnij strukturę strony.",
+            "command": "Odpowiedz na pytanie, wybierz tagi i uzupełnij kod.",
             "hints": [
               "<header> - nagłówek",
               "<nav> - nawigacja",
@@ -1819,134 +1819,193 @@
               "<section> - sekcja",
               "<footer> - stopka"
             ],
-            "previewHtml": "<style>body{padding:0}*{padding:0;margin:0;box-sizing:border-box}.site-top{position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}header{padding:1rem 2rem;background-color:color-mix(in oklch,currentColor 15%,transparent)}nav{display:flex;gap:1rem;justify-content:space-around;padding:.5rem .75rem;background-color:color-mix(in oklch,currentColor 8%,transparent);border-bottom:1px solid color-mix(in oklch,currentColor 30%,transparent)}nav a{color:inherit;text-decoration:none}main{margin:4rem 0;display:flex;flex-direction:column;gap:2rem}section{display:flex;align-items:center;gap:1rem;padding:1rem 2rem;width:1280px;max-width:80%;margin:0 auto;background:color-mix(in oklch,currentColor 5%,transparent);border:1px solid color-mix(in oklch,currentColor 30%,transparent);border-radius:.5rem}section img{width:100px}@media (max-width:500px){section{flex-direction:column}}footer{position:fixed;bottom:0;left:0;right:0;z-index:100;background-color:color-mix(in oklch,currentColor 15%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:1rem 2rem}</style><div class=\"site-top\"><header><h1>Blog o wiadrach</h1></header><nav><a>Metalowe</a><a>Plastikowe</a><a>O blogu</a></nav></div><main><section><img src=\"/api/course-assets/html-fundamentals/exercises/semanticTags/metalowe.png\" alt=\"Metalowe wiadro\" /><div><h2>Metalowe wiadra</h2><p>Metalowe wiadra są wytrzymałe, odporne na uszkodzenia i sprawdzają się przy cięższych pracach ogrodowych oraz w warsztacie.</p></div></section><section><img src=\"/api/course-assets/html-fundamentals/exercises/semanticTags/plastikowe.png\" alt=\"Plastikowe wiadro\" /><div><h2>Plastikowe wiadra</h2><p>Plastikowe wiadra są lekkie, tanie i wygodne do codziennego sprzątania oraz prania.</p></div></section></main><footer><p>© 2026 Blog o wiadrach</p></footer>",
-            "lines": [
+            "stages": [
               {
-                "kind": "gap",
-                "id": "header-open",
-                "indent": 0,
-                "answer": "<header>"
+                "type": "selectCorrect",
+                "question": "Po co korzystamy z semantycznych tagów HTML?",
+                "answers": [
+                  {
+                    "id": 1,
+                    "type": "text",
+                    "content": "Aby opisać znaczenie poszczególnych części strony."
+                  },
+                  {
+                    "id": 2,
+                    "type": "text",
+                    "content": "Aby zmienić wygląd elementów strony.",
+                    "explanation": "Za wygląd elementów odpowiada CSS, nie tagi semantyczne."
+                  },
+                  {
+                    "id": 3,
+                    "type": "text",
+                    "content": "Aby elementy na stronie były umieszczone w odpowiednim miejscu.",
+                    "explanation": "Układ elementów na stronie definiuje CSS, nie semantyka HTML."
+                  },
+                  {
+                    "id": 4,
+                    "type": "text",
+                    "content": "Aby strona działała płynniej.",
+                    "explanation": "Tagi semantyczne opisują znaczenie treści — nie wpływają bezpośrednio na wydajność strony."
+                  }
+                ],
+                "correctAnswerId": 1
               },
               {
-                "kind": "code",
-                "text": "<h1>Blog o wiadrach</h1>",
-                "indent": 1
+                "type": "chooseMatching",
+                "command": "Wybierz tagi semantyczne.",
+                "items": [
+                  { "id": 1, "content": "<main>" },
+                  { "id": 2, "content": "<header>" },
+                  { "id": 3, "content": "<h3>" },
+                  { "id": 4, "content": "<aside>" },
+                  { "id": 5, "content": "<strong>" },
+                  { "id": 6, "content": "<p>" },
+                  { "id": 7, "content": "<div>" },
+                  { "id": 8, "content": "<br />" },
+                  { "id": 9, "content": "<img />" },
+                  { "id": 10, "content": "<b>" },
+                  { "id": 11, "content": "<u>" },
+                  { "id": 12, "content": "<em>" }
+                ],
+                "correctItemIds": [1, 2, 3, 4, 5, 12]
               },
               {
-                "kind": "autoClose",
-                "id": "header-close",
-                "indent": 0,
-                "pairedGapId": "header-open"
-              },
-              {
-                "kind": "gap",
-                "id": "nav-open",
-                "indent": 0,
-                "answer": "<nav>"
-              },
-              {
-                "kind": "code",
-                "text": "<a>Metalowe</a>",
-                "indent": 1
-              },
-              {
-                "kind": "code",
-                "text": "<a>Plastikowe</a>",
-                "indent": 1
-              },
-              {
-                "kind": "code",
-                "text": "<a>O blogu</a>",
-                "indent": 1
-              },
-              {
-                "kind": "autoClose",
-                "id": "nav-close",
-                "indent": 0,
-                "pairedGapId": "nav-open"
-              },
-              {
-                "kind": "gap",
-                "id": "main-open",
-                "indent": 0,
-                "answer": "<main>"
-              },
-              {
-                "kind": "gap",
-                "id": "section-open",
-                "indent": 1,
-                "answer": "<section>"
-              },
-              {
-                "kind": "code",
-                "text": "<img src=\"media/metalowe.png\" alt=\"Metalowe wiadro\" />",
-                "indent": 2
-              },
-              {
-                "kind": "code",
-                "text": "<div>",
-                "indent": 2
-              },
-              {
-                "kind": "code",
-                "text": "<h2>Metalowe wiadra</h2>",
-                "indent": 3
-              },
-              {
-                "kind": "code",
-                "text": "<p>Metalowe wiadra są wytrzymałe i...</p>",
-                "indent": 3
-              },
-              {
-                "kind": "code",
-                "text": "</div>",
-                "indent": 2
-              },
-              {
-                "kind": "autoClose",
-                "id": "section-close",
-                "indent": 1,
-                "pairedGapId": "section-open"
-              },
-              {
-                "kind": "code",
-                "text": "...",
-                "indent": 1
-              },
-              {
-                "kind": "autoClose",
-                "id": "main-close",
-                "indent": 0,
-                "pairedGapId": "main-open"
-              },
-              {
-                "kind": "gap",
-                "id": "footer-open",
-                "indent": 0,
-                "answer": "<footer>"
-              },
-              {
-                "kind": "code",
-                "text": "<p>© 2026 Blog o wiadrach</p>",
-                "indent": 1
-              },
-              {
-                "kind": "autoClose",
-                "id": "footer-close",
-                "indent": 0,
-                "pairedGapId": "footer-open"
+                "type": "fillGaps",
+                "command": "Wybierz odpowiednie tagi semantyczne, aby uzupełnić strukturę strony widocznej obok/poniżej.",
+                "language": "html",
+                "presentation": {
+                  "kind": "preview",
+                  "previewHtml": "<style>body{padding:0}*{padding:0;margin:0;box-sizing:border-box}.site-top{position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}header{padding:1rem 2rem;background-color:color-mix(in oklch,currentColor 15%,transparent)}nav{display:flex;gap:1rem;justify-content:space-around;padding:.5rem .75rem;background-color:color-mix(in oklch,currentColor 8%,transparent);border-bottom:1px solid color-mix(in oklch,currentColor 30%,transparent)}nav a{color:inherit;text-decoration:none}main{margin:4rem 0;display:flex;flex-direction:column;gap:2rem}section{display:flex;align-items:center;gap:1rem;padding:1rem 2rem;width:1280px;max-width:80%;margin:0 auto;background:color-mix(in oklch,currentColor 5%,transparent);border:1px solid color-mix(in oklch,currentColor 30%,transparent);border-radius:.5rem}section img{width:100px}@media (max-width:500px){section{flex-direction:column}}footer{position:fixed;bottom:0;left:0;right:0;z-index:100;background-color:color-mix(in oklch,currentColor 15%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:1rem 2rem}</style><div class=\"site-top\"><header><h1>Blog o wiadrach</h1></header><nav><a>Metalowe</a><a>Plastikowe</a><a>O blogu</a></nav></div><main><section><img src=\"/api/course-assets/html-fundamentals/exercises/semanticTags/metalowe.png\" alt=\"Metalowe wiadro\" /><div><h2>Metalowe wiadra</h2><p>Metalowe wiadra są wytrzymałe, odporne na uszkodzenia i sprawdzają się przy cięższych pracach ogrodowych oraz w warsztacie.</p></div></section><section><img src=\"/api/course-assets/html-fundamentals/exercises/semanticTags/plastikowe.png\" alt=\"Plastikowe wiadro\" /><div><h2>Plastikowe wiadra</h2><p>Plastikowe wiadra są lekkie, tanie i wygodne do codziennego sprzątania oraz prania.</p></div></section></main><footer><p>© 2026 Blog o wiadrach</p></footer>"
+                },
+                "lines": [
+                  {
+                    "kind": "gap",
+                    "id": "header-open",
+                    "indent": 0,
+                    "answer": "<header>"
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<h1>Blog o wiadrach</h1>",
+                    "indent": 1
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "header-close",
+                    "indent": 0,
+                    "pairedGapId": "header-open"
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "nav-open",
+                    "indent": 0,
+                    "answer": "<nav>"
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<a>Metalowe</a>",
+                    "indent": 1
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<a>Plastikowe</a>",
+                    "indent": 1
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<a>O blogu</a>",
+                    "indent": 1
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "nav-close",
+                    "indent": 0,
+                    "pairedGapId": "nav-open"
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "main-open",
+                    "indent": 0,
+                    "answer": "<main>"
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "section-open",
+                    "indent": 1,
+                    "answer": "<section>"
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<img src=\"media/metalowe.png\" alt=\"Metalowe wiadro\" />",
+                    "indent": 2
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<div>",
+                    "indent": 2
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<h2>Metalowe wiadra</h2>",
+                    "indent": 3
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<p>Metalowe wiadra są wytrzymałe i...</p>",
+                    "indent": 3
+                  },
+                  {
+                    "kind": "code",
+                    "text": "</div>",
+                    "indent": 2
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "section-close",
+                    "indent": 1,
+                    "pairedGapId": "section-open"
+                  },
+                  {
+                    "kind": "code",
+                    "text": "...",
+                    "indent": 1
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "main-close",
+                    "indent": 0,
+                    "pairedGapId": "main-open"
+                  },
+                  {
+                    "kind": "gap",
+                    "id": "footer-open",
+                    "indent": 0,
+                    "answer": "<footer>"
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<p>© 2026 Blog o wiadrach</p>",
+                    "indent": 1
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "footer-close",
+                    "indent": 0,
+                    "pairedGapId": "footer-open"
+                  }
+                ],
+                "options": [
+                  "<header>",
+                  "<nav>",
+                  "<main>",
+                  "<section>",
+                  "<footer>",
+                  "<div>",
+                  "<aside>",
+                  "<head>",
+                  "<container>"
+                ]
               }
-            ],
-            "options": [
-              "<header>",
-              "<nav>",
-              "<main>",
-              "<section>",
-              "<footer>",
-              "<div>",
-              "<aside>",
-              "<head>",
-              "<container>"
             ]
           },
           "order": 2

@@ -20,6 +20,13 @@ import {
   isMatchPairsComplete,
 } from "../match-pairs/match-pairs-state";
 import {
+  applyChooseMatchingCheck,
+  createInitialChooseMatchingRetryState,
+  getChooseMatchingItemVisualState,
+  isChooseMatchingAnswerCorrect,
+  toggleItemSelection,
+} from "../choose-matching/choose-matching-state";
+import {
   applySelectCorrectAnswer,
   createInitialSelectCorrectRetryState,
   getSelectCorrectAnswerVisualState,
@@ -36,8 +43,10 @@ import type {
 
 import {
   createAllStageStates,
+  EMPTY_CHOOSE_MATCHING_ITEMS,
   EMPTY_FILL_GAPS_OPTIONS,
   EMPTY_SELECT_CORRECT_ANSWERS,
+  type ChooseMatchingStageState,
   type SelectCorrectStageState,
   type StageState,
 } from "./stage-state";
@@ -46,9 +55,11 @@ import {
   deriveIsCurrentStageComplete,
   deriveIsExerciseComplete,
   deriveMultiStageFeedback,
+  isRetryableStageDone,
 } from "./stage-view";
 import {
   getStageActionBarVariant,
+  isChooseMatchingStage,
   isFillCodeStage,
   isFillGapsStage,
   isMatchPairsStage,
@@ -58,13 +69,28 @@ import { useMultiStageWrongAnswerTimeout } from "./use-wrong-answer-timeout";
 
 const MATCH_PAIRS_ERROR_FLASH_MS = 600;
 
-const EMPTY_MATCH_PAIRS_ITEMS: readonly { id: string; text: string; pairId: string }[] =
-  [];
+const EMPTY_MATCH_PAIRS_ITEMS: readonly {
+  id: string;
+  text: string;
+  pairId: string;
+}[] = [];
 
-function prepareRetryStageState(state: SelectCorrectStageState): SelectCorrectStageState {
+function prepareSelectCorrectRetryStageState(
+  state: SelectCorrectStageState,
+): SelectCorrectStageState {
   return {
     ...state,
     selectCorrect: createInitialSelectCorrectRetryState(),
+    feedback: "idle",
+  };
+}
+
+function prepareChooseMatchingRetryStageState(
+  state: ChooseMatchingStageState,
+): ChooseMatchingStageState {
+  return {
+    ...state,
+    chooseMatching: createInitialChooseMatchingRetryState(),
     feedback: "idle",
   };
 }
@@ -116,6 +142,12 @@ export function useMultiStageExerciseController(
       ? currentStage
       : null;
 
+  const chooseMatchingStage =
+    currentState.kind === "chooseMatching" &&
+    isChooseMatchingStage(currentStage)
+      ? currentStage
+      : null;
+
   const currentShuffleToken = shuffleTokens[currentStageIndex] ?? 0;
 
   const optionOrder = useShuffledItems(
@@ -126,6 +158,11 @@ export function useMultiStageExerciseController(
   const shuffledSelectCorrectAnswers = useShuffledItems(
     selectCorrectStage?.answers ?? EMPTY_SELECT_CORRECT_ANSWERS,
     currentState.kind === "selectCorrect" ? currentShuffleToken : 0,
+  );
+
+  const shuffledChooseMatchingItems = useShuffledItems(
+    chooseMatchingStage?.items ?? EMPTY_CHOOSE_MATCHING_ITEMS,
+    currentState.kind === "chooseMatching" ? currentShuffleToken : 0,
   );
 
   const matchPairsLeftSource = matchPairsStage
@@ -157,10 +194,9 @@ export function useMultiStageExerciseController(
           total: totalStages,
         };
 
-  const feedbackTarget =
-    gapLinesStage?.presentation
-      ? getStageFeedbackTarget(gapLinesStage.presentation.kind)
-      : "codePanel";
+  const feedbackTarget = gapLinesStage?.presentation
+    ? getStageFeedbackTarget(gapLinesStage.presentation.kind)
+    : "codePanel";
 
   const gapAssignments =
     currentState.kind === "fillGaps" || currentState.kind === "fillCode"
@@ -193,12 +229,18 @@ export function useMultiStageExerciseController(
     setStageStates((prev) => {
       const next = [...prev];
       const stageState = next[stageIndex];
-      if (stageState?.kind !== "selectCorrect") {
-        return prev;
+
+      if (stageState?.kind === "selectCorrect") {
+        next[stageIndex] = prepareSelectCorrectRetryStageState(stageState);
+        return next;
       }
 
-      next[stageIndex] = prepareRetryStageState(stageState);
-      return next;
+      if (stageState?.kind === "chooseMatching") {
+        next[stageIndex] = prepareChooseMatchingRetryStageState(stageState);
+        return next;
+      }
+
+      return prev;
     });
 
     setShuffleTokens((prev) => {
@@ -400,6 +442,23 @@ export function useMultiStageExerciseController(
     return currentState.errorFlashIds.has(itemId);
   }
 
+  function toggleChooseMatchingItem(itemId: number) {
+    if (!chooseMatchingStage || currentState.kind !== "chooseMatching") {
+      return;
+    }
+
+    updateCurrentStageState((state) => {
+      if (state.kind !== "chooseMatching") {
+        return state;
+      }
+
+      return {
+        ...state,
+        chooseMatching: toggleItemSelection(state.chooseMatching, itemId),
+      };
+    });
+  }
+
   function selectAnswer(answerId: number) {
     if (!selectCorrectStage || currentState.kind !== "selectCorrect") {
       return;
@@ -505,14 +564,14 @@ export function useMultiStageExerciseController(
 
   function markAttempted() {
     updateCurrentStageState((state) => {
-      if (state.kind !== "fillGaps" && state.kind !== "fillCode") {
-        return state;
+      if (state.kind === "fillGaps" || state.kind === "fillCode") {
+        return {
+          ...state,
+          hasAttemptedCheck: true,
+        };
       }
 
-      return {
-        ...state,
-        hasAttemptedCheck: true,
-      };
+      return state;
     });
   }
 
@@ -525,18 +584,94 @@ export function useMultiStageExerciseController(
 
   function clearTransientFeedback() {
     updateCurrentStageState((state) => {
-      if (state.kind !== "fillGaps" && state.kind !== "fillCode") {
+      if (state.kind === "fillGaps" || state.kind === "fillCode") {
+        return {
+          ...state,
+          feedback:
+            state.feedback === "error" || state.feedback === "warning"
+              ? "idle"
+              : state.feedback,
+        };
+      }
+
+      if (state.kind === "chooseMatching") {
+        return {
+          ...state,
+          feedback:
+            state.feedback === "error" || state.feedback === "warning"
+              ? "idle"
+              : state.feedback,
+        };
+      }
+
+      return state;
+    });
+  }
+
+  function checkChooseMatching(): CheckResult {
+    if (!chooseMatchingStage || currentState.kind !== "chooseMatching") {
+      return "warning";
+    }
+
+    const { chooseMatching } = currentState;
+
+    if (chooseMatching.phase !== "idle") {
+      return isChooseMatchingAnswerCorrect(
+        chooseMatching.selectedIds,
+        chooseMatchingStage.correctItemIds,
+      )
+        ? "success"
+        : "error";
+    }
+
+    if (chooseMatching.selectedIds.length === 0) {
+      return "warning";
+    }
+
+    const nextChooseMatching = applyChooseMatchingCheck(
+      chooseMatching,
+      chooseMatchingStage.correctItemIds,
+    );
+    const isCorrect = nextChooseMatching.phase === "correct";
+
+    updateCurrentStageState((state) => {
+      if (state.kind !== "chooseMatching") {
         return state;
       }
 
+      const retryCompleted =
+        nextChooseMatching.attempt === "retry" &&
+        (nextChooseMatching.phase === "correct" ||
+          nextChooseMatching.phase === "wrongResolved")
+          ? true
+          : state.retryCompleted;
+
       return {
         ...state,
-        feedback:
-          state.feedback === "error" || state.feedback === "warning"
-            ? "idle"
-            : state.feedback,
+        chooseMatching: nextChooseMatching,
+        firstAttemptWrong:
+          nextChooseMatching.attempt === "first" &&
+          nextChooseMatching.phase === "wrongDeferred"
+            ? true
+            : state.firstAttemptWrong,
+        retryCompleted,
+        feedback: isCorrect ? "stageSuccess" : "stageCloseCall",
       };
     });
+
+    if (
+      !isCorrect &&
+      nextChooseMatching.attempt === "first" &&
+      nextChooseMatching.phase === "wrongDeferred"
+    ) {
+      setRetryQueue((prev) =>
+        prev.includes(currentStageIndex)
+          ? prev
+          : [...prev, currentStageIndex].sort((a, b) => a - b),
+      );
+    }
+
+    return isCorrect ? "success" : "error";
   }
 
   function check(): CheckResult {
@@ -544,6 +679,10 @@ export function useMultiStageExerciseController(
       return isSelectCorrectComplete(currentState.selectCorrect)
         ? "success"
         : "warning";
+    }
+
+    if (currentState.kind === "chooseMatching") {
+      return checkChooseMatching();
     }
 
     if (currentState.kind === "matchPairs") {
@@ -638,15 +777,16 @@ export function useMultiStageExerciseController(
   const selectCorrectPersisted =
     currentState.kind === "selectCorrect" ? currentState.selectCorrect : null;
 
+  const chooseMatchingPersisted =
+    currentState.kind === "chooseMatching" ? currentState.chooseMatching : null;
+
   const isCurrentStageComplete = deriveIsCurrentStageComplete(currentState);
 
   let isExerciseComplete = deriveIsExerciseComplete(stageStates);
   if (retryQueue.length > 0) {
     const allRetriesDone = retryQueue.every((stageIndex) => {
       const stageState = stageStates[stageIndex];
-      return (
-        stageState?.kind === "selectCorrect" && stageState.retryCompleted
-      );
+      return stageState !== undefined && isRetryableStageDone(stageState);
     });
 
     if (!allRetriesDone) {
@@ -657,12 +797,14 @@ export function useMultiStageExerciseController(
   const feedback = deriveMultiStageFeedback(
     currentState,
     selectCorrectPersisted,
+    chooseMatchingPersisted,
     isLastStage,
   );
 
   const hasAttemptedCheck = deriveHasAttemptedCheck(
     currentState,
     selectCorrectPersisted,
+    chooseMatchingPersisted,
   );
 
   function getAnswerVisualState(answerId: number) {
@@ -686,6 +828,18 @@ export function useMultiStageExerciseController(
       selectCorrectPersisted,
       selectCorrectStage.answers,
       selectCorrectStage.correctAnswerId,
+    );
+  }
+
+  function getChooseMatchingItemVisualStateForItem(itemId: number) {
+    if (!chooseMatchingStage || !chooseMatchingPersisted) {
+      return "idle" as const;
+    }
+
+    return getChooseMatchingItemVisualState(
+      chooseMatchingPersisted,
+      itemId,
+      chooseMatchingStage.correctItemIds,
     );
   }
 
@@ -730,6 +884,10 @@ export function useMultiStageExerciseController(
     selectAnswer,
     getAnswerVisualState,
     getWrongExplanation,
+    chooseMatchingPersisted,
+    shuffledChooseMatchingItems,
+    toggleChooseMatchingItem,
+    getChooseMatchingItemVisualState: getChooseMatchingItemVisualStateForItem,
     advanceStage,
     goToPreviousStage,
     check,

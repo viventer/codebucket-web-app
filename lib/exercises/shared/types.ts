@@ -6,10 +6,10 @@ import type {
 } from "@/schemas/courseSchema";
 
 import type {
-  SelectCorrectAnswerVisualState,
-  SelectCorrectPersistedState,
-  SelectCorrectPhase,
-} from "../select-correct/select-correct-state";
+  ChooseMatchingItemVisualState,
+  ChooseMatchingPersistedState,
+} from "../choose-matching/choose-matching-state";
+import type { SelectCorrectAnswerVisualState, SelectCorrectPersistedState, SelectCorrectPhase } from "../select-correct/select-correct-state";
 import type { StageFeedbackTarget } from "../fill-gaps/fill-gaps-utils";
 
 export type CheckResult = "success" | "error" | "warning";
@@ -21,6 +21,7 @@ export type ExerciseFeedback =
   | "stageSolution"
   | "stageWrongFirst"
   | "stageWrongRetry"
+  | "stageCloseCall"
   | "error"
   | "warning"
   | "solution";
@@ -134,6 +135,12 @@ export interface MultiStageControllerState {
   selectAnswer: (answerId: number) => void;
   getAnswerVisualState: (answerId: number) => SelectCorrectAnswerVisualState;
   getWrongExplanation: () => string | null;
+  chooseMatchingPersisted: ChooseMatchingPersistedState | null;
+  shuffledChooseMatchingItems: { id: number; content: string }[];
+  toggleChooseMatchingItem: (itemId: number) => void;
+  getChooseMatchingItemVisualState: (
+    itemId: number,
+  ) => ChooseMatchingItemVisualState;
   advanceStage: () => void;
   goToPreviousStage: () => void;
 }

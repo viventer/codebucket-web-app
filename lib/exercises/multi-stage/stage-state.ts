@@ -7,6 +7,10 @@ import type {
 } from "@/schemas/courseSchema";
 
 import {
+  createInitialChooseMatchingState,
+  type ChooseMatchingPersistedState,
+} from "../choose-matching/choose-matching-state";
+import {
   createInitialAssignments,
   getGapIds,
 } from "../fill-gaps/fill-gaps-utils";
@@ -23,6 +27,10 @@ import type { ExerciseFeedback, MatchPairSelection } from "../shared/types";
 
 export const EMPTY_FILL_GAPS_OPTIONS: readonly string[] = [];
 export const EMPTY_SELECT_CORRECT_ANSWERS: readonly {
+  id: number;
+  content: string;
+}[] = [];
+export const EMPTY_CHOOSE_MATCHING_ITEMS: readonly {
   id: number;
   content: string;
 }[] = [];
@@ -51,6 +59,14 @@ export type SelectCorrectStageState = {
   retryCompleted: boolean;
 };
 
+export type ChooseMatchingStageState = {
+  kind: "chooseMatching";
+  chooseMatching: ChooseMatchingPersistedState;
+  feedback: ExerciseFeedback;
+  firstAttemptWrong: boolean;
+  retryCompleted: boolean;
+};
+
 export type MatchPairsStageState = {
   kind: "matchPairs";
   selected: MatchPairSelection | null;
@@ -65,9 +81,12 @@ export type StageState =
   | FillGapsStageState
   | FillCodeStageState
   | SelectCorrectStageState
+  | ChooseMatchingStageState
   | MatchPairsStageState;
 
-export function createFillGapsStageState(stage: FillGapsStage): FillGapsStageState {
+export function createFillGapsStageState(
+  stage: FillGapsStage,
+): FillGapsStageState {
   const gapIds = getGapIds(stage);
   return {
     kind: "fillGaps",
@@ -78,7 +97,9 @@ export function createFillGapsStageState(stage: FillGapsStage): FillGapsStageSta
   };
 }
 
-export function createFillCodeStageState(stage: FillCodeStage): FillCodeStageState {
+export function createFillCodeStageState(
+  stage: FillCodeStage,
+): FillCodeStageState {
   const gapIds = getGapIds(stage);
   return {
     kind: "fillCode",
@@ -106,6 +127,16 @@ export function createMatchPairsStageState(
   };
 }
 
+export function createChooseMatchingStageState(): ChooseMatchingStageState {
+  return {
+    kind: "chooseMatching",
+    chooseMatching: createInitialChooseMatchingState(),
+    feedback: "idle",
+    firstAttemptWrong: false,
+    retryCompleted: false,
+  };
+}
+
 export function createStageState(stage: MultiStageStage): StageState {
   if (stage.type === "fillGaps") {
     return createFillGapsStageState(stage);
@@ -117,6 +148,10 @@ export function createStageState(stage: MultiStageStage): StageState {
 
   if (stage.type === "matchPairs") {
     return createMatchPairsStageState(stage);
+  }
+
+  if (stage.type === "chooseMatching") {
+    return createChooseMatchingStageState();
   }
 
   return {
