@@ -8,6 +8,7 @@ import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionConte
 import type { MultiStageContent } from "@/schemas/courseSchema";
 
 import { FillGapsWorkspace } from "./FillGapsWorkspace";
+import { GapLinesPanel } from "./gap-lines/GapLinesPanel";
 import { MatchPairsBoard } from "./match-pairs/MatchPairsBoard";
 import {
   StagePresentation,
@@ -39,6 +40,7 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
     availableOptions,
     selectOption,
     clearGap,
+    updateGap,
     setActiveGapId,
     selectCorrectPersisted,
     shuffledSelectCorrectAnswers,
@@ -103,6 +105,59 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
           <ExerciseFeedbackMessage />
         </motion.div>
       </AnimatePresence>
+    );
+  }
+
+  if (currentStage.type === "fillCode") {
+    const presentation = currentStage.presentation ?? { kind: "code" as const };
+    const usesPreviewLayout = stageUsesPreviewLayout(presentation);
+    const typography = currentStage.typography ?? "default";
+
+    const codePanel = (
+      <GapLinesPanel
+        gapMode="input"
+        language={currentStage.language}
+        lines={currentStage.lines}
+        assignments={assignments}
+        activeGapId={activeGapId}
+        onUpdateGap={updateGap}
+        onFocusGap={setActiveGapId}
+        typography={typography}
+        className="max-w-[90vw]"
+      />
+    );
+
+    const workspace = (
+      <div className="flex flex-col gap-4 sm:gap-8">
+        {codePanel}
+        <ExerciseFeedbackMessage />
+      </div>
+    );
+
+    return (
+      <div className="flex flex-col gap-4 sm:gap-8">
+        <h3 className="text-base font-medium">{stageCommand}</h3>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStageIndex}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25 }}
+            className="flex flex-col gap-4 sm:gap-8"
+          >
+            {usesPreviewLayout ? (
+              <div className="grid gap-4 sm:gap-8 lg:grid-cols-2">
+                {workspace}
+                <StagePreviewPanel presentation={presentation} />
+              </div>
+            ) : (
+              workspace
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
     );
   }
 

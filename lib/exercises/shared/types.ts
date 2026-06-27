@@ -140,6 +140,7 @@ export interface MultiStageControllerState {
 
 export type MultiStageExerciseController = ExerciseController &
   FillGapsControllerState &
+  FillCodeControllerState &
   MatchPairsControllerState &
   MultiStageControllerState & {
     kind: "multiStage";

@@ -162,10 +162,20 @@ export const matchPairsStageSchema = z.object({
   pairs: z.array(matchPairSchema).min(2),
 });
 
+export const fillCodeStageSchema = z.object({
+  type: z.literal("fillCode"),
+  command: z.string().min(1).optional(),
+  language: languageSchema,
+  lines: z.array(fillGapsLineSchema).min(1),
+  presentation: multiStageStagePresentationSchema.optional(),
+  typography: z.enum(["default", "large"]).optional(),
+});
+
 export const multiStageStageSchema = z.discriminatedUnion("type", [
   selectCorrectStageSchema,
   fillGapsStageSchema,
   matchPairsStageSchema,
+  fillCodeStageSchema,
 ]);
 
 export const multiStageContentSchema = z.object({
@@ -230,6 +240,7 @@ export type SelectCorrectContent = z.infer<typeof selectCorrectContentSchema>;
 export type SelectCorrectStage = z.infer<typeof selectCorrectStageSchema>;
 export type FillGapsStage = z.infer<typeof fillGapsStageSchema>;
 export type MatchPairsStage = z.infer<typeof matchPairsStageSchema>;
+export type FillCodeStage = z.infer<typeof fillCodeStageSchema>;
 export type MultiStageStage = z.infer<typeof multiStageStageSchema>;
 export type MultiStageContent = z.infer<typeof multiStageContentSchema>;
 export type MatchPairsContent = z.infer<typeof matchPairsContentSchema>;

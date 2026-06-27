@@ -17,7 +17,7 @@ function isFillGapsStagePassed(feedback: StageState["feedback"]): boolean {
 }
 
 export function isStageSatisfied(state: StageState): boolean {
-  if (state.kind === "fillGaps") {
+  if (state.kind === "fillGaps" || state.kind === "fillCode") {
     return isFillGapsStagePassed(state.feedback);
   }
 
@@ -53,7 +53,7 @@ export function deriveIsCurrentStageComplete(state: StageState): boolean {
     return isSelectCorrectComplete(state.selectCorrect);
   }
 
-  if (state.kind === "fillGaps") {
+  if (state.kind === "fillGaps" || state.kind === "fillCode") {
     return isFillGapsStagePassed(state.feedback);
   }
 
@@ -69,7 +69,7 @@ export function deriveMultiStageFeedback(
   selectCorrectPersisted: SelectCorrectPersistedState | null,
   isLastStage: boolean,
 ): ExerciseFeedback {
-  if (state.kind === "fillGaps" || state.kind === "matchPairs") {
+  if (state.kind === "fillGaps" || state.kind === "fillCode" || state.kind === "matchPairs") {
     return state.feedback;
   }
 
@@ -109,7 +109,7 @@ export function deriveHasAttemptedCheck(
   state: StageState,
   selectCorrectPersisted: SelectCorrectPersistedState | null,
 ): boolean {
-  if (state.kind === "fillGaps") {
+  if (state.kind === "fillGaps" || state.kind === "fillCode") {
     return state.hasAttemptedCheck;
   }
 

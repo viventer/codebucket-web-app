@@ -1,4 +1,5 @@
 import type {
+  FillCodeStage,
   FillGapsStage,
   MatchPairsStage,
   MultiStageContent,
@@ -34,6 +35,14 @@ export type FillGapsStageState = {
   feedback: ExerciseFeedback;
 };
 
+export type FillCodeStageState = {
+  kind: "fillCode";
+  assignments: Record<string, string | null>;
+  activeGapId: string | null;
+  hasAttemptedCheck: boolean;
+  feedback: ExerciseFeedback;
+};
+
 export type SelectCorrectStageState = {
   kind: "selectCorrect";
   selectCorrect: SelectCorrectPersistedState;
@@ -54,6 +63,7 @@ export type MatchPairsStageState = {
 
 export type StageState =
   | FillGapsStageState
+  | FillCodeStageState
   | SelectCorrectStageState
   | MatchPairsStageState;
 
@@ -61,6 +71,17 @@ export function createFillGapsStageState(stage: FillGapsStage): FillGapsStageSta
   const gapIds = getGapIds(stage);
   return {
     kind: "fillGaps",
+    assignments: createInitialAssignments(gapIds),
+    activeGapId: gapIds[0] ?? null,
+    hasAttemptedCheck: false,
+    feedback: "idle",
+  };
+}
+
+export function createFillCodeStageState(stage: FillCodeStage): FillCodeStageState {
+  const gapIds = getGapIds(stage);
+  return {
+    kind: "fillCode",
     assignments: createInitialAssignments(gapIds),
     activeGapId: gapIds[0] ?? null,
     hasAttemptedCheck: false,
@@ -88,6 +109,10 @@ export function createMatchPairsStageState(
 export function createStageState(stage: MultiStageStage): StageState {
   if (stage.type === "fillGaps") {
     return createFillGapsStageState(stage);
+  }
+
+  if (stage.type === "fillCode") {
+    return createFillCodeStageState(stage);
   }
 
   if (stage.type === "matchPairs") {

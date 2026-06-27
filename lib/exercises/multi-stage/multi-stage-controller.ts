@@ -49,6 +49,7 @@ import {
 } from "./stage-view";
 import {
   getStageActionBarVariant,
+  isFillCodeStage,
   isFillGapsStage,
   isMatchPairsStage,
   isSelectCorrectStage,
@@ -97,6 +98,13 @@ export function useMultiStageExerciseController(
     currentState.kind === "fillGaps" && isFillGapsStage(currentStage)
       ? currentStage
       : null;
+
+  const fillCodeStage =
+    currentState.kind === "fillCode" && isFillCodeStage(currentStage)
+      ? currentStage
+      : null;
+
+  const gapLinesStage = fillGapsStage ?? fillCodeStage;
 
   const matchPairsStage =
     currentState.kind === "matchPairs" && isMatchPairsStage(currentStage)
@@ -150,19 +158,23 @@ export function useMultiStageExerciseController(
         };
 
   const feedbackTarget =
-    fillGapsStage?.presentation
-      ? getStageFeedbackTarget(fillGapsStage.presentation.kind)
+    gapLinesStage?.presentation
+      ? getStageFeedbackTarget(gapLinesStage.presentation.kind)
       : "codePanel";
 
-  const fillGapsAssignments =
-    currentState.kind === "fillGaps" ? currentState.assignments : {};
-  const fillGapsActiveGapId =
-    currentState.kind === "fillGaps" ? currentState.activeGapId : null;
+  const gapAssignments =
+    currentState.kind === "fillGaps" || currentState.kind === "fillCode"
+      ? currentState.assignments
+      : {};
+  const gapActiveGapId =
+    currentState.kind === "fillGaps" || currentState.kind === "fillCode"
+      ? currentState.activeGapId
+      : null;
 
   const availableOptions = fillGapsStage
     ? getAvailableOptions(
         { ...fillGapsStage, options: optionOrder },
-        fillGapsAssignments,
+        currentState.kind === "fillGaps" ? currentState.assignments : {},
       )
     : [];
 
@@ -417,6 +429,26 @@ export function useMultiStageExerciseController(
     });
   }
 
+  function updateGap(gapId: string, value: string) {
+    if (!fillCodeStage || currentState.kind !== "fillCode") {
+      return;
+    }
+
+    updateCurrentStageState((state) => {
+      if (state.kind !== "fillCode") {
+        return state;
+      }
+
+      return {
+        ...state,
+        assignments: {
+          ...state.assignments,
+          [gapId]: value === "" ? null : value,
+        },
+      };
+    });
+  }
+
   function selectOption(option: string) {
     if (!fillGapsStage || currentState.kind !== "fillGaps") {
       return;
@@ -460,7 +492,7 @@ export function useMultiStageExerciseController(
 
   function setActiveGapId(gapId: string | null) {
     updateCurrentStageState((state) => {
-      if (state.kind !== "fillGaps") {
+      if (state.kind !== "fillGaps" && state.kind !== "fillCode") {
         return state;
       }
 
@@ -473,7 +505,7 @@ export function useMultiStageExerciseController(
 
   function markAttempted() {
     updateCurrentStageState((state) => {
-      if (state.kind !== "fillGaps") {
+      if (state.kind !== "fillGaps" && state.kind !== "fillCode") {
         return state;
       }
 
@@ -493,7 +525,7 @@ export function useMultiStageExerciseController(
 
   function clearTransientFeedback() {
     updateCurrentStageState((state) => {
-      if (state.kind !== "fillGaps") {
+      if (state.kind !== "fillGaps" && state.kind !== "fillCode") {
         return state;
       }
 
@@ -522,25 +554,42 @@ export function useMultiStageExerciseController(
       return evaluateFillGapsCheck(fillGapsStage, currentState.assignments);
     }
 
+    if (currentState.kind === "fillCode" && fillCodeStage) {
+      return evaluateFillGapsCheck(fillCodeStage, currentState.assignments);
+    }
+
     return "warning";
   }
 
   function applySolution() {
-    if (!fillGapsStage || currentState.kind !== "fillGaps") {
+    if (fillGapsStage && currentState.kind === "fillGaps") {
+      updateCurrentStageState((state) => {
+        if (state.kind !== "fillGaps") {
+          return state;
+        }
+
+        return {
+          ...state,
+          assignments: applyFillGapsSolution(fillGapsStage, state.assignments),
+          activeGapId: null,
+        };
+      });
       return;
     }
 
-    updateCurrentStageState((state) => {
-      if (state.kind !== "fillGaps") {
-        return state;
-      }
+    if (fillCodeStage && currentState.kind === "fillCode") {
+      updateCurrentStageState((state) => {
+        if (state.kind !== "fillCode") {
+          return state;
+        }
 
-      return {
-        ...state,
-        assignments: applyFillGapsSolution(fillGapsStage, state.assignments),
-        activeGapId: null,
-      };
-    });
+        return {
+          ...state,
+          assignments: applyFillGapsSolution(fillCodeStage, state.assignments),
+          activeGapId: null,
+        };
+      });
+    }
   }
 
   function reset() {
@@ -659,9 +708,10 @@ export function useMultiStageExerciseController(
     isExerciseComplete,
     currentStageActionBarVariant,
     isCurrentStageComplete,
-    assignments: fillGapsAssignments,
-    activeGapId: fillGapsActiveGapId,
+    assignments: gapAssignments,
+    activeGapId: gapActiveGapId,
     availableOptions,
+    updateGap,
     selectOption,
     clearGap,
     setActiveGapId,

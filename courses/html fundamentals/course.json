@@ -869,18 +869,48 @@
           "id": "reproduce-table",
           "type": "interactiveExercise",
           "content": {
-            "type": "fillCode",
+            "type": "multiStage",
             "title": "Odwzoruj tabelę",
-            "command": "Wpisz w luki brakujące tagi i atrybuty, aby kod odpowiadał tabeli z podglądu.",
-            "language": "html",
+            "description": "Dopasuj tagi budujące tabelę, a następnie odwzoruj tabelę w kodzie.",
+            "command": "Naciśnij pary.",
             "hints": [
               "<table> otacza całą tabelę.",
               "<tr> to wiersz tabeli.",
               "<th> to komórka nagłówkowa.",
               "Możliwe wartości align to: left, center, right."
             ],
-            "previewHtml": "<table border=\"1\"><tr><th>Nazwa</th><th>Opis</th><th>Cena</th></tr><tr align=\"center\"><td>Pakiet Gold</td><td>Ten plan to tylko wabik, wybierz droższy.</td><td>690 zł/miesiąc</td></tr><tr align=\"center\"><td>Pakiet Platinium</td><td>Ekskluzywny dostęp!</td><td>990 zł/miesiąc</td></tr></table>",
-            "lines": [
+            "stages": [
+              {
+                "type": "matchPairs",
+                "command": "Dopasuj tagi budujące tabelę.",
+                "pairs": [
+                  {
+                    "left": "<tr>",
+                    "right": "Wiersz tabeli"
+                  },
+                  {
+                    "left": "<th>",
+                    "right": "Komórka nagłówkowa"
+                  },
+                  {
+                    "left": "<td>",
+                    "right": "Komórka tabeli"
+                  },
+                  {
+                    "left": "<table>",
+                    "right": "Pojemnik na całą tabelę"
+                  }
+                ]
+              },
+              {
+                "type": "fillCode",
+                "command": "Wpisz w luki brakujące tagi i atrybuty, aby kod odpowiadał tabeli z podglądu.",
+                "language": "html",
+                "presentation": {
+                  "kind": "preview",
+                  "previewHtml": "<table border=\"1\"><tr><th>Nazwa</th><th>Opis</th><th>Cena</th></tr><tr align=\"center\"><td>Pakiet Gold</td><td>Ten plan to tylko wabik, wybierz droższy.</td><td>690 zł/miesiąc</td></tr><tr align=\"center\"><td>Pakiet Platinium</td><td>Ekskluzywny dostęp!</td><td>990 zł/miesiąc</td></tr></table>"
+                },
+                "lines": [
               {
                 "kind": "group",
                 "indent": 0,
@@ -1077,6 +1107,8 @@
                 "id": "table-close",
                 "indent": 0,
                 "pairedGapId": "table"
+              }
+                ]
               }
             ]
           },

@@ -1,4 +1,5 @@
 import type {
+  FillCodeStage,
   FillGapsStage,
   MatchPairsStage,
   MultiStageStage,
@@ -9,6 +10,10 @@ import type { StageActionBarVariant } from "../shared/types";
 
 export function isFillGapsStage(stage: MultiStageStage): stage is FillGapsStage {
   return stage.type === "fillGaps";
+}
+
+export function isFillCodeStage(stage: MultiStageStage): stage is FillCodeStage {
+  return stage.type === "fillCode";
 }
 
 export function isSelectCorrectStage(
@@ -26,5 +31,7 @@ export function isMatchPairsStage(
 export function getStageActionBarVariant(
   stage: MultiStageStage,
 ): StageActionBarVariant {
-  return stage.type === "fillGaps" ? "check" : "gated";
+  return stage.type === "fillGaps" || stage.type === "fillCode"
+    ? "check"
+    : "gated";
 }
