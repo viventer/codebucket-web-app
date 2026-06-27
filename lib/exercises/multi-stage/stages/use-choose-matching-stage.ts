@@ -1,7 +1,5 @@
 "use client";
 
-import { useCallback } from "react";
-
 import { useShuffledItems } from "@/lib/shuffle";
 
 import {
@@ -41,42 +39,36 @@ export function useChooseMatchingStage(
     currentState.kind === "chooseMatching" ? shuffleToken : 0,
   );
 
-  const toggleItem = useCallback(
-    (itemId: number) => {
-      if (!chooseMatchingStage || currentState.kind !== "chooseMatching") {
-        return;
+  function toggleItem(itemId: number) {
+    if (!chooseMatchingStage || currentState.kind !== "chooseMatching") {
+      return;
+    }
+
+    updateCurrentStageState((state) => {
+      if (state.kind !== "chooseMatching") {
+        return state;
       }
 
-      updateCurrentStageState((state) => {
-        if (state.kind !== "chooseMatching") {
-          return state;
-        }
+      return {
+        ...state,
+        chooseMatching: toggleItemSelection(state.chooseMatching, itemId),
+      };
+    });
+  }
 
-        return {
-          ...state,
-          chooseMatching: toggleItemSelection(state.chooseMatching, itemId),
-        };
-      });
-    },
-    [chooseMatchingStage, currentState.kind, updateCurrentStageState],
-  );
+  function getItemVisualState(itemId: number) {
+    if (!chooseMatchingStage || currentState.kind !== "chooseMatching") {
+      return "idle" as const;
+    }
 
-  const getItemVisualState = useCallback(
-    (itemId: number) => {
-      if (!chooseMatchingStage || currentState.kind !== "chooseMatching") {
-        return "idle" as const;
-      }
+    return getChooseMatchingItemVisualState(
+      currentState.chooseMatching,
+      itemId,
+      chooseMatchingStage.correctItemIds,
+    );
+  }
 
-      return getChooseMatchingItemVisualState(
-        currentState.chooseMatching,
-        itemId,
-        chooseMatchingStage.correctItemIds,
-      );
-    },
-    [chooseMatchingStage, currentState],
-  );
-
-  const checkChooseMatching = useCallback((): CheckResult => {
+  function checkChooseMatching(): CheckResult {
     if (!chooseMatchingStage || currentState.kind !== "chooseMatching") {
       return "warning";
     }
@@ -140,13 +132,7 @@ export function useChooseMatchingStage(
     }
 
     return isCorrect ? "success" : "error";
-  }, [
-    chooseMatchingStage,
-    currentState,
-    currentStageIndex,
-    setRetryQueue,
-    updateCurrentStageState,
-  ]);
+  }
 
   if (!chooseMatchingStage || currentState.kind !== "chooseMatching") {
     return {

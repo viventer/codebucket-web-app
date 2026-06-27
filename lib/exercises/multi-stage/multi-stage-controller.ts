@@ -1,7 +1,5 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
-
 import type { MultiStageContent } from "@/schemas/courseSchema";
 
 import { getStageFeedbackTarget } from "../fill-gaps/fill-gaps-utils";
@@ -75,37 +73,21 @@ export function useMultiStageExerciseController(
 
   const shuffleToken = shuffleTokens[currentStageIndex] ?? 0;
 
-  const updateCurrentStageState = useCallback(
-    (updater: (state: StageState) => StageState) => {
-      updateStageStateAtIndex(currentStageIndex, updater);
-    },
-    [currentStageIndex, updateStageStateAtIndex],
-  );
+  function updateCurrentStageState(updater: (state: StageState) => StageState) {
+    updateStageStateAtIndex(currentStageIndex, updater);
+  }
 
-  const coreContext = useMemo<MultiStageCoreContext>(
-    () => ({
-      content,
-      currentStageIndex,
-      currentStage,
-      currentState,
-      stageStates,
-      shuffleToken,
-      updateCurrentStageState,
-      bumpShuffleToken,
-      setRetryQueue,
-    }),
-    [
-      content,
-      currentStageIndex,
-      currentStage,
-      currentState,
-      stageStates,
-      shuffleToken,
-      updateCurrentStageState,
-      bumpShuffleToken,
-      setRetryQueue,
-    ],
-  );
+  const coreContext: MultiStageCoreContext = {
+    content,
+    currentStageIndex,
+    currentStage,
+    currentState,
+    stageStates,
+    shuffleToken,
+    updateCurrentStageState,
+    bumpShuffleToken,
+    setRetryQueue,
+  };
 
   const fillGapsSlice = useFillGapsStage(coreContext);
   const fillCodeSlice = useFillCodeStage(coreContext);

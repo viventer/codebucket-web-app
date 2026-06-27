@@ -1,7 +1,5 @@
 "use client";
 
-import { useCallback } from "react";
-
 import { useShuffledItems } from "@/lib/shuffle";
 
 import {
@@ -29,54 +27,48 @@ export function useSelectCorrectStage(
     currentState.kind === "selectCorrect" ? shuffleToken : 0,
   );
 
-  const selectAnswer = useCallback(
-    (answerId: number) => {
-      if (!selectCorrectStage || currentState.kind !== "selectCorrect") {
-        return;
+  function selectAnswer(answerId: number) {
+    if (!selectCorrectStage || currentState.kind !== "selectCorrect") {
+      return;
+    }
+
+    updateCurrentStageState((state) => {
+      if (state.kind !== "selectCorrect") {
+        return state;
       }
 
-      updateCurrentStageState((state) => {
-        if (state.kind !== "selectCorrect") {
-          return state;
-        }
-
-        const selectCorrect = applySelectCorrectAnswer(
-          state.selectCorrect,
-          answerId,
-          selectCorrectStage.correctAnswerId,
-        );
-
-        const retryCompleted =
-          selectCorrect.attempt === "retry" && selectCorrect.phase === "correct"
-            ? true
-            : state.retryCompleted;
-
-        return {
-          ...state,
-          selectCorrect,
-          retryCompleted,
-        };
-      });
-    },
-    [currentState.kind, selectCorrectStage, updateCurrentStageState],
-  );
-
-  const getAnswerVisualState = useCallback(
-    (answerId: number) => {
-      if (!selectCorrectStage || currentState.kind !== "selectCorrect") {
-        return "idle" as const;
-      }
-
-      return getSelectCorrectAnswerVisualState(
-        currentState.selectCorrect,
+      const selectCorrect = applySelectCorrectAnswer(
+        state.selectCorrect,
         answerId,
         selectCorrectStage.correctAnswerId,
       );
-    },
-    [currentState, selectCorrectStage],
-  );
 
-  const getWrongExplanation = useCallback(() => {
+      const retryCompleted =
+        selectCorrect.attempt === "retry" && selectCorrect.phase === "correct"
+          ? true
+          : state.retryCompleted;
+
+      return {
+        ...state,
+        selectCorrect,
+        retryCompleted,
+      };
+    });
+  }
+
+  function getAnswerVisualState(answerId: number) {
+    if (!selectCorrectStage || currentState.kind !== "selectCorrect") {
+      return "idle" as const;
+    }
+
+    return getSelectCorrectAnswerVisualState(
+      currentState.selectCorrect,
+      answerId,
+      selectCorrectStage.correctAnswerId,
+    );
+  }
+
+  function getWrongExplanation() {
     if (!selectCorrectStage || currentState.kind !== "selectCorrect") {
       return null;
     }
@@ -86,7 +78,7 @@ export function useSelectCorrectStage(
       selectCorrectStage.answers,
       selectCorrectStage.correctAnswerId,
     );
-  }, [currentState, selectCorrectStage]);
+  }
 
   if (!selectCorrectStage || currentState.kind !== "selectCorrect") {
     return null;

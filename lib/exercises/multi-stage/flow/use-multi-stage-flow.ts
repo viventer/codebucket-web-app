@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, type Dispatch, type SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 
 import type { MultiStageContent } from "@/schemas/courseSchema";
 
@@ -49,44 +49,41 @@ export function useMultiStageFlow({
           total: totalStages,
         };
 
-  const enterRetryStage = useCallback(
-    (stageIndex: number, queueIndex: number) => {
-      setFlowPhase("retry");
-      setRetryQueueIndex(queueIndex);
-      setCurrentStageIndex(stageIndex);
+  function enterRetryStage(stageIndex: number, queueIndex: number) {
+    setFlowPhase("retry");
+    setRetryQueueIndex(queueIndex);
+    setCurrentStageIndex(stageIndex);
 
-      setStageStates((prev) => {
-        const next = [...prev];
-        const stageState = next[stageIndex];
+    setStageStates((prev) => {
+      const next = [...prev];
+      const stageState = next[stageIndex];
 
-        if (stageState?.kind === "selectCorrect") {
-          next[stageIndex] = prepareSelectCorrectRetryStageState(stageState);
-          return next;
-        }
+      if (stageState?.kind === "selectCorrect") {
+        next[stageIndex] = prepareSelectCorrectRetryStageState(stageState);
+        return next;
+      }
 
-        if (stageState?.kind === "chooseMatching") {
-          next[stageIndex] = prepareChooseMatchingRetryStageState(stageState);
-          return next;
-        }
+      if (stageState?.kind === "chooseMatching") {
+        next[stageIndex] = prepareChooseMatchingRetryStageState(stageState);
+        return next;
+      }
 
-        return prev;
-      });
+      return prev;
+    });
 
-      bumpShuffleToken(stageIndex);
-    },
-    [bumpShuffleToken, setStageStates],
-  );
+    bumpShuffleToken(stageIndex);
+  }
 
-  const startRetryPhase = useCallback(() => {
+  function startRetryPhase() {
     const firstRetryStage = retryQueue[0];
     if (firstRetryStage === undefined) {
       return;
     }
 
     enterRetryStage(firstRetryStage, 0);
-  }, [enterRetryStage, retryQueue]);
+  }
 
-  const advanceStage = useCallback(() => {
+  function advanceStage() {
     if (flowPhase === "retry") {
       if (retryQueueIndex < retryQueue.length - 1) {
         const nextQueueIndex = retryQueueIndex + 1;
@@ -104,29 +101,21 @@ export function useMultiStageFlow({
     if (retryQueue.length > 0) {
       startRetryPhase();
     }
-  }, [
-    currentStageIndex,
-    enterRetryStage,
-    flowPhase,
-    retryQueue,
-    retryQueueIndex,
-    startRetryPhase,
-    totalStages,
-  ]);
+  }
 
-  const goToPreviousStage = useCallback(() => {
+  function goToPreviousStage() {
     if (flowPhase === "retry" || currentStageIndex === 0) {
       return;
     }
     setCurrentStageIndex((index) => index - 1);
-  }, [currentStageIndex, flowPhase]);
+  }
 
-  const resetFlow = useCallback(() => {
+  function resetFlow() {
     setCurrentStageIndex(0);
     setFlowPhase("main");
     setRetryQueue([]);
     setRetryQueueIndex(0);
-  }, []);
+  }
 
   return {
     currentStageIndex,

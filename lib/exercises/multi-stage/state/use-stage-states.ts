@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 import type { MultiStageContent } from "@/schemas/courseSchema";
 
@@ -14,29 +14,29 @@ export function useStageStates(content: MultiStageContent) {
     content.stages.map(() => 0),
   );
 
-  const updateCurrentStageState = useCallback(
-    (currentStageIndex: number, updater: (state: StageState) => StageState) => {
-      setStageStates((prev) => {
-        const next = [...prev];
-        next[currentStageIndex] = updater(prev[currentStageIndex]!);
-        return next;
-      });
-    },
-    [],
-  );
+  function updateCurrentStageState(
+    currentStageIndex: number,
+    updater: (state: StageState) => StageState,
+  ) {
+    setStageStates((prev) => {
+      const next = [...prev];
+      next[currentStageIndex] = updater(prev[currentStageIndex]!);
+      return next;
+    });
+  }
 
-  const bumpShuffleToken = useCallback((stageIndex: number) => {
+  function bumpShuffleToken(stageIndex: number) {
     setShuffleTokens((prev) => {
       const next = [...prev];
       next[stageIndex] = (next[stageIndex] ?? 0) + 1;
       return next;
     });
-  }, []);
+  }
 
-  const resetStageStates = useCallback(() => {
+  function resetStageStates() {
     setStageStates(createAllStageStates(content));
     setShuffleTokens(content.stages.map(() => 0));
-  }, [content]);
+  }
 
   return {
     stageStates,

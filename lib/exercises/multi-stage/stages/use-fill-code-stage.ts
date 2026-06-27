@@ -1,7 +1,5 @@
 "use client";
 
-import { useCallback } from "react";
-
 import { isFillCodeStage } from "../stage-utils";
 import type { MultiStageCoreContext, MultiStageFillCodeStage } from "../types";
 
@@ -15,44 +13,38 @@ export function useFillCodeStage(
       ? currentStage
       : null;
 
-  const updateGap = useCallback(
-    (gapId: string, value: string) => {
-      if (!fillCodeStage || currentState.kind !== "fillCode") {
-        return;
+  function updateGap(gapId: string, value: string) {
+    if (!fillCodeStage || currentState.kind !== "fillCode") {
+      return;
+    }
+
+    updateCurrentStageState((state) => {
+      if (state.kind !== "fillCode") {
+        return state;
       }
 
-      updateCurrentStageState((state) => {
-        if (state.kind !== "fillCode") {
-          return state;
-        }
+      return {
+        ...state,
+        assignments: {
+          ...state.assignments,
+          [gapId]: value === "" ? null : value,
+        },
+      };
+    });
+  }
 
-        return {
-          ...state,
-          assignments: {
-            ...state.assignments,
-            [gapId]: value === "" ? null : value,
-          },
-        };
-      });
-    },
-    [currentState.kind, fillCodeStage, updateCurrentStageState],
-  );
+  function setActiveGapId(gapId: string | null) {
+    updateCurrentStageState((state) => {
+      if (state.kind !== "fillGaps" && state.kind !== "fillCode") {
+        return state;
+      }
 
-  const setActiveGapId = useCallback(
-    (gapId: string | null) => {
-      updateCurrentStageState((state) => {
-        if (state.kind !== "fillGaps" && state.kind !== "fillCode") {
-          return state;
-        }
-
-        return {
-          ...state,
-          activeGapId: gapId,
-        };
-      });
-    },
-    [updateCurrentStageState],
-  );
+      return {
+        ...state,
+        activeGapId: gapId,
+      };
+    });
+  }
 
   if (!fillCodeStage || currentState.kind !== "fillCode") {
     return null;

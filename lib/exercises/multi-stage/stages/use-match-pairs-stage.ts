@@ -1,7 +1,5 @@
 "use client";
 
-import { useCallback } from "react";
-
 import { useShuffledItems } from "@/lib/shuffle";
 
 import {
@@ -48,72 +46,55 @@ export function useMatchPairsStage(
 
   const matchPairsAllItems = [...leftItems, ...rightItems];
 
-  const updateMatchPairsState = useCallback(
-    (updater: (state: MatchPairsStageState) => MatchPairsStageState) => {
-      updateCurrentStageState((state) => {
-        if (state.kind !== "matchPairs") {
-          return state;
-        }
-
-        return updater(state);
-      });
-    },
-    [updateCurrentStageState],
-  );
-
-  const selectItem = useCallback(
-    (column: "left" | "right", id: string) => {
-      if (!matchPairsStage || currentState.kind !== "matchPairs") {
-        return;
+  function updateMatchPairsState(
+    updater: (state: MatchPairsStageState) => MatchPairsStageState,
+  ) {
+    updateCurrentStageState((state) => {
+      if (state.kind !== "matchPairs") {
+        return state;
       }
 
-      selectMatchPairItem({
-        column,
-        id,
-        state: currentState,
-        leftItems,
-        rightItems,
-        allItems: matchPairsAllItems,
-        pairCount: matchPairsStage.pairs.length,
-        updateState: updateMatchPairsState,
-      });
-    },
-    [
-      currentState,
+      return updater(state);
+    });
+  }
+
+  function selectItem(column: "left" | "right", id: string) {
+    if (!matchPairsStage || currentState.kind !== "matchPairs") {
+      return;
+    }
+
+    selectMatchPairItem({
+      column,
+      id,
+      state: currentState,
       leftItems,
-      matchPairsAllItems,
-      matchPairsStage,
       rightItems,
-      updateMatchPairsState,
-    ],
-  );
+      allItems: matchPairsAllItems,
+      pairCount: matchPairsStage.pairs.length,
+      updateState: updateMatchPairsState,
+    });
+  }
 
-  const getItemState = useCallback(
-    (itemId: string) => {
-      if (currentState.kind !== "matchPairs") {
-        return "idle" as const;
-      }
+  function getItemState(itemId: string) {
+    if (currentState.kind !== "matchPairs") {
+      return "idle" as const;
+    }
 
-      return getMatchPairItemState(
-        itemId,
-        matchPairsAllItems,
-        currentState.matchedPairIds,
-        currentState.itemStates,
-      );
-    },
-    [currentState, matchPairsAllItems],
-  );
+    return getMatchPairItemState(
+      itemId,
+      matchPairsAllItems,
+      currentState.matchedPairIds,
+      currentState.itemStates,
+    );
+  }
 
-  const isErrorFlashing = useCallback(
-    (itemId: string) => {
-      if (currentState.kind !== "matchPairs") {
-        return false;
-      }
+  function isErrorFlashing(itemId: string) {
+    if (currentState.kind !== "matchPairs") {
+      return false;
+    }
 
-      return currentState.errorFlashIds.has(itemId);
-    },
-    [currentState],
-  );
+    return currentState.errorFlashIds.has(itemId);
+  }
 
   if (!matchPairsStage || currentState.kind !== "matchPairs") {
     return null;

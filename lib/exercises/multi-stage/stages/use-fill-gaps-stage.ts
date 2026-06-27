@@ -1,7 +1,5 @@
 "use client";
 
-import { useCallback } from "react";
-
 import { useShuffledItems } from "@/lib/shuffle";
 
 import {
@@ -37,68 +35,59 @@ export function useFillGapsStage(
         )
       : [];
 
-  const selectOption = useCallback(
-    (option: string) => {
-      if (!fillGapsStage || currentState.kind !== "fillGaps") {
-        return;
+  function selectOption(option: string) {
+    if (!fillGapsStage || currentState.kind !== "fillGaps") {
+      return;
+    }
+
+    const gapIds = getGapIds(fillGapsStage);
+    updateCurrentStageState((state) => {
+      if (state.kind !== "fillGaps" || !state.activeGapId) {
+        return state;
       }
 
-      const gapIds = getGapIds(fillGapsStage);
-      updateCurrentStageState((state) => {
-        if (state.kind !== "fillGaps" || !state.activeGapId) {
-          return state;
-        }
+      const assignments = {
+        ...state.assignments,
+        [state.activeGapId]: option,
+      };
 
-        const assignments = {
+      return {
+        ...state,
+        assignments,
+        activeGapId: getFirstEmptyGapId(gapIds, assignments),
+      };
+    });
+  }
+
+  function clearGap(gapId: string) {
+    updateCurrentStageState((state) => {
+      if (state.kind !== "fillGaps") {
+        return state;
+      }
+
+      return {
+        ...state,
+        assignments: {
           ...state.assignments,
-          [state.activeGapId]: option,
-        };
+          [gapId]: null,
+        },
+        activeGapId: gapId,
+      };
+    });
+  }
 
-        return {
-          ...state,
-          assignments,
-          activeGapId: getFirstEmptyGapId(gapIds, assignments),
-        };
-      });
-    },
-    [currentState.kind, fillGapsStage, updateCurrentStageState],
-  );
+  function setActiveGapId(gapId: string | null) {
+    updateCurrentStageState((state) => {
+      if (state.kind !== "fillGaps" && state.kind !== "fillCode") {
+        return state;
+      }
 
-  const clearGap = useCallback(
-    (gapId: string) => {
-      updateCurrentStageState((state) => {
-        if (state.kind !== "fillGaps") {
-          return state;
-        }
-
-        return {
-          ...state,
-          assignments: {
-            ...state.assignments,
-            [gapId]: null,
-          },
-          activeGapId: gapId,
-        };
-      });
-    },
-    [updateCurrentStageState],
-  );
-
-  const setActiveGapId = useCallback(
-    (gapId: string | null) => {
-      updateCurrentStageState((state) => {
-        if (state.kind !== "fillGaps" && state.kind !== "fillCode") {
-          return state;
-        }
-
-        return {
-          ...state,
-          activeGapId: gapId,
-        };
-      });
-    },
-    [updateCurrentStageState],
-  );
+      return {
+        ...state,
+        activeGapId: gapId,
+      };
+    });
+  }
 
   if (!fillGapsStage || currentState.kind !== "fillGaps") {
     return null;
