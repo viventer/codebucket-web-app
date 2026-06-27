@@ -1,16 +1,18 @@
 import type { MatchPairItemState } from "./item-glow-style";
 import type {
   MultiStageContent,
-  MultiStageStage,
   SelectCorrectContent,
 } from "@/schemas/courseSchema";
 
 import type {
-  ChooseMatchingItemVisualState,
-  ChooseMatchingPersistedState,
-} from "../choose-matching/choose-matching-state";
-import type { SelectCorrectAnswerVisualState, SelectCorrectPersistedState, SelectCorrectPhase } from "../select-correct/select-correct-state";
-import type { StageFeedbackTarget } from "../fill-gaps/fill-gaps-utils";
+  MultiStageActiveStage,
+  MultiStageNavigation,
+  MultiStageSessionMeta,
+} from "../multi-stage/types";
+import type {
+  SelectCorrectAnswerVisualState,
+  SelectCorrectPhase,
+} from "../select-correct/select-correct-state";
 
 export type CheckResult = "success" | "error" | "warning";
 
@@ -119,39 +121,13 @@ export type SelectCorrectExerciseController = ExerciseController &
     kind: "selectCorrect";
   };
 
-export interface MultiStageControllerState {
+export type MultiStageExerciseController = ExerciseController & {
+  kind: "multiStage";
   content: MultiStageContent;
-  currentStageIndex: number;
-  currentStage: MultiStageStage;
-  stageProgress: StageProgress;
-  feedbackTarget: StageFeedbackTarget;
-  flowPhase: MultiStageFlowPhase;
-  isLastStage: boolean;
-  isExerciseComplete: boolean;
-  currentStageActionBarVariant: StageActionBarVariant;
-  isCurrentStageComplete: boolean;
-  selectCorrectPersisted: SelectCorrectPersistedState | null;
-  shuffledSelectCorrectAnswers: { id: number; content: string }[];
-  selectAnswer: (answerId: number) => void;
-  getAnswerVisualState: (answerId: number) => SelectCorrectAnswerVisualState;
-  getWrongExplanation: () => string | null;
-  chooseMatchingPersisted: ChooseMatchingPersistedState | null;
-  shuffledChooseMatchingItems: { id: number; content: string }[];
-  toggleChooseMatchingItem: (itemId: number) => void;
-  getChooseMatchingItemVisualState: (
-    itemId: number,
-  ) => ChooseMatchingItemVisualState;
-  advanceStage: () => void;
-  goToPreviousStage: () => void;
-}
-
-export type MultiStageExerciseController = ExerciseController &
-  FillGapsControllerState &
-  FillCodeControllerState &
-  MatchPairsControllerState &
-  MultiStageControllerState & {
-    kind: "multiStage";
-  };
+  navigation: MultiStageNavigation;
+  session: MultiStageSessionMeta;
+  stage: MultiStageActiveStage;
+};
 
 export type ExerciseControllerUnion =
   | FillGapsExerciseController

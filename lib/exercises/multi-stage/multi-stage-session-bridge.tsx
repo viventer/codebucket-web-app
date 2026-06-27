@@ -50,8 +50,9 @@ export function MultiStageSessionBridge({
   const advanceTimeoutRef = useRef<number | null>(null);
   const autoAdvancedStagesRef = useRef<Set<number>>(new Set());
 
-  const { feedback, clearTransientFeedback, isLastStage, advanceStage } =
-    controller;
+  const { navigation, session, feedback, clearTransientFeedback } = controller;
+  const { isLastStage, advanceStage, currentStageIndex, flowPhase, stageProgress } =
+    navigation;
 
   function clearAdvanceTimeout() {
     if (advanceTimeoutRef.current !== null) {
@@ -77,10 +78,10 @@ export function MultiStageSessionBridge({
   }, [feedback, clearTransientFeedback]);
 
   useEffect(() => {
-    if (controller.flowPhase === "retry") {
+    if (flowPhase === "retry") {
       autoAdvancedStagesRef.current.clear();
     }
-  }, [controller.flowPhase]);
+  }, [flowPhase]);
 
   function dismissCelebration() {
     setShowCelebration(false);
@@ -96,7 +97,7 @@ export function MultiStageSessionBridge({
       return;
     }
 
-    autoAdvancedStagesRef.current.add(controller.currentStageIndex);
+    autoAdvancedStagesRef.current.add(currentStageIndex);
     if (advanceFeedback !== null) {
       controller.setFeedback(advanceFeedback);
     }
@@ -110,15 +111,18 @@ export function MultiStageSessionBridge({
 
   useEffect(() => {
     if (
-      controller.currentStageActionBarVariant !== "gated" ||
+      session.currentStageActionBarVariant !== "gated" ||
       isLastStage ||
-      !controller.isCurrentStageComplete ||
-      autoAdvancedStagesRef.current.has(controller.currentStageIndex)
+      !session.isCurrentStageComplete ||
+      autoAdvancedStagesRef.current.has(currentStageIndex)
     ) {
       return;
     }
 
-    const phase = controller.selectCorrectPersisted?.phase;
+    const phase =
+      controller.stage.type === "selectCorrect"
+        ? controller.stage.persisted.phase
+        : undefined;
     const isWrongAdvance =
       phase === "wrongDeferred" || phase === "wrongResolved";
     const delayMs = isWrongAdvance
@@ -128,19 +132,19 @@ export function MultiStageSessionBridge({
 
     scheduleMiddleStageAdvance(advanceFeedback, delayMs);
   }, [
-    controller.currentStageActionBarVariant,
-    controller.currentStageIndex,
-    controller.isCurrentStageComplete,
-    controller.selectCorrectPersisted?.phase,
+    session.currentStageActionBarVariant,
+    currentStageIndex,
+    session.isCurrentStageComplete,
+    controller.stage,
     isLastStage,
   ]);
 
   useEffect(() => {
     if (
-      controller.currentStageActionBarVariant !== "gated" ||
-      !controller.isLastStage ||
-      !controller.isCurrentStageComplete ||
-      !controller.isExerciseComplete ||
+      session.currentStageActionBarVariant !== "gated" ||
+      !isLastStage ||
+      !session.isCurrentStageComplete ||
+      !session.isExerciseComplete ||
       controller.feedback !== "success"
     ) {
       return;
@@ -148,11 +152,11 @@ export function MultiStageSessionBridge({
 
     setShowCelebration(true);
   }, [
-    controller.currentStageActionBarVariant,
+    session.currentStageActionBarVariant,
     controller.feedback,
-    controller.isCurrentStageComplete,
-    controller.isExerciseComplete,
-    controller.isLastStage,
+    session.isCurrentStageComplete,
+    session.isExerciseComplete,
+    isLastStage,
   ]);
 
   function handleCheck(): CheckResult | null {
@@ -173,7 +177,7 @@ export function MultiStageSessionBridge({
     clearAdvanceTimeout();
 
     if (result === "error") {
-      if (controller.currentStage.type === "chooseMatching") {
+      if (controller.stage.type === "chooseMatching") {
         if (!isLastStage) {
           scheduleMiddleStageAdvance(null, STAGE_ADVANCE_AFTER_WRONG_MS);
         }
@@ -193,7 +197,7 @@ export function MultiStageSessionBridge({
   }
 
   function handleProceedAttempt() {
-    if (controller.currentStageActionBarVariant === "gated") {
+    if (session.currentStageActionBarVariant === "gated") {
       toast.warning("Wykonaj ćwiczenie, zanim przejdziesz dalej.");
       return;
     }
@@ -238,18 +242,18 @@ export function MultiStageSessionBridge({
     }
 
     persistStageCompletionFeedback(controller.setFeedback, feedback);
-    autoAdvancedStagesRef.current.add(controller.currentStageIndex);
+    autoAdvancedStagesRef.current.add(currentStageIndex);
     advanceStage();
     setShowCelebration(false);
   }
 
   function goToPreviousStage() {
     clearAdvanceTimeout();
-    controller.goToPreviousStage();
+    navigation.goToPreviousStage();
     setShowCelebration(false);
   }
 
-  const isGatedStage = controller.currentStageActionBarVariant === "gated";
+  const isGatedStage = session.currentStageActionBarVariant === "gated";
   const isLocked =
     feedback === "stageSuccess" ||
     feedback === "stageSolution" ||
@@ -258,8 +262,8 @@ export function MultiStageSessionBridge({
 
   const canProceed =
     isLastStage &&
-    controller.isExerciseComplete &&
-    controller.isCurrentStageComplete &&
+    session.isExerciseComplete &&
+    session.isCurrentStageComplete &&
     (isGatedStage
       ? true
       : feedback === "success" ||
@@ -270,12 +274,10 @@ export function MultiStageSessionBridge({
     !isLastStage &&
     (feedback === "stageSuccess" ||
       feedback === "stageSolution" ||
-      controller.isCurrentStageComplete);
+      session.isCurrentStageComplete);
 
   const canGoBack =
-    controller.flowPhase === "main" &&
-    controller.currentStageIndex > 0 &&
-    !isLocked;
+    flowPhase === "main" && currentStageIndex > 0 && !isLocked;
 
   const value: ExerciseSessionContextValue = {
     controller,
@@ -285,7 +287,7 @@ export function MultiStageSessionBridge({
     canProceed,
     actionBarMode: "multi-stage",
     hints: isGatedStage ? [] : hints,
-    stageProgress: controller.stageProgress,
+    stageProgress,
     canGoBack,
     goToPreviousStage,
     reset: resetExercise,
@@ -293,7 +295,7 @@ export function MultiStageSessionBridge({
     handleProceedAttempt,
     tryShowSolution: isGatedStage ? () => {} : tryShowSolution,
     showHintDialog: isGatedStage ? () => {} : () => setHintOpen(true),
-    currentStageActionBarVariant: controller.currentStageActionBarVariant,
+    currentStageActionBarVariant: session.currentStageActionBarVariant,
     advanceCurrentStage,
     canProceedStage,
   };

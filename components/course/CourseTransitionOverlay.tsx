@@ -11,7 +11,7 @@ import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion
 
 const MotionCard = motion.create(Card);
 
-export const TRANSITION_OVERLAY_VISIBLE_MS = 3000;
+export const TRANSITION_OVERLAY_VISIBLE_MS = 2000;
 export const TRANSITION_OVERLAY_EXIT_MS = 300;
 
 type OverlaySnapshot = {

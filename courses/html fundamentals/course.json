@@ -1187,19 +1187,19 @@
                     "id": 2,
                     "type": "text",
                     "content": "for i type",
-                    "explanation": "Atrybut type określa rodzaj pola formularza, nie łączy etykiety z inputem."
+                    "explanation": "Atrybut type określa typ pola formularza, nie łączy etykiety z inputem."
                   },
                   {
                     "id": 3,
                     "type": "text",
                     "content": "label i input",
-                    "explanation": "label i input to tagi HTML, a nie atrybuty łączące etykietę z polem."
+                    "explanation": "Label i input to tagi HTML, a nie atrybuty łączące etykietę z polem."
                   },
                   {
                     "id": 4,
                     "type": "text",
                     "content": "label i type",
-                    "explanation": "type to atrybut pola input — nie służy do połączenia z etykietą."
+                    "explanation": "Type to atrybut pola input — nie służy do połączenia z etykietą."
                   }
                 ],
                 "correctAnswerId": 1

@@ -32,31 +32,13 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
     return null;
   }
 
-  const {
-    currentStage,
-    currentStageIndex,
-    flowPhase,
-    assignments,
-    activeGapId,
-    availableOptions,
-    selectOption,
-    clearGap,
-    updateGap,
-    setActiveGapId,
-    selectCorrectPersisted,
-    shuffledSelectCorrectAnswers,
-    selectAnswer,
-    getAnswerVisualState,
-    getWrongExplanation,
-    chooseMatchingPersisted,
-    shuffledChooseMatchingItems,
-    toggleChooseMatchingItem,
-    getChooseMatchingItemVisualState,
-  } = controller;
-
+  const { navigation, stage } = controller;
+  const { currentStage, currentStageIndex, flowPhase } = navigation;
   const stageCommand = currentStage.command ?? content.command;
 
-  if (currentStage.type === "matchPairs") {
+  if (stage.type === "matchPairs") {
+    const { type: _, ...matchPairsController } = stage;
+
     return (
       <div className="flex flex-col gap-4 sm:gap-8">
         <h3 className="text-base font-medium">{stageCommand}</h3>
@@ -70,7 +52,7 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
             transition={{ duration: 0.25 }}
             className="flex flex-col gap-4 sm:gap-8"
           >
-            <MatchPairsBoard controller={controller} />
+            <MatchPairsBoard controller={matchPairsController} />
             <ExerciseFeedbackMessage />
           </motion.div>
         </AnimatePresence>
@@ -78,12 +60,8 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
     );
   }
 
-  if (currentStage.type === "selectCorrect") {
-    const persisted = selectCorrectPersisted ?? {
-      selectedAnswerId: null,
-      phase: "idle" as const,
-      attempt: "first" as const,
-    };
+  if (stage.type === "selectCorrect") {
+    const persisted = stage.persisted;
 
     return (
       <AnimatePresence mode="wait">
@@ -96,16 +74,16 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
           className="flex flex-col gap-4 sm:gap-8"
         >
           <SelectCorrectAnswers
-            question={currentStage.question}
-            answers={shuffledSelectCorrectAnswers}
-            prompt={currentStage.prompt}
+            question={stage.question}
+            answers={stage.shuffledAnswers}
+            prompt={stage.prompt}
             isLocked={persisted.selectedAnswerId !== null || isLocked}
-            selectAnswer={selectAnswer}
-            getAnswerVisualState={getAnswerVisualState}
-            getWrongExplanation={getWrongExplanation}
+            selectAnswer={stage.selectAnswer}
+            getAnswerVisualState={stage.getAnswerVisualState}
+            getWrongExplanation={stage.getWrongExplanation}
             selectedAnswerId={persisted.selectedAnswerId}
             phase={persisted.phase}
-            flowPhase={flowPhase as "first" | "retry"}
+            flowPhase={flowPhase === "retry" ? "retry" : "first"}
           />
           <ExerciseFeedbackMessage />
         </motion.div>
@@ -113,13 +91,8 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
     );
   }
 
-  if (currentStage.type === "chooseMatching") {
-    const persisted = chooseMatchingPersisted ?? {
-      selectedIds: [],
-      phase: "idle" as const,
-      attempt: "first" as const,
-    };
-    const stageCommand = currentStage.command ?? content.command;
+  if (stage.type === "chooseMatching") {
+    const persisted = stage.persisted;
 
     return (
       <AnimatePresence mode="wait">
@@ -131,19 +104,19 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
           transition={{ duration: 0.25 }}
         >
           <ChooseMatchingGrid
-            command={stageCommand}
-            items={shuffledChooseMatchingItems}
+            command={stage.command}
+            items={stage.shuffledItems}
             flowPhase={flowPhase}
             isLocked={persisted.phase !== "idle" || isLocked}
-            toggleItem={toggleChooseMatchingItem}
-            getItemVisualState={getChooseMatchingItemVisualState}
+            toggleItem={stage.toggleItem}
+            getItemVisualState={stage.getItemVisualState}
           />
         </motion.div>
       </AnimatePresence>
     );
   }
 
-  if (currentStage.type === "fillCode") {
+  if (stage.type === "fillCode" && currentStage.type === "fillCode") {
     const presentation = currentStage.presentation ?? { kind: "code" as const };
     const usesPreviewLayout = stageUsesPreviewLayout(presentation);
     const typography = currentStage.typography ?? "default";
@@ -153,10 +126,10 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
         gapMode="input"
         language={currentStage.language}
         lines={currentStage.lines}
-        assignments={assignments}
-        activeGapId={activeGapId}
-        onUpdateGap={updateGap}
-        onFocusGap={setActiveGapId}
+        assignments={stage.assignments}
+        activeGapId={stage.activeGapId}
+        onUpdateGap={stage.updateGap}
+        onFocusGap={stage.setActiveGapId}
         typography={typography}
         className="max-w-[90vw]"
       />
@@ -196,6 +169,10 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
     );
   }
 
+  if (stage.type !== "fillGaps" || currentStage.type !== "fillGaps") {
+    return null;
+  }
+
   const presentation = currentStage.presentation ?? { kind: "code" as const };
   const hasTopPresentation = stageHasTopPresentation(presentation);
   const usesPreviewLayout = stageUsesPreviewLayout(presentation);
@@ -206,12 +183,12 @@ export function MultiStageExercise({ content }: MultiStageExerciseProps) {
       <FillGapsWorkspace
         language={currentStage.language}
         lines={currentStage.lines}
-        assignments={assignments}
-        activeGapId={activeGapId}
-        availableOptions={availableOptions}
-        selectOption={selectOption}
-        clearGap={clearGap}
-        setActiveGapId={setActiveGapId}
+        assignments={stage.assignments}
+        activeGapId={stage.activeGapId}
+        availableOptions={stage.availableOptions}
+        selectOption={stage.selectOption}
+        clearGap={stage.clearGap}
+        setActiveGapId={stage.setActiveGapId}
         showOptionsPool={!canProceed}
         isLocked={isLocked}
         typography={typography}
