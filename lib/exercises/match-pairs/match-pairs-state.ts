@@ -1,5 +1,5 @@
 import type { MatchPairItemState } from "../shared/item-glow-style";
-import type { MatchPairsContent } from "@/schemas/courseSchema";
+import type { MatchPairsStage } from "@/schemas/courseSchema";
 
 import type { MatchPairsColumn, MatchPairsItem } from "../shared/types";
 
@@ -8,7 +8,7 @@ export type MatchPairSelection = {
   id: string;
 };
 
-type MatchPairsLikeContent = Pick<MatchPairsContent, "pairs">;
+type MatchPairsLikeContent = Pick<MatchPairsStage, "pairs">;
 
 export function buildMatchPairItems(
   content: MatchPairsLikeContent,

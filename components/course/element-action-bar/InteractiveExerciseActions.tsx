@@ -1,9 +1,5 @@
 "use client";
 
-import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
-
-import { ExerciseActions } from "./ExerciseActions";
-import { GatedBackNextActions } from "./GatedBackNextActions";
 import { MultiStageExerciseActions } from "./MultiStageExerciseActions";
 
 type InteractiveExerciseActionsProps = {
@@ -13,25 +9,8 @@ type InteractiveExerciseActionsProps = {
 };
 
 export function InteractiveExerciseActions({
-  prevHref,
   nextHref,
   hasHint,
 }: InteractiveExerciseActionsProps) {
-  const { actionBarMode } = useExerciseSession();
-
-  if (actionBarMode === "multi-stage") {
-    return <MultiStageExerciseActions nextHref={nextHref} hasHint={hasHint} />;
-  }
-
-  if (actionBarMode === "back-next-gated") {
-    return <GatedBackNextActions prevHref={prevHref} nextHref={nextHref} />;
-  }
-
-  return (
-    <ExerciseActions
-      prevHref={prevHref}
-      nextHref={nextHref}
-      hasHint={hasHint}
-    />
-  );
+  return <MultiStageExerciseActions nextHref={nextHref} hasHint={hasHint} />;
 }

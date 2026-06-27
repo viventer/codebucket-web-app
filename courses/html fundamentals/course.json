@@ -352,16 +352,22 @@
             "title": "Uzupełnij tagi",
             "description": "Uzupełnij brakujące tagi HTML, aby kod odpowiadał wyglądowi strony z podglądu.",
             "command": "Wybierz odpowiednie tagi, aby uzupełnić kod strony widocznej obok/poniżej.",
-            "type": "fillGaps",
-            "language": "html",
+            "type": "multiStage",
             "hints": [
               "<br /> to tag break line — łamie linię.",
               "<hr /> to tag horizontal rule — pozioma linia.",
               "<p> to tag paragraph — akapit.",
               "<h> to tag heading — nagłówek (np. h1, h3)."
             ],
-            "previewHtml": "<h1>Nagłówek</h1><hr /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus distinctio at velit ipsam deleniti veniam a dignissimos molestiae blanditiis laudantium, doloribus tempora suscipit ea. Consequuntur qui ratione expedita vitae maiores.</p><br /><h3>Mniejszy nagłówek</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus distinctio at velit ipsam deleniti veniam a dignissimos molestiae blanditiis laudantium, doloribus tempora suscipit ea. Consequuntur qui ratione expedita vitae maiores.</p>",
-            "lines": [
+            "stages": [
+              {
+                "type": "fillGaps",
+                "language": "html",
+                "presentation": {
+                  "kind": "preview",
+                  "previewHtml": "<h1>Nagłówek</h1><hr /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus distinctio at velit ipsam deleniti veniam a dignissimos molestiae blanditiis laudantium, doloribus tempora suscipit ea. Consequuntur qui ratione expedita vitae maiores.</p><br /><h3>Mniejszy nagłówek</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus distinctio at velit ipsam deleniti veniam a dignissimos molestiae blanditiis laudantium, doloribus tempora suscipit ea. Consequuntur qui ratione expedita vitae maiores.</p>"
+                },
+                "lines": [
               {
                 "kind": "group",
                 "indent": 0,
@@ -464,6 +470,8 @@
               "<p>",
               "<h3>",
               "<h7>"
+            ]
+              }
             ]
           },
           "order": 3
@@ -729,15 +737,21 @@
             "title": "Stwórz listę",
             "description": "Uzupełnij brakujące tagi HTML, aby kod odpowiadał wyglądowi strony z podglądu.",
             "command": "Wybierz odpowiednie tagi, aby uzupełnić kod strony widocznej obok/poniżej.",
-            "type": "fillGaps",
-            "language": "html",
+            "type": "multiStage",
             "hints": [
               "<ul> to unordered list — lista nienumerowana.",
               "<ol> to ordered list — lista numerowana.",
               "<li> to list item — element listy."
             ],
-            "previewHtml": "<h1>Owoce</h1><ul><li>Jabłko</li><li>Banan</li><li>Ananas</li></ul>",
-            "lines": [
+            "stages": [
+              {
+                "type": "fillGaps",
+                "language": "html",
+                "presentation": {
+                  "kind": "preview",
+                  "previewHtml": "<h1>Owoce</h1><ul><li>Jabłko</li><li>Banan</li><li>Ananas</li></ul>"
+                },
+                "lines": [
               {
                 "kind": "group",
                 "indent": 0,
@@ -840,6 +854,8 @@
               "<li>",
               "<list>",
               "<li>"
+            ]
+              }
             ]
           },
           "order": 3
@@ -1335,11 +1351,10 @@
           "id": "login-form",
           "type": "interactiveExercise",
           "content": {
-            "type": "fillCode",
+            "type": "multiStage",
             "title": "Formularz logowania",
             "description": "Uzupełnij typy pól, atrybut placeholder i wartość przycisku, aby stworzyć formularz logowania.",
             "command": "Wpisz w luki brakujące typy pól, atrybuty i wartości, aby kod odpowiadał podglądowi.",
-            "language": "html",
             "hints": [
               "type=\"text\" tworzy zwykłe pole tekstowe.",
               "type=\"email\" tworzy pole na adres e-mail.",
@@ -1348,8 +1363,15 @@
               "Atrybut placeholder wyświetla podpowiedź w pustym polu.",
               "Atrybut value określa tekst wyświetlany na przycisku."
             ],
-            "previewHtml": "<form><label for=\"username\">Nazwa użytkownika:</label><input type=\"text\" placeholder=\"janek123\" id=\"username\"><br /><label for=\"email\">Email:</label><input type=\"email\" placeholder=\"janek123@mail.pl\" id=\"email\"><br /><label for=\"password\">Hasło:</label><input type=\"password\" id=\"password\"><br /><input type=\"submit\" value=\"Zaloguj się\"></form>",
-            "lines": [
+            "stages": [
+              {
+                "type": "fillCode",
+                "language": "html",
+                "presentation": {
+                  "kind": "preview",
+                  "previewHtml": "<form><label for=\"username\">Nazwa użytkownika:</label><input type=\"text\" placeholder=\"janek123\" id=\"username\"><br /><label for=\"email\">Email:</label><input type=\"email\" placeholder=\"janek123@mail.pl\" id=\"email\"><br /><label for=\"password\">Hasło:</label><input type=\"password\" id=\"password\"><br /><input type=\"submit\" value=\"Zaloguj się\"></form>"
+                },
+                "lines": [
               {
                 "kind": "code",
                 "text": "<form>",
@@ -1492,6 +1514,8 @@
                 "kind": "code",
                 "text": "</form>",
                 "indent": 0
+              }
+            ]
               }
             ]
           },
@@ -1676,18 +1700,24 @@
           "id": "create-select-list",
           "type": "interactiveExercise",
           "content": {
-            "type": "fillGaps",
+            "type": "multiStage",
             "title": "Stwórz listę wyboru",
             "description": "Uzupełnij brakujące tagi i atrybuty, aby stworzyć listę rozwijaną z trzema opcjami.",
             "command": "Wybierz odpowiednie fragmenty, aby uzupełnić kod listy wyboru.",
-            "language": "html",
             "hints": [
               "<select> tworzy listę rozwijaną do wyboru jednej opcji.",
               "<option> definiuje pojedynczą opcję na liście.",
               "Atrybut value określa wartość wysyłaną na serwer po wybraniu opcji."
             ],
-            "previewHtml": "<label for=\"material\">Wybierz materiał wiadra</label><br /><select id=\"material\"><option value=\"metal\">metal</option><option value=\"plastik\">plastik</option><option value=\"papier\">papier</option></select>",
-            "lines": [
+            "stages": [
+              {
+                "type": "fillGaps",
+                "language": "html",
+                "presentation": {
+                  "kind": "preview",
+                  "previewHtml": "<label for=\"material\">Wybierz materiał wiadra</label><br /><select id=\"material\"><option value=\"metal\">metal</option><option value=\"plastik\">plastik</option><option value=\"papier\">papier</option></select>"
+                },
+                "lines": [
               {
                 "kind": "code",
                 "text": "<label for=\"material\">Wybierz materiał wiadra</label>",
@@ -1767,6 +1797,8 @@
               "id",
               "item",
               "options"
+            ]
+              }
             ]
           },
           "order": 6

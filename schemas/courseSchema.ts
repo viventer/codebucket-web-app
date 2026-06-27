@@ -10,8 +10,6 @@ export {
   codeExerciseContentSchema,
   codeSnippetSchema,
   customInteractiveExerciseContentSchema,
-  fillCodeContentSchema,
-  fillGapsContentSchema,
   fillGapsGroupSegmentSchema,
   fillGapsLineSchema,
   fillCodeStageSchema,
@@ -24,10 +22,8 @@ export {
   interactiveExerciseTypeSchema,
   languageSchema,
   matchPairSchema,
-  matchPairsContentSchema,
   selectCorrectAnswerSchema,
   selectCorrectAnswerTypeSchema,
-  selectCorrectContentSchema,
   selectCorrectPromptSchema,
   selectCorrectStageSchema,
   chooseMatchingItemSchema,
@@ -37,8 +33,6 @@ export {
 export type {
   CodeExerciseContent,
   CodeSnippet,
-  FillCodeContent,
-  FillGapsContent,
   FillGapsLine,
   FillCodeStage,
   FillGapsStage,
@@ -48,7 +42,6 @@ export type {
   MultiStageStagePresentation,
   SelectCorrectAnswer,
   SelectCorrectAnswerType,
-  SelectCorrectContent,
   SelectCorrectPrompt,
   SelectCorrectStage,
   ChooseMatchingItem,
@@ -56,7 +49,6 @@ export type {
   InteractiveExerciseContent,
   InteractiveExerciseType,
   Language,
-  MatchPairsContent,
 } from "./exerciseSchema";
 
 export const courseElementTypeSchema = z.enum([

@@ -89,7 +89,7 @@ export function ExerciseActionBarInfo({
           )}
         </AnimatePresence>
       </div>
-      {stageProgress && (
+      {stageProgress && stageProgress.total > 1 && (
         <motion.span
           key={`${stageProgress.current}-${stageProgress.total}`}
           initial={{ opacity: 0, scale: 0.92 }}
