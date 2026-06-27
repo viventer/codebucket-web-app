@@ -11,6 +11,7 @@ import type {
 import type { SelectCorrectPrompt } from "@/schemas/courseSchema";
 
 import { SelectCorrectAnswerButton } from "./SelectCorrectAnswerButton";
+import { SELECT_CORRECT_CODE_INSTRUCTION } from "./constants";
 import { SelectCorrectPromptContent } from "./SelectCorrectPrompt";
 import { selectCorrectListSuccessVariants } from "./select-correct-animations";
 import { RotateCcwIcon } from "lucide-react";
@@ -56,21 +57,34 @@ export function SelectCorrectAnswers({
   }
 
   const wrongExplanation = getWrongExplanation();
+  const hasCodePrompt = prompt?.kind === "code";
 
   const content = (
     <div className="flex flex-col gap-4 sm:gap-6">
-      <div className="flex flex-col gap-1">
-        {flowPhase === "retry" && (
-          <div className="flex items-center gap-2 text-sm font-light text text-feedback-warning">
-            <RotateCcwIcon className="size-4" />
-            <p>Ponowna próba</p>
-          </div>
-        )}
-        <p className="text-base font-medium">{question}</p>
-      </div>
+      {flowPhase === "retry" && (
+        <div className="flex items-center gap-2 text-sm font-light text text-feedback-warning">
+          <RotateCcwIcon className="size-4" />
+          <p>Ponowna próba</p>
+        </div>
+      )}
 
-      {prompt && (
-        <SelectCorrectPromptContent courseId={courseId} prompt={prompt} />
+      {hasCodePrompt ? (
+        <>
+          <div className="flex flex-col gap-2">
+            <p className="text-sm text-muted-foreground">
+              {SELECT_CORRECT_CODE_INSTRUCTION}
+            </p>
+            <SelectCorrectPromptContent courseId={courseId} prompt={prompt} />
+          </div>
+          <p className="text-base font-medium">{question}</p>
+        </>
+      ) : (
+        <>
+          <p className="text-base font-medium">{question}</p>
+          {prompt && (
+            <SelectCorrectPromptContent courseId={courseId} prompt={prompt} />
+          )}
+        </>
       )}
 
       <div className="flex flex-col gap-3">

@@ -18,6 +18,7 @@ export function SelectCorrectExercise({ content }: SelectCorrectExerciseProps) {
 
   return (
     <SelectCorrectAnswers
+      flowPhase="first"
       question={content.question}
       answers={controller.shuffledAnswers}
       prompt={content.prompt}

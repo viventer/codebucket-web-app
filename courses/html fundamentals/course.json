@@ -1512,18 +1512,60 @@
           "id": "grouping-radiobuttons",
           "type": "interactiveExercise",
           "content": {
-            "type": "fillCode",
+            "type": "multiStage",
             "title": "Grupowanie radiobutton'ów",
-            "description": "Uzupełnij brakujące atrybuty, aby pogrupować przyciski radio i umożliwić wybór tylko jednej opcji.",
-            "command": "Wpisz w luki brakujące atrybuty, aby kod odpowiadał podglądowi.",
-            "language": "html",
+            "description": "Sprawdź, dlaczego przyciski radio nie działają jak grupa, a następnie uzupełnij brakujące atrybuty w kodzie.",
+            "command": "Odpowiedz na pytanie i uzupełnij brakujące atrybuty w kodzie.",
             "hints": [
               "type=\"radio\" tworzy przycisk wyboru jednej opcji.",
               "Atrybut name grupuje przyciski radio — te same name oznacza jedną grupę.",
               "Atrybut value określa wartość wysyłaną na serwer."
             ],
-            "previewHtml": "<h2>Wybierz płeć</h2><input type=\"radio\" name=\"plec\" value=\"mezczyzna\" id=\"mezczyzna\"><label for=\"mezczyzna\">Mężczyzna</label><br /><input type=\"radio\" name=\"plec\" value=\"kobieta\" id=\"kobieta\"><label for=\"kobieta\">Kobieta</label>",
-            "lines": [
+            "stages": [
+              {
+                "type": "selectCorrect",
+                "question": "Dlaczego można wybrać oba pola radio na raz?",
+                "prompt": {
+                  "kind": "code",
+                  "language": "html",
+                  "code": "<h2>Wybierz metodę płatności</h2>\n<input type=\"radio\" name=\"przelew\" value=\"przelew\" id=\"przelew\">\n<label for=\"przelew\">Przelew</label>\n<br />\n<input type=\"radio\" name=\"pobranie\" value=\"pobranie\" id=\"pobranie\">\n<label for=\"pobranie\">Płatność za pobraniem</label>"
+                },
+                "answers": [
+                  {
+                    "id": 1,
+                    "type": "text",
+                    "content": "Atrybuty name mają różne wartości."
+                  },
+                  {
+                    "id": 2,
+                    "type": "text",
+                    "content": "Atrybuty value mają różne wartości.",
+                    "explanation": "Różne wartości value są wymagane — określają, którą opcję wysyła formularz. Nie decydują o grupowaniu."
+                  },
+                  {
+                    "id": 3,
+                    "type": "text",
+                    "content": "Pola radio nie znajdują się wewnątrz tagu group.",
+                    "explanation": "Tag <group> nie istnieje w HTML. Przyciski radio grupuje wspólna wartość atrybutu name."
+                  },
+                  {
+                    "id": 4,
+                    "type": "text",
+                    "content": "Brakuje atrybutu group-by.",
+                    "explanation": "Atrybut group-by nie istnieje w HTML. Przyciski radio grupuje atrybut name."
+                  }
+                ],
+                "correctAnswerId": 1
+              },
+              {
+                "type": "fillCode",
+                "command": "Wpisz w luki brakujące atrybuty, aby kod odpowiadał podglądowi.",
+                "language": "html",
+                "presentation": {
+                  "kind": "preview",
+                  "previewHtml": "<h2>Wybierz płeć</h2><input type=\"radio\" name=\"plec\" value=\"mezczyzna\" id=\"mezczyzna\"><label for=\"mezczyzna\">Mężczyzna</label><br /><input type=\"radio\" name=\"plec\" value=\"kobieta\" id=\"kobieta\"><label for=\"kobieta\">Kobieta</label>"
+                },
+                "lines": [
               {
                 "kind": "code",
                 "text": "<h2>Wybierz płeć</h2>",
@@ -1612,6 +1654,8 @@
                 "kind": "code",
                 "text": "<label for=\"kobieta\">Kobieta</label>",
                 "indent": 0
+              }
+            ]
               }
             ]
           },

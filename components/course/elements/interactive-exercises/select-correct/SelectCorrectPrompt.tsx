@@ -2,8 +2,8 @@
 
 import { HTMLPreview } from "@/components/html-preview/HTMLPreview";
 import type { SelectCorrectPrompt } from "@/schemas/courseSchema";
-import { cn } from "@/lib/utils";
 
+import { StaticCodePanel } from "../gap-lines/StaticCodePanel";
 import { StageImageDiagram } from "../multi-stage/StageImageDiagram";
 
 type SelectCorrectPromptProps = {
@@ -27,13 +27,11 @@ export function SelectCorrectPromptContent({
 
   if (prompt.kind === "code") {
     return (
-      <pre
-        className={cn(
-          "overflow-auto rounded-lg border bg-card/30 p-4 font-mono text-sm",
-        )}
-      >
-        <code>{prompt.code}</code>
-      </pre>
+      <StaticCodePanel
+        code={prompt.code}
+        language={prompt.language}
+        className="max-w-[90vw]"
+      />
     );
   }
 

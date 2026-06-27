@@ -6,6 +6,7 @@ import type { Language } from "@/schemas/courseSchema";
 
 import { GapInputSlot } from "../fill-code/GapInputSlot";
 import { GapSlot } from "../fill-gaps/GapSlot";
+import { ColorizedText } from "./ColorizedText";
 import type { CodeLineSegment } from "./line-segments";
 import { useColorizedLine } from "./use-colorized-line";
 
@@ -32,27 +33,6 @@ type CodeLineRowSelectProps = CodeLineRowBaseProps & {
 };
 
 export type CodeLineRowProps = CodeLineRowInputProps | CodeLineRowSelectProps;
-
-function ColorizedText({
-  html,
-  fallback,
-}: {
-  html: string | null;
-  fallback: string;
-}) {
-  if (html) {
-    return (
-      <span
-        className="inline leading-normal"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    );
-  }
-
-  return (
-    <span className="inline text-foreground leading-normal">{fallback}</span>
-  );
-}
 
 export function CodeLineRow(props: CodeLineRowProps) {
   const {
