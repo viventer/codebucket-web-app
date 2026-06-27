@@ -55,18 +55,36 @@ export function createInitialAssignments(
   return assignments;
 }
 
+function gapAnswersMatch(
+  assignment: string | null,
+  answer: string,
+  caseInsensitive: boolean,
+): boolean {
+  if (assignment === null) {
+    return false;
+  }
+
+  if (caseInsensitive) {
+    return assignment.toLowerCase() === answer.toLowerCase();
+  }
+
+  return assignment === answer;
+}
+
 export function evaluateFillGapsCheck(
   content: GapLinesContent,
   assignments: Record<string, string | null>,
+  options?: { caseInsensitive?: boolean },
 ): CheckResult {
+  const caseInsensitive = options?.caseInsensitive ?? false;
   const gaps = getGapAnswers(content);
 
   if (gaps.some((gap) => assignments[gap.id] === null)) {
     return "warning";
   }
 
-  const allCorrect = gaps.every(
-    (gap) => assignments[gap.id] === gap.answer,
+  const allCorrect = gaps.every((gap) =>
+    gapAnswersMatch(assignments[gap.id], gap.answer, caseInsensitive),
   );
 
   return allCorrect ? "success" : "error";

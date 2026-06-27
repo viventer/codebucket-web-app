@@ -53,7 +53,9 @@ export function useFillCodeExerciseController(
   }
 
   function check(): CheckResult {
-    return evaluateFillGapsCheck(content, assignments);
+    return evaluateFillGapsCheck(content, assignments, {
+      caseInsensitive: true,
+    });
   }
 
   function applySolution() {

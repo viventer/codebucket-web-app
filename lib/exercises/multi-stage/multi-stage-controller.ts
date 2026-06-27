@@ -555,7 +555,9 @@ export function useMultiStageExerciseController(
     }
 
     if (currentState.kind === "fillCode" && fillCodeStage) {
-      return evaluateFillGapsCheck(fillCodeStage, currentState.assignments);
+      return evaluateFillGapsCheck(fillCodeStage, currentState.assignments, {
+        caseInsensitive: true,
+      });
     }
 
     return "warning";
