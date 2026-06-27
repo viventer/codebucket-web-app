@@ -141,13 +141,7 @@
                 "command": "Ułóż tag akapitu z podaną treścią.",
                 "language": "html",
                 "typography": "large",
-                "options": [
-                  "<p",
-                  ">",
-                  "siema",
-                  "</",
-                  "p>"
-                ],
+                "options": ["<p", ">", "siema", "</", "p>"],
                 "lines": [
                   {
                     "kind": "group",
@@ -317,9 +311,7 @@
           "order": 5
         }
       ],
-      "cheatsheets": [
-        ""
-      ]
+      "cheatsheets": [""]
     },
     {
       "id": "text-and-images",
@@ -696,9 +688,7 @@
           "order": 6
         }
       ],
-      "cheatsheets": [
-        ""
-      ]
+      "cheatsheets": [""]
     },
     {
       "id": "other-elements",
@@ -911,203 +901,203 @@
                   "previewHtml": "<table border=\"1\"><tr><th>Nazwa</th><th>Opis</th><th>Cena</th></tr><tr align=\"center\"><td>Pakiet Gold</td><td>Ten plan to tylko wabik, wybierz droższy.</td><td>690 zł/miesiąc</td></tr><tr align=\"center\"><td>Pakiet Platinium</td><td>Ekskluzywny dostęp!</td><td>990 zł/miesiąc</td></tr></table>"
                 },
                 "lines": [
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
                   {
-                    "kind": "text",
-                    "value": "<"
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<"
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "table",
+                        "answer": "table"
+                      },
+                      {
+                        "kind": "text",
+                        "value": " "
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "border",
+                        "answer": "border"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "=\"1\">"
+                      }
+                    ]
                   },
                   {
-                    "kind": "gap",
-                    "id": "table",
-                    "answer": "table"
+                    "kind": "group",
+                    "indent": 1,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<"
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "tr-header",
+                        "answer": "tr"
+                      },
+                      {
+                        "kind": "text",
+                        "value": ">"
+                      }
+                    ]
                   },
                   {
-                    "kind": "text",
-                    "value": " "
+                    "kind": "group",
+                    "indent": 2,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<"
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "th-1",
+                        "answer": "th"
+                      },
+                      {
+                        "kind": "text",
+                        "value": ">"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "Nazwa"
+                      },
+                      {
+                        "kind": "autoClose",
+                        "id": "th-1-close",
+                        "pairedGapId": "th-1"
+                      }
+                    ]
                   },
                   {
-                    "kind": "gap",
-                    "id": "border",
-                    "answer": "border"
+                    "kind": "group",
+                    "indent": 2,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<"
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "th-2",
+                        "answer": "th"
+                      },
+                      {
+                        "kind": "text",
+                        "value": ">"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "Opis"
+                      },
+                      {
+                        "kind": "autoClose",
+                        "id": "th-2-close",
+                        "pairedGapId": "th-2"
+                      }
+                    ]
                   },
                   {
-                    "kind": "text",
-                    "value": "=\"1\">"
-                  }
-                ]
-              },
-              {
-                "kind": "group",
-                "indent": 1,
-                "segments": [
-                  {
-                    "kind": "text",
-                    "value": "<"
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "tr-header",
-                    "answer": "tr"
-                  },
-                  {
-                    "kind": "text",
-                    "value": ">"
-                  }
-                ]
-              },
-              {
-                "kind": "group",
-                "indent": 2,
-                "segments": [
-                  {
-                    "kind": "text",
-                    "value": "<"
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "th-1",
-                    "answer": "th"
-                  },
-                  {
-                    "kind": "text",
-                    "value": ">"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "Nazwa"
+                    "kind": "group",
+                    "indent": 2,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<"
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "th-3",
+                        "answer": "th"
+                      },
+                      {
+                        "kind": "text",
+                        "value": ">"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "Cena"
+                      },
+                      {
+                        "kind": "autoClose",
+                        "id": "th-3-close",
+                        "pairedGapId": "th-3"
+                      }
+                    ]
                   },
                   {
                     "kind": "autoClose",
-                    "id": "th-1-close",
-                    "pairedGapId": "th-1"
-                  }
-                ]
-              },
-              {
-                "kind": "group",
-                "indent": 2,
-                "segments": [
-                  {
-                    "kind": "text",
-                    "value": "<"
+                    "id": "tr-header-close",
+                    "indent": 1,
+                    "pairedGapId": "tr-header"
                   },
                   {
-                    "kind": "gap",
-                    "id": "th-2",
-                    "answer": "th"
+                    "kind": "group",
+                    "indent": 1,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<"
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "tr-row-1",
+                        "answer": "tr"
+                      },
+                      {
+                        "kind": "text",
+                        "value": " align=\""
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "align-1",
+                        "answer": "center"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "\">"
+                      }
+                    ]
                   },
                   {
-                    "kind": "text",
-                    "value": ">"
+                    "kind": "code",
+                    "text": "<td>Pakiet Gold</td>",
+                    "indent": 2
                   },
                   {
-                    "kind": "text",
-                    "value": "Opis"
+                    "kind": "code",
+                    "text": "<td>Ten plan to tylko wabik, wybierz droższy.</td>",
+                    "indent": 2
                   },
                   {
-                    "kind": "autoClose",
-                    "id": "th-2-close",
-                    "pairedGapId": "th-2"
-                  }
-                ]
-              },
-              {
-                "kind": "group",
-                "indent": 2,
-                "segments": [
-                  {
-                    "kind": "text",
-                    "value": "<"
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "th-3",
-                    "answer": "th"
-                  },
-                  {
-                    "kind": "text",
-                    "value": ">"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "Cena"
+                    "kind": "code",
+                    "text": "<td>690 zł/miesiąc</td>",
+                    "indent": 2
                   },
                   {
                     "kind": "autoClose",
-                    "id": "th-3-close",
-                    "pairedGapId": "th-3"
+                    "id": "tr-row-1-close",
+                    "indent": 1,
+                    "pairedGapId": "tr-row-1"
+                  },
+                  {
+                    "kind": "code",
+                    "text": "...",
+                    "indent": 1
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "table-close",
+                    "indent": 0,
+                    "pairedGapId": "table"
                   }
-                ]
-              },
-              {
-                "kind": "autoClose",
-                "id": "tr-header-close",
-                "indent": 1,
-                "pairedGapId": "tr-header"
-              },
-              {
-                "kind": "group",
-                "indent": 1,
-                "segments": [
-                  {
-                    "kind": "text",
-                    "value": "<"
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "tr-row-1",
-                    "answer": "tr"
-                  },
-                  {
-                    "kind": "text",
-                    "value": " align=\""
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "align-1",
-                    "answer": "center"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "\">"
-                  }
-                ]
-              },
-              {
-                "kind": "code",
-                "text": "<td>Pakiet Gold</td>",
-                "indent": 2
-              },
-              {
-                "kind": "code",
-                "text": "<td>Ten plan to tylko wabik, wybierz droższy.</td>",
-                "indent": 2
-              },
-              {
-                "kind": "code",
-                "text": "<td>690 zł/miesiąc</td>",
-                "indent": 2
-              },
-              {
-                "kind": "autoClose",
-                "id": "tr-row-1-close",
-                "indent": 1,
-                "pairedGapId": "tr-row-1"
-              },
-              {
-                "kind": "code",
-                "text": "...",
-                "indent": 1
-              },
-              {
-                "kind": "autoClose",
-                "id": "table-close",
-                "indent": 0,
-                "pairedGapId": "table"
-              }
                 ]
               }
             ]
@@ -1136,9 +1126,7 @@
           "order": 7
         }
       ],
-      "cheatsheets": [
-        ""
-      ]
+      "cheatsheets": [""]
     },
     {
       "id": "form-building",
@@ -1176,91 +1164,150 @@
           "id": "connect-label-with-field",
           "type": "interactiveExercise",
           "content": {
-            "title": "Połącz etykietę z polem formularza",
-            "description": "Uzupełnij brakujące atrybuty, aby połączyć etykietę z polem formularza.",
-            "command": "Wybierz odpowiednie fragmenty, aby połączyć tag label z tagiem input.",
-            "type": "fillGaps",
-            "language": "html",
+            "title": "Budowa formularza",
+            "description": "Sprawdź, jak łączyć etykiety z polami formularza, dopasuj tagi do opisów i uzupełnij kod.",
+            "command": "Odpowiedz na pytania, dopasuj tagi i ułóż kod formularza.",
+            "type": "multiStage",
             "hints": [
               "Atrybut for w tagu label wskazuje na id powiązanego pola.",
               "Wartość atrybutu for musi być taka sama jak wartość atrybutu id w input.",
               "Dzięki połączeniu kliknięcie w etykietę aktywuje pole formularza."
             ],
-            "previewHtml": "<label for=\"username\">Nazwa użytkownika: </label><input id=\"username\">",
-            "lines": [
+            "stages": [
               {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
+                "type": "selectCorrect",
+                "question": "Z jakich atrybutów skorzystamy, aby połączyć pole formularza z etykietą?",
+                "answers": [
                   {
-                    "kind": "text",
-                    "value": "<label "
+                    "id": 1,
+                    "type": "text",
+                    "content": "for i id"
                   },
                   {
-                    "kind": "gap",
-                    "id": "label-attr",
-                    "answer": "for"
+                    "id": 2,
+                    "type": "text",
+                    "content": "for i type",
+                    "explanation": "Atrybut type określa rodzaj pola formularza, nie łączy etykiety z inputem."
                   },
                   {
-                    "kind": "text",
-                    "value": "=\""
+                    "id": 3,
+                    "type": "text",
+                    "content": "label i input",
+                    "explanation": "label i input to tagi HTML, a nie atrybuty łączące etykietę z polem."
                   },
                   {
-                    "kind": "gap",
-                    "id": "label-for-value",
-                    "answer": "username"
+                    "id": 4,
+                    "type": "text",
+                    "content": "label i type",
+                    "explanation": "type to atrybut pola input — nie służy do połączenia z etykietą."
+                  }
+                ],
+                "correctAnswerId": 1
+              },
+              {
+                "type": "matchPairs",
+                "command": "Dopasuj tag do opisu.",
+                "pairs": [
+                  {
+                    "left": "<form>",
+                    "right": "Pojemnik na formularz"
                   },
                   {
-                    "kind": "text",
-                    "value": "\">"
+                    "left": "<label>",
+                    "right": "Etykieta pola formularza"
                   },
                   {
-                    "kind": "text",
-                    "value": "Nazwa użytkownika"
+                    "left": "<input>",
+                    "right": "Pole formularza"
                   },
                   {
-                    "kind": "text",
-                    "value": "</label>"
+                    "left": "<text>",
+                    "right": "Nie istnieje"
                   }
                 ]
               },
               {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
+                "type": "fillGaps",
+                "command": "Wybierz odpowiednie fragmenty, aby połączyć tag label z tagiem input.",
+                "language": "html",
+                "presentation": {
+                  "kind": "preview",
+                  "previewHtml": "<label for=\"username\">Nazwa użytkownika: </label><input id=\"username\">"
+                },
+                "lines": [
                   {
-                    "kind": "text",
-                    "value": "<input "
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<label "
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "label-attr",
+                        "answer": "for"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "=\""
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "label-for-value",
+                        "answer": "username"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "\">"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "Nazwa użytkownika"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "</label>"
+                      }
+                    ]
                   },
                   {
-                    "kind": "gap",
-                    "id": "input-attr",
-                    "answer": "id"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "=\"username\">"
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<input "
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "input-attr",
+                        "answer": "id"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "=\"username\">"
+                      }
+                    ]
                   }
+                ],
+                "options": [
+                  "for",
+                  "id",
+                  "username",
+                  "name",
+                  "href",
+                  "type",
+                  "label",
+                  "class"
                 ]
               }
-            ],
-            "options": [
-              "for",
-              "id",
-              "username",
-              "name",
-              "href",
-              "type",
-              "label",
-              "class"
             ]
           },
           "order": 3
         }
       ],
-      "cheatsheets": [
-        ""
-      ]
+      "cheatsheets": [""]
     },
     {
       "id": "form-fields",
@@ -1535,9 +1582,7 @@
           "order": 7
         }
       ],
-      "cheatsheets": [
-        ""
-      ]
+      "cheatsheets": [""]
     },
     {
       "id": "semantic-html",
@@ -1707,9 +1752,7 @@
           "order": 2
         }
       ],
-      "cheatsheets": [
-        ""
-      ]
+      "cheatsheets": [""]
     },
     {
       "id": "summary",
@@ -1745,9 +1788,7 @@
     "nextSteps": {
       "heading": "Co dalej?",
       "subheading": "Zacznij naukę CSS",
-      "recommendedCourseIds": [
-        "css-basics"
-      ]
+      "recommendedCourseIds": ["css-basics"]
     }
   },
   "createdAt": "2026-06-17T00:00:00.000Z",

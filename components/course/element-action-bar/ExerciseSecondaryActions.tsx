@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  EyeIcon,
-  LightbulbIcon,
-  RotateCcwIcon,
-} from "lucide-react";
+import { EyeIcon, LightbulbIcon, RotateCcwIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
@@ -18,13 +14,8 @@ type ExerciseSecondaryActionsProps = {
 export function ExerciseSecondaryActions({
   hasHint,
 }: ExerciseSecondaryActionsProps) {
-  const {
-    controller,
-    isLocked,
-    reset,
-    tryShowSolution,
-    showHintDialog,
-  } = useExerciseSession();
+  const { controller, isLocked, reset, tryShowSolution, showHintDialog } =
+    useExerciseSession();
 
   const hasController = controller !== null;
 
@@ -32,7 +23,7 @@ export function ExerciseSecondaryActions({
     <>
       {hasHint && (
         <Button variant="ghost" onClick={showHintDialog} disabled={isLocked}>
-          <ActionBarButtonLabel label="Wskazówka" icon={LightbulbIcon} />
+          <ActionBarButtonLabel label="Ściąga" icon={LightbulbIcon} />
         </Button>
       )}
       <Button

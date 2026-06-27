@@ -10,12 +10,15 @@ type ProjectActionsProps = {
   hasMaterials: boolean;
 };
 
-export function ProjectActions({ nextHref, hasMaterials }: ProjectActionsProps) {
+export function ProjectActions({
+  nextHref,
+  hasMaterials,
+}: ProjectActionsProps) {
   return (
     <>
       {hasMaterials && <DownloadMaterialsButton />}
       <PlaceholderButton variant="ghost">
-        <ActionBarButtonLabel label="Wskazówka" icon={LightbulbIcon} />
+        <ActionBarButtonLabel label="Ściąga" icon={LightbulbIcon} />
       </PlaceholderButton>
       <PlaceholderButton variant="ghost">
         <ActionBarButtonLabel label="Rozwiązanie" icon={EyeIcon} />

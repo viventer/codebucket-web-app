@@ -22,7 +22,7 @@ export function ExerciseHintDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Wskazówki</DialogTitle>
+          <DialogTitle>Ściąga</DialogTitle>
         </DialogHeader>
         <ul className="flex list-disc flex-col gap-2 list-inside">
           {hints.map((hint, index) => (
