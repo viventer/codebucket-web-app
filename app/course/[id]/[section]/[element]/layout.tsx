@@ -107,6 +107,7 @@ export default async function ElementLayout({
         .map((element) => ({
           id: element.id,
           title: getElementTitle(element),
+          type: element.type,
           completed: completedIds.has(element.id),
         })),
     }));

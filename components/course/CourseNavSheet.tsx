@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { CircleCheckIcon, CircleIcon, MenuIcon } from "lucide-react";
+import { MenuIcon } from "lucide-react";
 
+import type { CourseElement } from "@/schemas/courseSchema";
 import { cn } from "@/lib/utils";
+import { ELEMENT_TYPE_ICONS } from "@/components/course/element-action-bar/element-type-icons";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -23,6 +25,7 @@ import {
 export type NavElement = {
   id: string;
   title: string;
+  type: CourseElement["type"];
   completed: boolean;
 };
 
@@ -84,6 +87,7 @@ export function CourseNavSheet({
                       const isCurrent =
                         section.id === currentSectionId &&
                         element.id === currentElementId;
+                      const Icon = ELEMENT_TYPE_ICONS[element.type];
 
                       return (
                         <li key={element.id}>
@@ -98,11 +102,14 @@ export function CourseNavSheet({
                                   : "text-muted-foreground",
                               )}
                             >
-                              {element.completed ? (
-                                <CircleCheckIcon className="size-4 shrink-0 text-green-500" />
-                              ) : (
-                                <CircleIcon className="size-4 shrink-0 text-muted-foreground/50" />
-                              )}
+                              <Icon
+                                className={cn(
+                                  "size-4 shrink-0",
+                                  element.completed
+                                    ? "text-feedback-success"
+                                    : "text-muted-foreground",
+                                )}
+                              />
                               <p className="truncate">{element.title}</p>
                             </Link>
                           </SheetClose>
