@@ -74,7 +74,6 @@
             "title": "Pierwsze kroki z HTML",
             "description": "Sprawdź podstawowe pojęcia HTML i ułóż swój pierwszy tag.",
             "command": "Odpowiedz na pytania i ułóż tag HTML.",
-            "type": "multiStage",
             "stages": [
               {
                 "type": "selectCorrect",
@@ -210,7 +209,6 @@
             "title": "Struktura HTML",
             "description": "Dopasuj tagi HTML do ich znaczenia, a następnie ułóż podstawową strukturę dokumentu.",
             "command": "Naciśnij pary.",
-            "type": "multiStage",
             "hints": [
               "<html> to tag w którym umieszczamy cały dokument HTML.",
               "<head> to tag w którym zamieszczamy informacje dla przeglądarki.",
@@ -352,7 +350,6 @@
             "title": "Uzupełnij tagi",
             "description": "Uzupełnij brakujące tagi HTML, aby kod odpowiadał wyglądowi strony z podglądu.",
             "command": "Wybierz odpowiednie tagi, aby uzupełnić kod strony widocznej obok/poniżej.",
-            "type": "multiStage",
             "hints": [
               "<br /> to tag break line — łamie linię.",
               "<hr /> to tag horizontal rule — pozioma linia.",
@@ -504,7 +501,6 @@
             "title": "Uzupełnij ścieżkę",
             "description": "Na podstawie struktury plików uzupełnij brakujące atrybuty i ścieżki w tagu img.",
             "command": "Wybierz odpowiednie fragmenty, aby uzupełnić tag img.",
-            "type": "multiStage",
             "hints": [
               ".. — przejście do folderu nadrzędnego.",
               "src — atrybut ze ścieżką do pliku obrazu.",
@@ -737,7 +733,6 @@
             "title": "Stwórz listę",
             "description": "Uzupełnij brakujące tagi HTML, aby kod odpowiadał wyglądowi strony z podglądu.",
             "command": "Wybierz odpowiednie tagi, aby uzupełnić kod strony widocznej obok/poniżej.",
-            "type": "multiStage",
             "hints": [
               "<ul> to unordered list — lista nienumerowana.",
               "<ol> to ordered list — lista numerowana.",
@@ -875,7 +870,6 @@
           "id": "reproduce-table",
           "type": "interactiveExercise",
           "content": {
-            "type": "multiStage",
             "title": "Odwzoruj tabelę",
             "description": "Dopasuj tagi budujące tabelę, a następnie odwzoruj tabelę w kodzie.",
             "command": "Naciśnij pary.",
@@ -993,60 +987,9 @@
                     ]
                   },
                   {
-                    "kind": "group",
-                    "indent": 2,
-                    "segments": [
-                      {
-                        "kind": "text",
-                        "value": "<"
-                      },
-                      {
-                        "kind": "gap",
-                        "id": "th-2",
-                        "answer": "th"
-                      },
-                      {
-                        "kind": "text",
-                        "value": ">"
-                      },
-                      {
-                        "kind": "text",
-                        "value": "Opis"
-                      },
-                      {
-                        "kind": "autoClose",
-                        "id": "th-2-close",
-                        "pairedGapId": "th-2"
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "group",
-                    "indent": 2,
-                    "segments": [
-                      {
-                        "kind": "text",
-                        "value": "<"
-                      },
-                      {
-                        "kind": "gap",
-                        "id": "th-3",
-                        "answer": "th"
-                      },
-                      {
-                        "kind": "text",
-                        "value": ">"
-                      },
-                      {
-                        "kind": "text",
-                        "value": "Cena"
-                      },
-                      {
-                        "kind": "autoClose",
-                        "id": "th-3-close",
-                        "pairedGapId": "th-3"
-                      }
-                    ]
+                    "kind": "code",
+                    "text": "...",
+                    "indent": 2
                   },
                   {
                     "kind": "autoClose",
@@ -1183,7 +1126,6 @@
             "title": "Budowa formularza",
             "description": "Sprawdź, jak łączyć etykiety z polami formularza, dopasuj tagi do opisów i uzupełnij kod.",
             "command": "Odpowiedz na pytania, dopasuj tagi i ułóż kod formularza.",
-            "type": "multiStage",
             "hints": [
               "Atrybut for w tagu label wskazuje na id powiązanego pola.",
               "Wartość atrybutu for musi być taka sama jak wartość atrybutu id w input.",
@@ -1351,7 +1293,6 @@
           "id": "login-form",
           "type": "interactiveExercise",
           "content": {
-            "type": "multiStage",
             "title": "Formularz logowania",
             "description": "Uzupełnij typy pól, atrybut placeholder i wartość przycisku, aby stworzyć formularz logowania.",
             "command": "Wpisz w luki brakujące typy pól, atrybuty i wartości, aby kod odpowiadał podglądowi.",
@@ -1536,7 +1477,6 @@
           "id": "grouping-radiobuttons",
           "type": "interactiveExercise",
           "content": {
-            "type": "multiStage",
             "title": "Grupowanie radiobutton'ów",
             "description": "Sprawdź, dlaczego przyciski radio nie działają jak grupa, a następnie uzupełnij brakujące atrybuty w kodzie.",
             "command": "Odpowiedz na pytanie i uzupełnij brakujące atrybuty w kodzie.",
@@ -1700,7 +1640,6 @@
           "id": "create-select-list",
           "type": "interactiveExercise",
           "content": {
-            "type": "multiStage",
             "title": "Stwórz listę wyboru",
             "description": "Uzupełnij brakujące tagi i atrybuty, aby stworzyć listę rozwijaną z trzema opcjami.",
             "command": "Wybierz odpowiednie fragmenty, aby uzupełnić kod listy wyboru.",
@@ -1840,7 +1779,6 @@
           "id": "complete-semantic-tags",
           "type": "interactiveExercise",
           "content": {
-            "type": "multiStage",
             "title": "Uzupełnij semantyczne tagi",
             "description": "Sprawdź, po co używamy tagów semantycznych, wybierz właściwe tagi i uzupełnij strukturę strony.",
             "command": "Odpowiedz na pytanie, wybierz tagi i uzupełnij kod.",

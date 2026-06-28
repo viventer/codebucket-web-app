@@ -1,25 +1,25 @@
 import type { StageState } from "./stage-state";
 import type {
-  MultiStageActiveStage,
-  MultiStageChooseMatchingStage,
-  MultiStageFillCodeStage,
-  MultiStageFillGapsStage,
-  MultiStageMatchPairsStage,
-  MultiStageSelectCorrectStage,
+  InteractiveExerciseActiveStage,
+  InteractiveExerciseChooseMatchingStage,
+  InteractiveExerciseFillCodeStage,
+  InteractiveExerciseFillGapsStage,
+  InteractiveExerciseMatchPairsStage,
+  InteractiveExerciseSelectCorrectStage,
 } from "./types";
 
 type StageSlices = {
-  fillGaps: MultiStageFillGapsStage | null;
-  fillCode: MultiStageFillCodeStage | null;
-  matchPairs: MultiStageMatchPairsStage | null;
-  selectCorrect: MultiStageSelectCorrectStage | null;
-  chooseMatching: MultiStageChooseMatchingStage | null;
+  fillGaps: InteractiveExerciseFillGapsStage | null;
+  fillCode: InteractiveExerciseFillCodeStage | null;
+  matchPairs: InteractiveExerciseMatchPairsStage | null;
+  selectCorrect: InteractiveExerciseSelectCorrectStage | null;
+  chooseMatching: InteractiveExerciseChooseMatchingStage | null;
 };
 
 export function resolveActiveStage(
   currentState: StageState,
   slices: StageSlices,
-): MultiStageActiveStage {
+): InteractiveExerciseActiveStage {
   switch (currentState.kind) {
     case "fillGaps":
       if (!slices.fillGaps) {

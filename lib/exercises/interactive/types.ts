@@ -1,8 +1,8 @@
 import type { Dispatch, SetStateAction } from "react";
 
 import type {
-  MultiStageContent,
-  MultiStageStage,
+  ExerciseStage,
+  InteractiveExerciseContent,
   SelectCorrectPrompt,
 } from "@/schemas/courseSchema";
 
@@ -19,17 +19,17 @@ import type {
   FillCodeControllerState,
   FillGapsControllerState,
   MatchPairsControllerState,
-  MultiStageFlowPhase,
+  InteractiveExerciseFlowPhase,
   StageActionBarVariant,
   StageProgress,
 } from "../shared/types";
 
 import type { StageState } from "./stage-state";
 
-export type MultiStageCoreContext = {
-  content: MultiStageContent;
+export type InteractiveExerciseContext = {
+  content: InteractiveExerciseContent;
   currentStageIndex: number;
-  currentStage: MultiStageStage;
+  currentStage: ExerciseStage;
   currentState: StageState;
   stageStates: StageState[];
   shuffleToken: number;
@@ -38,7 +38,7 @@ export type MultiStageCoreContext = {
   setRetryQueue: Dispatch<SetStateAction<number[]>>;
 };
 
-export type MultiStageSelectCorrectStage = {
+export type InteractiveExerciseSelectCorrectStage = {
   type: "selectCorrect";
   question: string;
   prompt?: SelectCorrectPrompt;
@@ -49,7 +49,7 @@ export type MultiStageSelectCorrectStage = {
   getWrongExplanation: () => string | null;
 };
 
-export type MultiStageChooseMatchingStage = {
+export type InteractiveExerciseChooseMatchingStage = {
   type: "chooseMatching";
   command: string;
   persisted: ChooseMatchingPersistedState;
@@ -58,36 +58,36 @@ export type MultiStageChooseMatchingStage = {
   getItemVisualState: (itemId: number) => ChooseMatchingItemVisualState;
 };
 
-export type MultiStageFillGapsStage = {
+export type InteractiveExerciseFillGapsStage = {
   type: "fillGaps";
 } & FillGapsControllerState;
 
-export type MultiStageFillCodeStage = {
+export type InteractiveExerciseFillCodeStage = {
   type: "fillCode";
 } & FillCodeControllerState;
 
-export type MultiStageMatchPairsStage = {
+export type InteractiveExerciseMatchPairsStage = {
   type: "matchPairs";
 } & MatchPairsControllerState;
 
-export type MultiStageActiveStage =
-  | MultiStageFillGapsStage
-  | MultiStageFillCodeStage
-  | MultiStageMatchPairsStage
-  | MultiStageSelectCorrectStage
-  | MultiStageChooseMatchingStage;
+export type InteractiveExerciseActiveStage =
+  | InteractiveExerciseFillGapsStage
+  | InteractiveExerciseFillCodeStage
+  | InteractiveExerciseMatchPairsStage
+  | InteractiveExerciseSelectCorrectStage
+  | InteractiveExerciseChooseMatchingStage;
 
-export type MultiStageNavigation = {
+export type InteractiveExerciseNavigation = {
   currentStageIndex: number;
-  currentStage: MultiStageStage;
-  flowPhase: MultiStageFlowPhase;
+  currentStage: ExerciseStage;
+  flowPhase: InteractiveExerciseFlowPhase;
   stageProgress: StageProgress;
   isLastStage: boolean;
   advanceStage: () => void;
   goToPreviousStage: () => void;
 };
 
-export type MultiStageSessionMeta = {
+export type InteractiveExerciseSessionMeta = {
   isExerciseComplete: boolean;
   isCurrentStageComplete: boolean;
   currentStageActionBarVariant: StageActionBarVariant;

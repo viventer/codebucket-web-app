@@ -8,14 +8,14 @@ import {
   getChooseMatchingGridColumns,
   type ChooseMatchingItemVisualState,
 } from "@/lib/exercises/choose-matching/choose-matching-state";
-import type { MultiStageFlowPhase } from "@/lib/exercises/shared/types";
+import type { InteractiveExerciseFlowPhase } from "@/lib/exercises/shared/types";
 
 import { ChooseMatchingItemButton } from "./ChooseMatchingItemButton";
 
 type ChooseMatchingGridProps = {
   command: string;
   items: { id: number; content: string }[];
-  flowPhase: MultiStageFlowPhase;
+  flowPhase: InteractiveExerciseFlowPhase;
   isLocked: boolean;
   toggleItem: (itemId: number) => void;
   getItemVisualState: (itemId: number) => ChooseMatchingItemVisualState;

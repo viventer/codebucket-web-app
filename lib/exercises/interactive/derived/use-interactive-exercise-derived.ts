@@ -4,24 +4,24 @@ import {
   deriveHasAttemptedCheck,
   deriveIsCurrentStageComplete,
   deriveIsExerciseComplete,
-  deriveMultiStageFeedback,
+  deriveInteractiveExerciseFeedback,
   isRetryableStageDone,
 } from "../stage-view";
 import type { StageState } from "../stage-state";
 
-type UseMultiStageDerivedParams = {
+type UseInteractiveExerciseDerivedParams = {
   currentState: StageState;
   stageStates: StageState[];
   retryQueue: number[];
   isLastStage: boolean;
 };
 
-export function useMultiStageDerived({
+export function useInteractiveExerciseDerived({
   currentState,
   stageStates,
   retryQueue,
   isLastStage,
-}: UseMultiStageDerivedParams) {
+}: UseInteractiveExerciseDerivedParams) {
   const selectCorrectPersisted =
     currentState.kind === "selectCorrect" ? currentState.selectCorrect : null;
 
@@ -42,7 +42,7 @@ export function useMultiStageDerived({
     }
   }
 
-  const feedback = deriveMultiStageFeedback(
+  const feedback = deriveInteractiveExerciseFeedback(
     currentState,
     selectCorrectPersisted,
     chooseMatchingPersisted,

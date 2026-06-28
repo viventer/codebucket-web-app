@@ -11,7 +11,7 @@ import type { StageState } from "./stage-state";
 
 const WRONG_ANSWER_RESOLVE_MS = 500;
 
-export function useMultiStageWrongAnswerTimeout(
+export function useInteractiveExerciseWrongAnswerTimeout(
   currentStageIndex: number,
   currentState: StageState,
   setStageStates: Dispatch<SetStateAction<StageState[]>>,

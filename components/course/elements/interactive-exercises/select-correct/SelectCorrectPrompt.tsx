@@ -4,7 +4,7 @@ import { HTMLPreview } from "@/components/html-preview/HTMLPreview";
 import type { SelectCorrectPrompt } from "@/schemas/courseSchema";
 
 import { StaticCodePanel } from "../gap-lines/StaticCodePanel";
-import { StageImageDiagram } from "../multi-stage/StageImageDiagram";
+import { StageImageDiagram } from "../interactive/StageImageDiagram";
 
 type SelectCorrectPromptProps = {
   courseId?: string;

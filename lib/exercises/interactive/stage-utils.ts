@@ -3,44 +3,44 @@ import type {
   FillCodeStage,
   FillGapsStage,
   MatchPairsStage,
-  MultiStageStage,
+  ExerciseStage,
   SelectCorrectStage,
 } from "@/schemas/courseSchema";
 
 import type { StageActionBarVariant } from "../shared/types";
 
 export function isFillGapsStage(
-  stage: MultiStageStage,
+  stage: ExerciseStage,
 ): stage is FillGapsStage {
   return stage.type === "fillGaps";
 }
 
 export function isFillCodeStage(
-  stage: MultiStageStage,
+  stage: ExerciseStage,
 ): stage is FillCodeStage {
   return stage.type === "fillCode";
 }
 
 export function isSelectCorrectStage(
-  stage: MultiStageStage,
+  stage: ExerciseStage,
 ): stage is SelectCorrectStage {
   return stage.type === "selectCorrect";
 }
 
 export function isChooseMatchingStage(
-  stage: MultiStageStage,
+  stage: ExerciseStage,
 ): stage is ChooseMatchingStage {
   return stage.type === "chooseMatching";
 }
 
 export function isMatchPairsStage(
-  stage: MultiStageStage,
+  stage: ExerciseStage,
 ): stage is MatchPairsStage {
   return stage.type === "matchPairs";
 }
 
 export function getStageActionBarVariant(
-  stage: MultiStageStage,
+  stage: ExerciseStage,
 ): StageActionBarVariant {
   return stage.type === "fillGaps" ||
     stage.type === "fillCode" ||

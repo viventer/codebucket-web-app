@@ -9,11 +9,11 @@ import {
 } from "../../select-correct/select-correct-state";
 import { EMPTY_SELECT_CORRECT_ANSWERS } from "../stage-state";
 import { isSelectCorrectStage } from "../stage-utils";
-import type { MultiStageCoreContext, MultiStageSelectCorrectStage } from "../types";
+import type { InteractiveExerciseContext, InteractiveExerciseSelectCorrectStage } from "../types";
 
 export function useSelectCorrectStage(
-  ctx: MultiStageCoreContext,
-): MultiStageSelectCorrectStage | null {
+  ctx: InteractiveExerciseContext,
+): InteractiveExerciseSelectCorrectStage | null {
   const { currentStage, currentState, shuffleToken, updateCurrentStageState } =
     ctx;
 

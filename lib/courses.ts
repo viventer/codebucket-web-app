@@ -26,6 +26,7 @@ const ELEMENT_TYPE_LABELS: Record<CourseElement["type"], string> = {
   video: "Lekcja",
   codeExercise: "Ćwiczenie",
   interactiveExercise: "Ćwiczenie",
+  customExercise: "Ćwiczenie",
   interactiveDemo: "Demonstracja",
   guidedProject: "Projekt",
   individualProject: "Projekt indywidualny",
@@ -39,7 +40,11 @@ export function getElementTitle(element: CourseElement): string {
 }
 
 export function elementHasHint(element: CourseElement): boolean {
-  if (element.type !== "codeExercise" && element.type !== "interactiveExercise") {
+  if (
+    element.type !== "codeExercise" &&
+    element.type !== "interactiveExercise" &&
+    element.type !== "customExercise"
+  ) {
     return false;
   }
 
@@ -51,7 +56,10 @@ export function elementHasHint(element: CourseElement): boolean {
 }
 
 export function elementHideInfoOnMobile(element: CourseElement): boolean {
-  if (element.type !== "interactiveExercise") {
+  if (
+    element.type !== "interactiveExercise" &&
+    element.type !== "customExercise"
+  ) {
     return false;
   }
 

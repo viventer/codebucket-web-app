@@ -1,24 +1,20 @@
-import type { CourseElement, MultiStageContent } from "@/schemas/courseSchema";
+import type { CourseElement, InteractiveExerciseContent } from "@/schemas/courseSchema";
 
-export type MultiStageExerciseConfig = {
-  kind: "multiStage";
-  content: MultiStageContent;
+export type InteractiveExerciseConfig = {
+  kind: "interactive";
+  content: InteractiveExerciseContent;
   hints: string[];
 };
 
-export function getMultiStageExerciseConfig(
+export function getInteractiveExerciseConfig(
   element: CourseElement,
-): MultiStageExerciseConfig | null {
+): InteractiveExerciseConfig | null {
   if (element.type !== "interactiveExercise") {
     return null;
   }
 
-  if (element.content.type !== "multiStage") {
-    return null;
-  }
-
   return {
-    kind: "multiStage",
+    kind: "interactive",
     content: element.content,
     hints: element.content.hints ?? [],
   };
@@ -30,6 +26,10 @@ export function getExerciseHints(element: CourseElement): string[] {
   }
 
   if (element.type === "interactiveExercise") {
+    return element.content.hints ?? [];
+  }
+
+  if (element.type === "customExercise") {
     return element.content.hints ?? [];
   }
 

@@ -1,11 +1,11 @@
 "use client";
 
 import { isFillCodeStage } from "../stage-utils";
-import type { MultiStageCoreContext, MultiStageFillCodeStage } from "../types";
+import type { InteractiveExerciseContext, InteractiveExerciseFillCodeStage } from "../types";
 
 export function useFillCodeStage(
-  ctx: MultiStageCoreContext,
-): MultiStageFillCodeStage | null {
+  ctx: InteractiveExerciseContext,
+): InteractiveExerciseFillCodeStage | null {
   const { currentStage, currentState, updateCurrentStageState } = ctx;
 
   const fillCodeStage =

@@ -3,23 +3,22 @@ import { z } from "zod";
 import {
   codeExerciseContentSchema,
   codeSnippetSchema,
+  customExerciseContentSchema,
   interactiveExerciseContentSchema,
 } from "./exerciseSchema";
 
 export {
   codeExerciseContentSchema,
   codeSnippetSchema,
-  customInteractiveExerciseContentSchema,
+  customExerciseContentSchema,
   fillGapsGroupSegmentSchema,
   fillGapsLineSchema,
   fillCodeStageSchema,
   fillGapsStageSchema,
   matchPairsStageSchema,
-  multiStageContentSchema,
-  multiStageStagePresentationSchema,
-  multiStageStageSchema,
+  exerciseStagePresentationSchema,
+  exerciseStageSchema,
   interactiveExerciseContentSchema,
-  interactiveExerciseTypeSchema,
   languageSchema,
   matchPairSchema,
   selectCorrectAnswerSchema,
@@ -33,13 +32,13 @@ export {
 export type {
   CodeExerciseContent,
   CodeSnippet,
+  CustomExerciseContent,
   FillGapsLine,
   FillCodeStage,
   FillGapsStage,
   MatchPairsStage,
-  MultiStageContent,
-  MultiStageStage,
-  MultiStageStagePresentation,
+  ExerciseStage,
+  ExerciseStagePresentation,
   SelectCorrectAnswer,
   SelectCorrectAnswerType,
   SelectCorrectPrompt,
@@ -47,7 +46,6 @@ export type {
   ChooseMatchingItem,
   ChooseMatchingStage,
   InteractiveExerciseContent,
-  InteractiveExerciseType,
   Language,
 } from "./exerciseSchema";
 
@@ -55,6 +53,7 @@ export const courseElementTypeSchema = z.enum([
   "video",
   "codeExercise",
   "interactiveExercise",
+  "customExercise",
   "interactiveDemo",
   "guidedProject",
   "individualProject",
@@ -111,6 +110,11 @@ export const courseElementSchema = z.discriminatedUnion("type", [
     ...elementBase,
     type: z.literal("interactiveExercise"),
     content: interactiveExerciseContentSchema,
+  }),
+  z.object({
+    ...elementBase,
+    type: z.literal("customExercise"),
+    content: customExerciseContentSchema,
   }),
   z.object({
     ...elementBase,

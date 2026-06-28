@@ -1,11 +1,11 @@
 import type { MatchPairItemState } from "./item-glow-style";
-import type { MultiStageContent } from "@/schemas/courseSchema";
+import type { InteractiveExerciseContent } from "@/schemas/courseSchema";
 
 import type {
-  MultiStageActiveStage,
-  MultiStageNavigation,
-  MultiStageSessionMeta,
-} from "../multi-stage/types";
+  InteractiveExerciseActiveStage,
+  InteractiveExerciseNavigation,
+  InteractiveExerciseSessionMeta,
+} from "../interactive/types";
 
 export type CheckResult = "success" | "error" | "warning";
 
@@ -21,7 +21,7 @@ export type ExerciseFeedback =
   | "warning"
   | "solution";
 
-export type MultiStageFlowPhase = "main" | "retry";
+export type InteractiveExerciseFlowPhase = "main" | "retry";
 
 export type StageProgress = {
   current: number;
@@ -82,14 +82,14 @@ export interface MatchPairsControllerState {
   isErrorFlashing: (itemId: string) => boolean;
 }
 
-export type MultiStageExerciseController = ExerciseController & {
-  kind: "multiStage";
-  content: MultiStageContent;
-  navigation: MultiStageNavigation;
-  session: MultiStageSessionMeta;
-  stage: MultiStageActiveStage;
+export type InteractiveExerciseController = ExerciseController & {
+  kind: "interactive";
+  content: InteractiveExerciseContent;
+  navigation: InteractiveExerciseNavigation;
+  session: InteractiveExerciseSessionMeta;
+  stage: InteractiveExerciseActiveStage;
 };
 
-export type ExerciseControllerUnion = MultiStageExerciseController;
+export type ExerciseControllerUnion = InteractiveExerciseController;
 
-export type ActionBarMode = "multi-stage";
+export type ActionBarMode = "interactive";

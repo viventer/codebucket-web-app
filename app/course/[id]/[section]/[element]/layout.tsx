@@ -123,7 +123,8 @@ export default async function ElementLayout({
 
   const isExercise =
     currentElement.type === "codeExercise" ||
-    currentElement.type === "interactiveExercise";
+    currentElement.type === "interactiveExercise" ||
+    currentElement.type === "customExercise";
 
   return (
     <CourseElementShell

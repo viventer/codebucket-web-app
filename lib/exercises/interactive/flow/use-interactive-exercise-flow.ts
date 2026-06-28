@@ -2,30 +2,30 @@
 
 import { useState, type Dispatch, type SetStateAction } from "react";
 
-import type { MultiStageContent } from "@/schemas/courseSchema";
+import type { InteractiveExerciseContent } from "@/schemas/courseSchema";
 
-import type { MultiStageFlowPhase, StageProgress } from "../../shared/types";
+import type { InteractiveExerciseFlowPhase, StageProgress } from "../../shared/types";
 import {
   prepareChooseMatchingRetryStageState,
   prepareSelectCorrectRetryStageState,
 } from "../retry/prepare-retry-stage-state";
 import type { StageState } from "../stage-state";
 
-type UseMultiStageFlowParams = {
-  content: MultiStageContent;
+type UseInteractiveExerciseFlowParams = {
+  content: InteractiveExerciseContent;
   stageStates: StageState[];
   setStageStates: Dispatch<SetStateAction<StageState[]>>;
   bumpShuffleToken: (stageIndex: number) => void;
 };
 
-export function useMultiStageFlow({
+export function useInteractiveExerciseFlow({
   content,
   stageStates,
   setStageStates,
   bumpShuffleToken,
-}: UseMultiStageFlowParams) {
+}: UseInteractiveExerciseFlowParams) {
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
-  const [flowPhase, setFlowPhase] = useState<MultiStageFlowPhase>("main");
+  const [flowPhase, setFlowPhase] = useState<InteractiveExerciseFlowPhase>("main");
   const [retryQueue, setRetryQueue] = useState<number[]>([]);
   const [retryQueueIndex, setRetryQueueIndex] = useState(0);
 

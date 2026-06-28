@@ -9,7 +9,7 @@ import {
 import { selectMatchPairItem } from "../match-pairs/match-pairs-actions";
 import { isMatchPairsStage } from "../stage-utils";
 import type { MatchPairsStageState } from "../stage-state";
-import type { MultiStageCoreContext, MultiStageMatchPairsStage } from "../types";
+import type { InteractiveExerciseContext, InteractiveExerciseMatchPairsStage } from "../types";
 
 const EMPTY_MATCH_PAIRS_ITEMS: readonly {
   id: string;
@@ -18,8 +18,8 @@ const EMPTY_MATCH_PAIRS_ITEMS: readonly {
 }[] = [];
 
 export function useMatchPairsStage(
-  ctx: MultiStageCoreContext,
-): MultiStageMatchPairsStage | null {
+  ctx: InteractiveExerciseContext,
+): InteractiveExerciseMatchPairsStage | null {
   const { currentStage, currentState, shuffleToken, updateCurrentStageState } =
     ctx;
 

@@ -2,8 +2,8 @@ import type {
   FillCodeStage,
   FillGapsStage,
   MatchPairsStage,
-  MultiStageContent,
-  MultiStageStage,
+  InteractiveExerciseContent,
+  ExerciseStage,
 } from "@/schemas/courseSchema";
 
 import {
@@ -137,7 +137,7 @@ export function createChooseMatchingStageState(): ChooseMatchingStageState {
   };
 }
 
-export function createStageState(stage: MultiStageStage): StageState {
+export function createStageState(stage: ExerciseStage): StageState {
   if (stage.type === "fillGaps") {
     return createFillGapsStageState(stage);
   }
@@ -163,6 +163,6 @@ export function createStageState(stage: MultiStageStage): StageState {
   };
 }
 
-export function createAllStageStates(content: MultiStageContent): StageState[] {
+export function createAllStageStates(content: InteractiveExerciseContent): StageState[] {
   return content.stages.map((stage) => createStageState(stage));
 }

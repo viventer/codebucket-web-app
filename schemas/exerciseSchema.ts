@@ -7,9 +7,7 @@ export const codeSnippetSchema = z.object({
   code: z.string().min(1, "Code is required"),
 });
 
-export const interactiveExerciseTypeSchema = z.enum(["multiStage", "custom"]);
-
-const interactiveExerciseBaseSchema = {
+const exerciseBaseSchema = {
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
   command: z.string().min(1, "Command is required"),
@@ -58,7 +56,7 @@ export const fillGapsLineSchema = z.discriminatedUnion("kind", [
   }),
 ]);
 
-export const multiStageStagePresentationSchema = z.discriminatedUnion("kind", [
+export const exerciseStagePresentationSchema = z.discriminatedUnion("kind", [
   z.object({
     kind: z.literal("image"),
     imageSrc: z.string().min(1),
@@ -125,7 +123,7 @@ export const fillGapsStageSchema = z.object({
   language: languageSchema,
   lines: z.array(fillGapsLineSchema).min(1),
   options: z.array(z.string().min(1)).min(1),
-  presentation: multiStageStagePresentationSchema.optional(),
+  presentation: exerciseStagePresentationSchema.optional(),
   typography: z.enum(["default", "large"]).optional(),
 });
 
@@ -145,7 +143,7 @@ export const fillCodeStageSchema = z.object({
   command: z.string().min(1).optional(),
   language: languageSchema,
   lines: z.array(fillGapsLineSchema).min(1),
-  presentation: multiStageStagePresentationSchema.optional(),
+  presentation: exerciseStagePresentationSchema.optional(),
   typography: z.enum(["default", "large"]).optional(),
 });
 
@@ -174,7 +172,7 @@ export const chooseMatchingStageSchema = z
     }
   });
 
-export const multiStageStageSchema = z.discriminatedUnion("type", [
+export const exerciseStageSchema = z.discriminatedUnion("type", [
   selectCorrectStageSchema,
   chooseMatchingStageSchema,
   fillGapsStageSchema,
@@ -182,22 +180,15 @@ export const multiStageStageSchema = z.discriminatedUnion("type", [
   fillCodeStageSchema,
 ]);
 
-export const multiStageContentSchema = z.object({
-  ...interactiveExerciseBaseSchema,
-  type: z.literal("multiStage"),
-  stages: z.array(multiStageStageSchema).min(1),
+export const interactiveExerciseContentSchema = z.object({
+  ...exerciseBaseSchema,
+  stages: z.array(exerciseStageSchema).min(1),
 });
 
-export const customInteractiveExerciseContentSchema = z.object({
-  ...interactiveExerciseBaseSchema,
-  type: z.literal("custom"),
+export const customExerciseContentSchema = z.object({
+  ...exerciseBaseSchema,
   component: z.string().min(1, "Component is required"),
 });
-
-export const interactiveExerciseContentSchema = z.discriminatedUnion("type", [
-  multiStageContentSchema,
-  customInteractiveExerciseContentSchema,
-]);
 
 export const codeExerciseContentSchema = z.object({
   command: z.string().min(1, "Command is required"),
@@ -209,12 +200,9 @@ export const codeExerciseContentSchema = z.object({
 
 export type Language = z.infer<typeof languageSchema>;
 export type CodeSnippet = z.infer<typeof codeSnippetSchema>;
-export type InteractiveExerciseType = z.infer<
-  typeof interactiveExerciseTypeSchema
->;
 export type FillGapsLine = z.infer<typeof fillGapsLineSchema>;
-export type MultiStageStagePresentation = z.infer<
-  typeof multiStageStagePresentationSchema
+export type ExerciseStagePresentation = z.infer<
+  typeof exerciseStagePresentationSchema
 >;
 export type SelectCorrectAnswerType = z.infer<
   typeof selectCorrectAnswerTypeSchema
@@ -227,9 +215,9 @@ export type MatchPairsStage = z.infer<typeof matchPairsStageSchema>;
 export type FillCodeStage = z.infer<typeof fillCodeStageSchema>;
 export type ChooseMatchingItem = z.infer<typeof chooseMatchingItemSchema>;
 export type ChooseMatchingStage = z.infer<typeof chooseMatchingStageSchema>;
-export type MultiStageStage = z.infer<typeof multiStageStageSchema>;
-export type MultiStageContent = z.infer<typeof multiStageContentSchema>;
+export type ExerciseStage = z.infer<typeof exerciseStageSchema>;
 export type InteractiveExerciseContent = z.infer<
   typeof interactiveExerciseContentSchema
 >;
+export type CustomExerciseContent = z.infer<typeof customExerciseContentSchema>;
 export type CodeExerciseContent = z.infer<typeof codeExerciseContentSchema>;

@@ -7,7 +7,7 @@ import { ExerciseSolutionDialog } from "@/components/course/exercises/ExerciseSo
 import { SuccessCelebration } from "@/components/course/exercises/SuccessCelebration";
 import { toast } from "@/hooks/use-toast";
 
-import type { getMultiStageExerciseConfig } from "../shared/create-exercise-controller";
+import type { getInteractiveExerciseConfig } from "../shared/create-exercise-controller";
 import { EXERCISE_ERROR_FEEDBACK } from "../shared/exercise-feedback-messages";
 import {
   ExerciseSessionContext,
@@ -15,7 +15,7 @@ import {
 } from "../shared/exercise-session-context-shared";
 import type { CheckResult, ExerciseFeedback } from "../shared/types";
 import { useCelebrationAutoDismiss } from "../shared/use-celebration-auto-dismiss";
-import { useMultiStageExerciseController } from "./multi-stage-controller";
+import { useInteractiveExerciseController } from "./interactive-exercise-controller";
 
 const TRANSIENT_FEEDBACK_MS = 3000;
 const STAGE_ADVANCE_AFTER_CORRECT_MS = 1500;
@@ -32,18 +32,18 @@ function persistStageCompletionFeedback(
   }
 }
 
-type MultiStageSessionBridgeProps = {
-  config: NonNullable<ReturnType<typeof getMultiStageExerciseConfig>>;
+type InteractiveExerciseSessionBridgeProps = {
+  config: NonNullable<ReturnType<typeof getInteractiveExerciseConfig>>;
   children: ReactNode;
   hints: string[];
 };
 
-export function MultiStageSessionBridge({
+export function InteractiveExerciseSessionBridge({
   config,
   children,
   hints,
-}: MultiStageSessionBridgeProps) {
-  const controller = useMultiStageExerciseController(config.content, hints);
+}: InteractiveExerciseSessionBridgeProps) {
+  const controller = useInteractiveExerciseController(config.content, hints);
   const [hintOpen, setHintOpen] = useState(false);
   const [solutionOpen, setSolutionOpen] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
@@ -285,7 +285,7 @@ export function MultiStageSessionBridge({
     showCelebration,
     isLocked,
     canProceed,
-    actionBarMode: "multi-stage",
+    actionBarMode: "interactive",
     hints: isGatedStage ? [] : hints,
     stageProgress,
     canGoBack,

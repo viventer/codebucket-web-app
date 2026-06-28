@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 
-import type { MultiStageContent } from "@/schemas/courseSchema";
+import type { InteractiveExerciseContent } from "@/schemas/courseSchema";
 
 import { createAllStageStates, type StageState } from "../stage-state";
 
-export function useStageStates(content: MultiStageContent) {
+export function useStageStates(content: InteractiveExerciseContent) {
   const [stageStates, setStageStates] = useState<StageState[]>(() =>
     createAllStageStates(content),
   );

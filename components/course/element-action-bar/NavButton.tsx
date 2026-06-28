@@ -37,7 +37,8 @@ export function NavButton({
 
     const isExercise =
       metadata.currentElement.type === "codeExercise" ||
-      metadata.currentElement.type === "interactiveExercise";
+      metadata.currentElement.type === "interactiveExercise" ||
+      metadata.currentElement.type === "customExercise";
 
     const isFirstExerciseCompletion = !elementsCompleted.includes(
       metadata.currentElement.id,

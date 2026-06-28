@@ -41,7 +41,7 @@ export const EMPTY_SESSION_VALUE: ExerciseSessionContextValue = {
   showCelebration: false,
   isLocked: false,
   canProceed: false,
-  actionBarMode: "multi-stage",
+  actionBarMode: "interactive",
   hints: [],
   stageProgress: null,
   canGoBack: false,

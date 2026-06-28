@@ -11,12 +11,12 @@ import {
 import type { CheckResult } from "../../shared/types";
 import { EMPTY_CHOOSE_MATCHING_ITEMS } from "../stage-state";
 import { isChooseMatchingStage } from "../stage-utils";
-import type { MultiStageCoreContext, MultiStageChooseMatchingStage } from "../types";
+import type { InteractiveExerciseContext, InteractiveExerciseChooseMatchingStage } from "../types";
 
 export function useChooseMatchingStage(
-  ctx: MultiStageCoreContext,
+  ctx: InteractiveExerciseContext,
 ): {
-  stage: MultiStageChooseMatchingStage | null;
+  stage: InteractiveExerciseChooseMatchingStage | null;
   checkChooseMatching: () => CheckResult;
 } {
   const {

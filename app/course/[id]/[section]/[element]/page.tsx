@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { getCourseById } from "@/lib/courses";
 import { CodeExerciseElement } from "@/components/course/elements/CodeExerciseElement";
+import { CustomExerciseElement } from "@/components/course/elements/CustomExerciseElement";
 import { GuidedProjectElement } from "@/components/course/elements/GuidedProjectElement";
 import { IndividualProjectElement } from "@/components/course/elements/IndividualProjectElement";
 import { InteractiveDemoElement } from "@/components/course/elements/InteractiveDemoElement";
@@ -33,6 +34,8 @@ export default async function CourseElementPage({
       return <CodeExerciseElement content={element.content} />;
     case "interactiveExercise":
       return <InteractiveExerciseElement content={element.content} />;
+    case "customExercise":
+      return <CustomExerciseElement content={element.content} />;
     case "interactiveDemo":
       return <InteractiveDemoElement content={element.content} />;
     case "guidedProject":

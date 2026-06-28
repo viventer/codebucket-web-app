@@ -8,13 +8,13 @@ import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionConte
 import { ActionBarButtonLabel } from "./ActionBarButtonLabel";
 import { NavButton } from "./NavButton";
 
-type MultiStageExerciseSubmitActionProps = {
+type InteractiveExerciseSubmitActionProps = {
   nextHref: string | null;
 };
 
-export function MultiStageExerciseSubmitAction({
+export function InteractiveExerciseSubmitAction({
   nextHref,
-}: MultiStageExerciseSubmitActionProps) {
+}: InteractiveExerciseSubmitActionProps) {
   const {
     controller,
     canProceed,

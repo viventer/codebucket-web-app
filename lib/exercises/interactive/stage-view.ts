@@ -97,7 +97,7 @@ export function deriveIsCurrentStageComplete(state: StageState): boolean {
   return false;
 }
 
-export function deriveMultiStageFeedback(
+export function deriveInteractiveExerciseFeedback(
   state: StageState,
   selectCorrectPersisted: SelectCorrectPersistedState | null,
   chooseMatchingPersisted: ChooseMatchingPersistedState | null,

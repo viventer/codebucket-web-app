@@ -1,13 +1,13 @@
 "use client";
 
 import { HTMLPreview } from "@/components/html-preview/HTMLPreview";
-import type { MultiStageStagePresentation } from "@/schemas/courseSchema";
+import type { ExerciseStagePresentation } from "@/schemas/courseSchema";
 
 import { StageImageDiagram } from "./StageImageDiagram";
 
 type StagePresentationProps = {
   courseId: string;
-  presentation: MultiStageStagePresentation;
+  presentation: ExerciseStagePresentation;
 };
 
 export function StagePresentation({
@@ -26,7 +26,7 @@ export function StagePresentation({
 export function StagePreviewPanel({
   presentation,
 }: {
-  presentation: MultiStageStagePresentation;
+  presentation: ExerciseStagePresentation;
 }) {
   if (presentation.kind !== "preview") {
     return null;
@@ -41,13 +41,13 @@ export function StagePreviewPanel({
 }
 
 export function stageHasTopPresentation(
-  presentation: MultiStageStagePresentation,
+  presentation: ExerciseStagePresentation,
 ): boolean {
   return presentation.kind === "image";
 }
 
 export function stageUsesPreviewLayout(
-  presentation: MultiStageStagePresentation,
+  presentation: ExerciseStagePresentation,
 ): boolean {
   return presentation.kind === "preview";
 }

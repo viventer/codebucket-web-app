@@ -28,6 +28,7 @@ function renderActions(
       return <ProjectActions nextHref={nextHref} hasMaterials={hasMaterials} />;
     case "codeExercise":
     case "interactiveExercise":
+    case "customExercise":
       return (
         <InteractiveExerciseActions
           prevHref={prevHref}

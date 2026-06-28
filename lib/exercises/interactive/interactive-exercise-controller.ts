@@ -1,16 +1,16 @@
 "use client";
 
-import type { MultiStageContent } from "@/schemas/courseSchema";
+import type { InteractiveExerciseContent } from "@/schemas/courseSchema";
 
 import { getStageFeedbackTarget } from "../fill-gaps/fill-gaps-utils";
 import type {
   CheckResult,
   ExerciseFeedback,
-  MultiStageExerciseController,
+  InteractiveExerciseController,
 } from "../shared/types";
 
-import { useMultiStageDerived } from "./derived/use-multi-stage-derived";
-import { useMultiStageFlow } from "./flow/use-multi-stage-flow";
+import { useInteractiveExerciseDerived } from "./derived/use-interactive-exercise-derived";
+import { useInteractiveExerciseFlow } from "./flow/use-interactive-exercise-flow";
 import { resolveActiveStage } from "./resolve-active-stage";
 import { useStageStates } from "./state/use-stage-states";
 import {
@@ -34,13 +34,13 @@ import {
   isFillGapsStage,
 } from "./stage-utils";
 import type { StageState } from "./stage-state";
-import type { MultiStageCoreContext } from "./types";
-import { useMultiStageWrongAnswerTimeout } from "./use-wrong-answer-timeout";
+import type { InteractiveExerciseContext } from "./types";
+import { useInteractiveExerciseWrongAnswerTimeout } from "./use-wrong-answer-timeout";
 
-export function useMultiStageExerciseController(
-  content: MultiStageContent,
+export function useInteractiveExerciseController(
+  content: InteractiveExerciseContent,
   hints: string[],
-): MultiStageExerciseController {
+): InteractiveExerciseController {
   const {
     stageStates,
     setStageStates,
@@ -50,7 +50,7 @@ export function useMultiStageExerciseController(
     resetStageStates,
   } = useStageStates(content);
 
-  const flow = useMultiStageFlow({
+  const flow = useInteractiveExerciseFlow({
     content,
     stageStates,
     setStageStates,
@@ -77,7 +77,7 @@ export function useMultiStageExerciseController(
     updateStageStateAtIndex(currentStageIndex, updater);
   }
 
-  const coreContext: MultiStageCoreContext = {
+  const coreContext: InteractiveExerciseContext = {
     content,
     currentStageIndex,
     currentStage,
@@ -96,14 +96,14 @@ export function useMultiStageExerciseController(
   const { stage: chooseMatchingSlice, checkChooseMatching } =
     useChooseMatchingStage(coreContext);
 
-  const { clearWrongAnswerTimeout } = useMultiStageWrongAnswerTimeout(
+  const { clearWrongAnswerTimeout } = useInteractiveExerciseWrongAnswerTimeout(
     currentStageIndex,
     currentState,
     setStageStates,
     setRetryQueue,
   );
 
-  const derived = useMultiStageDerived({
+  const derived = useInteractiveExerciseDerived({
     currentState,
     stageStates,
     retryQueue,
@@ -238,7 +238,7 @@ export function useMultiStageExerciseController(
   }
 
   return {
-    kind: "multiStage",
+    kind: "interactive",
     content,
     navigation: {
       currentStageIndex,

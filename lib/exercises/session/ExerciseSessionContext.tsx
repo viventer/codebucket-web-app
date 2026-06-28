@@ -4,10 +4,10 @@ import { useContext, type ReactNode } from "react";
 
 import type { CourseElement } from "@/schemas/courseSchema";
 
-import { MultiStageSessionBridge } from "../multi-stage/multi-stage-session-bridge";
+import { InteractiveExerciseSessionBridge } from "../interactive/interactive-exercise-session-bridge";
 import {
   getExerciseHints,
-  getMultiStageExerciseConfig,
+  getInteractiveExerciseConfig,
 } from "../shared/create-exercise-controller";
 import {
   EMPTY_SESSION_VALUE,
@@ -23,13 +23,13 @@ export function ExerciseSessionProvider({
   children: ReactNode;
 }) {
   const hints = getExerciseHints(element);
-  const multiStageConfig = getMultiStageExerciseConfig(element);
+  const interactiveConfig = getInteractiveExerciseConfig(element);
 
-  if (multiStageConfig) {
+  if (interactiveConfig) {
     return (
-      <MultiStageSessionBridge config={multiStageConfig} hints={hints}>
+      <InteractiveExerciseSessionBridge config={interactiveConfig} hints={hints}>
         {children}
-      </MultiStageSessionBridge>
+      </InteractiveExerciseSessionBridge>
     );
   }
 
@@ -56,4 +56,4 @@ export function useExerciseSessionOptional(): ExerciseSessionContextValue | null
   return useContext(ExerciseSessionContext);
 }
 
-export type { MultiStageExerciseController } from "../shared/types";
+export type { InteractiveExerciseController } from "../shared/types";

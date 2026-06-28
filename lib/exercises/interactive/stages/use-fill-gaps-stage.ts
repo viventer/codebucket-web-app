@@ -9,11 +9,11 @@ import {
 } from "../../fill-gaps/fill-gaps-utils";
 import { isFillGapsStage } from "../stage-utils";
 import { EMPTY_FILL_GAPS_OPTIONS } from "../stage-state";
-import type { MultiStageCoreContext, MultiStageFillGapsStage } from "../types";
+import type { InteractiveExerciseContext, InteractiveExerciseFillGapsStage } from "../types";
 
 export function useFillGapsStage(
-  ctx: MultiStageCoreContext,
-): MultiStageFillGapsStage | null {
+  ctx: InteractiveExerciseContext,
+): InteractiveExerciseFillGapsStage | null {
   const { currentStage, currentState, shuffleToken, updateCurrentStageState } =
     ctx;
 

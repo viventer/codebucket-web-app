@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 
 import { ExerciseFeedbackMessage } from "@/components/course/exercises/ExerciseFeedbackMessage";
 import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
-import type { MultiStageContent } from "@/schemas/courseSchema";
+import type { InteractiveExerciseContent } from "@/schemas/courseSchema";
 
 import { FillGapsWorkspace } from "./FillGapsWorkspace";
 import { GapLinesPanel } from "./gap-lines/GapLinesPanel";
@@ -15,20 +15,20 @@ import {
   StagePreviewPanel,
   stageHasTopPresentation,
   stageUsesPreviewLayout,
-} from "./multi-stage/StagePresentation";
+} from "./interactive/StagePresentation";
 import { SelectCorrectAnswers } from "./select-correct/SelectCorrectAnswers";
 import { ChooseMatchingGrid } from "./choose-matching/ChooseMatchingGrid";
 
-type MultiStageExerciseProps = {
-  content: MultiStageContent;
+type InteractiveExerciseStagesProps = {
+  content: InteractiveExerciseContent;
 };
 
-export function MultiStageExercise({ content }: MultiStageExerciseProps) {
+export function InteractiveExerciseStages({ content }: InteractiveExerciseStagesProps) {
   const params = useParams<{ id: string }>();
   const courseId = params.id;
   const { controller, canProceed, isLocked } = useExerciseSession();
 
-  if (!controller || controller.kind !== "multiStage") {
+  if (!controller || controller.kind !== "interactive") {
     return null;
   }
 
