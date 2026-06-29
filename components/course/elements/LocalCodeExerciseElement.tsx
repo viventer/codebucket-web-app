@@ -1,5 +1,6 @@
 "use client";
 
+import { StaticCodePanel } from "@/components/course/elements/interactive-exercises/gap-lines/StaticCodePanel";
 import { HTMLPreview } from "@/components/html-preview/HTMLPreview";
 import { Card, CardContent } from "@/components/ui/card";
 import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
@@ -48,10 +49,8 @@ export function LocalCodeExerciseElement({
             "shadow-[0_0_24px_rgba(34,197,94,0.35)]",
           )}
         >
-          <CardContent className="h-full max-h-[calc(100vh-16rem)] overflow-auto p-0">
-            <pre className="p-4 text-sm">
-              <code>{html}</code>
-            </pre>
+          <CardContent className="h-full max-h-[calc(100vh-16rem)] overflow-auto p-4">
+            <StaticCodePanel code={html} language="html" embedded />
           </CardContent>
         </Card>
       ) : (

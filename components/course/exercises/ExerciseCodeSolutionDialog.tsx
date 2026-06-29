@@ -1,5 +1,6 @@
 "use client";
 
+import { StaticCodePanel } from "@/components/course/elements/interactive-exercises/gap-lines/StaticCodePanel";
 import {
   Dialog,
   DialogContent,
@@ -21,19 +22,21 @@ export function ExerciseCodeSolutionDialog({
 }: ExerciseCodeSolutionDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[85vh] max-w-3xl overflow-y-auto">
+      <DialogContent className="flex max-h-[85vh] w-[90vw] max-w-[calc(100%-2rem)] flex-col overflow-hidden lg:max-w-[1280px]">
         <DialogHeader>
           <DialogTitle>Rozwiązanie</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-4">
+        <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto">
           {solutionCode.map((snippet) => (
-            <div key={snippet.language} className="flex flex-col gap-2">
+            <div key={snippet.language} className="flex min-h-0 flex-col gap-2">
               <p className="text-sm font-medium uppercase text-muted-foreground">
                 {snippet.language}
               </p>
-              <pre className="overflow-x-auto rounded-md bg-muted p-4 text-sm">
-                <code>{snippet.code}</code>
-              </pre>
+              <StaticCodePanel
+                code={snippet.code}
+                language={snippet.language}
+                className="max-w-none"
+              />
             </div>
           ))}
         </div>
