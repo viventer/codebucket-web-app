@@ -1,8 +1,12 @@
 import { notFound } from "next/navigation";
 
 import { getCourseById } from "@/lib/courses";
-import { resolveInteractiveExerciseAssets } from "@/lib/course/resolve-element-assets";
-import { CodeExerciseElement } from "@/components/course/elements/CodeExerciseElement";
+import {
+  resolveInteractiveExerciseAssets,
+  resolveLocalCodeExerciseAssets,
+} from "@/lib/course/resolve-element-assets";
+import { LocalCodeExerciseElement } from "@/components/course/elements/LocalCodeExerciseElement";
+import { PlatformCodeExerciseElement } from "@/components/course/elements/PlatformCodeExerciseElement";
 import { CustomExerciseElement } from "@/components/course/elements/CustomExerciseElement";
 import { GuidedProjectElement } from "@/components/course/elements/GuidedProjectElement";
 import { IndividualProjectElement } from "@/components/course/elements/IndividualProjectElement";
@@ -31,8 +35,16 @@ export default async function CourseElementPage({
   switch (element.type) {
     case "video":
       return <VideoElement content={element.content} />;
-    case "codeExercise":
-      return <CodeExerciseElement content={element.content} />;
+    case "platformCodeExercise":
+      return <PlatformCodeExerciseElement content={element.content} />;
+    case "localCodeExercise": {
+      const { content } = await resolveLocalCodeExerciseAssets(
+        id,
+        elementId,
+        element.content,
+      );
+      return <LocalCodeExerciseElement content={content} />;
+    }
     case "interactiveExercise": {
       const { assetUrls, content } = await resolveInteractiveExerciseAssets(
         id,

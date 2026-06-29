@@ -1,14 +1,14 @@
 import { z } from "zod";
 
 import {
-  codeExerciseContentSchema,
-  codeSnippetSchema,
   customExerciseContentSchema,
   interactiveExerciseContentSchema,
+  localCodeExerciseContentSchema,
+  platformCodeExerciseContentSchema,
+  codeSnippetSchema,
 } from "./exerciseSchema";
 
 export {
-  codeExerciseContentSchema,
   codeSnippetSchema,
   customExerciseContentSchema,
   fillGapsGroupSegmentSchema,
@@ -20,7 +20,9 @@ export {
   exerciseStageSchema,
   interactiveExerciseContentSchema,
   languageSchema,
+  localCodeExerciseContentSchema,
   matchPairSchema,
+  platformCodeExerciseContentSchema,
   selectCorrectAnswerSchema,
   selectCorrectAnswerTypeSchema,
   selectCorrectPromptSchema,
@@ -30,7 +32,6 @@ export {
 } from "./exerciseSchema";
 
 export type {
-  CodeExerciseContent,
   CodeSnippet,
   CustomExerciseContent,
   FillGapsLine,
@@ -47,11 +48,14 @@ export type {
   ChooseMatchingStage,
   InteractiveExerciseContent,
   Language,
+  LocalCodeExerciseContent,
+  PlatformCodeExerciseContent,
 } from "./exerciseSchema";
 
 export const courseElementTypeSchema = z.enum([
   "video",
-  "codeExercise",
+  "platformCodeExercise",
+  "localCodeExercise",
   "interactiveExercise",
   "customExercise",
   "interactiveDemo",
@@ -103,8 +107,13 @@ export const courseElementSchema = z.discriminatedUnion("type", [
   }),
   z.object({
     ...elementBase,
-    type: z.literal("codeExercise"),
-    content: codeExerciseContentSchema,
+    type: z.literal("platformCodeExercise"),
+    content: platformCodeExerciseContentSchema,
+  }),
+  z.object({
+    ...elementBase,
+    type: z.literal("localCodeExercise"),
+    content: localCodeExerciseContentSchema,
   }),
   z.object({
     ...elementBase,

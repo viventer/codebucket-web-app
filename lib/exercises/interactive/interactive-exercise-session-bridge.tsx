@@ -298,6 +298,8 @@ export function InteractiveExerciseSessionBridge({
     currentStageActionBarVariant: session.currentStageActionBarVariant,
     advanceCurrentStage,
     canProceedStage,
+    localPhase: null,
+    markLocalExerciseCompleted: () => {},
   };
 
   return (

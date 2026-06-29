@@ -3,6 +3,7 @@ import { getExerciseAssetStoragePath } from "@/lib/course-storage-paths";
 import type {
   ExerciseStage,
   InteractiveExerciseContent,
+  LocalCodeExerciseContent,
   SelectCorrectPrompt,
 } from "@/schemas/courseSchema";
 
@@ -179,6 +180,58 @@ export async function resolveInteractiveExerciseAssets(
     ...content,
     stages: content.stages.map((stage) =>
       resolveStageContent(assetUrls, stage),
+    ),
+  };
+
+  return { assetUrls, content: resolvedContent };
+}
+
+function getHtmlFromSolutionCode(content: LocalCodeExerciseContent): string | null {
+  return content.solutionCode.find((snippet) => snippet.language === "html")
+    ?.code ?? null;
+}
+
+export async function resolveLocalCodeExerciseAssets(
+  courseId: string,
+  elementId: string,
+  content: LocalCodeExerciseContent,
+): Promise<{
+  assetUrls: Record<string, string>;
+  content: LocalCodeExerciseContent;
+}> {
+  const previewHtml = getHtmlFromSolutionCode(content);
+  if (!previewHtml) {
+    return { assetUrls: {}, content };
+  }
+
+  const references: AssetReference[] = [];
+  collectPreviewHtmlAssets(courseId, elementId, previewHtml, references);
+
+  if (references.length === 0) {
+    return { assetUrls: {}, content };
+  }
+
+  const storagePaths = references.map((reference) => reference.storagePath);
+
+  let urlsByStoragePath: Record<string, string>;
+  try {
+    urlsByStoragePath = await getPublicStorageUrls(storagePaths);
+  } catch {
+    return { assetUrls: {}, content };
+  }
+
+  const assetUrls = Object.fromEntries(
+    references.map((reference) => [
+      reference.key,
+      urlsByStoragePath[reference.storagePath],
+    ]),
+  );
+
+  const resolvedHtml = replacePreviewHtmlAssets(previewHtml, assetUrls);
+  const resolvedContent: LocalCodeExerciseContent = {
+    ...content,
+    solutionCode: content.solutionCode.map((snippet) =>
+      snippet.language === "html" ? { ...snippet, code: resolvedHtml } : snippet,
     ),
   };
 

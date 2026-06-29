@@ -36,7 +36,8 @@ export function NavButton({
       !sectionsCompleted.includes(metadata.currentSection.id);
 
     const isExercise =
-      metadata.currentElement.type === "codeExercise" ||
+      metadata.currentElement.type === "platformCodeExercise" ||
+      metadata.currentElement.type === "localCodeExercise" ||
       metadata.currentElement.type === "interactiveExercise" ||
       metadata.currentElement.type === "customExercise";
 

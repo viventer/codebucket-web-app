@@ -140,7 +140,13 @@
                 "command": "Ułóż tag akapitu z podaną treścią.",
                 "language": "html",
                 "typography": "large",
-                "options": ["<p", ">", "siema", "</", "p>"],
+                "options": [
+                  "<p",
+                  ">",
+                  "siema",
+                  "</",
+                  "p>"
+                ],
                 "lines": [
                   {
                     "kind": "group",
@@ -309,7 +315,9 @@
           "order": 5
         }
       ],
-      "cheatsheets": [""]
+      "cheatsheets": [
+        ""
+      ]
     },
     {
       "id": "text-and-images",
@@ -365,109 +373,109 @@
                   "previewHtml": "<h1>Nagłówek</h1><hr /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus distinctio at velit ipsam deleniti veniam a dignissimos molestiae blanditiis laudantium, doloribus tempora suscipit ea. Consequuntur qui ratione expedita vitae maiores.</p><br /><h3>Mniejszy nagłówek</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus distinctio at velit ipsam deleniti veniam a dignissimos molestiae blanditiis laudantium, doloribus tempora suscipit ea. Consequuntur qui ratione expedita vitae maiores.</p>"
                 },
                 "lines": [
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
+                  {
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "gap",
+                        "id": "h1-open",
+                        "answer": "<h1>"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "Nagłówek"
+                      },
+                      {
+                        "kind": "autoClose",
+                        "id": "h1-close",
+                        "pairedGapId": "h1-open"
+                      }
+                    ]
+                  },
                   {
                     "kind": "gap",
-                    "id": "h1-open",
-                    "answer": "<h1>"
+                    "id": "hr",
+                    "indent": 0,
+                    "answer": "<hr />"
                   },
                   {
-                    "kind": "text",
-                    "value": "Nagłówek"
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "gap",
+                        "id": "p1-open",
+                        "answer": "<p>"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "Lorem ipsum dolor sit amet consectetur..."
+                      },
+                      {
+                        "kind": "autoClose",
+                        "id": "p1-close",
+                        "pairedGapId": "p1-open"
+                      }
+                    ]
                   },
-                  {
-                    "kind": "autoClose",
-                    "id": "h1-close",
-                    "pairedGapId": "h1-open"
-                  }
-                ]
-              },
-              {
-                "kind": "gap",
-                "id": "hr",
-                "indent": 0,
-                "answer": "<hr />"
-              },
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
                   {
                     "kind": "gap",
-                    "id": "p1-open",
-                    "answer": "<p>"
+                    "id": "br",
+                    "indent": 0,
+                    "answer": "<br />"
                   },
                   {
-                    "kind": "text",
-                    "value": "Lorem ipsum dolor sit amet consectetur..."
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "gap",
+                        "id": "h3-open",
+                        "answer": "<h3>"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "Mniejszy nagłówek"
+                      },
+                      {
+                        "kind": "autoClose",
+                        "id": "h3-close",
+                        "pairedGapId": "h3-open"
+                      }
+                    ]
                   },
                   {
-                    "kind": "autoClose",
-                    "id": "p1-close",
-                    "pairedGapId": "p1-open"
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "gap",
+                        "id": "p2-open",
+                        "answer": "<p>"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "Lorem ipsum dolor sit amet consectetur..."
+                      },
+                      {
+                        "kind": "autoClose",
+                        "id": "p2-close",
+                        "pairedGapId": "p2-open"
+                      }
+                    ]
                   }
+                ],
+                "options": [
+                  "<h1>",
+                  "<heading>",
+                  "<hr />",
+                  "<br />",
+                  "<p>",
+                  "<p>",
+                  "<h3>",
+                  "<h7>"
                 ]
-              },
-              {
-                "kind": "gap",
-                "id": "br",
-                "indent": 0,
-                "answer": "<br />"
-              },
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
-                  {
-                    "kind": "gap",
-                    "id": "h3-open",
-                    "answer": "<h3>"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "Mniejszy nagłówek"
-                  },
-                  {
-                    "kind": "autoClose",
-                    "id": "h3-close",
-                    "pairedGapId": "h3-open"
-                  }
-                ]
-              },
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
-                  {
-                    "kind": "gap",
-                    "id": "p2-open",
-                    "answer": "<p>"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "Lorem ipsum dolor sit amet consectetur..."
-                  },
-                  {
-                    "kind": "autoClose",
-                    "id": "p2-close",
-                    "pairedGapId": "p2-open"
-                  }
-                ]
-              }
-            ],
-            "options": [
-              "<h1>",
-              "<heading>",
-              "<hr />",
-              "<br />",
-              "<p>",
-              "<p>",
-              "<h3>",
-              "<h7>"
-            ]
               }
             ]
           },
@@ -475,13 +483,22 @@
         },
         {
           "id": "song",
-          "type": "individualProject",
+          "type": "localCodeExercise",
+          "order": 4,
           "content": {
             "title": "Piosenka",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
-            "sampleSolution": []
-          },
-          "order": 4
+            "command": "Odwzoruj stronę widoczną poniżej we własnym edytorze kodu.",
+            "languages": [
+              "html"
+            ],
+            "hasMaterials": false,
+            "solutionCode": [
+              {
+                "language": "html",
+                "code": "<!doctype html>\n<html>\n  <head>\n    <title>Moja ulubiona piosenka</title>\n  </head>\n  <body>\n    <h1>Tytuł: Turi ip ip ip</h1>\n    <hr />\n    <h3>Tekst:</h3>\n    <p>\n      [Intro] <br />\n      Turi ip ip ip Ip ip ip ip tsha ik Ip tura ip ik Eugh eugh isha ik turisha\n      Turi ip ip ip Ip ip ip ip tsha ik Ip tura ip ik Eugh eugh isha ik turisha\n      <br />\n      [Verse] <br />\n      Turi ip ip ip Ip ip ip ip tsha ik Ip tura ip ik Eugh eugh isha ik turisha\n      Turi ip ip ip Ip ip ip ip tsha ik Ip tura ip ik Eugh eugh isha ik turisha\n      <br />\n      [Build] <br />\n      Turi ip ip ip Ip ip ip ip tsha ik Ip tura ip ik Eugh eugh isha ik turisha\n      Turi ip ip ip Ip ip ip ip tsha ik Ip tura ip ik Eugh eugh isha ik turisha\n      <br />\n      [Chorus] <br />\n      Turi ip ip ip Ip ip ip ip tsha ik Ip tura ip ik Eugh eugh isha ik turisha\n      Turi ip ip ip Ip ip ip ip tsha ik Ip tura ip ik Eugh eugh isha ik turisha\n      <br />\n      [Build] <br />\n      Turi ip ip ip Ip ip ip ip tsha ik Ip tura ip ik Eugh eugh isha ik turisha\n      Turi ip ip ip Ip ip ip ip tsha ik Ip tura ip ik Eugh eugh isha ik turisha\n      <br />\n      [Chorus] <br />\n      Turi ip ip ip Ip ip ip ip tsha ik Ip tura ip ik Eugh eugh isha ik turisha\n      Turi ip ip ip Ip ip ip ip tsha ik Ip tura ip ik Eugh eugh isha ik turisha\n    </p>\n    <hr />\n    <br />\n\n    <h3>Linki:</h3>\n    <a\n      href=\"https://youtu.be/__CRWE-L45k?si=iXOOhCscJWRvXX99\"\n      target=\"_blank\"\n      title=\"Link do piosenki na yt\"\n      >Link do yt</a\n    >\n  </body>\n</html>\n"
+              }
+            ]
+          }
         },
         {
           "id": "images",
@@ -692,7 +709,9 @@
           "order": 6
         }
       ],
-      "cheatsheets": [""]
+      "cheatsheets": [
+        ""
+      ]
     },
     {
       "id": "other-elements",
@@ -747,109 +766,109 @@
                   "previewHtml": "<h1>Owoce</h1><ul><li>Jabłko</li><li>Banan</li><li>Ananas</li></ul>"
                 },
                 "lines": [
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
                   {
-                    "kind": "gap",
-                    "id": "h1-open",
-                    "answer": "<h1>"
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "gap",
+                        "id": "h1-open",
+                        "answer": "<h1>"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "Owoce"
+                      },
+                      {
+                        "kind": "autoClose",
+                        "id": "h1-close",
+                        "pairedGapId": "h1-open"
+                      }
+                    ]
                   },
                   {
-                    "kind": "text",
-                    "value": "Owoce"
+                    "kind": "gap",
+                    "id": "ul-open",
+                    "indent": 0,
+                    "answer": "<ul>"
+                  },
+                  {
+                    "kind": "group",
+                    "indent": 1,
+                    "segments": [
+                      {
+                        "kind": "gap",
+                        "id": "li1-open",
+                        "answer": "<li>"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "Jabłko"
+                      },
+                      {
+                        "kind": "autoClose",
+                        "id": "li1-close",
+                        "pairedGapId": "li1-open"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "group",
+                    "indent": 1,
+                    "segments": [
+                      {
+                        "kind": "gap",
+                        "id": "li2-open",
+                        "answer": "<li>"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "Banan"
+                      },
+                      {
+                        "kind": "autoClose",
+                        "id": "li2-close",
+                        "pairedGapId": "li2-open"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "group",
+                    "indent": 1,
+                    "segments": [
+                      {
+                        "kind": "gap",
+                        "id": "li3-open",
+                        "answer": "<li>"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "Ananas"
+                      },
+                      {
+                        "kind": "autoClose",
+                        "id": "li3-close",
+                        "pairedGapId": "li3-open"
+                      }
+                    ]
                   },
                   {
                     "kind": "autoClose",
-                    "id": "h1-close",
-                    "pairedGapId": "h1-open"
+                    "id": "ul-close",
+                    "indent": 0,
+                    "pairedGapId": "ul-open"
                   }
+                ],
+                "options": [
+                  "<h1>",
+                  "<item>",
+                  "<ol>",
+                  "<ul>",
+                  "<li>",
+                  "<li>",
+                  "<list>",
+                  "<li>"
                 ]
-              },
-              {
-                "kind": "gap",
-                "id": "ul-open",
-                "indent": 0,
-                "answer": "<ul>"
-              },
-              {
-                "kind": "group",
-                "indent": 1,
-                "segments": [
-                  {
-                    "kind": "gap",
-                    "id": "li1-open",
-                    "answer": "<li>"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "Jabłko"
-                  },
-                  {
-                    "kind": "autoClose",
-                    "id": "li1-close",
-                    "pairedGapId": "li1-open"
-                  }
-                ]
-              },
-              {
-                "kind": "group",
-                "indent": 1,
-                "segments": [
-                  {
-                    "kind": "gap",
-                    "id": "li2-open",
-                    "answer": "<li>"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "Banan"
-                  },
-                  {
-                    "kind": "autoClose",
-                    "id": "li2-close",
-                    "pairedGapId": "li2-open"
-                  }
-                ]
-              },
-              {
-                "kind": "group",
-                "indent": 1,
-                "segments": [
-                  {
-                    "kind": "gap",
-                    "id": "li3-open",
-                    "answer": "<li>"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "Ananas"
-                  },
-                  {
-                    "kind": "autoClose",
-                    "id": "li3-close",
-                    "pairedGapId": "li3-open"
-                  }
-                ]
-              },
-              {
-                "kind": "autoClose",
-                "id": "ul-close",
-                "indent": 0,
-                "pairedGapId": "ul-open"
-              }
-            ],
-            "options": [
-              "<h1>",
-              "<item>",
-              "<ol>",
-              "<ul>",
-              "<li>",
-              "<li>",
-              "<list>",
-              "<li>"
-            ]
               }
             ]
           },
@@ -1075,17 +1094,28 @@
           "order": 6
         },
         {
-          "id": "use-knowledge-in-practice",
-          "type": "individualProject",
+          "id": "timetable",
+          "type": "localCodeExercise",
+          "order": 7,
           "content": {
-            "title": "Twój pierwszy projekt",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
-            "sampleSolution": []
-          },
-          "order": 7
+            "title": "Plan lekcji",
+            "command": "Odwzoruj stronę widoczną poniżej we własnym edytorze kodu.",
+            "languages": [
+              "html"
+            ],
+            "hasMaterials": true,
+            "solutionCode": [
+              {
+                "language": "html",
+                "code": "<!doctype html>\n<html lang=\"pl\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Plan lekcji</title>\n  </head>\n  <body>\n    <h1>Mój plan lekcji:</h1>\n    <table border=\"5\">\n      <tr height=\"50\">\n        <th width=\"100\"></th>\n        <th width=\"125\">Poniedziałek</th>\n        <th width=\"125\">Wtorek</th>\n        <th width=\"125\">Środa</th>\n        <th width=\"125\">Czwartek</th>\n        <th width=\"125\">Piątek</th>\n      </tr>\n      <tr height=\"30\" align=\"center\">\n        <td>8:00 - 8:45</td>\n        <td>Matematyka</td>\n        <td>Polski</td>\n        <td>Matematyka</td>\n        <td>Geografia</td>\n        <td>Historia</td>\n      </tr>\n      <tr height=\"30\" align=\"center\">\n        <td>8:50 - 9:35</td>\n        <td>Włoski</td>\n        <td>Geografia</td>\n        <td>WF</td>\n        <td>Włoski</td>\n        <td>Matematyka</td>\n      </tr>\n      <tr height=\"30\" align=\"center\">\n        <td>9:40 - 10:25</td>\n        <td>Geografia</td>\n        <td>Historia</td>\n        <td>Informatyka</td>\n        <td>Angielski</td>\n        <td>Matematyka</td>\n      </tr>\n      <tr height=\"30\" align=\"center\">\n        <td>10:30 - 11:15</td>\n        <td>Historia</td>\n        <td>Polski</td>\n        <td>Matematyka</td>\n        <td>WF</td>\n        <td>Geografia</td>\n      </tr>\n      <tr height=\"30\" align=\"center\">\n        <td>11:30 - 12:15</td>\n        <td>Polski</td>\n        <td>Angielski</td>\n        <td>Geografia</td>\n        <td>WF</td>\n        <td>Włoski</td>\n      </tr>\n    </table>\n    <br />\n    <hr />\n    <h3>Nauczyciele:</h3>\n    <ul>\n      <li>\n        <p>Włoski: Frédéric Vasseur</p>\n        <img src=\"images/pizza.png\" alt=\"pizza\" height=\"100\" />\n      </li>\n      <li>\n        <p>Angielski: David Kalvinsky</p>\n        <img src=\"images/burger.png\" alt=\"hamburger\" height=\"100\" />\n      </li>\n      <li>\n        <p>Matematyka: Borys Przybylski</p>\n        <img src=\"images/calc.png\" alt=\"kalkulator\" height=\"100\" />\n      </li>\n      <li>\n        <p>Geografia: Trevor Rainbolt</p>\n        <img src=\"images/car.jpg\" alt=\"auto z Kenii\" height=\"100\" />\n      </li>\n    </ul>\n  </body>\n</html>\n"
+              }
+            ]
+          }
         }
       ],
-      "cheatsheets": [""]
+      "cheatsheets": [
+        ""
+      ]
     },
     {
       "id": "form-building",
@@ -1265,7 +1295,9 @@
           "order": 3
         }
       ],
-      "cheatsheets": [""]
+      "cheatsheets": [
+        ""
+      ]
     },
     {
       "id": "form-fields",
@@ -1313,150 +1345,150 @@
                   "previewHtml": "<form><label for=\"username\">Nazwa użytkownika:</label><input type=\"text\" placeholder=\"janek123\" id=\"username\"><br /><label for=\"email\">Email:</label><input type=\"email\" placeholder=\"janek123@mail.pl\" id=\"email\"><br /><label for=\"password\">Hasło:</label><input type=\"password\" id=\"password\"><br /><input type=\"submit\" value=\"Zaloguj się\"></form>"
                 },
                 "lines": [
-              {
-                "kind": "code",
-                "text": "<form>",
-                "indent": 0
-              },
-              {
-                "kind": "code",
-                "text": "<label for=\"username\">Nazwa użytkownika:</label>",
-                "indent": 0
-              },
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
                   {
-                    "kind": "text",
-                    "value": "<input type=\""
+                    "kind": "code",
+                    "text": "<form>",
+                    "indent": 0
                   },
                   {
-                    "kind": "gap",
-                    "id": "username-type",
-                    "answer": "text"
+                    "kind": "code",
+                    "text": "<label for=\"username\">Nazwa użytkownika:</label>",
+                    "indent": 0
                   },
                   {
-                    "kind": "text",
-                    "value": "\" "
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<input type=\""
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "username-type",
+                        "answer": "text"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "\" "
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "username-placeholder-attr",
+                        "answer": "placeholder"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "=\"janek123\" id=\"username\">"
+                      }
+                    ]
                   },
                   {
-                    "kind": "gap",
-                    "id": "username-placeholder-attr",
-                    "answer": "placeholder"
+                    "kind": "code",
+                    "text": "<br />",
+                    "indent": 0
                   },
                   {
-                    "kind": "text",
-                    "value": "=\"janek123\" id=\"username\">"
+                    "kind": "code",
+                    "text": "<label for=\"email\">Email:</label>",
+                    "indent": 0
+                  },
+                  {
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<input type=\""
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "email-type",
+                        "answer": "email"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "\" "
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "email-placeholder-attr",
+                        "answer": "placeholder"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "=\"janek123@mail.pl\" id=\"email\">"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<br />",
+                    "indent": 0
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<label for=\"password\">Hasło:</label>",
+                    "indent": 0
+                  },
+                  {
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<input type=\""
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "password-type",
+                        "answer": "password"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "\" id=\"password\">"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "code",
+                    "text": "<br />",
+                    "indent": 0
+                  },
+                  {
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<input type=\""
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "submit-type",
+                        "answer": "submit"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "\" value=\""
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "submit-value",
+                        "answer": "Zaloguj się"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "\">"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "code",
+                    "text": "</form>",
+                    "indent": 0
                   }
                 ]
-              },
-              {
-                "kind": "code",
-                "text": "<br />",
-                "indent": 0
-              },
-              {
-                "kind": "code",
-                "text": "<label for=\"email\">Email:</label>",
-                "indent": 0
-              },
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
-                  {
-                    "kind": "text",
-                    "value": "<input type=\""
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "email-type",
-                    "answer": "email"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "\" "
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "email-placeholder-attr",
-                    "answer": "placeholder"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "=\"janek123@mail.pl\" id=\"email\">"
-                  }
-                ]
-              },
-              {
-                "kind": "code",
-                "text": "<br />",
-                "indent": 0
-              },
-              {
-                "kind": "code",
-                "text": "<label for=\"password\">Hasło:</label>",
-                "indent": 0
-              },
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
-                  {
-                    "kind": "text",
-                    "value": "<input type=\""
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "password-type",
-                    "answer": "password"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "\" id=\"password\">"
-                  }
-                ]
-              },
-              {
-                "kind": "code",
-                "text": "<br />",
-                "indent": 0
-              },
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
-                  {
-                    "kind": "text",
-                    "value": "<input type=\""
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "submit-type",
-                    "answer": "submit"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "\" value=\""
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "submit-value",
-                    "answer": "Zaloguj się"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "\">"
-                  }
-                ]
-              },
-              {
-                "kind": "code",
-                "text": "</form>",
-                "indent": 0
-              }
-            ]
               }
             ]
           },
@@ -1657,86 +1689,86 @@
                   "previewHtml": "<label for=\"material\">Wybierz materiał wiadra</label><br /><select id=\"material\"><option value=\"metal\">metal</option><option value=\"plastik\">plastik</option><option value=\"papier\">papier</option></select>"
                 },
                 "lines": [
-              {
-                "kind": "code",
-                "text": "<label for=\"material\">Wybierz materiał wiadra</label>",
-                "indent": 0
-              },
-              {
-                "kind": "code",
-                "text": "<br />",
-                "indent": 0
-              },
-              {
-                "kind": "group",
-                "indent": 0,
-                "segments": [
                   {
-                    "kind": "text",
-                    "value": "<"
+                    "kind": "code",
+                    "text": "<label for=\"material\">Wybierz materiał wiadra</label>",
+                    "indent": 0
                   },
                   {
-                    "kind": "gap",
-                    "id": "select-open",
-                    "answer": "select"
+                    "kind": "code",
+                    "text": "<br />",
+                    "indent": 0
                   },
                   {
-                    "kind": "text",
-                    "value": " id=\"material\">"
+                    "kind": "group",
+                    "indent": 0,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<"
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "select-open",
+                        "answer": "select"
+                      },
+                      {
+                        "kind": "text",
+                        "value": " id=\"material\">"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "group",
+                    "indent": 1,
+                    "segments": [
+                      {
+                        "kind": "text",
+                        "value": "<"
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "option-1",
+                        "answer": "option"
+                      },
+                      {
+                        "kind": "text",
+                        "value": " "
+                      },
+                      {
+                        "kind": "gap",
+                        "id": "value-1",
+                        "answer": "value"
+                      },
+                      {
+                        "kind": "text",
+                        "value": "=\"metal\">metal</option>"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "code",
+                    "text": "...",
+                    "indent": 1
+                  },
+                  {
+                    "kind": "autoClose",
+                    "id": "select-close",
+                    "indent": 0,
+                    "pairedGapId": "select-open"
                   }
+                ],
+                "options": [
+                  "select",
+                  "option",
+                  "value",
+                  "input",
+                  "opt",
+                  "name",
+                  "id",
+                  "item",
+                  "options"
                 ]
-              },
-              {
-                "kind": "group",
-                "indent": 1,
-                "segments": [
-                  {
-                    "kind": "text",
-                    "value": "<"
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "option-1",
-                    "answer": "option"
-                  },
-                  {
-                    "kind": "text",
-                    "value": " "
-                  },
-                  {
-                    "kind": "gap",
-                    "id": "value-1",
-                    "answer": "value"
-                  },
-                  {
-                    "kind": "text",
-                    "value": "=\"metal\">metal</option>"
-                  }
-                ]
-              },
-              {
-                "kind": "code",
-                "text": "...",
-                "indent": 1
-              },
-              {
-                "kind": "autoClose",
-                "id": "select-close",
-                "indent": 0,
-                "pairedGapId": "select-open"
-              }
-            ],
-            "options": [
-              "select",
-              "option",
-              "value",
-              "input",
-              "opt",
-              "name",
-              "id",
-              "item",
-              "options"
-            ]
               }
             ]
           },
@@ -1744,16 +1776,27 @@
         },
         {
           "id": "pc-configurator",
-          "type": "individualProject",
+          "type": "localCodeExercise",
+          "order": 7,
           "content": {
             "title": "Konfigurator PC",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
-            "sampleSolution": []
-          },
-          "order": 7
+            "command": "Odwzoruj stronę widoczną poniżej we własnym edytorze kodu.",
+            "languages": [
+              "html"
+            ],
+            "hasMaterials": false,
+            "solutionCode": [
+              {
+                "language": "html",
+                "code": "<!doctype html>\n<html lang=\"pl\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Document</title>\n  </head>\n  <body>\n    <h1>Konfigurator PC</h1>\n\n    <h2>Twoje dane</h2>\n    <label for=\"name\">Imię:</label>\n    <input type=\"text\" id=\"name\" placeholder=\"Jan\" />\n    <br />\n\n    <label for=\"email\">Email:</label>\n    <input type=\"email\" id=\"email\" placeholder=\"jan.kowalski@gmail.com\" />\n    <br />\n\n    <label for=\"birthDate\">Data urodzenia:</label>\n    <input type=\"date\" id=\"birthDate\" />\n\n    <hr />\n\n    <h2>Konfiguracja</h2>\n    <label for=\"uses\">Główne zastosowanie:</label>\n    <select id=\"uses\">\n      <option value=\"gaming\">Granie</option>\n      <option value=\"office\">Praca biurowa</option>\n      <option value=\"crative\">Praca kreatywna</option>\n    </select>\n    <br />\n\n    <label for=\"budget\">Budżet:</label>\n    <input type=\"number\" id=\"budget\" />\n    <br />\n\n    <h3>Stan części:</h3>\n    <label for=\"new\">Nowe</label>\n    <input type=\"checkbox\" value=\"new\" id=\"new\" />\n    <br />\n\n    <label for=\"used\">Używane</label>\n    <input type=\"checkbox\" value=\"used\" id=\"used\" />\n    <br />\n\n    <label for=\"outlet\">Outlet (powystawowe, po zwrocie)</label>\n    <input type=\"checkbox\" value=\"outlet\" id=\"outlet\" />\n    <br />\n\n    <h3>Co jest dla Ciebie najważniwejsze?</h3>\n    <label for=\"performance\">Wydajność</label>\n    <input type=\"radio\" id=\"performance\" name=\"mostImportant\" />\n    <br />\n    <label for=\"loudness\">Kultura pracy</label>\n    <input type=\"radio\" id=\"loudness\" name=\"mostImportant\" />\n    <br />\n    <label for=\"design\">Wygląd</label>\n    <input type=\"radio\" id=\"design\" name=\"mostImportant\" />\n    <br />\n    <label for=\"lowPrice\">Niska cena</label>\n    <input type=\"radio\" id=\"lowPrice\" name=\"mostImportant\" />\n    <br />\n\n    <input type=\"submit\" />\n  </body>\n</html>\n"
+              }
+            ]
+          }
         }
       ],
-      "cheatsheets": [""]
+      "cheatsheets": [
+        ""
+      ]
     },
     {
       "id": "semantic-html",
@@ -1824,20 +1867,63 @@
                 "type": "chooseMatching",
                 "command": "Wybierz tagi semantyczne.",
                 "items": [
-                  { "id": 1, "content": "<main>" },
-                  { "id": 2, "content": "<header>" },
-                  { "id": 3, "content": "<h3>" },
-                  { "id": 4, "content": "<aside>" },
-                  { "id": 5, "content": "<strong>" },
-                  { "id": 6, "content": "<p>" },
-                  { "id": 7, "content": "<div>" },
-                  { "id": 8, "content": "<br />" },
-                  { "id": 9, "content": "<img />" },
-                  { "id": 10, "content": "<b>" },
-                  { "id": 11, "content": "<u>" },
-                  { "id": 12, "content": "<em>" }
+                  {
+                    "id": 1,
+                    "content": "<main>"
+                  },
+                  {
+                    "id": 2,
+                    "content": "<header>"
+                  },
+                  {
+                    "id": 3,
+                    "content": "<h3>"
+                  },
+                  {
+                    "id": 4,
+                    "content": "<aside>"
+                  },
+                  {
+                    "id": 5,
+                    "content": "<strong>"
+                  },
+                  {
+                    "id": 6,
+                    "content": "<p>"
+                  },
+                  {
+                    "id": 7,
+                    "content": "<div>"
+                  },
+                  {
+                    "id": 8,
+                    "content": "<br />"
+                  },
+                  {
+                    "id": 9,
+                    "content": "<img />"
+                  },
+                  {
+                    "id": 10,
+                    "content": "<b>"
+                  },
+                  {
+                    "id": 11,
+                    "content": "<u>"
+                  },
+                  {
+                    "id": 12,
+                    "content": "<em>"
+                  }
                 ],
-                "correctItemIds": [1, 2, 3, 4, 5, 12]
+                "correctItemIds": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  12
+                ]
               },
               {
                 "type": "fillGaps",
@@ -1981,7 +2067,9 @@
           "order": 2
         }
       ],
-      "cheatsheets": [""]
+      "cheatsheets": [
+        ""
+      ]
     },
     {
       "id": "summary",
@@ -2017,7 +2105,9 @@
     "nextSteps": {
       "heading": "Co dalej?",
       "subheading": "Zacznij naukę CSS",
-      "recommendedCourseIds": ["css-basics"]
+      "recommendedCourseIds": [
+        "css-basics"
+      ]
     }
   },
   "createdAt": "2026-06-17T00:00:00.000Z",

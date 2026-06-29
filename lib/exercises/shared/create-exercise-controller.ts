@@ -1,8 +1,18 @@
-import type { CourseElement, InteractiveExerciseContent } from "@/schemas/courseSchema";
+import type {
+  CourseElement,
+  InteractiveExerciseContent,
+  LocalCodeExerciseContent,
+} from "@/schemas/courseSchema";
 
 export type InteractiveExerciseConfig = {
   kind: "interactive";
   content: InteractiveExerciseContent;
+  hints: string[];
+};
+
+export type LocalCodeExerciseConfig = {
+  kind: "localCode";
+  content: LocalCodeExerciseContent;
   hints: string[];
 };
 
@@ -20,8 +30,26 @@ export function getInteractiveExerciseConfig(
   };
 }
 
+export function getLocalCodeExerciseConfig(
+  element: CourseElement,
+): LocalCodeExerciseConfig | null {
+  if (element.type !== "localCodeExercise") {
+    return null;
+  }
+
+  return {
+    kind: "localCode",
+    content: element.content,
+    hints: element.content.hints ?? [],
+  };
+}
+
 export function getExerciseHints(element: CourseElement): string[] {
-  if (element.type === "codeExercise") {
+  if (element.type === "platformCodeExercise") {
+    return element.content.hints ?? [];
+  }
+
+  if (element.type === "localCodeExercise") {
     return element.content.hints ?? [];
   }
 

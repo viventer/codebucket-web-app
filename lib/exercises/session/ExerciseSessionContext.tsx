@@ -5,9 +5,11 @@ import { useContext, type ReactNode } from "react";
 import type { CourseElement } from "@/schemas/courseSchema";
 
 import { InteractiveExerciseSessionBridge } from "../interactive/interactive-exercise-session-bridge";
+import { LocalCodeExerciseSessionBridge } from "../local/local-code-exercise-session-bridge";
 import {
   getExerciseHints,
   getInteractiveExerciseConfig,
+  getLocalCodeExerciseConfig,
 } from "../shared/create-exercise-controller";
 import {
   EMPTY_SESSION_VALUE,
@@ -24,12 +26,21 @@ export function ExerciseSessionProvider({
 }) {
   const hints = getExerciseHints(element);
   const interactiveConfig = getInteractiveExerciseConfig(element);
+  const localCodeConfig = getLocalCodeExerciseConfig(element);
 
   if (interactiveConfig) {
     return (
       <InteractiveExerciseSessionBridge config={interactiveConfig} hints={hints}>
         {children}
       </InteractiveExerciseSessionBridge>
+    );
+  }
+
+  if (localCodeConfig) {
+    return (
+      <LocalCodeExerciseSessionBridge config={localCodeConfig} hints={hints}>
+        {children}
+      </LocalCodeExerciseSessionBridge>
     );
   }
 

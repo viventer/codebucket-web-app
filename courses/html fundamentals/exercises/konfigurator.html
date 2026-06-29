@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Konfigurator PC</h1>
+
+    <h2>Twoje dane</h2>
+    <label for="name">Imię:</label>
+    <input type="text" id="name" placeholder="Jan" />
+    <br />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="jan.kowalski@gmail.com" />
+    <br />
+
+    <label for="birthDate">Data urodzenia:</label>
+    <input type="date" id="birthDate" />
+
+    <hr />
+
+    <h2>Konfiguracja</h2>
+    <label for="uses">Główne zastosowanie:</label>
+    <select id="uses">
+      <option value="gaming">Granie</option>
+      <option value="office">Praca biurowa</option>
+      <option value="crative">Praca kreatywna</option>
+    </select>
+    <br />
+
+    <label for="budget">Budżet:</label>
+    <input type="number" id="budget" />
+    <br />
+
+    <h3>Stan części:</h3>
+    <label for="new">Nowe</label>
+    <input type="checkbox" value="new" id="new" />
+    <br />
+
+    <label for="used">Używane</label>
+    <input type="checkbox" value="used" id="used" />
+    <br />
+
+    <label for="outlet">Outlet (powystawowe, po zwrocie)</label>
+    <input type="checkbox" value="outlet" id="outlet" />
+    <br />
+
+    <h3>Co jest dla Ciebie najważniwejsze?</h3>
+    <label for="performance">Wydajność</label>
+    <input type="radio" id="performance" name="mostImportant" />
+    <br />
+    <label for="loudness">Kultura pracy</label>
+    <input type="radio" id="loudness" name="mostImportant" />
+    <br />
+    <label for="design">Wygląd</label>
+    <input type="radio" id="design" name="mostImportant" />
+    <br />
+    <label for="lowPrice">Niska cena</label>
+    <input type="radio" id="lowPrice" name="mostImportant" />
+    <br />
+
+    <input type="submit" />
+  </body>
+</html>

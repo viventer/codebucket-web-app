@@ -30,6 +30,8 @@ export type ExerciseSessionContextValue = {
   currentStageActionBarVariant: StageActionBarVariant | null;
   advanceCurrentStage: () => void;
   canProceedStage: boolean;
+  localPhase: "working" | "completed" | null;
+  markLocalExerciseCompleted: () => void;
 };
 
 export const ExerciseSessionContext =
@@ -54,4 +56,6 @@ export const EMPTY_SESSION_VALUE: ExerciseSessionContextValue = {
   currentStageActionBarVariant: null,
   advanceCurrentStage: () => {},
   canProceedStage: false,
+  localPhase: null,
+  markLocalExerciseCompleted: () => {},
 };

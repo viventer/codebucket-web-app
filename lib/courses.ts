@@ -51,7 +51,8 @@ export async function getAllCourseElementParams(): Promise<
 
 const ELEMENT_TYPE_LABELS: Record<CourseElement["type"], string> = {
   video: "Lekcja",
-  codeExercise: "Ćwiczenie",
+  platformCodeExercise: "Ćwiczenie",
+  localCodeExercise: "Ćwiczenie",
   interactiveExercise: "Ćwiczenie",
   customExercise: "Ćwiczenie",
   interactiveDemo: "Demonstracja",
@@ -68,14 +69,15 @@ export function getElementTitle(element: CourseElement): string {
 
 export function elementHasHint(element: CourseElement): boolean {
   if (
-    element.type !== "codeExercise" &&
+    element.type !== "platformCodeExercise" &&
+    element.type !== "localCodeExercise" &&
     element.type !== "interactiveExercise" &&
     element.type !== "customExercise"
   ) {
     return false;
   }
 
-  if (element.type === "codeExercise") {
+  if (element.type === "platformCodeExercise") {
     return element.content.hints.length > 0;
   }
 
@@ -94,6 +96,10 @@ export function elementHideInfoOnMobile(element: CourseElement): boolean {
 }
 
 export function elementHasMaterials(element: CourseElement): boolean {
+  if (element.type === "localCodeExercise") {
+    return element.content.hasMaterials;
+  }
+
   if (
     element.type !== "guidedProject" &&
     element.type !== "individualProject"

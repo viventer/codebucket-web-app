@@ -13,7 +13,8 @@ import type { CourseElement } from "@/schemas/courseSchema";
 
 export const ELEMENT_TYPE_ICONS: Record<CourseElement["type"], LucideIcon> = {
   video: FileVideoIcon,
-  codeExercise: CodeIcon,
+  platformCodeExercise: CodeIcon,
+  localCodeExercise: CodeIcon,
   interactiveExercise: MousePointerClickIcon,
   customExercise: PuzzleIcon,
   interactiveDemo: MonitorPlayIcon,

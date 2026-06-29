@@ -127,7 +127,8 @@ export default async function ElementLayout({
   };
 
   const isExercise =
-    currentElement.type === "codeExercise" ||
+    currentElement.type === "platformCodeExercise" ||
+    currentElement.type === "localCodeExercise" ||
     currentElement.type === "interactiveExercise" ||
     currentElement.type === "customExercise";
 

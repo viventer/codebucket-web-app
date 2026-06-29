@@ -14,3 +14,10 @@ export function getExerciseAssetStoragePath(
   const normalizedFilename = filename.replace(/^\/+/, "");
   return `courses/${courseId}/exercises/${elementId}/${normalizedFilename}`;
 }
+
+export function getExerciseMaterialsFolderPath(
+  courseId: string,
+  elementId: string,
+): string {
+  return `courses/${courseId}/exercises/${elementId}/materials`;
+}

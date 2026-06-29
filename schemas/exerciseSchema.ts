@@ -190,12 +190,21 @@ export const customExerciseContentSchema = z.object({
   component: z.string().min(1, "Component is required"),
 });
 
-export const codeExerciseContentSchema = z.object({
+export const platformCodeExerciseContentSchema = z.object({
   command: z.string().min(1, "Command is required"),
   languages: z.array(languageSchema),
   starterCode: z.array(codeSnippetSchema),
   solutionCode: z.array(codeSnippetSchema),
   hints: z.array(z.string()).min(1, "Hints are required"),
+});
+
+export const localCodeExerciseContentSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  command: z.string().min(1, "Command is required"),
+  languages: z.array(languageSchema).min(1),
+  hasMaterials: z.boolean(),
+  hints: z.array(z.string()).optional(),
+  solutionCode: z.array(codeSnippetSchema).min(1),
 });
 
 export type Language = z.infer<typeof languageSchema>;
@@ -220,4 +229,9 @@ export type InteractiveExerciseContent = z.infer<
   typeof interactiveExerciseContentSchema
 >;
 export type CustomExerciseContent = z.infer<typeof customExerciseContentSchema>;
-export type CodeExerciseContent = z.infer<typeof codeExerciseContentSchema>;
+export type PlatformCodeExerciseContent = z.infer<
+  typeof platformCodeExerciseContentSchema
+>;
+export type LocalCodeExerciseContent = z.infer<
+  typeof localCodeExerciseContentSchema
+>;
