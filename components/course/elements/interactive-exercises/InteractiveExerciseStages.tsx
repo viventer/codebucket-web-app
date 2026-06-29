@@ -1,11 +1,13 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useParams } from "next/navigation";
 
 import { ExerciseFeedbackMessage } from "@/components/course/exercises/ExerciseFeedbackMessage";
 import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
-import type { InteractiveExerciseContent } from "@/schemas/courseSchema";
+import type {
+  ExerciseStagePresentation,
+  InteractiveExerciseContent,
+} from "@/schemas/courseSchema";
 
 import { FillGapsWorkspace } from "./FillGapsWorkspace";
 import { GapLinesPanel } from "./gap-lines/GapLinesPanel";
@@ -21,11 +23,25 @@ import { ChooseMatchingGrid } from "./choose-matching/ChooseMatchingGrid";
 
 type InteractiveExerciseStagesProps = {
   content: InteractiveExerciseContent;
+  assetUrls: Record<string, string>;
 };
 
-export function InteractiveExerciseStages({ content }: InteractiveExerciseStagesProps) {
-  const params = useParams<{ id: string }>();
-  const courseId = params.id;
+function getResolvedStagePresentation(
+  content: InteractiveExerciseContent,
+  currentStageIndex: number,
+  fallbackPresentation?: ExerciseStagePresentation,
+): ExerciseStagePresentation {
+  const stage = content.stages[currentStageIndex];
+  const presentation =
+    stage && "presentation" in stage ? stage.presentation : undefined;
+
+  return presentation ?? fallbackPresentation ?? { kind: "code" };
+}
+
+export function InteractiveExerciseStages({
+  content,
+  assetUrls,
+}: InteractiveExerciseStagesProps) {
   const { controller, canProceed, isLocked } = useExerciseSession();
 
   if (!controller || controller.kind !== "interactive") {
@@ -77,6 +93,7 @@ export function InteractiveExerciseStages({ content }: InteractiveExerciseStages
             question={stage.question}
             answers={stage.shuffledAnswers}
             prompt={stage.prompt}
+            assetUrls={assetUrls}
             isLocked={persisted.selectedAnswerId !== null || isLocked}
             selectAnswer={stage.selectAnswer}
             getAnswerVisualState={stage.getAnswerVisualState}
@@ -117,7 +134,11 @@ export function InteractiveExerciseStages({ content }: InteractiveExerciseStages
   }
 
   if (stage.type === "fillCode" && currentStage.type === "fillCode") {
-    const presentation = currentStage.presentation ?? { kind: "code" as const };
+    const presentation = getResolvedStagePresentation(
+      content,
+      currentStageIndex,
+      currentStage.presentation,
+    );
     const usesPreviewLayout = stageUsesPreviewLayout(presentation);
     const typography = currentStage.typography ?? "default";
 
@@ -173,7 +194,11 @@ export function InteractiveExerciseStages({ content }: InteractiveExerciseStages
     return null;
   }
 
-  const presentation = currentStage.presentation ?? { kind: "code" as const };
+  const presentation = getResolvedStagePresentation(
+    content,
+    currentStageIndex,
+    currentStage.presentation,
+  );
   const hasTopPresentation = stageHasTopPresentation(presentation);
   const usesPreviewLayout = stageUsesPreviewLayout(presentation);
   const typography = currentStage.typography ?? "default";
@@ -220,8 +245,8 @@ export function InteractiveExerciseStages({ content }: InteractiveExerciseStages
             <>
               {hasTopPresentation && (
                 <StagePresentation
-                  courseId={courseId}
                   presentation={presentation}
+                  assetUrls={assetUrls}
                 />
               )}
 

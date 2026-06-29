@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { getCourseById } from "@/lib/courses";
+import { resolveInteractiveExerciseAssets } from "@/lib/course/resolve-element-assets";
 import { CodeExerciseElement } from "@/components/course/elements/CodeExerciseElement";
 import { CustomExerciseElement } from "@/components/course/elements/CustomExerciseElement";
 import { GuidedProjectElement } from "@/components/course/elements/GuidedProjectElement";
@@ -32,8 +33,16 @@ export default async function CourseElementPage({
       return <VideoElement content={element.content} />;
     case "codeExercise":
       return <CodeExerciseElement content={element.content} />;
-    case "interactiveExercise":
-      return <InteractiveExerciseElement content={element.content} />;
+    case "interactiveExercise": {
+      const { assetUrls, content } = await resolveInteractiveExerciseAssets(
+        id,
+        elementId,
+        element.content,
+      );
+      return (
+        <InteractiveExerciseElement content={content} assetUrls={assetUrls} />
+      );
+    }
     case "customExercise":
       return <CustomExerciseElement content={element.content} />;
     case "interactiveDemo":

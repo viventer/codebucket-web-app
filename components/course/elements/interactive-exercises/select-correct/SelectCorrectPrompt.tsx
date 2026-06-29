@@ -7,16 +7,19 @@ import { StaticCodePanel } from "../gap-lines/StaticCodePanel";
 import { StageImageDiagram } from "../interactive/StageImageDiagram";
 
 type SelectCorrectPromptProps = {
-  courseId?: string;
   prompt: SelectCorrectPrompt;
+  assetUrls: Record<string, string>;
 };
 
 export function SelectCorrectPromptContent({
-  courseId,
   prompt,
+  assetUrls,
 }: SelectCorrectPromptProps) {
-  if (prompt.kind === "image" && courseId) {
-    return <StageImageDiagram courseId={courseId} imageSrc={prompt.imageSrc} />;
+  if (prompt.kind === "image") {
+    const src = assetUrls[prompt.imageSrc];
+    if (!src) return null;
+
+    return <StageImageDiagram src={src} />;
   }
 
   if (prompt.kind === "preview") {

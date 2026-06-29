@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import {
+  getAllCourseElementParams,
   getCourseById,
   getCourseTitle,
   getElementTitle,
@@ -16,6 +17,10 @@ import {
   getSectionsCompleted,
 } from "@/lib/progress";
 import { CourseElementShell } from "@/components/course/CourseElementShell";
+
+export async function generateStaticParams() {
+  return getAllCourseElementParams();
+}
 
 type ElementLayoutProps = {
   children: React.ReactNode;

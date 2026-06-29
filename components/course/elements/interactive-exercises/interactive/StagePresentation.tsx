@@ -6,18 +6,19 @@ import type { ExerciseStagePresentation } from "@/schemas/courseSchema";
 import { StageImageDiagram } from "./StageImageDiagram";
 
 type StagePresentationProps = {
-  courseId: string;
   presentation: ExerciseStagePresentation;
+  assetUrls: Record<string, string>;
 };
 
 export function StagePresentation({
-  courseId,
   presentation,
+  assetUrls,
 }: StagePresentationProps) {
   if (presentation.kind === "image") {
-    return (
-      <StageImageDiagram courseId={courseId} imageSrc={presentation.imageSrc} />
-    );
+    const src = assetUrls[presentation.imageSrc];
+    if (!src) return null;
+
+    return <StageImageDiagram src={src} />;
   }
 
   return null;

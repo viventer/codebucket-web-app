@@ -22,6 +22,33 @@ export function getCourseTitle(id: string): string | undefined {
   return COURSE_REGISTRY[id]?.title;
 }
 
+export function getRegisteredCourseIds(): string[] {
+  return Object.keys(COURSE_REGISTRY);
+}
+
+export async function getAllCourseElementParams(): Promise<
+  Array<{ id: string; section: string; element: string }>
+> {
+  const params: Array<{ id: string; section: string; element: string }> = [];
+
+  for (const courseId of getRegisteredCourseIds()) {
+    const course = await getCourseById(courseId);
+    if (!course) continue;
+
+    for (const section of course.sections) {
+      for (const element of section.elements) {
+        params.push({
+          id: courseId,
+          section: section.id,
+          element: element.id,
+        });
+      }
+    }
+  }
+
+  return params;
+}
+
 const ELEMENT_TYPE_LABELS: Record<CourseElement["type"], string> = {
   video: "Lekcja",
   codeExercise: "Ćwiczenie",

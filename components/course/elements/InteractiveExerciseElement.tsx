@@ -6,8 +6,12 @@ import { InteractiveExerciseStages } from "./interactive-exercises/InteractiveEx
 
 export function InteractiveExerciseElement({
   content,
+  assetUrls,
 }: {
   content: InteractiveExerciseContent;
+  assetUrls: Record<string, string>;
 }) {
-  return <InteractiveExerciseStages content={content} />;
+  return (
+    <InteractiveExerciseStages content={content} assetUrls={assetUrls} />
+  );
 }

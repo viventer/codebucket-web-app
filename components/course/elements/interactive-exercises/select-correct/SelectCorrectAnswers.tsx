@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useParams } from "next/navigation";
 
 import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
 import type {
@@ -21,6 +20,7 @@ type SelectCorrectAnswersProps = {
   question: string;
   answers: { id: number; content: string }[];
   prompt?: SelectCorrectPrompt;
+  assetUrls: Record<string, string>;
   isLocked: boolean;
   selectAnswer: (answerId: number) => void;
   getAnswerVisualState: (answerId: number) => SelectCorrectAnswerVisualState;
@@ -34,6 +34,7 @@ export function SelectCorrectAnswers({
   question,
   answers,
   prompt,
+  assetUrls,
   isLocked,
   selectAnswer,
   getAnswerVisualState,
@@ -41,8 +42,6 @@ export function SelectCorrectAnswers({
   selectedAnswerId,
   phase,
 }: SelectCorrectAnswersProps) {
-  const params = useParams<{ id: string }>();
-  const courseId = params.id;
   const prefersReducedMotion = usePrefersReducedMotion();
 
   let listAnimationKey: "success" | "error" | null = null;
@@ -66,7 +65,7 @@ export function SelectCorrectAnswers({
           <p className="text-sm text-muted-foreground">
             {SELECT_CORRECT_CODE_INSTRUCTION}
           </p>
-          <SelectCorrectPromptContent courseId={courseId} prompt={prompt} />
+          <SelectCorrectPromptContent prompt={prompt} assetUrls={assetUrls} />
         </div>
       )}
 
@@ -81,7 +80,7 @@ export function SelectCorrectAnswers({
         <p className="text-base font-medium">{question}</p>
 
         {!hasCodePrompt && prompt && (
-          <SelectCorrectPromptContent courseId={courseId} prompt={prompt} />
+          <SelectCorrectPromptContent prompt={prompt} assetUrls={assetUrls} />
         )}
       </div>
 
