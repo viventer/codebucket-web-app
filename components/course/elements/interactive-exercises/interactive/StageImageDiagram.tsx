@@ -18,7 +18,7 @@ export function StageImageDiagram({ src, className }: StageImageDiagramProps) {
       height={360}
       priority
       className={cn(
-        "h-fit max-h-64 w-fit max-w-full object-contain sm:max-w-xl",
+        "h-fit max-h-64 w-fit max-w-full object-contain sm:max-w-xl bg-black/30 p-4 rounded-lg shadow-md",
         className,
       )}
       unoptimized
