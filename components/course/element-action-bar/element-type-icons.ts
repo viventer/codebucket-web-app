@@ -1,5 +1,6 @@
 import {
   CodeIcon,
+  FileTextIcon,
   FileVideoIcon,
   FolderGitIcon,
   MonitorPlayIcon,
@@ -20,4 +21,5 @@ export const ELEMENT_TYPE_ICONS: Record<CourseElement["type"], LucideIcon> = {
   interactiveDemo: MonitorPlayIcon,
   guidedProject: FolderGitIcon,
   individualProject: UserIcon,
+  cheatsheet: FileTextIcon,
 };

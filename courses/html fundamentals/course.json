@@ -314,9 +314,6 @@
           },
           "order": 5
         }
-      ],
-      "cheatsheets": [
-        ""
       ]
     },
     {
@@ -708,9 +705,6 @@
           },
           "order": 6
         }
-      ],
-      "cheatsheets": [
-        ""
       ]
     },
     {
@@ -1094,9 +1088,17 @@
           "order": 6
         },
         {
+          "id": "html-basics",
+          "type": "cheatsheet",
+          "order": 7,
+          "content": {
+            "title": "Podstawy HTML"
+          }
+        },
+        {
           "id": "timetable",
           "type": "localCodeExercise",
-          "order": 7,
+          "order": 8,
           "content": {
             "title": "Plan lekcji",
             "command": "Odwzoruj stronę widoczną poniżej we własnym edytorze kodu.",
@@ -1112,9 +1114,6 @@
             ]
           }
         }
-      ],
-      "cheatsheets": [
-        ""
       ]
     },
     {
@@ -1294,9 +1293,6 @@
           },
           "order": 3
         }
-      ],
-      "cheatsheets": [
-        ""
       ]
     },
     {
@@ -1775,9 +1771,17 @@
           "order": 6
         },
         {
+          "id": "html-forms",
+          "type": "cheatsheet",
+          "order": 7,
+          "content": {
+            "title": "Formularze w HTML"
+          }
+        },
+        {
           "id": "pc-configurator",
           "type": "localCodeExercise",
-          "order": 7,
+          "order": 8,
           "content": {
             "title": "Konfigurator PC",
             "command": "Odwzoruj stronę widoczną poniżej we własnym edytorze kodu.",
@@ -1793,9 +1797,6 @@
             ]
           }
         }
-      ],
-      "cheatsheets": [
-        ""
       ]
     },
     {
@@ -2065,10 +2066,15 @@
             ]
           },
           "order": 2
+        },
+        {
+          "id": "semantic-tags",
+          "type": "cheatsheet",
+          "order": 3,
+          "content": {
+            "title": "Semantyczny HTML"
+          }
         }
-      ],
-      "cheatsheets": [
-        ""
       ]
     },
     {

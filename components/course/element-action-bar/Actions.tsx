@@ -1,6 +1,7 @@
 import type { CourseElement } from "@/schemas/courseSchema";
 
 import { BackNextActions } from "./BackNextActions";
+import { CheatsheetActions } from "./CheatsheetActions";
 import { DownloadMaterialsButton } from "./DownloadMaterialsButton";
 import { InteractiveExerciseActions } from "./InteractiveExerciseActions";
 import { LocalCodeExerciseActions } from "./LocalCodeExerciseActions";
@@ -18,6 +19,8 @@ function renderActions(
     case "video":
     case "interactiveDemo":
       return <BackNextActions prevHref={prevHref} nextHref={nextHref} />;
+    case "cheatsheet":
+      return <CheatsheetActions prevHref={prevHref} nextHref={nextHref} />;
     case "guidedProject":
       return (
         <>

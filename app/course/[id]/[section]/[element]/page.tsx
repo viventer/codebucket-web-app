@@ -7,6 +7,7 @@ import {
 } from "@/lib/course/resolve-element-assets";
 import { LocalCodeExerciseElement } from "@/components/course/elements/LocalCodeExerciseElement";
 import { PlatformCodeExerciseElement } from "@/components/course/elements/PlatformCodeExerciseElement";
+import { CheatsheetElement } from "@/components/course/elements/CheatsheetElement";
 import { CustomExerciseElement } from "@/components/course/elements/CustomExerciseElement";
 import { GuidedProjectElement } from "@/components/course/elements/GuidedProjectElement";
 import { IndividualProjectElement } from "@/components/course/elements/IndividualProjectElement";
@@ -63,5 +64,13 @@ export default async function CourseElementPage({
       return <GuidedProjectElement content={element.content} />;
     case "individualProject":
       return <IndividualProjectElement content={element.content} />;
+    case "cheatsheet":
+      return (
+        <CheatsheetElement
+          courseId={id}
+          cheatsheetId={elementId}
+          content={element.content}
+        />
+      );
   }
 }

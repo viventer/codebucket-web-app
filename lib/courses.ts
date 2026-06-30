@@ -58,6 +58,7 @@ const ELEMENT_TYPE_LABELS: Record<CourseElement["type"], string> = {
   interactiveDemo: "Demonstracja",
   guidedProject: "Projekt",
   individualProject: "Projekt indywidualny",
+  cheatsheet: "Ściąga",
 };
 
 export function getElementTitle(element: CourseElement): string {

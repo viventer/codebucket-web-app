@@ -1,5 +1,13 @@
-import { getPublicStorageUrls } from "@/firebase/storage";
-import { getExerciseAssetStoragePath } from "@/lib/course-storage-paths";
+import { getPublicStorageUrls } from "@/actions/storage/storage";
+import { adminStorage } from "@/firebase/admin-init";
+import {
+  isCheatsheetImageFile,
+  sortCheatsheetFilenames,
+} from "@/lib/course/cheatsheet-files";
+import {
+  getCheatsheetFolderPath,
+  getExerciseAssetStoragePath,
+} from "@/lib/course-storage-paths";
 import type {
   ExerciseStage,
   InteractiveExerciseContent,
@@ -12,8 +20,7 @@ type AssetReference = {
   storagePath: string;
 };
 
-const previewHtmlImageSrcPattern =
-  /\bsrc=(?:"([^"/][^"]*)"|'([^'/][^']*)')/g;
+const previewHtmlImageSrcPattern = /\bsrc=(?:"([^"/][^"]*)"|'([^'/][^']*)')/g;
 
 function collectExerciseAsset(
   courseId: string,
@@ -186,9 +193,13 @@ export async function resolveInteractiveExerciseAssets(
   return { assetUrls, content: resolvedContent };
 }
 
-function getHtmlFromSolutionCode(content: LocalCodeExerciseContent): string | null {
-  return content.solutionCode.find((snippet) => snippet.language === "html")
-    ?.code ?? null;
+function getHtmlFromSolutionCode(
+  content: LocalCodeExerciseContent,
+): string | null {
+  return (
+    content.solutionCode.find((snippet) => snippet.language === "html")?.code ??
+    null
+  );
 }
 
 export async function resolveLocalCodeExerciseAssets(
@@ -231,9 +242,59 @@ export async function resolveLocalCodeExerciseAssets(
   const resolvedContent: LocalCodeExerciseContent = {
     ...content,
     solutionCode: content.solutionCode.map((snippet) =>
-      snippet.language === "html" ? { ...snippet, code: resolvedHtml } : snippet,
+      snippet.language === "html"
+        ? { ...snippet, code: resolvedHtml }
+        : snippet,
     ),
   };
 
   return { assetUrls, content: resolvedContent };
+}
+
+export type CheatsheetSlide = {
+  url: string;
+  filename: string;
+};
+
+export async function resolveCheatsheetAssets(
+  courseId: string,
+  cheatsheetId: string,
+): Promise<{ slides: CheatsheetSlide[] }> {
+  const folderPath = getCheatsheetFolderPath(courseId, cheatsheetId);
+  const folderPrefix = `${folderPath}/`;
+  const bucket = adminStorage.bucket();
+  const [files] = await bucket.getFiles({ prefix: folderPrefix });
+
+  const filenames = files
+    .map((file) => file.name.slice(folderPrefix.length))
+    .filter((name) => name.length > 0 && !name.endsWith("/"));
+
+  const imageFilenames = sortCheatsheetFilenames(
+    filenames.filter(isCheatsheetImageFile),
+  );
+
+  if (imageFilenames.length === 0) {
+    return { slides: [] };
+  }
+
+  const storagePaths = imageFilenames.map(
+    (filename) => `${folderPath}/${filename}`,
+  );
+
+  let urlsByStoragePath: Record<string, string>;
+  try {
+    urlsByStoragePath = await getPublicStorageUrls(storagePaths);
+  } catch {
+    return { slides: [] };
+  }
+
+  const slides = imageFilenames.map((filename) => {
+    const storagePath = `${folderPath}/${filename}`;
+    return {
+      filename,
+      url: urlsByStoragePath[storagePath],
+    };
+  });
+
+  return { slides: slides.filter((slide) => slide.url) };
 }

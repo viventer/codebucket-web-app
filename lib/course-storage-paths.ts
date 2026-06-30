@@ -21,3 +21,10 @@ export function getExerciseMaterialsFolderPath(
 ): string {
   return `courses/${courseId}/exercises/${elementId}/materials`;
 }
+
+export function getCheatsheetFolderPath(
+  courseId: string,
+  cheatsheetId: string,
+): string {
+  return `courses/${courseId}/cheatsheets/${cheatsheetId}`;
+}

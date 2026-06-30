@@ -1,32 +1,13 @@
 "use server";
 
 import { ZipArchive } from "archiver";
-import { z } from "zod";
 
 import { adminStorage } from "@/firebase/admin-init";
-import { getExerciseMaterialsFolderPath } from "@/lib/course-storage-paths";
-
-const courseIdSchema = z
-  .string()
-  .min(1)
-  .regex(/^[\w-]+$/, "Invalid course id");
-
-const elementIdSchema = z
-  .string()
-  .min(1)
-  .regex(/^[\w-]+$/, "Invalid element id");
+import { normalizeStoragePath } from "@/actions/helpers";
 
 const TEMP_ZIP_TTL_MS = 60 * 60 * 1000;
 
-function normalizeStoragePath(path: string): string {
-  const normalized = path.replace(/^\/+/, "");
-  if (!normalized || normalized.includes("..")) {
-    throw new Error(`Invalid storage path: ${path}`);
-  }
-  return normalized;
-}
-
-async function createFolderZipDownloadUrl(
+export async function createFolderZipDownloadUrl(
   folderPath: string,
   downloadName: string,
 ): Promise<string> {
@@ -79,18 +60,4 @@ async function createFolderZipDownloadUrl(
   });
 
   return signedUrl;
-}
-
-export async function getExerciseMaterialsDownloadUrl(
-  courseId: string,
-  elementId: string,
-): Promise<string> {
-  const parsedCourseId = courseIdSchema.parse(courseId);
-  const parsedElementId = elementIdSchema.parse(elementId);
-  const folderPath = getExerciseMaterialsFolderPath(
-    parsedCourseId,
-    parsedElementId,
-  );
-
-  return createFolderZipDownloadUrl(folderPath, parsedElementId);
 }

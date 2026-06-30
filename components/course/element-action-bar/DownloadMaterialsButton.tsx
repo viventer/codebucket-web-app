@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { getExerciseMaterialsDownloadUrl } from "@/firebase/download-exercise-materials";
+import { getExerciseMaterialsDownloadUrl } from "@/actions/storage/download-exercise-materials";
 import { Button } from "@/components/ui/button";
 
 import { ActionBarButtonLabel } from "./ActionBarButtonLabel";

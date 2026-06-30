@@ -4,14 +4,7 @@ import { getDownloadURL } from "firebase-admin/storage";
 import { z } from "zod";
 
 import { adminStorage } from "@/firebase/admin-init";
-
-function normalizeStoragePath(path: string): string {
-  const normalized = path.replace(/^\/+/, "");
-  if (!normalized || normalized.includes("..")) {
-    throw new Error(`Invalid storage path: ${path}`);
-  }
-  return normalized;
-}
+import { normalizeStoragePath } from "@/actions/helpers";
 
 async function resolvePublicStorageUrl(storagePath: string): Promise<string> {
   const normalized = normalizeStoragePath(storagePath);
@@ -32,7 +25,9 @@ const storagePathSchema = z
 
 const storagePathsSchema = z.array(storagePathSchema).min(1);
 
-export async function getPublicStorageUrl(storagePath: string): Promise<string> {
+export async function getPublicStorageUrl(
+  storagePath: string,
+): Promise<string> {
   const parsed = storagePathSchema.parse(storagePath);
   return resolvePublicStorageUrl(parsed);
 }

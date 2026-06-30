@@ -61,6 +61,7 @@ export const courseElementTypeSchema = z.enum([
   "interactiveDemo",
   "guidedProject",
   "individualProject",
+  "cheatsheet",
 ]);
 
 export const videoContentSchema = z.object({
@@ -92,6 +93,10 @@ export const individualProjectContentSchema = z.object({
   description: z.string().min(1, "Project description is required"),
   sampleSolution: z.array(codeSnippetSchema),
   materials: z.array(z.string()).optional(),
+});
+
+export const cheatsheetContentSchema = z.object({
+  title: z.string().min(1, "Title is required"),
 });
 
 const elementBase = {
@@ -140,6 +145,11 @@ export const courseElementSchema = z.discriminatedUnion("type", [
     type: z.literal("individualProject"),
     content: individualProjectContentSchema,
   }),
+  z.object({
+    ...elementBase,
+    type: z.literal("cheatsheet"),
+    content: cheatsheetContentSchema,
+  }),
 ]);
 
 export const courseSectionSchema = z.object({
@@ -149,7 +159,6 @@ export const courseSectionSchema = z.object({
   whatYouWillLearn: z.array(z.string()).optional(),
   order: z.number().min(0, "Order must be positive"),
   elements: z.array(courseElementSchema),
-  cheatsheets: z.array(z.string()).optional(),
 });
 
 export const courseEndingSchema = z.object({
@@ -198,6 +207,7 @@ export type GuidedProjectContent = z.infer<typeof guidedProjectContentSchema>;
 export type IndividualProjectContent = z.infer<
   typeof individualProjectContentSchema
 >;
+export type CheatsheetContent = z.infer<typeof cheatsheetContentSchema>;
 export type CourseElement = z.infer<typeof courseElementSchema>;
 export type CourseSection = z.infer<typeof courseSectionSchema>;
 export type CourseEnding = z.infer<typeof courseEndingSchema>;
