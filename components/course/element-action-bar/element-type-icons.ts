@@ -6,6 +6,7 @@ import {
   MonitorPlayIcon,
   MousePointerClickIcon,
   PuzzleIcon,
+  TrophyIcon,
   UserIcon,
   type LucideIcon,
 } from "lucide-react";
@@ -22,4 +23,5 @@ export const ELEMENT_TYPE_ICONS: Record<CourseElement["type"], LucideIcon> = {
   guidedProject: FolderGitIcon,
   individualProject: UserIcon,
   cheatsheet: FileTextIcon,
+  courseEnding: TrophyIcon,
 };

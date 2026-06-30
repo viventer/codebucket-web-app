@@ -140,13 +140,7 @@
                 "command": "Ułóż tag akapitu z podaną treścią.",
                 "language": "html",
                 "typography": "large",
-                "options": [
-                  "<p",
-                  ">",
-                  "siema",
-                  "</",
-                  "p>"
-                ],
+                "options": ["<p", ">", "siema", "</", "p>"],
                 "lines": [
                   {
                     "kind": "group",
@@ -485,9 +479,7 @@
           "content": {
             "title": "Piosenka",
             "command": "Odwzoruj stronę widoczną poniżej we własnym edytorze kodu.",
-            "languages": [
-              "html"
-            ],
+            "languages": ["html"],
             "hasMaterials": false,
             "solutionCode": [
               {
@@ -1102,9 +1094,7 @@
           "content": {
             "title": "Plan lekcji",
             "command": "Odwzoruj stronę widoczną poniżej we własnym edytorze kodu.",
-            "languages": [
-              "html"
-            ],
+            "languages": ["html"],
             "hasMaterials": true,
             "solutionCode": [
               {
@@ -1785,9 +1775,7 @@
           "content": {
             "title": "Konfigurator PC",
             "command": "Odwzoruj stronę widoczną poniżej we własnym edytorze kodu.",
-            "languages": [
-              "html"
-            ],
+            "languages": ["html"],
             "hasMaterials": false,
             "solutionCode": [
               {
@@ -1917,14 +1905,7 @@
                     "content": "<em>"
                   }
                 ],
-                "correctItemIds": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  12
-                ]
+                "correctItemIds": [1, 2, 3, 4, 5, 12]
               },
               {
                 "type": "fillGaps",
@@ -2092,30 +2073,33 @@
             "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d"
           },
           "order": 1
+        },
+        {
+          "id": "course-ending",
+          "type": "courseEnding",
+          "content": {
+            "congrats": {
+              "heading": "Gratulacje!",
+              "subheading": "Ukończyłeś kurs HTML"
+            },
+            "obtainedSkills": [
+              "Tworzyć strukturę strony.",
+              "Korzystać z podstawowych tagów HTML.",
+              "Zamieszczać na stronie multimedia.",
+              "Tworzyć formularze.",
+              "Korzystać z semantycznych tagów."
+            ],
+            "nextSteps": {
+              "heading": "Kolejne kroki w nauce",
+              "subheading": "Naucz się stylować strony internetowe.",
+              "recommendedCourseIds": ["css-basics"]
+            }
+          },
+          "order": 2
         }
       ]
     }
   ],
-  "ending": {
-    "congrats": {
-      "heading": "Gratulacje!",
-      "subheading": "Ukończyłeś pełny kurs HTML"
-    },
-    "obtainedSkills": [
-      "Tworzenie struktury strony",
-      "Korzystanie z podstawowych tagów",
-      "Wstawianie multimedia",
-      "Tworzenie formularzy",
-      "Korzystanie z semantycznych tagów"
-    ],
-    "nextSteps": {
-      "heading": "Co dalej?",
-      "subheading": "Zacznij naukę CSS",
-      "recommendedCourseIds": [
-        "css-basics"
-      ]
-    }
-  },
   "createdAt": "2026-06-17T00:00:00.000Z",
   "updatedAt": "2026-06-27T07:00:18.235Z"
 }

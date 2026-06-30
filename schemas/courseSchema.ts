@@ -62,6 +62,7 @@ export const courseElementTypeSchema = z.enum([
   "guidedProject",
   "individualProject",
   "cheatsheet",
+  "courseEnding",
 ]);
 
 export const videoContentSchema = z.object({
@@ -97,6 +98,19 @@ export const individualProjectContentSchema = z.object({
 
 export const cheatsheetContentSchema = z.object({
   title: z.string().min(1, "Title is required"),
+});
+
+export const courseEndingContentSchema = z.object({
+  congrats: z.object({
+    heading: z.string(),
+    subheading: z.string(),
+  }),
+  obtainedSkills: z.array(z.string()).min(1, "Obtained skills is required"),
+  nextSteps: z.object({
+    heading: z.string(),
+    subheading: z.string(),
+    recommendedCourseIds: z.array(z.string()),
+  }),
 });
 
 const elementBase = {
@@ -150,6 +164,11 @@ export const courseElementSchema = z.discriminatedUnion("type", [
     type: z.literal("cheatsheet"),
     content: cheatsheetContentSchema,
   }),
+  z.object({
+    ...elementBase,
+    type: z.literal("courseEnding"),
+    content: courseEndingContentSchema,
+  }),
 ]);
 
 export const courseSectionSchema = z.object({
@@ -159,19 +178,6 @@ export const courseSectionSchema = z.object({
   whatYouWillLearn: z.array(z.string()).optional(),
   order: z.number().min(0, "Order must be positive"),
   elements: z.array(courseElementSchema),
-});
-
-export const courseEndingSchema = z.object({
-  congrats: z.object({
-    heading: z.string(),
-    subheading: z.string(),
-  }),
-  obtainedSkills: z.array(z.string()).min(1, "Obtained skills is required"),
-  nextSteps: z.object({
-    heading: z.string(),
-    subheading: z.string(),
-    recommendedCourseIds: z.array(z.string()),
-  }),
 });
 
 export const coursePriceSchema = z.object({
@@ -194,7 +200,6 @@ export const courseSchema = z.object({
     .array(z.string())
     .min(1, "What you will learn is required"),
   sections: z.array(courseSectionSchema),
-  ending: courseEndingSchema,
   createdAt: z.date(),
   updatedAt: z.date(),
 });
@@ -208,7 +213,9 @@ export type IndividualProjectContent = z.infer<
   typeof individualProjectContentSchema
 >;
 export type CheatsheetContent = z.infer<typeof cheatsheetContentSchema>;
+export type CourseEndingContent = z.infer<typeof courseEndingContentSchema>;
 export type CourseElement = z.infer<typeof courseElementSchema>;
 export type CourseSection = z.infer<typeof courseSectionSchema>;
-export type CourseEnding = z.infer<typeof courseEndingSchema>;
+/** @deprecated Use CourseEndingContent */
+export type CourseEnding = CourseEndingContent;
 export type Course = z.infer<typeof courseSchema>;

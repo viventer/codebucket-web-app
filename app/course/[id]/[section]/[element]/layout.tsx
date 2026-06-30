@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import {
   getAllCourseElementParams,
   getCourseById,
+  getCoursePath,
   getCourseTitle,
   getElementTitle,
   elementHasHint,
@@ -132,6 +133,17 @@ export default async function ElementLayout({
     currentElement.type === "interactiveExercise" ||
     currentElement.type === "customExercise";
 
+  const continueHref =
+    currentElement.type === "courseEnding"
+      ? (() => {
+          const recommendedCourseId =
+            currentElement.content.nextSteps.recommendedCourseIds[0];
+          return recommendedCourseId
+            ? getCoursePath(recommendedCourseId)
+            : null;
+        })()
+      : null;
+
   return (
     <CourseElementShell
       navigationMetadata={navigationMetadata}
@@ -155,6 +167,7 @@ export default async function ElementLayout({
         hideInfoOnMobile: elementHideInfoOnMobile(currentElement),
         prevHref,
         nextHref,
+        continueHref,
         hasMaterials: elementHasMaterials(currentElement),
         hasHint: elementHasHint(currentElement),
       }}

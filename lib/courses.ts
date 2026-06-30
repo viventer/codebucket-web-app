@@ -2,9 +2,21 @@ import { promises as fs } from "fs";
 import path from "path";
 import type { Course, CourseElement } from "@/schemas/courseSchema";
 
+export type CourseCardData = {
+  id: string;
+  title: string;
+  description: string;
+  badge: string;
+  badgeClassName: string;
+  currentPrice: number;
+  whatYouWillLearn: string[];
+  isPresale: boolean;
+};
+
 type CourseRegistryEntry = {
   folder: string;
   title: string;
+  card?: Omit<CourseCardData, "id">;
 };
 
 const COURSE_REGISTRY: Record<string, CourseRegistryEntry> = {
@@ -15,6 +27,22 @@ const COURSE_REGISTRY: Record<string, CourseRegistryEntry> = {
   "css-basics": {
     folder: "css fundamentals",
     title: "Podstawy CSS",
+    card: {
+      title: "Podstawy CSS",
+      description: "Naucz się stylować strony internetowe.",
+      badge: "CSS",
+      badgeClassName: "bg-sky-500 text-white",
+      currentPrice: 59.99,
+      isPresale: true,
+      whatYouWillLearn: [
+        "Selektory CSS i specyficzność",
+        "Kolory i typografia",
+        "CSS box-model",
+        "Flexbox",
+        "Responsywność",
+        "CSS Grid",
+      ],
+    },
   },
 };
 
@@ -22,8 +50,19 @@ export function getCourseTitle(id: string): string | undefined {
   return COURSE_REGISTRY[id]?.title;
 }
 
+export function getCoursePath(courseId: string): string {
+  return `/course/${courseId}`;
+}
+
 export function getRegisteredCourseIds(): string[] {
   return Object.keys(COURSE_REGISTRY);
+}
+
+export function getCourseCardData(id: string): CourseCardData | null {
+  const entry = COURSE_REGISTRY[id];
+  if (!entry?.card) return null;
+
+  return { id, ...entry.card };
 }
 
 export async function getAllCourseElementParams(): Promise<
@@ -59,9 +98,14 @@ const ELEMENT_TYPE_LABELS: Record<CourseElement["type"], string> = {
   guidedProject: "Projekt",
   individualProject: "Projekt indywidualny",
   cheatsheet: "Ściąga",
+  courseEnding: "Zakończenie",
 };
 
 export function getElementTitle(element: CourseElement): string {
+  if (element.type === "courseEnding") {
+    return element.content.congrats.heading;
+  }
+
   if ("title" in element.content && element.content.title) {
     return element.content.title;
   }

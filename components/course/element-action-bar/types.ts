@@ -8,13 +8,14 @@ export type ElementActionBarProps = {
   hideInfoOnMobile?: boolean;
   prevHref: string | null;
   nextHref: string | null;
+  continueHref?: string | null;
   hasMaterials: boolean;
   hasHint?: boolean;
 };
 
 export type ElementActionsProps = Pick<
   ElementActionBarProps,
-  "type" | "prevHref" | "nextHref" | "hasMaterials" | "hasHint"
+  "type" | "prevHref" | "nextHref" | "continueHref" | "hasMaterials" | "hasHint"
 >;
 
 export type NavButtonProps = {

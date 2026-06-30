@@ -8,6 +8,7 @@ import {
 import { LocalCodeExerciseElement } from "@/components/course/elements/LocalCodeExerciseElement";
 import { PlatformCodeExerciseElement } from "@/components/course/elements/PlatformCodeExerciseElement";
 import { CheatsheetElement } from "@/components/course/elements/CheatsheetElement";
+import { CourseEndingElement } from "@/components/course/elements/CourseEndingElement";
 import { CustomExerciseElement } from "@/components/course/elements/CustomExerciseElement";
 import { GuidedProjectElement } from "@/components/course/elements/GuidedProjectElement";
 import { IndividualProjectElement } from "@/components/course/elements/IndividualProjectElement";
@@ -72,5 +73,7 @@ export default async function CourseElementPage({
           content={element.content}
         />
       );
+    case "courseEnding":
+      return <CourseEndingElement content={element.content} />;
   }
 }

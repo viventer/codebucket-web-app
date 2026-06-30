@@ -2,6 +2,7 @@ import type { CourseElement } from "@/schemas/courseSchema";
 
 import { BackNextActions } from "./BackNextActions";
 import { CheatsheetActions } from "./CheatsheetActions";
+import { CourseEndingActions } from "./CourseEndingActions";
 import { DownloadMaterialsButton } from "./DownloadMaterialsButton";
 import { InteractiveExerciseActions } from "./InteractiveExerciseActions";
 import { LocalCodeExerciseActions } from "./LocalCodeExerciseActions";
@@ -12,6 +13,7 @@ function renderActions(
   type: CourseElement["type"],
   prevHref: string | null,
   nextHref: string | null,
+  continueHref: string | null,
   hasMaterials: boolean,
   hasHint?: boolean,
 ) {
@@ -21,6 +23,10 @@ function renderActions(
       return <BackNextActions prevHref={prevHref} nextHref={nextHref} />;
     case "cheatsheet":
       return <CheatsheetActions prevHref={prevHref} nextHref={nextHref} />;
+    case "courseEnding":
+      return (
+        <CourseEndingActions prevHref={prevHref} continueHref={continueHref} />
+      );
     case "guidedProject":
       return (
         <>
@@ -56,8 +62,16 @@ export function Actions({
   type,
   prevHref,
   nextHref,
+  continueHref,
   hasMaterials,
   hasHint,
 }: ElementActionsProps) {
-  return renderActions(type, prevHref, nextHref, hasMaterials, hasHint);
+  return renderActions(
+    type,
+    prevHref,
+    nextHref,
+    continueHref ?? null,
+    hasMaterials,
+    hasHint,
+  );
 }
