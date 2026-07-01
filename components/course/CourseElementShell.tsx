@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 
 import type { CourseNavigationMetadata } from "@/lib/course/navigation-transition-types";
 import { CourseNavigationProvider } from "@/lib/course/navigation-transition-context";
+import { CheatsheetFullscreenProvider } from "@/lib/course/cheatsheet-fullscreen-context";
 import { ExerciseSessionProvider } from "@/lib/exercises/session/ExerciseSessionContext";
 import type { CourseElement } from "@/schemas/courseSchema";
 import {
@@ -46,6 +47,14 @@ export function CourseElementShell({
     </>
   );
 
+  const isCheatsheet = actionBarProps.type === "cheatsheet";
+
+  const wrappedBody = isCheatsheet ? (
+    <CheatsheetFullscreenProvider>{body}</CheatsheetFullscreenProvider>
+  ) : (
+    body
+  );
+
   return (
     <CourseNavigationProvider
       metadata={navigationMetadata}
@@ -57,10 +66,10 @@ export function CourseElementShell({
         <CourseHeader {...headerProps} />
         {isExercise ? (
           <ExerciseSessionProvider element={exerciseElement}>
-            {body}
+            {wrappedBody}
           </ExerciseSessionProvider>
         ) : (
-          body
+          wrappedBody
         )}
       </div>
     </CourseNavigationProvider>

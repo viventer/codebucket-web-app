@@ -1,13 +1,13 @@
 "use client";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { useEffect, useRef } from "react";
+
+import { useCheatsheetFullscreen } from "@/lib/course/cheatsheet-fullscreen-context";
+import type { CarouselApi } from "@/components/ui/carousel";
 import type { CheatsheetSlide } from "@/lib/course/resolve-element-assets";
+
+import { CheatsheetCarouselView } from "./CheatsheetCarouselView";
+import { CheatsheetFullscreenOverlay } from "./CheatsheetFullscreenOverlay";
 
 type CheatsheetCarouselProps = {
   slides: CheatsheetSlide[];
@@ -15,34 +15,50 @@ type CheatsheetCarouselProps = {
 };
 
 export function CheatsheetCarousel({ slides, title }: CheatsheetCarouselProps) {
+  const {
+    isFullscreen,
+    slideIndex,
+    setSlideIndex,
+    setSlidesCount,
+    enterFullscreen,
+  } = useCheatsheetFullscreen();
+  const inlineApiRef = useRef<CarouselApi | null>(null);
+  const wasFullscreenRef = useRef(false);
+
+  useEffect(() => {
+    setSlidesCount(slides.length);
+  }, [setSlidesCount, slides.length]);
+
+  useEffect(() => {
+    if (wasFullscreenRef.current && !isFullscreen) {
+      inlineApiRef.current?.scrollTo(slideIndex);
+    }
+
+    wasFullscreenRef.current = isFullscreen;
+  }, [isFullscreen, slideIndex]);
+
   if (slides.length === 0) {
     return (
-      <div className="flex  w-full items-center justify-center rounded-xl bg-card">
+      <div className="flex w-full items-center justify-center rounded-xl bg-card">
         <p className="text-sm text-muted-foreground">Brak plików ściągi</p>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto w-full max-w-[1280px] px-12">
-      <Carousel opts={{ loop: true }}>
-        <CarouselContent>
-          {slides.map((slide) => (
-            <CarouselItem key={slide.filename}>
-              <div className="flex w-full items-center justify-center overflow-hidden rounded-xl bg-card">
-                {/* eslint-disable-next-line @next/next/no-img-element -- Firebase signed URLs */}
-                <img
-                  src={slide.url}
-                  alt={`${title} — ${slide.filename}`}
-                  className="max-h-full max-w-full object-contain"
-                />
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-    </div>
+    <>
+      <CheatsheetCarouselView
+        slides={slides}
+        title={title}
+        showNavButtons={true}
+        onSlideChange={setSlideIndex}
+        setApi={(api) => {
+          inlineApiRef.current = api;
+        }}
+        onImageClick={enterFullscreen}
+        className="px-12"
+      />
+      <CheatsheetFullscreenOverlay slides={slides} title={title} />
+    </>
   );
 }
