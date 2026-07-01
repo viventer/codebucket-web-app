@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import { useCourseNavigation } from "@/lib/course/navigation-transition-context";
 import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
+import { useSkipInitialMotion } from "@/lib/course/use-skip-initial-motion";
 import { cn } from "@/lib/utils";
 
 type AnimatedActionBarContentProps = {
@@ -23,15 +24,20 @@ function AnimatedActionBarContent({
   fullWidth = false,
 }: AnimatedActionBarContentProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const skipInitialMotion = useSkipInitialMotion();
   const enterX = direction === "forward" ? 8 : direction === "back" ? -8 : 0;
+
+  const motionInitial = skipInitialMotion
+    ? false
+    : {
+        opacity: prefersReducedMotion ? 1 : 0,
+        x: prefersReducedMotion ? 0 : enterX,
+      };
 
   return (
     <motion.div
       key={contentKey}
-      initial={{
-        opacity: prefersReducedMotion ? 1 : 0,
-        x: prefersReducedMotion ? 0 : enterX,
-      }}
+      initial={motionInitial}
       animate={{ opacity: 1, x: 0 }}
       transition={{
         duration: prefersReducedMotion ? 0 : 0.25,

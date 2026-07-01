@@ -16,6 +16,7 @@ import {
   ElementActionBar,
   type ElementActionBarProps,
 } from "@/components/course/element-action-bar";
+import { cn } from "@/lib/utils";
 
 type CourseElementShellProps = {
   navigationMetadata: CourseNavigationMetadata;
@@ -25,6 +26,7 @@ type CourseElementShellProps = {
   actionBarProps: ElementActionBarProps;
   isExercise: boolean;
   exerciseElement: CourseElement;
+  centerContentOnMobile?: boolean;
   children: ReactNode;
 };
 
@@ -36,11 +38,19 @@ export function CourseElementShell({
   actionBarProps,
   isExercise,
   exerciseElement,
+  centerContentOnMobile = false,
   children,
 }: CourseElementShellProps) {
   const body = (
     <>
-      <main className="mx-auto mt-8 w-[90vw] max-w-[90vw] lg:max-w-[1280px] flex-1 pb-28 sm:mt-16">
+      <main
+        className={cn(
+          "mx-auto w-[90vw] max-w-[90vw] lg:max-w-[1280px] flex-1 pb-28",
+          centerContentOnMobile
+            ? "max-sm:flex max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:mt-0 sm:mt-16"
+            : "mt-8 sm:mt-16",
+        )}
+      >
         {children}
       </main>
       <ElementActionBar {...actionBarProps} />
@@ -61,7 +71,7 @@ export function CourseElementShell({
       sectionsCompleted={sectionsCompleted}
       elementsCompleted={elementsCompleted}
     >
-      <div className="flex min-h-screen flex-col bg-background text-foreground">
+      <div className="flex min-h-dvh flex-col bg-background text-foreground">
         <CourseTransitionOverlay />
         <CourseHeader {...headerProps} />
         {isExercise ? (

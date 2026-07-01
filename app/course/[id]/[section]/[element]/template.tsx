@@ -10,6 +10,7 @@ import {
 } from "@/components/course/CourseTransitionOverlay";
 import { useCourseNavigation } from "@/lib/course/navigation-transition-context";
 import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
+import { useSkipInitialMotion } from "@/lib/course/use-skip-initial-motion";
 
 const TRANSITION_CONTENT_DELAY_MS =
   TRANSITION_OVERLAY_VISIBLE_MS + TRANSITION_OVERLAY_EXIT_MS;
@@ -59,15 +60,15 @@ export default function CourseElementTemplate({
   const pathname = usePathname();
   const { transitionState } = useCourseNavigation();
   const prefersReducedMotion = usePrefersReducedMotion();
+  const skipInitialMotion = useSkipInitialMotion();
   const { direction, showTransitionOverlay } = transitionState;
   const motionValues = getContentMotionValues(direction, showTransitionOverlay);
   const useReducedTransition =
     prefersReducedMotion && showTransitionOverlay;
 
-  return (
-    <motion.div
-      key={pathname}
-      initial={{
+  const motionInitial = skipInitialMotion
+    ? false
+    : {
         opacity: useReducedTransition || !prefersReducedMotion ? 0 : 1,
         y:
           prefersReducedMotion && !showTransitionOverlay
@@ -75,7 +76,12 @@ export default function CourseElementTemplate({
             : useReducedTransition
               ? 0
               : motionValues.enterY,
-      }}
+      };
+
+  return (
+    <motion.div
+      key={pathname}
+      initial={motionInitial}
       animate={{ opacity: 1, y: 0 }}
       transition={{
         duration:

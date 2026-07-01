@@ -140,6 +140,14 @@ export function elementHideInfoOnMobile(element: CourseElement): boolean {
   return true;
 }
 
+export function elementCentersMediaOnMobile(element: CourseElement): boolean {
+  return (
+    element.type === "video" ||
+    element.type === "guidedProject" ||
+    element.type === "cheatsheet"
+  );
+}
+
 export function elementHasMaterials(element: CourseElement): boolean {
   if (element.type === "localCodeExercise") {
     return element.content.hasMaterials;

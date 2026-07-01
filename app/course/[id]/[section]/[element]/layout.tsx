@@ -8,6 +8,7 @@ import {
   getElementTitle,
   elementHasHint,
   elementHideInfoOnMobile,
+  elementCentersMediaOnMobile,
   elementHasMaterials,
 } from "@/lib/courses";
 import { buildCourseNavigationMetadata } from "@/lib/course/build-navigation-metadata";
@@ -173,6 +174,7 @@ export default async function ElementLayout({
       }}
       isExercise={isExercise}
       exerciseElement={currentElement}
+      centerContentOnMobile={elementCentersMediaOnMobile(currentElement)}
     >
       {children}
     </CourseElementShell>

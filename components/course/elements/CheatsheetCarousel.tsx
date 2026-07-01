@@ -50,13 +50,14 @@ export function CheatsheetCarousel({ slides, title }: CheatsheetCarouselProps) {
       <CheatsheetCarouselView
         slides={slides}
         title={title}
-        showNavButtons={true}
+        showNavButtons="responsive"
         onSlideChange={setSlideIndex}
         setApi={(api) => {
           inlineApiRef.current = api;
         }}
         onImageClick={enterFullscreen}
-        className="px-12"
+        className="sm:px-12"
+        imageClassName="max-sm:max-h-[calc(100dvh-10.5rem)]"
       />
       <CheatsheetFullscreenOverlay slides={slides} title={title} />
     </>
