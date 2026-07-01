@@ -25,7 +25,7 @@ export function CheatsheetCarousel({ slides, title }: CheatsheetCarouselProps) {
 
   return (
     <div className="mx-auto w-full max-w-[1280px] px-12">
-      <Carousel>
+      <Carousel opts={{ loop: true }}>
         <CarouselContent>
           {slides.map((slide) => (
             <CarouselItem key={slide.filename}>

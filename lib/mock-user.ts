@@ -24,6 +24,6 @@ export const mockUser: User = {
     },
   ],
   preferences: {
-    colorScheme: "light",
+    colorScheme: "dark",
   },
 };
