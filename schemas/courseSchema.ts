@@ -82,10 +82,8 @@ export const interactiveDemoContentSchema = z.object({
 export const guidedProjectContentSchema = z.object({
   videoUrl: z.string().min(1, "Project video url is required"),
   title: z.string().min(1, "Project title is required"),
-  description: z.string().min(1, "Project description is required"),
-  starterCode: z.array(codeSnippetSchema),
-  materials: z.array(z.string()).optional(),
-  finalCode: z.array(codeSnippetSchema),
+  description: z.string().optional(),
+  hasMaterials: z.boolean(),
 });
 
 export const individualProjectContentSchema = z.object({

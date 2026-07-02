@@ -149,14 +149,14 @@ export function elementCentersMediaOnMobile(element: CourseElement): boolean {
 }
 
 export function elementHasMaterials(element: CourseElement): boolean {
-  if (element.type === "localCodeExercise") {
+  if (
+    element.type === "localCodeExercise" ||
+    element.type === "guidedProject"
+  ) {
     return element.content.hasMaterials;
   }
 
-  if (
-    element.type !== "guidedProject" &&
-    element.type !== "individualProject"
-  ) {
+  if (element.type !== "individualProject") {
     return false;
   }
 

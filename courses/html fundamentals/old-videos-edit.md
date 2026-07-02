@@ -66,6 +66,8 @@ Dodatkowo, żeby ułatwić ci naukę, stworzyłem mnóstwo krótkich ćwiczeń, 
 - info, że można pobrac z githuba trzeba usunąć
 - usunąć od wstawki o subie do końca
 
+Jeśli jej nie wykonałeś to pobierz materiały przy pomocy przycisku poniżej.
+
 ## 1.18 [Q] Sprawdź swoją wiedzę o podstawach HTML
 
 - w sumie oprócz pytań ABCD można dać też tu jakieś ćwiczenia interaktywne

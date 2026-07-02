@@ -175,8 +175,7 @@
             "title": "Twoja pierwsza strona",
             "videoUrl": "https://youtu.be/fNa5Pn6ZMHY",
             "description": "",
-            "starterCode": [],
-            "finalCode": []
+            "hasMaterials": false
           },
           "order": 3
         },
@@ -187,8 +186,7 @@
             "title": "Struktura strony",
             "videoUrl": "https://youtu.be/5ad8w6HU974",
             "description": "",
-            "starterCode": [],
-            "finalCode": []
+            "hasMaterials": false
           },
           "order": 4
         },
@@ -327,8 +325,7 @@
           "content": {
             "title": "Strona o wiadrach + Prettier",
             "videoUrl": "https://youtu.be/P2rn2fN0eLQ",
-            "starterCode": [],
-            "finalCode": []
+            "hasMaterials": false
           },
           "order": 2
         },
@@ -485,8 +482,7 @@
           "content": {
             "title": "Zdjęcia na stronie",
             "videoUrl": "https://youtu.be/7izBGgNtJoE",
-            "starterCode": [],
-            "finalCode": []
+            "hasMaterials": false
           },
           "order": 5
         },
@@ -716,8 +712,7 @@
           "content": {
             "title": "Listy + Emmet",
             "videoUrl": "https://youtu.be/jO5yWTM56sg",
-            "starterCode": [],
-            "finalCode": []
+            "hasMaterials": false
           },
           "order": 2
         },
@@ -856,8 +851,7 @@
           "content": {
             "title": "Tabele",
             "videoUrl": "https://youtu.be/KCWX5hVQrIw",
-            "starterCode": [],
-            "finalCode": []
+            "hasMaterials": false
           },
           "order": 4
         },
@@ -1064,8 +1058,7 @@
           "content": {
             "title": "Video i audio",
             "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
-            "starterCode": [],
-            "finalCode": []
+            "hasMaterials": true
           },
           "order": 6
         },
@@ -1123,8 +1116,7 @@
             "title": "Podstawy budowy formularza",
             "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
             "description": "",
-            "starterCode": [],
-            "finalCode": []
+            "hasMaterials": false
           },
           "order": 2
         },
@@ -1292,8 +1284,7 @@
           "content": {
             "title": "Podstawowe pola formularza",
             "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
-            "starterCode": [],
-            "finalCode": []
+            "hasMaterials": false
           },
           "order": 1
         },
@@ -1476,8 +1467,7 @@
           "content": {
             "title": "Radiobutton",
             "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
-            "starterCode": [],
-            "finalCode": []
+            "hasMaterials": false
           },
           "order": 3
         },
@@ -1639,8 +1629,7 @@
           "content": {
             "title": "Pozostałe pola",
             "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
-            "starterCode": [],
-            "finalCode": []
+            "hasMaterials": false
           },
           "order": 5
         },

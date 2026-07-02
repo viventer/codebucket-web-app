@@ -3,7 +3,10 @@
 import { z } from "zod";
 
 import { createFolderZipDownloadUrl } from "@/actions/storage/create-folder-zip-download-url";
-import { getExerciseMaterialsFolderPath } from "@/lib/course-storage-paths";
+import {
+  getExerciseMaterialsFolderPath,
+  getGuidedProjectMaterialsFolderPath,
+} from "@/lib/course-storage-paths";
 
 const courseIdSchema = z
   .string()
@@ -15,16 +18,20 @@ const elementIdSchema = z
   .min(1)
   .regex(/^[\w-]+$/, "Invalid element id");
 
+const materialsSourceSchema = z.enum(["exercise", "guidedProject"]);
+
 export async function getExerciseMaterialsDownloadUrl(
   courseId: string,
   elementId: string,
+  source: "exercise" | "guidedProject" = "exercise",
 ): Promise<string> {
   const parsedCourseId = courseIdSchema.parse(courseId);
   const parsedElementId = elementIdSchema.parse(elementId);
-  const folderPath = getExerciseMaterialsFolderPath(
-    parsedCourseId,
-    parsedElementId,
-  );
+  const parsedSource = materialsSourceSchema.parse(source);
+  const folderPath =
+    parsedSource === "guidedProject"
+      ? getGuidedProjectMaterialsFolderPath(parsedCourseId, parsedElementId)
+      : getExerciseMaterialsFolderPath(parsedCourseId, parsedElementId);
 
   return createFolderZipDownloadUrl(folderPath, parsedElementId);
 }

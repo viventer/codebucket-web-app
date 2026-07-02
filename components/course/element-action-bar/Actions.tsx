@@ -3,7 +3,7 @@ import type { CourseElement } from "@/schemas/courseSchema";
 import { BackNextActions } from "./BackNextActions";
 import { CheatsheetActions } from "./CheatsheetActions";
 import { CourseEndingActions } from "./CourseEndingActions";
-import { DownloadMaterialsButton } from "./DownloadMaterialsButton";
+import { GuidedProjectActions } from "./GuidedProjectActions";
 import { InteractiveExerciseActions } from "./InteractiveExerciseActions";
 import { LocalCodeExerciseActions } from "./LocalCodeExerciseActions";
 import { ProjectActions } from "./ProjectActions";
@@ -29,10 +29,11 @@ function renderActions(
       );
     case "guidedProject":
       return (
-        <>
-          <BackNextActions prevHref={prevHref} nextHref={nextHref} />
-          {hasMaterials && <DownloadMaterialsButton />}
-        </>
+        <GuidedProjectActions
+          prevHref={prevHref}
+          nextHref={nextHref}
+          hasMaterials={hasMaterials}
+        />
       );
     case "individualProject":
       return <ProjectActions nextHref={nextHref} hasMaterials={hasMaterials} />;

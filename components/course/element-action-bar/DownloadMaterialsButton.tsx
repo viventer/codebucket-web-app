@@ -10,7 +10,13 @@ import { Button } from "@/components/ui/button";
 
 import { ActionBarButtonLabel } from "./ActionBarButtonLabel";
 
-export function DownloadMaterialsButton() {
+type DownloadMaterialsButtonProps = {
+  source?: "exercise" | "guidedProject";
+};
+
+export function DownloadMaterialsButton({
+  source = "exercise",
+}: DownloadMaterialsButtonProps) {
   const params = useParams<{ id: string; element: string }>();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,6 +30,7 @@ export function DownloadMaterialsButton() {
       const url = await getExerciseMaterialsDownloadUrl(
         params.id,
         params.element,
+        source,
       );
       window.location.href = url;
     } catch {

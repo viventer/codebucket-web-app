@@ -22,6 +22,13 @@ export function getExerciseMaterialsFolderPath(
   return `courses/${courseId}/exercises/${elementId}/materials`;
 }
 
+export function getGuidedProjectMaterialsFolderPath(
+  courseId: string,
+  elementId: string,
+): string {
+  return `courses/${courseId}/guided-projects/${elementId}/materials`;
+}
+
 export function getCheatsheetFolderPath(
   courseId: string,
   cheatsheetId: string,
