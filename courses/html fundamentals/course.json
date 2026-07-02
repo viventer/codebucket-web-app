@@ -1056,8 +1056,8 @@
           "id": "video-audio",
           "type": "guidedProject",
           "content": {
-            "title": "Video i audio",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
+            "title": "Video, audio i button",
+            "videoUrl": "https://youtu.be/iINKdEJ5A0I",
             "hasMaterials": true
           },
           "order": 6
@@ -1091,7 +1091,7 @@
     },
     {
       "id": "form-building",
-      "title": "Budowa formularzy",
+      "title": "Podstawy formularzy",
       "description": "Podstawy tworzenia formularzy w HTML",
       "whatYouWillLearn": [
         "Jak zbudować formularz",
@@ -1100,25 +1100,15 @@
       "order": 4,
       "elements": [
         {
-          "id": "forms-intro",
-          "type": "video",
-          "content": {
-            "title": "Wstęp",
-            "duration": 0,
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d"
-          },
-          "order": 1
-        },
-        {
           "id": "form-basics",
           "type": "guidedProject",
           "content": {
             "title": "Podstawy budowy formularza",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
+            "videoUrl": "https://youtu.be/0xk-pxSXrp8",
             "description": "",
             "hasMaterials": false
           },
-          "order": 2
+          "order": 1
         },
         {
           "id": "connect-label-with-field",
@@ -1263,30 +1253,17 @@
               }
             ]
           },
-          "order": 3
-        }
-      ]
-    },
-    {
-      "id": "form-fields",
-      "title": "Pola formularza",
-      "description": "Typy pól, radiobuttony, listy wyboru i projekt końcowy",
-      "whatYouWillLearn": [
-        "Jak korzystać z różnych typów pól",
-        "Jak grupować radiobuttony",
-        "Jak budować formularze w praktyce"
-      ],
-      "order": 5,
-      "elements": [
+          "order": 2
+        },
         {
           "id": "basic-form-fields",
           "type": "guidedProject",
           "content": {
             "title": "Podstawowe pola formularza",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
+            "videoUrl": "https://youtu.be/vDcsTy8vtE0",
             "hasMaterials": false
           },
-          "order": 1
+          "order": 3
         },
         {
           "id": "login-form",
@@ -1459,17 +1436,30 @@
               }
             ]
           },
-          "order": 2
-        },
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "form-fields",
+      "title": "Inne pola formularza",
+      "description": "Typy pól, radiobuttony, listy wyboru i projekt końcowy",
+      "whatYouWillLearn": [
+        "Jak korzystać z różnych typów pól",
+        "Jak grupować radiobuttony",
+        "Jak budować formularze w praktyce"
+      ],
+      "order": 5,
+      "elements": [
         {
           "id": "radiobutton",
           "type": "guidedProject",
           "content": {
             "title": "Radiobutton",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
+            "videoUrl": "https://youtu.be/oHnX-0B8obA",
             "hasMaterials": false
           },
-          "order": 3
+          "order": 1
         },
         {
           "id": "grouping-radiobuttons",
@@ -1621,17 +1611,17 @@
               }
             ]
           },
-          "order": 4
+          "order": 2
         },
         {
           "id": "remaining-fields",
           "type": "guidedProject",
           "content": {
             "title": "Pozostałe pola",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
+            "videoUrl": "https://youtu.be/3ecGnpBovBk",
             "hasMaterials": false
           },
-          "order": 5
+          "order": 3
         },
         {
           "id": "create-select-list",
@@ -1737,12 +1727,12 @@
               }
             ]
           },
-          "order": 6
+          "order": 4
         },
         {
           "id": "html-forms",
           "type": "cheatsheet",
-          "order": 7,
+          "order": 5,
           "content": {
             "title": "Formularze w HTML"
           }
@@ -1750,7 +1740,7 @@
         {
           "id": "pc-configurator",
           "type": "localCodeExercise",
-          "order": 8,
+          "order": 6,
           "content": {
             "title": "Konfigurator PC",
             "command": "Odwzoruj stronę widoczną poniżej we własnym edytorze kodu.",

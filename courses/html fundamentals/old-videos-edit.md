@@ -82,6 +82,8 @@ Jeśli jej nie wykonałeś to pobierz materiały przy pomocy przycisku poniżej.
 
 - usunąć fragment o tym, że to 2. cz i o notatce
 
+Z tej sekcji kursu dowiesz się jak je stworzyć.
+
 ## 2.2. [Pg] Podstawy budowy formularza
 
 ## 2.3. [Ei] Połącz etykietę z polem formularza
