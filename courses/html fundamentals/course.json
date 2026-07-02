@@ -52,7 +52,7 @@
           "content": {
             "title": "Czym jest HTML",
             "duration": 0,
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d"
+            "videoUrl": "https://youtu.be/M4YZLs_u1nc"
           },
           "order": 1
         },
@@ -172,8 +172,8 @@
           "id": "first-website",
           "type": "guidedProject",
           "content": {
-            "title": "Nasza pierwsza strona",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
+            "title": "Twoja pierwsza strona",
+            "videoUrl": "https://youtu.be/fNa5Pn6ZMHY",
             "description": "",
             "starterCode": [],
             "finalCode": []
@@ -185,7 +185,7 @@
           "type": "guidedProject",
           "content": {
             "title": "Struktura strony",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
+            "videoUrl": "https://youtu.be/5ad8w6HU974",
             "description": "",
             "starterCode": [],
             "finalCode": []
@@ -317,7 +317,7 @@
           "content": {
             "title": "Live Server + podstawowe tagi",
             "duration": 3,
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d"
+            "videoUrl": "https://youtu.be/iXlEZYIukec"
           },
           "order": 1
         },
@@ -326,7 +326,7 @@
           "type": "guidedProject",
           "content": {
             "title": "Strona o wiadrach + Prettier",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
+            "videoUrl": "https://youtu.be/P2rn2fN0eLQ",
             "starterCode": [],
             "finalCode": []
           },
@@ -484,7 +484,7 @@
           "type": "guidedProject",
           "content": {
             "title": "Zdjęcia na stronie",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
+            "videoUrl": "https://youtu.be/7izBGgNtJoE",
             "starterCode": [],
             "finalCode": []
           },
@@ -706,7 +706,7 @@
           "content": {
             "title": "Komentarze",
             "duration": 1,
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d"
+            "videoUrl": "https://youtu.be/b1PAyRYym9A"
           },
           "order": 1
         },
@@ -715,7 +715,7 @@
           "type": "guidedProject",
           "content": {
             "title": "Listy + Emmet",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
+            "videoUrl": "https://youtu.be/jO5yWTM56sg",
             "starterCode": [],
             "finalCode": []
           },
@@ -855,7 +855,7 @@
           "type": "guidedProject",
           "content": {
             "title": "Tabele",
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d",
+            "videoUrl": "https://youtu.be/KCWX5hVQrIw",
             "starterCode": [],
             "finalCode": []
           },
