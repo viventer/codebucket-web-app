@@ -4,6 +4,10 @@
 
 - wyrzucić fragment o notatce, zastąpić go informacją o ćwiczeniach, podsumowaniach itp.
 
+Dodatkowo, żebyś nie musiał robić notatek, albo co gorsza uczyć się na pamięć, stworzyłem dla ciebie mnóstwo krótkich ćwiczeń, które pozwolą ci utrwalić zdobytą wiedzę oraz podsumowania, które pozwolą Ci powtórzyć ją w dowolnym momencie.
+
+Dodatkowo, żeby ułatwić ci naukę, stworzyłem mnóstwo krótkich ćwiczeń, dzięki którym utrwalisz zdobytą wiedzę oraz podsumowania, które pozwolą Ci powtórzyć ją w dowolnym momencie.
+
 ## 0.2 [V] Potrzebne narzędzia
 
 # 1. Podstawy HTML

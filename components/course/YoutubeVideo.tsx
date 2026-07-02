@@ -38,7 +38,7 @@ export function YoutubeVideo({ videoUrl, title }: YoutubeVideoProps) {
               src={embedUrl}
               title={title}
               className={cn(
-                "h-full w-[90vw] transition-opacity duration-300",
+                "sm:absolute sm:inset-0 h-full w-full transition-opacity duration-300",
                 isLoaded ? "opacity-100" : "opacity-0",
               )}
               onLoad={() => setIsLoaded(true)}

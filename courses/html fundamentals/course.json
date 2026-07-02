@@ -27,21 +27,11 @@
           "id": "introduction-video",
           "type": "video",
           "content": {
-            "title": "Wprowadzenie",
-            "duration": 0,
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d"
+            "title": "Wprowadzenie i potrzebne narzędzia",
+            "duration": 1,
+            "videoUrl": "https://youtu.be/GVbFryDhgkk"
           },
           "order": 1
-        },
-        {
-          "id": "tools",
-          "type": "video",
-          "content": {
-            "title": "Potrzebne narzędzia",
-            "duration": 0,
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18dhttps://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d"
-          },
-          "order": 2
         }
       ]
     },
