@@ -1,13 +1,20 @@
 {
   "id": "html-fundamentals",
-  "title": "Pełny kurs HTML dla początkujących",
-  "description": "Wszystko co musisz wiedzieć o HTML, aby zacząć tworzyć swoje pierwsze strony",
+  "title": "Pełny kurs HTML",
+  "description": "Wszystko co musisz wiedzieć o HTML, aby zacząć tworzyć swoje pierwsze strony.",
   "price": {
     "isFree": true
   },
   "image": "html-logo.svg",
   "duration": 120,
+  "level": "Początkujący",
   "prerequisites": [],
+  "courseIncludes": [
+    "Krótkie lekcje wideo",
+    "Interaktywne ćwiczenia",
+    "Wspólne mini-projekty",
+    "Podsumowania do szybkiego powtórzenia"
+  ],
   "CTADescription": "Zacznij tworzyć swoje pierwsze strony",
   "whatYouWillLearn": [
     "Tworzyć strukturę strony.",

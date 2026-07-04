@@ -192,7 +192,11 @@ export const courseSchema = z.object({
   description: z.string().min(1, "Description is required"),
   image: z.string().min(1, "Image is required"),
   duration: z.number().gt(0, "Duration must be greater than 0"),
+  level: z.string().min(1).optional(),
   prerequisites: z.array(z.string()).optional(),
+  courseIncludes: z
+    .array(z.string().min(1))
+    .min(1, "Course includes is required"),
   CTADescription: z.string().min(1, "CTA Description is required"),
   whatYouWillLearn: z
     .array(z.string())

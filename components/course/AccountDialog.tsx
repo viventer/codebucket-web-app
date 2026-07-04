@@ -22,25 +22,27 @@ export type AccountDialogProps = {
   email: string;
   courses: AccountCourse[];
   currentCourseId?: string;
+  triggerLabel?: string;
 };
 
 export function AccountDialog({
   email,
   courses,
   currentCourseId,
+  triggerLabel = "Moje konto",
 }: AccountDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm">
-          <p className="hidden sm:block">Twoje konto</p>
+          <p className="hidden sm:block">{triggerLabel}</p>
           <UserIcon className="size-4 sm:hidden" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl">
-            Twoje konto
+            {triggerLabel}
           </DialogTitle>
         </DialogHeader>
 
