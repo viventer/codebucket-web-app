@@ -121,9 +121,7 @@ export function buildCourseLandingData(course: Course): CourseLandingData {
     whatYouWillLearn: course.whatYouWillLearn,
     ctaDescription: course.CTADescription,
     startButtonLabel: isFree ? "Rozpocznij za darmo" : "Rozpocznij kurs",
-    finalCtaButtonLabel: isFree
-      ? "Rozpocznij naukę za darmo"
-      : "Rozpocznij naukę",
+    finalCtaButtonLabel: isFree ? "Rozpocznij za darmo" : "Rozpocznij kurs",
     sections,
   };
 }

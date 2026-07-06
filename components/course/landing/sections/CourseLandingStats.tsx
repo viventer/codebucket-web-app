@@ -33,7 +33,7 @@ export function CourseLandingStats(props: CourseLandingStatsProps) {
   return (
     <div className="grid gap-6 sm:grid-cols-3">
       {stats.map(({ key, label, icon: Icon, getValue }) => (
-        <Card key={key} className="gap-3">
+        <Card key={key} className="gap-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 font-light">
               <Icon className="size-5 text-accent" />

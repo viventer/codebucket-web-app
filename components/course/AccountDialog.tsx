@@ -48,7 +48,7 @@ export function AccountDialog({
 
         <div className="mt-2 flex flex-col gap-8">
           <section className="flex flex-col gap-1">
-            <h3 className="text-sm font-semibold text-foreground">Email</h3>
+            <h3 className="text-sm font-medium text-foreground">Email</h3>
             <p className="text-sm text-muted-foreground">{email}</p>
           </section>
 
@@ -56,7 +56,7 @@ export function AccountDialog({
 
           <section className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-              <h3 className="text-sm font-semibold text-foreground">
+              <h3 className="text-sm font-medium text-foreground">
                 Twoje kursy
               </h3>
 

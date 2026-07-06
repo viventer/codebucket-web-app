@@ -12,7 +12,7 @@ export function CourseLandingCurriculum({
 }: CourseLandingCurriculumProps) {
   return (
     <section>
-      <h2 className="mb-2 text-lg font-medium">Program kursu</h2>
+      <h2 className="text-lg font-medium mb-2">Program kursu</h2>
       <CourseSectionsAccordion sections={sections} showDescription />
     </section>
   );

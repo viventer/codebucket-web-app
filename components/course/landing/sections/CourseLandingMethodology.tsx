@@ -38,7 +38,7 @@ export function CourseLandingMethodology() {
   return (
     <section className="flex flex-col gap-6">
       <div className="flex flex-col gap-1">
-        <h2 className="text-lg font-semibold">
+        <h2 className="text-lg font-medium">
           Najskuteczniejszy sposób nauki programowania
         </h2>
         <p className="text-sm text-muted-foreground">
@@ -49,10 +49,10 @@ export function CourseLandingMethodology() {
 
       <div className="grid gap-6 sm:grid-cols-2">
         {methodologyItems.map(({ title, description, icon: Icon }) => (
-          <Card key={title}>
+          <Card key={title} className="gap-3">
             <CardHeader className="flex flex-row items-center gap-2">
               <Icon className="size-8 text-accent" />
-              <CardTitle className="text-lg">{title}</CardTitle>
+              <CardTitle>{title}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">{description}</p>

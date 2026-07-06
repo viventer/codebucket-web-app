@@ -5,6 +5,7 @@ import {
   FolderKanbanIcon,
   Gamepad2Icon,
   PlayCircleIcon,
+  RocketIcon,
   type LucideIcon,
 } from "lucide-react";
 
@@ -56,34 +57,37 @@ export function CourseLandingHero({
 }: CourseLandingHeroProps) {
   return (
     <div className="flex gap-6">
-      <Card className="flex-1">
-        <CardContent className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+      <section className="flex-1 bg-transparent ring-0">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <section className="flex flex-col gap-6">
             {isFree ? (
-              <div className="w-fit rounded-full bg-foreground/20 px-5 py-1 text-sm font-medium">
+              <div className="w-fit rounded-full bg-foreground/20 px-5 py-1 text-sm">
                 Cały kurs <span className="text-feedback-success">za 0 zł</span>
               </div>
             ) : null}
 
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-3">
               <Image
                 src={imageUrl}
                 alt=""
                 width={72}
                 height={72}
-                className="size-16 shrink-0 sm:size-[72px]"
+                className="size-12 shrink-0 sm:size-16"
               />
               <div className="flex flex-col gap-1">
-                <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+                <h1 className="text-xl font-bold tracking-tight sm:text-2xl">
                   {title}
                 </h1>
-                <p className="text-base text-muted-foreground">{description}</p>
+                <p className="text-sm sm:text-base text-muted-foreground">
+                  {description}
+                </p>
               </div>
             </div>
 
-            <Button asChild size="lg" className="w-fit px-6 text-lg">
+            <Button asChild size="lg" className="w-full max-w-md">
               <Link href={startHref}>
-                <p>{startButtonLabel}</p>
+                <RocketIcon />
+                {startButtonLabel}
               </Link>
             </Button>
           </section>
@@ -106,8 +110,8 @@ export function CourseLandingHero({
               </ul>
             </CardContent>
           </Card>
-        </CardContent>
-      </Card>
+        </div>
+      </section>
     </div>
   );
 }

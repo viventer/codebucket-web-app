@@ -39,7 +39,7 @@ export function CourseEndingElement({ content }: CourseEndingElementProps) {
 
       <section className="flex flex-col gap-4">
         <div>
-          <h2 className="text-lg font-semibold">Czego się nauczyłeś?</h2>
+          <h2 className="text-lg font-medium">Czego się nauczyłeś?</h2>
           <p className="text-sm text-muted-foreground">
             Umiejętności, które przybliżają Cię do Twojego celu.
           </p>
@@ -60,7 +60,7 @@ export function CourseEndingElement({ content }: CourseEndingElementProps) {
 
       <section className="flex flex-col gap-4">
         <div>
-          <h2 className="text-lg font-semibold">{nextSteps.heading}</h2>
+          <h2 className="text-lg font-medium">{nextSteps.heading}</h2>
           <p className="text-sm text-muted-foreground">
             Ukończ kolejny kurs i zdobądź nowe umiejętności.
           </p>

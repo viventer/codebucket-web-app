@@ -9,7 +9,7 @@ export function CourseLandingObjectives({
   whatYouWillLearn,
 }: CourseLandingObjectivesProps) {
   return (
-    <Card>
+    <Card className="bg-primary/20 ring-0">
       <CardHeader>
         <CardTitle className="text-lg">Czego się nauczysz?</CardTitle>
       </CardHeader>
