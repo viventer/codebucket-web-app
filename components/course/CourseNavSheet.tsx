@@ -1,6 +1,6 @@
 "use client";
 
-import { MenuIcon } from "lucide-react";
+import { HomeIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";
 
 import type { CourseElement } from "@/schemas/courseSchema";
@@ -74,7 +74,21 @@ export function CourseNavSheet({
       </SheetTrigger>
       <SheetContent side="left" className="w-80 gap-0 sm:max-w-sm">
         <SheetHeader className="border-b">
-          <SheetTitle>{courseTitle}</SheetTitle>
+          <div className="flex items-center gap-2 pr-8">
+            <SheetClose asChild>
+              <Button variant="ghost" size="icon" asChild>
+                <Link
+                  href={`/course/${courseId}`}
+                  aria-label="Strona główna kursu"
+                >
+                  <HomeIcon />
+                </Link>
+              </Button>
+            </SheetClose>
+            <SheetTitle className="min-w-0 flex-1 truncate">
+              {courseTitle}
+            </SheetTitle>
+          </div>
         </SheetHeader>
         <nav className="flex-1 overflow-y-auto px-2 pt-2 pb-8">
           <CourseSectionsAccordion
