@@ -84,7 +84,12 @@ export function CourseLandingHero({
               </div>
             </div>
 
-            <Button asChild size="lg" className="w-full max-w-md">
+            <Button
+              asChild
+              size="lg"
+              className="w-full max-w-md"
+              data-course-landing-hero-cta
+            >
               <Link href={startHref}>
                 <RocketIcon />
                 {startButtonLabel}

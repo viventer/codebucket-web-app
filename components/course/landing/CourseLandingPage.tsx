@@ -1,3 +1,4 @@
+import { CourseLandingFloatingCta } from "@/components/course/landing/CourseLandingFloatingCta";
 import { CourseLandingCurriculum } from "@/components/course/landing/sections/CourseLandingCurriculum";
 import { CourseLandingFinalCta } from "@/components/course/landing/sections/CourseLandingFinalCta";
 import { CourseLandingHero } from "@/components/course/landing/sections/CourseLandingHero";
@@ -12,34 +13,44 @@ type CourseLandingPageProps = {
 
 export function CourseLandingPage({ data }: CourseLandingPageProps) {
   return (
-    <main className="mx-auto flex w-[90vw] max-w-[1280px] flex-1 flex-col gap-16 pt-8 pb-16 sm:pt-16">
-      <CourseLandingHero
-        title={data.title}
-        description={data.description}
-        imageUrl={data.imageUrl}
+    <>
+      <main className="mx-auto flex w-[90vw] max-w-[1280px] flex-1 flex-col gap-16 pt-8 pb-16 sm:pt-16">
+        <CourseLandingHero
+          title={data.title}
+          description={data.description}
+          imageUrl={data.imageUrl}
+          startHref={data.startHref}
+          startButtonLabel={data.startButtonLabel}
+          courseIncludes={data.courseIncludes}
+          isFree={data.isFree}
+        />
+
+        <CourseLandingStats
+          durationLabel={data.durationLabel}
+          levelLabel={data.levelLabel}
+          prerequisitesLabel={data.prerequisitesLabel}
+        />
+
+        <CourseLandingObjectives whatYouWillLearn={data.whatYouWillLearn} />
+
+        <CourseLandingCurriculum sections={data.sections} />
+
+        <CourseLandingMethodology />
+
+        <div data-course-landing-final-cta>
+          <CourseLandingFinalCta
+            ctaDescription={data.ctaDescription}
+            startHref={data.startHref}
+            finalCtaButtonLabel={data.finalCtaButtonLabel}
+          />
+        </div>
+      </main>
+
+      <CourseLandingFloatingCta
         startHref={data.startHref}
-        startButtonLabel={data.startButtonLabel}
-        courseIncludes={data.courseIncludes}
-        isFree={data.isFree}
+        label={data.finalCtaButtonLabel}
+        className="sm:hidden"
       />
-
-      <CourseLandingStats
-        durationLabel={data.durationLabel}
-        levelLabel={data.levelLabel}
-        prerequisitesLabel={data.prerequisitesLabel}
-      />
-
-      <CourseLandingObjectives whatYouWillLearn={data.whatYouWillLearn} />
-
-      <CourseLandingCurriculum sections={data.sections} />
-
-      <CourseLandingMethodology />
-
-      <CourseLandingFinalCta
-        ctaDescription={data.ctaDescription}
-        startHref={data.startHref}
-        finalCtaButtonLabel={data.finalCtaButtonLabel}
-      />
-    </main>
+    </>
   );
 }
