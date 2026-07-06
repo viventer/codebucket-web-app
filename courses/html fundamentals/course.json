@@ -27,7 +27,7 @@
     {
       "id": "introduction",
       "title": "Wstęp",
-      "description": "Wstęp do kursu",
+      "description": "Wprowadzenie do kursu.",
       "order": 0,
       "elements": [
         {
@@ -45,7 +45,7 @@
     {
       "id": "fundamentals",
       "title": "Fundamenty",
-      "description": "Poznaj HTML od podstaw — tagi, struktura dokumentu i pierwsza strona",
+      "description": "Podstawy podstaw HTML - czym jest i jak działa.",
       "whatYouWillLearn": [
         "Czym jest HTML",
         "Jak budować pierwszą stronę",
@@ -308,7 +308,7 @@
     {
       "id": "text-and-images",
       "title": "Tekst i zdjęcia",
-      "description": "Live Server, podstawowe tagi tekstowe i obrazy na stronie",
+      "description": "Podstawowe tagi tekstowe i obrazy na stronie.",
       "whatYouWillLearn": [
         "Jak korzystać z Live Server i Prettier",
         "Jak formatować tekst tagami HTML",
@@ -1099,7 +1099,7 @@
     {
       "id": "form-building",
       "title": "Podstawy formularzy",
-      "description": "Podstawy tworzenia formularzy w HTML",
+      "description": "Jak tworzyć formularze w HTML.",
       "whatYouWillLearn": [
         "Jak zbudować formularz",
         "Jak łączyć etykiety z polami"
@@ -1450,7 +1450,7 @@
     {
       "id": "form-fields",
       "title": "Inne pola formularza",
-      "description": "Typy pól, radiobuttony, listy wyboru i projekt końcowy",
+      "description": "Typy pól, radiobuttony, listy wyboru i inne.",
       "whatYouWillLearn": [
         "Jak korzystać z różnych typów pól",
         "Jak grupować radiobuttony",
@@ -1766,7 +1766,7 @@
     {
       "id": "semantic-html",
       "title": "Tagi semantyczne",
-      "description": "Semantyczny HTML i sensowna struktura strony",
+      "description": "Semantyczny HTML i sensowna struktura strony.",
       "whatYouWillLearn": [
         "Czym jest semantyczny HTML",
         "Jak używać tagów semantycznych"
@@ -2037,7 +2037,7 @@
     {
       "id": "summary",
       "title": "Podsumowanie",
-      "description": "Podsumowanie kursu HTML",
+      "description": "Szybkie przypomnienie wszystkich tematów.",
       "order": 7,
       "elements": [
         {
