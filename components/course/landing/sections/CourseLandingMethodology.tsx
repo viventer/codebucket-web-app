@@ -17,18 +17,19 @@ const methodologyItems = [
   {
     title: "Podsumowania",
     description:
-      "Ściągi i podsumowania pomagają szybko powtórzyć materiał przed ćwiczeniami.",
+      "Ściągi i podsumowania pomagają szybko powtórzyć materiał przed zadaniami.",
     icon: FileTextIcon,
   },
   {
     title: "Interaktywne ćwiczenia",
     description:
-      "Od razu ćwiczysz to, czego się nauczyłeś — bez pasywnego oglądania.",
+      "Od razu ćwiczysz to, czego się nauczyłeś - bez pasywnego oglądania.",
     icon: PuzzleIcon,
   },
   {
     title: "Wspólne projekty",
-    description: "Budujesz realne strony krok po kroku, razem z instruktorem.",
+    description:
+      "Budujesz realne strony krok po kroku, ucząc się jak wykorzystać zdobytą wiedzę.",
     icon: FolderKanbanIcon,
   },
 ] as const;
