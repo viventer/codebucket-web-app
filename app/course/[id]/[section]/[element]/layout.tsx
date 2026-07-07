@@ -2,10 +2,18 @@ import { notFound } from "next/navigation";
 
 import {
   getAllCourseElementParams,
-  getCourseById,
-  getCoursePath,
+  getCourseElement,
+  getCourseNavigationData,
   getCourseTitle,
-  getElementTitle,
+} from "@/actions/courses/read-courses";
+import {
+  buildOrderedElementRefs,
+  sortOutlineElements,
+  sortOutlineSections,
+  toCourseElement,
+} from "@/actions/courses/helpers";
+import {
+  getCoursePath,
   elementHasHint,
   elementHideInfoOnMobile,
   elementCentersMediaOnMobile,
@@ -17,7 +25,7 @@ import {
   getCompletedElementIds,
   getSectionProgress,
   getSectionsCompleted,
-} from "@/lib/progress";
+} from "@/lib/course/progress";
 import { CourseElementShell } from "@/components/course/CourseElementShell";
 
 export async function generateStaticParams() {
@@ -35,27 +43,21 @@ export default async function ElementLayout({
 }: ElementLayoutProps) {
   const { id, section: sectionId, element: elementId } = await params;
 
-  const course = await getCourseById(id);
-  if (!course) notFound();
+  const [navigationData, currentElementDocument] = await Promise.all([
+    getCourseNavigationData(id),
+    getCourseElement(id, sectionId, elementId),
+  ]);
 
-  const currentSection = course.sections.find((s) => s.id === sectionId);
+  if (!navigationData || !currentElementDocument) notFound();
+
+  const { course, outline } = navigationData;
+  const currentSection = outline.sections.find(
+    (section) => section.id === sectionId,
+  );
   if (!currentSection) notFound();
 
-  const currentElement = currentSection.elements.find(
-    (e) => e.id === elementId,
-  );
-  if (!currentElement) notFound();
-
-  const orderedElements = [...course.sections]
-    .sort((a, b) => a.order - b.order)
-    .flatMap((section) =>
-      [...section.elements]
-        .sort((a, b) => a.order - b.order)
-        .map((element) => ({
-          sectionId: section.id,
-          elementId: element.id,
-        })),
-    );
+  const currentElement = toCourseElement(currentElementDocument);
+  const orderedElements = buildOrderedElementRefs(outline);
 
   const currentIndex = orderedElements.findIndex(
     (item) => item.sectionId === sectionId && item.elementId === elementId,
@@ -76,22 +78,26 @@ export default async function ElementLayout({
 
   let nextElement: { id: string; title: string } | null = null;
   if (next) {
-    const nextSection = course.sections.find((s) => s.id === next.sectionId);
-    const nextEl = nextSection?.elements.find((e) => e.id === next.elementId);
+    const nextSection = outline.sections.find(
+      (section) => section.id === next.sectionId,
+    );
+    const nextEl = nextSection?.elements.find(
+      (element) => element.id === next.elementId,
+    );
     if (nextEl) {
-      nextElement = { id: nextEl.id, title: getElementTitle(nextEl) };
+      nextElement = { id: nextEl.id, title: nextEl.displayTitle };
     }
   }
 
   const navigationMetadata = buildCourseNavigationMetadata(
-    course,
+    { id: course.id, outline },
     sectionId,
     elementId,
     orderedElements,
     currentIndex,
     {
       id: currentElement.id,
-      title: getElementTitle(currentElement),
+      title: currentElementDocument.displayTitle,
       type: currentElement.type,
     },
     nextElement,
@@ -101,30 +107,34 @@ export default async function ElementLayout({
   const completedIds = getCompletedElementIds(user, course.id);
   const elementsCompleted = Array.from(completedIds);
   const sectionsCompleted = getSectionsCompleted(user, course.id);
-  const progress = getSectionProgress(course, sectionId, user);
+  const progress = getSectionProgress(
+    course.id,
+    sortOutlineElements(currentSection.elements).map((element) => element.id),
+    user,
+  );
 
-  const sections = [...course.sections]
-    .sort((a, b) => a.order - b.order)
-    .map((section) => ({
-      id: section.id,
-      title: section.title,
-      order: section.order,
-      elements: [...section.elements]
-        .sort((a, b) => a.order - b.order)
-        .map((element) => ({
-          id: element.id,
-          title: getElementTitle(element),
-          type: element.type,
-          completed: completedIds.has(element.id),
-        })),
-    }));
+  const sections = sortOutlineSections(outline).map((section) => ({
+    id: section.id,
+    title: section.title,
+    order: section.order,
+    elements: sortOutlineElements(section.elements).map((element) => ({
+      id: element.id,
+      title: element.displayTitle,
+      type: element.type,
+      completed: completedIds.has(element.id),
+    })),
+  }));
+
+  const unlockedCourseTitles = await Promise.all(
+    user.unlockedCourses.map(async (courseId) => ({
+      id: courseId,
+      title: (await getCourseTitle(courseId)) ?? courseId,
+    })),
+  );
 
   const account = {
     email: user.email,
-    courses: user.unlockedCourses.map((courseId) => ({
-      id: courseId,
-      title: getCourseTitle(courseId) ?? courseId,
-    })),
+    courses: unlockedCourseTitles,
     currentCourseId: user.currentCourse,
   };
 
@@ -162,7 +172,7 @@ export default async function ElementLayout({
       }}
       actionBarProps={{
         type: currentElement.type,
-        title: getElementTitle(currentElement),
+        title: currentElementDocument.displayTitle,
         sectionOrder: currentSection.order,
         sectionTitle: currentSection.title,
         hideInfoOnMobile: elementHideInfoOnMobile(currentElement),

@@ -1,4 +1,4 @@
-import type { CustomExerciseContent } from "@/schemas/courseSchema";
+import type { CustomExerciseContent } from "@/schemas/exerciseSchema";
 
 export function CustomExerciseElement({
   content,

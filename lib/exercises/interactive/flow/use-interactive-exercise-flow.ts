@@ -2,7 +2,7 @@
 
 import { useState, type Dispatch, type SetStateAction } from "react";
 
-import type { InteractiveExerciseContent } from "@/schemas/courseSchema";
+import type { InteractiveExerciseContent } from "@/schemas/exerciseSchema";
 
 import type { InteractiveExerciseFlowPhase, StageProgress } from "../../shared/types";
 import {

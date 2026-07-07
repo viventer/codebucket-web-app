@@ -1,3 +1,5 @@
+"use server";
+
 import { getPublicStorageUrls } from "@/actions/storage/storage";
 import { adminStorage } from "@/firebase/admin-init";
 import {
@@ -7,13 +9,13 @@ import {
 import {
   getCheatsheetFolderPath,
   getExerciseAssetStoragePath,
-} from "@/lib/course-storage-paths";
+} from "@/actions/storage/course-storage-paths";
 import type {
   ExerciseStage,
   InteractiveExerciseContent,
   LocalCodeExerciseContent,
   SelectCorrectPrompt,
-} from "@/schemas/courseSchema";
+} from "@/schemas/exerciseSchema";
 
 type AssetReference = {
   key: string;

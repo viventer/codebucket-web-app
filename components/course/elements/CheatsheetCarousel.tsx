@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 import { useCheatsheetFullscreen } from "@/lib/course/cheatsheet-fullscreen-context";
 import type { CarouselApi } from "@/components/ui/carousel";
-import type { CheatsheetSlide } from "@/lib/course/resolve-element-assets";
+import type { CheatsheetSlide } from "@/actions/storage/resolve-element-assets";
 
 import { CheatsheetCarouselView } from "./CheatsheetCarouselView";
 import { CheatsheetFullscreenOverlay } from "./CheatsheetFullscreenOverlay";

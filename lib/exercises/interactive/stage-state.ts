@@ -4,7 +4,7 @@ import type {
   MatchPairsStage,
   InteractiveExerciseContent,
   ExerciseStage,
-} from "@/schemas/courseSchema";
+} from "@/schemas/exerciseSchema";
 
 import {
   createInitialChooseMatchingState,

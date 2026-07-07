@@ -1,5 +1,5 @@
 import type { CheatsheetContent } from "@/schemas/courseSchema";
-import { resolveCheatsheetAssets } from "@/lib/course/resolve-element-assets";
+import { resolveCheatsheetAssets } from "@/actions/storage/resolve-element-assets";
 
 import { CheatsheetCarousel } from "./CheatsheetCarousel";
 

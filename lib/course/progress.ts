@@ -1,4 +1,3 @@
-import type { Course } from "@/schemas/courseSchema";
 import type { User } from "@/schemas/userSchema";
 
 export type SectionProgress = {
@@ -24,16 +23,15 @@ export function getSectionsCompleted(
 }
 
 export function getSectionProgress(
-  course: Course,
-  sectionId: string,
+  courseId: string,
+  sectionElementIds: string[],
   user: User,
 ): SectionProgress {
-  const section = course.sections.find((s) => s.id === sectionId);
-  const total = section?.elements.length ?? 0;
-  const completedIds = getCompletedElementIds(user, course.id);
-  const completed =
-    section?.elements.filter((element) => completedIds.has(element.id)).length ??
-    0;
+  const completedIds = getCompletedElementIds(user, courseId);
+  const total = sectionElementIds.length;
+  const completed = sectionElementIds.filter((elementId) =>
+    completedIds.has(elementId),
+  ).length;
   const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
 
   return { completed, total, percent };

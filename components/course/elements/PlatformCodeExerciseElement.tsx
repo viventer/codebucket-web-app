@@ -1,4 +1,4 @@
-import type { PlatformCodeExerciseContent } from "@/schemas/courseSchema";
+import type { PlatformCodeExerciseContent } from "@/schemas/exerciseSchema";
 
 export function PlatformCodeExerciseElement({
   content,

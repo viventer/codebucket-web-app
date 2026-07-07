@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import type { CodeSnippet } from "@/schemas/courseSchema";
+import type { CodeSnippet } from "@/schemas/exerciseSchema";
 
 type ExerciseCodeSolutionDialogProps = {
   open: boolean;

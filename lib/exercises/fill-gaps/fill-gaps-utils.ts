@@ -1,4 +1,4 @@
-import type { FillGapsLine } from "@/schemas/courseSchema";
+import type { FillGapsLine } from "@/schemas/exerciseSchema";
 
 import type { CheckResult } from "../shared/types";
 

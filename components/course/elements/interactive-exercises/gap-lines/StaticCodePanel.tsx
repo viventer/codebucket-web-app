@@ -2,7 +2,7 @@
 
 import { codeStringToLines } from "@/lib/exercises/shared/code-string-to-lines";
 import { cn } from "@/lib/utils";
-import type { Language } from "@/schemas/courseSchema";
+import type { Language } from "@/schemas/exerciseSchema";
 
 import { Card, CardContent } from "@/components/ui/card";
 

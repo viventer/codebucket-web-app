@@ -1,6 +1,6 @@
 "use client";
 
-import type { InteractiveExerciseContent } from "@/schemas/courseSchema";
+import type { InteractiveExerciseContent } from "@/schemas/exerciseSchema";
 
 import { getStageFeedbackTarget } from "../fill-gaps/fill-gaps-utils";
 import type {

@@ -23,12 +23,14 @@ export function CourseLandingFinalCta({
           <p className="text-sm text-muted-foreground">{ctaDescription}</p>
         </div>
 
-        <Button asChild size="lg" className="w-full max-w-md">
-          <Link href={startHref}>
-            <RocketIcon />
-            {finalCtaButtonLabel}
-          </Link>
-        </Button>
+        {startHref ? (
+          <Button asChild size="lg" className="w-full max-w-md">
+            <Link href={startHref}>
+              <RocketIcon />
+              {finalCtaButtonLabel}
+            </Link>
+          </Button>
+        ) : null}
       </CardContent>
     </Card>
   );

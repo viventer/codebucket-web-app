@@ -5,8 +5,8 @@ type SiteLayoutProps = {
   children: React.ReactNode;
 };
 
-export default function SiteLayout({ children }: SiteLayoutProps) {
-  const { isAuthenticated, account } = getMainHeaderAccount();
+export default async function SiteLayout({ children }: SiteLayoutProps) {
+  const { isAuthenticated, account } = await getMainHeaderAccount();
 
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground">

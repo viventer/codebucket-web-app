@@ -7,7 +7,7 @@ import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { useCheatsheetFullscreen } from "@/lib/course/cheatsheet-fullscreen-context";
 import { cn } from "@/lib/utils";
-import type { CheatsheetSlide } from "@/lib/course/resolve-element-assets";
+import type { CheatsheetSlide } from "@/actions/storage/resolve-element-assets";
 import { CheatsheetCarouselView } from "./CheatsheetCarouselView";
 
 type CheatsheetFullscreenOverlayProps = {

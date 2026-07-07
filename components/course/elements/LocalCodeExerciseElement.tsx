@@ -4,7 +4,7 @@ import { StaticCodePanel } from "@/components/course/elements/interactive-exerci
 import { HTMLPreview } from "@/components/html-preview/HTMLPreview";
 import { Card, CardContent } from "@/components/ui/card";
 import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
-import type { LocalCodeExerciseContent } from "@/schemas/courseSchema";
+import type { LocalCodeExerciseContent } from "@/schemas/exerciseSchema";
 import { cn } from "@/lib/utils";
 
 const COMPLETED_COMMAND = "Porównaj swoje rozwiązanie z przykładowym.";

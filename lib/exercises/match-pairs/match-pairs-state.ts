@@ -1,5 +1,5 @@
 import type { MatchPairItemState } from "../shared/item-glow-style";
-import type { MatchPairsStage } from "@/schemas/courseSchema";
+import type { MatchPairsStage } from "@/schemas/exerciseSchema";
 
 import type { MatchPairsColumn, MatchPairsItem } from "../shared/types";
 

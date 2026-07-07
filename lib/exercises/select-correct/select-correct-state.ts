@@ -1,4 +1,4 @@
-import type { SelectCorrectAnswer } from "@/schemas/courseSchema";
+import type { SelectCorrectAnswer } from "@/schemas/exerciseSchema";
 
 export type SelectCorrectInput = {
   question: string;

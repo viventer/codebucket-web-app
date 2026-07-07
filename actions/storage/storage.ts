@@ -4,7 +4,7 @@ import { getDownloadURL } from "firebase-admin/storage";
 import { z } from "zod";
 
 import { adminStorage } from "@/firebase/admin-init";
-import { normalizeStoragePath } from "@/actions/helpers";
+import { normalizeStoragePath } from "@/actions/storage/helpers";
 
 async function resolvePublicStorageUrl(storagePath: string): Promise<string> {
   const normalized = normalizeStoragePath(storagePath);

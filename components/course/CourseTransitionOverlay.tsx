@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useCourseNavigation } from "@/lib/course/navigation-transition-context";
 import type { TransitionOverlayVariant } from "@/lib/course/navigation-transition-types";
-import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 const MotionCard = motion.create(Card);
 

@@ -84,17 +84,19 @@ export function CourseLandingHero({
               </div>
             </div>
 
-            <Button
-              asChild
-              size="lg"
-              className="w-full max-w-md"
-              data-course-landing-hero-cta
-            >
-              <Link href={startHref}>
-                <RocketIcon />
-                {startButtonLabel}
-              </Link>
-            </Button>
+            {startHref ? (
+              <Button
+                asChild
+                size="lg"
+                className="w-full max-w-md"
+                data-course-landing-hero-cta
+              >
+                <Link href={startHref}>
+                  <RocketIcon />
+                  {startButtonLabel}
+                </Link>
+              </Button>
+            ) : null}
           </section>
           <Card className="w-full sm:w-fit justify-center bg-primary/20 ring-0">
             <CardHeader>

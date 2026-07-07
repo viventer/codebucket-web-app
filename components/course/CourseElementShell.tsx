@@ -12,10 +12,8 @@ import {
   type CourseHeaderProps,
 } from "@/components/course/CourseHeader";
 import { CourseTransitionOverlay } from "@/components/course/CourseTransitionOverlay";
-import {
-  ElementActionBar,
-  type ElementActionBarProps,
-} from "@/components/course/element-action-bar";
+import { ElementActionBar } from "@/components/course/element-action-bar/ElementActionBar";
+import type { ElementActionBarProps } from "@/components/course/element-action-bar/types";
 import { cn } from "@/lib/utils";
 
 type CourseElementShellProps = {

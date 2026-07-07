@@ -6,11 +6,11 @@ import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
 
 type CourseLandingFloatingCtaProps = {
-  startHref: string;
+  startHref: string | null;
   label: string;
   className?: string;
 };
@@ -24,7 +24,8 @@ export function CourseLandingFloatingCta({
   const [heroCtaVisible, setHeroCtaVisible] = useState(true);
   const [finalCtaVisible, setFinalCtaVisible] = useState(false);
 
-  const showFloatingCta = !heroCtaVisible && !finalCtaVisible;
+  const showFloatingCta =
+    Boolean(startHref) && !heroCtaVisible && !finalCtaVisible;
 
   useEffect(() => {
     const heroCta = document.querySelector("[data-course-landing-hero-cta]");
@@ -83,7 +84,7 @@ export function CourseLandingFloatingCta({
         className="mx-auto flex w-[90vw] max-w-[1280px] items-center justify-center rounded-xl border border-accent bg-background/70 px-4! py-3 backdrop-blur"
       >
         <Button asChild size="lg" className="w-full max-w-md">
-          <Link href={startHref}>
+          <Link href={startHref!}>
             <RocketIcon />
             {label}
           </Link>

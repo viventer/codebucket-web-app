@@ -7,7 +7,7 @@ import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionConte
 import type {
   ExerciseStagePresentation,
   InteractiveExerciseContent,
-} from "@/schemas/courseSchema";
+} from "@/schemas/exerciseSchema";
 
 import { FillGapsWorkspace } from "./FillGapsWorkspace";
 import { GapLinesPanel } from "./gap-lines/GapLinesPanel";

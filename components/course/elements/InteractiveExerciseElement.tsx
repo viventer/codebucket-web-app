@@ -1,6 +1,6 @@
 "use client";
 
-import type { InteractiveExerciseContent } from "@/schemas/courseSchema";
+import type { InteractiveExerciseContent } from "@/schemas/exerciseSchema";
 
 import { InteractiveExerciseStages } from "./interactive-exercises/InteractiveExerciseStages";
 

@@ -2,12 +2,12 @@
 
 import { motion } from "motion/react";
 
-import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import type {
   SelectCorrectAnswerVisualState,
   SelectCorrectPhase,
 } from "@/lib/exercises/select-correct/select-correct-state";
-import type { SelectCorrectPrompt } from "@/schemas/courseSchema";
+import type { SelectCorrectPrompt } from "@/schemas/exerciseSchema";
 
 import { SelectCorrectAnswerButton } from "./SelectCorrectAnswerButton";
 import { SELECT_CORRECT_CODE_INSTRUCTION } from "./constants";

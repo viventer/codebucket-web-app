@@ -6,7 +6,7 @@ import { createFolderZipDownloadUrl } from "@/actions/storage/create-folder-zip-
 import {
   getExerciseMaterialsFolderPath,
   getGuidedProjectMaterialsFolderPath,
-} from "@/lib/course-storage-paths";
+} from "@/actions/storage/course-storage-paths";
 
 const courseIdSchema = z
   .string()

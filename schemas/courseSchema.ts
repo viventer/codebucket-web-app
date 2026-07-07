@@ -8,50 +8,6 @@ import {
   codeSnippetSchema,
 } from "./exerciseSchema";
 
-export {
-  codeSnippetSchema,
-  customExerciseContentSchema,
-  fillGapsGroupSegmentSchema,
-  fillGapsLineSchema,
-  fillCodeStageSchema,
-  fillGapsStageSchema,
-  matchPairsStageSchema,
-  exerciseStagePresentationSchema,
-  exerciseStageSchema,
-  interactiveExerciseContentSchema,
-  languageSchema,
-  localCodeExerciseContentSchema,
-  matchPairSchema,
-  platformCodeExerciseContentSchema,
-  selectCorrectAnswerSchema,
-  selectCorrectAnswerTypeSchema,
-  selectCorrectPromptSchema,
-  selectCorrectStageSchema,
-  chooseMatchingItemSchema,
-  chooseMatchingStageSchema,
-} from "./exerciseSchema";
-
-export type {
-  CodeSnippet,
-  CustomExerciseContent,
-  FillGapsLine,
-  FillCodeStage,
-  FillGapsStage,
-  MatchPairsStage,
-  ExerciseStage,
-  ExerciseStagePresentation,
-  SelectCorrectAnswer,
-  SelectCorrectAnswerType,
-  SelectCorrectPrompt,
-  SelectCorrectStage,
-  ChooseMatchingItem,
-  ChooseMatchingStage,
-  InteractiveExerciseContent,
-  Language,
-  LocalCodeExerciseContent,
-  PlatformCodeExerciseContent,
-} from "./exerciseSchema";
-
 export const courseElementTypeSchema = z.enum([
   "video",
   "platformCodeExercise",
@@ -221,3 +177,66 @@ export type CourseSection = z.infer<typeof courseSectionSchema>;
 /** @deprecated Use CourseEndingContent */
 export type CourseEnding = CourseEndingContent;
 export type Course = z.infer<typeof courseSchema>;
+
+export const courseOutlineElementSchema = z.object({
+  id: z.string().min(1),
+  type: courseElementTypeSchema,
+  displayTitle: z.string().min(1),
+  order: z.number().min(1),
+});
+
+export const courseOutlineSectionSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(1),
+  description: z.string().min(1),
+  order: z.number().min(0),
+  elements: z.array(courseOutlineElementSchema),
+});
+
+export const courseOutlineSchema = z.object({
+  startSectionId: z.string().min(1).optional(),
+  startElementId: z.string().min(1).optional(),
+  sections: z.array(courseOutlineSectionSchema),
+});
+
+export const courseSectionDocumentSchema = courseSectionSchema.omit({
+  elements: true,
+});
+
+export const courseElementDocumentSchema = courseElementSchema.and(
+  z.object({
+    displayTitle: z.string().min(1),
+  }),
+);
+
+export const courseCardFieldsSchema = z.object({
+  badge: z.string().min(1),
+  badgeClassName: z.string().min(1),
+  isPresale: z.boolean(),
+});
+
+export const courseDocumentSchema = courseSchema
+  .omit({ sections: true })
+  .extend({
+    outline: courseOutlineSchema,
+    ...courseCardFieldsSchema.shape,
+  })
+  .partial({
+    badge: true,
+    badgeClassName: true,
+    isPresale: true,
+  });
+
+/** JSON source file — dates as ISO strings, includes nested sections. */
+export const courseJsonSchema = courseSchema.extend({
+  createdAt: z.union([z.date(), z.string()]),
+  updatedAt: z.union([z.date(), z.string()]),
+});
+
+export type CourseOutlineElement = z.infer<typeof courseOutlineElementSchema>;
+export type CourseOutlineSection = z.infer<typeof courseOutlineSectionSchema>;
+export type CourseOutline = z.infer<typeof courseOutlineSchema>;
+export type CourseSectionDocument = z.infer<typeof courseSectionDocumentSchema>;
+export type CourseElementDocument = z.infer<typeof courseElementDocumentSchema>;
+export type CourseDocument = z.infer<typeof courseDocumentSchema>;
+export type CourseJson = z.infer<typeof courseJsonSchema>;

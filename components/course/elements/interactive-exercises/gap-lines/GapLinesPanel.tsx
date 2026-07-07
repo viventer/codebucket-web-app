@@ -4,7 +4,7 @@ import { useExerciseSessionOptional } from "@/lib/exercises/session/ExerciseSess
 import { itemGlowStyleFromExerciseFeedback } from "@/lib/exercises/shared/item-glow-style";
 import type { GapLinesContent } from "@/lib/exercises/fill-gaps/fill-gaps-utils";
 import { cn } from "@/lib/utils";
-import type { FillGapsLine, Language } from "@/schemas/courseSchema";
+import type { FillGapsLine, Language } from "@/schemas/exerciseSchema";
 
 import { Card, CardContent } from "@/components/ui/card";
 

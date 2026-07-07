@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import type { CourseElement } from "@/schemas/courseSchema";
 import { useCourseNavigation } from "@/lib/course/navigation-transition-context";
-import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { useExerciseSessionOptional } from "@/lib/exercises/session/ExerciseSessionContext";
 import { cn } from "@/lib/utils";
 

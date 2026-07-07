@@ -1,6 +1,8 @@
-import { getElementTitle } from "@/lib/courses";
-import type { Course } from "@/schemas/courseSchema";
-import type { CourseElement } from "@/schemas/courseSchema";
+import type { CourseDocument, CourseElement } from "@/schemas/courseSchema";
+import {
+  sortOutlineElements,
+  sortOutlineSections,
+} from "@/actions/courses/helpers";
 
 export type CourseLandingSection = {
   id: string;
@@ -21,7 +23,7 @@ export type CourseLandingData = {
   description: string;
   imageUrl: string;
   isFree: boolean;
-  startHref: string;
+  startHref: string | null;
   courseIncludes: string[];
   durationLabel: string;
   levelLabel: string;
@@ -75,37 +77,33 @@ export function getCourseImageUrl(courseId: string, filename: string): string {
   return `/courses/${courseId}/${normalizedFilename}`;
 }
 
-export function getFirstElementPath(course: Course): string {
-  const firstSection = [...course.sections].sort(
-    (a, b) => a.order - b.order,
-  )[0];
-  const firstElement = [...firstSection.elements].sort(
-    (a, b) => a.order - b.order,
-  )[0];
+export function getFirstElementPath(course: CourseDocument): string | null {
+  const { startSectionId, startElementId } = course.outline;
+  if (!startSectionId || !startElementId) {
+    return null;
+  }
 
-  return `/course/${course.id}/${firstSection.id}/${firstElement.id}`;
+  return `/course/${course.id}/${startSectionId}/${startElementId}`;
 }
 
-export function buildCourseLandingData(course: Course): CourseLandingData {
+export function buildCourseLandingData(
+  course: CourseDocument,
+): CourseLandingData {
   const startHref = getFirstElementPath(course);
   const isFree = course.price.isFree;
 
-  const sections = [...course.sections]
-    .sort((a, b) => a.order - b.order)
-    .map((section) => ({
-      id: section.id,
-      title: section.title,
-      description: section.description,
-      order: section.order,
-      elements: [...section.elements]
-        .sort((a, b) => a.order - b.order)
-        .map((element) => ({
-          id: element.id,
-          title: getElementTitle(element),
-          type: element.type,
-          href: `/course/${course.id}/${section.id}/${element.id}`,
-        })),
-    }));
+  const sections = sortOutlineSections(course.outline).map((section) => ({
+    id: section.id,
+    title: section.title,
+    description: section.description,
+    order: section.order,
+    elements: sortOutlineElements(section.elements).map((element) => ({
+      id: element.id,
+      title: element.displayTitle,
+      type: element.type,
+      href: `/course/${course.id}/${section.id}/${element.id}`,
+    })),
+  }));
 
   return {
     id: course.id,

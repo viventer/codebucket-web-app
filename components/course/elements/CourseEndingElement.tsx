@@ -1,22 +1,21 @@
-import { CheckCircle2Icon, CheckIcon } from "lucide-react";
-
-import { ClientIcon } from "@/components/ui/client-icon";
 import type { CourseEndingContent } from "@/schemas/courseSchema";
-import { getCourseCardData } from "@/lib/courses";
+import type { CourseCardData } from "@/actions/courses/types";
 
 import { RecommendedCourseCard } from "./RecommendedCourseCard";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { ClientIcon } from "@/components/ui/client-icon";
+import { CheckCircle2Icon } from "lucide-react";
 
 type CourseEndingElementProps = {
   content: CourseEndingContent;
+  recommendedCourses: CourseCardData[];
 };
 
-export function CourseEndingElement({ content }: CourseEndingElementProps) {
+export function CourseEndingElement({
+  content,
+  recommendedCourses,
+}: CourseEndingElementProps) {
   const { congrats, obtainedSkills, nextSteps } = content;
-
-  const recommendedCourses = nextSteps.recommendedCourseIds
-    .map((id) => getCourseCardData(id))
-    .filter((course) => course !== null);
 
   return (
     <div className="mx-auto max-w-xl flex flex-col gap-16">

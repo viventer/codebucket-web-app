@@ -1,7 +1,7 @@
 "use client";
 
 import { HTMLPreview } from "@/components/html-preview/HTMLPreview";
-import type { ExerciseStagePresentation } from "@/schemas/courseSchema";
+import type { ExerciseStagePresentation } from "@/schemas/exerciseSchema";
 
 import { StageImageDiagram } from "./StageImageDiagram";
 

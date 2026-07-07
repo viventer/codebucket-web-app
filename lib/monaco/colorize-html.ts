@@ -1,4 +1,4 @@
-import type { Language } from "@/schemas/courseSchema";
+import type { Language } from "@/schemas/exerciseSchema";
 
 import type { CodeThemeMode } from "./theme-colors";
 

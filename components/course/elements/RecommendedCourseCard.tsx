@@ -15,7 +15,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getCoursePath, type CourseCardData } from "@/lib/courses";
+import { getCoursePath } from "@/lib/courses";
+import type { CourseCardData } from "@/actions/courses/types";
 import { cn } from "@/lib/utils";
 
 const MAX_TOPICS = 6;

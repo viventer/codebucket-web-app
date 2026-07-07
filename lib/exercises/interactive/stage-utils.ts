@@ -5,7 +5,7 @@ import type {
   MatchPairsStage,
   ExerciseStage,
   SelectCorrectStage,
-} from "@/schemas/courseSchema";
+} from "@/schemas/exerciseSchema";
 
 import type { StageActionBarVariant } from "../shared/types";
 

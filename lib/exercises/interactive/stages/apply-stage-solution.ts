@@ -1,4 +1,4 @@
-import type { FillCodeStage, FillGapsStage } from "@/schemas/courseSchema";
+import type { FillCodeStage, FillGapsStage } from "@/schemas/exerciseSchema";
 
 import { applyFillGapsSolution } from "../../fill-gaps/fill-gaps-utils";
 

@@ -1,4 +1,4 @@
-import type { Course } from "@/schemas/courseSchema";
+import type { CourseOutline } from "@/schemas/courseSchema";
 
 import type {
   CourseElementNavRef,
@@ -10,8 +10,13 @@ type OrderedElementRef = {
   elementId: string;
 };
 
+export type CourseNavigationInput = {
+  id: string;
+  outline: CourseOutline;
+};
+
 export function buildCourseNavigationMetadata(
-  course: Course,
+  course: CourseNavigationInput,
   sectionId: string,
   elementId: string,
   orderedElements: OrderedElementRef[],
@@ -19,7 +24,9 @@ export function buildCourseNavigationMetadata(
   currentElement: CourseElementNavRef,
   nextElement: { id: string; title: string } | null,
 ): CourseNavigationMetadata {
-  const currentSection = course.sections.find((section) => section.id === sectionId);
+  const currentSection = course.outline.sections.find(
+    (section) => section.id === sectionId,
+  );
   if (!currentSection) {
     throw new Error(`Section not found: ${sectionId}`);
   }
@@ -31,7 +38,9 @@ export function buildCourseNavigationMetadata(
       : undefined;
 
   const getSectionRef = (targetSectionId: string) => {
-    const section = course.sections.find((item) => item.id === targetSectionId);
+    const section = course.outline.sections.find(
+      (item) => item.id === targetSectionId,
+    );
     if (!section) {
       return null;
     }

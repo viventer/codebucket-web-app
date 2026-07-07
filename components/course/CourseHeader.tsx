@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import type { SectionProgress } from "@/lib/progress";
+import type { SectionProgress } from "@/lib/course/progress";
 import {
   AccountDialog,
   type AccountCourse,

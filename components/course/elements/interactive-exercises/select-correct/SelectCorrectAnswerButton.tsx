@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
-import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { itemGlowStyle } from "@/lib/exercises/shared/item-glow-style";
 import type { SelectCorrectAnswerVisualState } from "@/lib/exercises/select-correct/select-correct-state";
 import { cn } from "@/lib/utils";

@@ -4,7 +4,7 @@ import type {
   ExerciseStage,
   InteractiveExerciseContent,
   SelectCorrectPrompt,
-} from "@/schemas/courseSchema";
+} from "@/schemas/exerciseSchema";
 
 import type {
   ChooseMatchingItemVisualState,

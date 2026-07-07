@@ -2,7 +2,7 @@
 
 import { getClosingTag } from "@/lib/exercises/fill-gaps/fill-gaps-utils";
 import { sliceColorizedHtml } from "@/lib/monaco/slice-colorized-html";
-import type { Language } from "@/schemas/courseSchema";
+import type { Language } from "@/schemas/exerciseSchema";
 
 import { GapInputSlot } from "../fill-code/GapInputSlot";
 import { GapSlot } from "../fill-gaps/GapSlot";

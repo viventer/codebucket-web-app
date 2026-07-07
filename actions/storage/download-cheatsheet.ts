@@ -3,7 +3,7 @@
 import { z } from "zod";
 
 import { createFolderZipDownloadUrl } from "@/actions/storage/create-folder-zip-download-url";
-import { getCheatsheetFolderPath } from "@/lib/course-storage-paths";
+import { getCheatsheetFolderPath } from "@/actions/storage/course-storage-paths";
 
 const courseIdSchema = z
   .string()

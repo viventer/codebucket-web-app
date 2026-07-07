@@ -66,5 +66,3 @@ export function useExerciseSession(): ExerciseSessionContextValue {
 export function useExerciseSessionOptional(): ExerciseSessionContextValue | null {
   return useContext(ExerciseSessionContext);
 }
-
-export type { InteractiveExerciseController } from "../shared/types";

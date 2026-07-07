@@ -1,7 +1,7 @@
 import type {
   FillCodeStage,
   FillGapsStage,
-} from "@/schemas/courseSchema";
+} from "@/schemas/exerciseSchema";
 
 import { evaluateFillGapsCheck } from "../../fill-gaps/fill-gaps-utils";
 import { isSelectCorrectComplete } from "../../select-correct/select-correct-state";

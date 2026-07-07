@@ -6,8 +6,8 @@ import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 
 import { useCourseNavigation } from "@/lib/course/navigation-transition-context";
-import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
-import { useSkipInitialMotion } from "@/lib/course/use-skip-initial-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useSkipInitialMotion } from "@/hooks/use-skip-initial-motion";
 import { cn } from "@/lib/utils";
 
 type AnimatedActionBarContentProps = {

@@ -1,7 +1,7 @@
 "use client";
 
 import { sliceColorizedHtml } from "@/lib/monaco/slice-colorized-html";
-import type { Language } from "@/schemas/courseSchema";
+import type { Language } from "@/schemas/exerciseSchema";
 
 import { ColorizedText } from "./ColorizedText";
 import { useColorizedLine } from "./use-colorized-line";

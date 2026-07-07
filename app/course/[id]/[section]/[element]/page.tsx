@@ -1,10 +1,14 @@
 import { notFound } from "next/navigation";
 
-import { getCourseById } from "@/lib/courses";
+import {
+  getCourseCardData,
+  getCourseElement,
+} from "@/actions/courses/read-courses";
+import { toCourseElement } from "@/actions/courses/helpers";
 import {
   resolveInteractiveExerciseAssets,
   resolveLocalCodeExerciseAssets,
-} from "@/lib/course/resolve-element-assets";
+} from "@/actions/storage/resolve-element-assets";
 import { LocalCodeExerciseElement } from "@/components/course/elements/LocalCodeExerciseElement";
 import { PlatformCodeExerciseElement } from "@/components/course/elements/PlatformCodeExerciseElement";
 import { CheatsheetElement } from "@/components/course/elements/CheatsheetElement";
@@ -25,14 +29,10 @@ export default async function CourseElementPage({
 }: CourseElementPageProps) {
   const { id, section: sectionId, element: elementId } = await params;
 
-  const course = await getCourseById(id);
-  if (!course) notFound();
+  const elementDocument = await getCourseElement(id, sectionId, elementId);
+  if (!elementDocument) notFound();
 
-  const section = course.sections.find((s) => s.id === sectionId);
-  if (!section) notFound();
-
-  const element = section.elements.find((e) => e.id === elementId);
-  if (!element) notFound();
+  const element = toCourseElement(elementDocument);
 
   switch (element.type) {
     case "video":
@@ -73,7 +73,21 @@ export default async function CourseElementPage({
           content={element.content}
         />
       );
-    case "courseEnding":
-      return <CourseEndingElement content={element.content} />;
+    case "courseEnding": {
+      const recommendedCourses = (
+        await Promise.all(
+          element.content.nextSteps.recommendedCourseIds.map((courseId) =>
+            getCourseCardData(courseId),
+          ),
+        )
+      ).filter((course) => course !== null);
+
+      return (
+        <CourseEndingElement
+          content={element.content}
+          recommendedCourses={recommendedCourses}
+        />
+      );
+    }
   }
 }

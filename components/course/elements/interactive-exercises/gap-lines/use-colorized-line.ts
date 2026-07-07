@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { colorizeCode } from "@/lib/monaco/setup";
 import { useCodeTheme } from "@/lib/monaco/use-code-theme";
-import type { Language } from "@/schemas/courseSchema";
+import type { Language } from "@/schemas/exerciseSchema";
 
 import {
   buildLineColorizePlainText,

@@ -2,10 +2,11 @@ import { notFound } from "next/navigation";
 
 import { CourseLandingPage } from "@/components/course/landing/CourseLandingPage";
 import { buildCourseLandingData } from "@/lib/course/landing-data";
-import { getCourseById, getRegisteredCourseIds } from "@/lib/courses";
+import { getCourseDocument, listCourseIds } from "@/actions/courses/read-courses";
 
 export async function generateStaticParams() {
-  return getRegisteredCourseIds().map((id) => ({ id }));
+  const courseIds = await listCourseIds();
+  return courseIds.map((id) => ({ id }));
 }
 
 type CourseLandingRouteProps = {
@@ -17,7 +18,7 @@ export default async function CourseLandingRoute({
 }: CourseLandingRouteProps) {
   const { id } = await params;
 
-  const course = await getCourseById(id);
+  const course = await getCourseDocument(id);
   if (!course) notFound();
 
   const data = buildCourseLandingData(course);

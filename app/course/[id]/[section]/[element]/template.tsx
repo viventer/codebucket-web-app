@@ -9,8 +9,8 @@ import {
   TRANSITION_OVERLAY_VISIBLE_MS,
 } from "@/components/course/CourseTransitionOverlay";
 import { useCourseNavigation } from "@/lib/course/navigation-transition-context";
-import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
-import { useSkipInitialMotion } from "@/lib/course/use-skip-initial-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useSkipInitialMotion } from "@/hooks/use-skip-initial-motion";
 
 const TRANSITION_CONTENT_DELAY_MS =
   TRANSITION_OVERLAY_VISIBLE_MS + TRANSITION_OVERLAY_EXIT_MS;
@@ -63,8 +63,7 @@ export default function CourseElementTemplate({
   const skipInitialMotion = useSkipInitialMotion();
   const { direction, showTransitionOverlay } = transitionState;
   const motionValues = getContentMotionValues(direction, showTransitionOverlay);
-  const useReducedTransition =
-    prefersReducedMotion && showTransitionOverlay;
+  const useReducedTransition = prefersReducedMotion && showTransitionOverlay;
 
   const motionInitial = skipInitialMotion
     ? false

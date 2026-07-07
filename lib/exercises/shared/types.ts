@@ -1,5 +1,5 @@
 import type { MatchPairItemState } from "./item-glow-style";
-import type { InteractiveExerciseContent } from "@/schemas/courseSchema";
+import type { InteractiveExerciseContent } from "@/schemas/exerciseSchema";
 
 import type {
   InteractiveExerciseActiveStage,

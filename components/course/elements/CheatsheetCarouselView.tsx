@@ -11,7 +11,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
-import type { CheatsheetSlide } from "@/lib/course/resolve-element-assets";
+import type { CheatsheetSlide } from "@/actions/storage/resolve-element-assets";
 
 type CheatsheetCarouselViewProps = {
   slides: CheatsheetSlide[];

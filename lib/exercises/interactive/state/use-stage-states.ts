@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import type { InteractiveExerciseContent } from "@/schemas/courseSchema";
+import type { InteractiveExerciseContent } from "@/schemas/exerciseSchema";
 
 import { createAllStageStates, type StageState } from "../stage-state";
 

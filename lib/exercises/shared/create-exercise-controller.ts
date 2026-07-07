@@ -1,8 +1,8 @@
+import type { CourseElement } from "@/schemas/courseSchema";
 import type {
-  CourseElement,
   InteractiveExerciseContent,
   LocalCodeExerciseContent,
-} from "@/schemas/courseSchema";
+} from "@/schemas/exerciseSchema";
 
 export type InteractiveExerciseConfig = {
   kind: "interactive";

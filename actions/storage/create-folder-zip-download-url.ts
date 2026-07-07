@@ -3,7 +3,7 @@
 import { ZipArchive } from "archiver";
 
 import { adminStorage } from "@/firebase/admin-init";
-import { normalizeStoragePath } from "@/actions/helpers";
+import { normalizeStoragePath } from "@/actions/storage/helpers";
 
 const TEMP_ZIP_TTL_MS = 60 * 60 * 1000;
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { HTMLPreview } from "@/components/html-preview/HTMLPreview";
-import type { SelectCorrectPrompt } from "@/schemas/courseSchema";
+import type { SelectCorrectPrompt } from "@/schemas/exerciseSchema";
 
 import { StaticCodePanel } from "../gap-lines/StaticCodePanel";
 import { StageImageDiagram } from "../interactive/StageImageDiagram";

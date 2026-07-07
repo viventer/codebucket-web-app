@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { FillGapsLine, Language } from "@/schemas/courseSchema";
+import type { FillGapsLine, Language } from "@/schemas/exerciseSchema";
 
 import { GapLinesPanel } from "./gap-lines/GapLinesPanel";
 import { OptionsPool } from "./fill-gaps/OptionsPool";

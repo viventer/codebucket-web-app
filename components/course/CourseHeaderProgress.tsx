@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { useCourseNavigation } from "@/lib/course/navigation-transition-context";
-import { usePrefersReducedMotion } from "@/lib/course/use-prefers-reduced-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 
@@ -56,7 +56,10 @@ export function CourseHeaderProgress({
               }
             : { scale: 1, boxShadow: "0 0 0 0 transparent" }
         }
-        transition={{ duration: prefersReducedMotion ? 0 : 0.8, ease: "easeOut" }}
+        transition={{
+          duration: prefersReducedMotion ? 0 : 0.8,
+          ease: "easeOut",
+        }}
         className={cn("rounded-full p-0.5", pulseActive && "bg-primary/5")}
       >
         <Progress value={value} className="w-24" />
