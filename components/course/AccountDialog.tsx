@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition, useState } from "react";
+import { useTransition, useState, useEffect } from "react";
 import Link from "next/link";
 import { auth } from "@/firebase/init";
 import { deleteSession } from "@/actions/auth/session";
@@ -55,12 +55,21 @@ const THEME_OPTIONS: ThemeOption[] = [
   },
 ];
 
-export function AccountDialog({ triggerLabel = "Twoje konto" }: AccountDialogProps) {
+const DEFAULT_THEME = "dark";
+
+export function AccountDialog({
+  triggerLabel = "Twoje konto",
+}: AccountDialogProps) {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [accountData, setAccountData] = useState<AccountData | null>(null);
   const [isFetching, startFetchTransition] = useTransition();
   const [isSigningOut, startSignOutTransition] = useTransition();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   function handleOpenChange(isOpen: boolean) {
     setOpen(isOpen);
@@ -81,6 +90,8 @@ export function AccountDialog({ triggerLabel = "Twoje konto" }: AccountDialogPro
     });
   }
 
+  const activeTheme = mounted ? (theme ?? DEFAULT_THEME) : DEFAULT_THEME;
+
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
@@ -89,127 +100,124 @@ export function AccountDialog({ triggerLabel = "Twoje konto" }: AccountDialogPro
           <UserIcon className="size-4 sm:hidden" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="text-center text-2xl">
+      <DialogContent className="inset-0 top-0 left-0 flex h-dvh max-h-dvh w-full max-w-none translate-x-0 translate-y-0 flex-col gap-4 overflow-hidden rounded-none p-4 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:h-auto sm:max-h-none sm:max-w-md sm:-translate-x-1/2 sm:-translate-y-1/2 sm:gap-8 sm:overflow-visible sm:rounded-xl sm:p-6">
+        <DialogHeader className="shrink-0 space-y-0 mb-8 sm:mb-0">
+          <DialogTitle className="text-center text-lg sm:text-xl">
             {triggerLabel}
           </DialogTitle>
         </DialogHeader>
 
-        {isFetching || !accountData ? (
-          <div className="flex items-center justify-center py-12">
-            <LoaderCircleIcon className="size-6 animate-spin text-muted-foreground" />
-          </div>
-        ) : (
-          <div className="mt-2 flex flex-col gap-6">
-            <section className="flex flex-col gap-1">
-              <h3 className="text-sm font-medium">Email</h3>
-              <p className="text-sm text-muted-foreground">{accountData.email}</p>
-            </section>
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          {isFetching || !accountData ? (
+            <div className="flex items-center justify-center py-12">
+              <LoaderCircleIcon className="size-6 animate-spin text-muted-foreground" />
+            </div>
+          ) : (
+            <div className="flex flex-col gap-8">
+              <section className="flex flex-col gap-1">
+                <h3 className="font-medium">Email</h3>
+                <p className="text-muted-foreground">{accountData.email}</p>
+              </section>
 
-            <Separator />
-
-            <section className="flex flex-col gap-3">
-              <h3 className="text-sm font-medium">Motyw kolorów</h3>
-              <div className="flex gap-2">
-                {THEME_OPTIONS.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => setTheme(option.value)}
-                    className={cn(
-                      "flex flex-1 flex-col items-center gap-1.5 rounded-lg border px-3 py-2 text-xs transition-colors",
-                      theme === option.value
-                        ? "border-primary bg-primary/10 text-primary"
-                        : "border-input text-muted-foreground hover:border-foreground/30 hover:text-foreground",
-                    )}
-                  >
-                    {option.icon}
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            </section>
-
-            {accountData.canChangePassword && (
-              <>
-                <Separator />
-
+              {accountData.canChangePassword && (
                 <section>
-                  <Button asChild variant="outline" className="w-full">
+                  <Button asChild variant="outline" className="">
                     <Link href="/change-password">
                       <KeyRoundIcon className="size-4" />
                       Zmień hasło
                     </Link>
                   </Button>
                 </section>
-              </>
-            )}
+              )}
 
-            <Separator />
+              <section className="flex flex-col gap-1">
+                <h3 className="font-medium">Motyw kolorów</h3>
+                <div className="flex gap-3 flex-col sm:flex-row">
+                  {THEME_OPTIONS.map((option) => (
+                    <Button
+                      onClick={() => setTheme(option.value)}
+                      key={option.value}
+                      variant="outline"
+                      size="sm"
+                      className={cn(
+                        "sm:flex-1 p-4 transition-colors",
+                        activeTheme === option.value
+                          ? "border-accent"
+                          : "text-muted-foreground",
+                      )}
+                    >
+                      <span className="flex items-center gap-1">
+                        {option.icon}
+                        {option.label}
+                      </span>
+                    </Button>
+                  ))}
+                </div>
+              </section>
 
-            <section className="flex flex-col gap-4">
-              <div className="flex flex-col gap-1">
-                <h3 className="text-sm font-medium">Twoje kursy</h3>
+              <section className="flex flex-col gap-4">
+                <div className="flex flex-col gap-1">
+                  <h3 className="text-sm font-medium">Twoje kursy</h3>
 
-                {accountData.courses.length > 0 ? (
-                  <ul className="flex flex-col gap-4 mt-2">
-                    {accountData.courses.map((course) => (
-                      <li
-                        key={course.id}
-                        className="flex items-center justify-between gap-4"
-                      >
-                        <p className="text-sm text-muted-foreground">
-                          {course.title}
-                        </p>
-                        <Button asChild variant="outline" size="sm">
-                          <Link href={`/course/${course.id}`}>
-                            {course.id === accountData.currentCourseId
-                              ? "Przejdź do kursu"
-                              : "Otwórz"}
-                          </Link>
-                        </Button>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Nie masz jeszcze żadnych kursów.
-                  </p>
-                )}
-              </div>
+                  {accountData.courses.length > 0 ? (
+                    <ul className="flex flex-col gap-4">
+                      {accountData.courses.map((course) => (
+                        <li
+                          key={course.id}
+                          className="flex items-center justify-between gap-4"
+                        >
+                          <p className="text-sm text-muted-foreground">
+                            {course.title}
+                          </p>
+                          <Button asChild variant="outline" size="sm">
+                            <Link href={`/course/${course.id}`}>
+                              {course.id === accountData.currentCourseId
+                                ? "Przejdź do kursu"
+                                : "Otwórz"}
+                            </Link>
+                          </Button>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">
+                      Nie masz jeszcze żadnych kursów.
+                    </p>
+                  )}
+                </div>
 
-              <Button className="w-full">
-                <PlusIcon />
-                Odblokuj nowy kurs
-              </Button>
-            </section>
+                <Button className="w-full">
+                  <PlusIcon />
+                  Odblokuj nowy kurs
+                </Button>
+              </section>
 
-            <Separator />
+              <Separator />
 
-            <div className="flex items-center justify-between">
-              <p className="text-sm text-muted-foreground">
-                Napotkałeś problemy?{" "}
-                <Link
-                  href="/help"
-                  className="font-medium text-foreground underline underline-offset-4"
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">
+                  Napotkałeś problemy?{" "}
+                  <Link
+                    href="/help"
+                    className="font-medium text-foreground underline underline-offset-4"
+                  >
+                    Pomoc
+                  </Link>
+                </p>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleSignOut}
+                  disabled={isSigningOut}
+                  className="hover:text-destructive"
                 >
-                  Pomoc
-                </Link>
-              </p>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleSignOut}
-                disabled={isSigningOut}
-                className="text-muted-foreground hover:text-destructive"
-              >
-                <LogOutIcon className="size-4" />
-                {isSigningOut ? "Wylogowywanie..." : "Wyloguj się"}
-              </Button>
+                  <LogOutIcon className="size-4" />
+                  {isSigningOut ? "Wylogowywanie..." : "Wyloguj się"}
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </DialogContent>
     </Dialog>
   );
