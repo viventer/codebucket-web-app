@@ -4,10 +4,7 @@ import path from "path";
 import { adminDB } from "@/firebase/admin-init";
 import { getElementTitle } from "@/lib/courses";
 import { dateToFirestoreTimestamp } from "@/actions/courses/timestamps";
-import {
-  COURSE_SEED_REGISTRY,
-  PRESALE_COURSE_SEED_DATA,
-} from "@/actions/courses/seed-registry";
+import { COURSE_SEED_REGISTRY } from "@/actions/courses/seed-registry";
 import type {
   Course,
   CourseDocument,
@@ -114,37 +111,6 @@ function toElementDocument(element: CourseElement) {
   };
 }
 
-async function seedPresaleCourse(data: (typeof PRESALE_COURSE_SEED_DATA)[number]) {
-  const now = new Date();
-  const document = {
-    id: data.id,
-    title: data.title,
-    description: data.description,
-    price: {
-      isFree: false,
-      currentPrice: data.currentPrice,
-    },
-    image: `${data.id}-logo.svg`,
-    duration: 1,
-    level: "Początkujący",
-    prerequisites: [],
-    courseIncludes: ["Krótkie lekcje wideo", "Interaktywne ćwiczenia"],
-    CTADescription: data.description,
-    whatYouWillLearn: data.whatYouWillLearn,
-    badge: data.badge,
-    badgeClassName: data.badgeClassName,
-    isPresale: data.isPresale,
-    outline: {
-      sections: [],
-    },
-    createdAt: dateToFirestoreTimestamp(now),
-    updatedAt: dateToFirestoreTimestamp(now),
-  };
-
-  await courseDocRef(data.id).set(document);
-  console.log(`Seeded presale course metadata: ${data.id}`);
-}
-
 function courseDocRef(courseId: string) {
   return adminDB.collection("courses").doc(courseId);
 }
@@ -160,10 +126,6 @@ function elementsCollection(courseId: string, sectionId: string) {
 async function main() {
   for (const [courseId, entry] of Object.entries(COURSE_SEED_REGISTRY)) {
     await seedCourseFromJson(courseId, entry.folder);
-  }
-
-  for (const presaleCourse of PRESALE_COURSE_SEED_DATA) {
-    await seedPresaleCourse(presaleCourse);
   }
 
   console.log("Course seed completed.");

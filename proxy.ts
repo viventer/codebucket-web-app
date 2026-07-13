@@ -13,13 +13,16 @@ const SESSION_OPTIONS = {
   },
 };
 
+const CB_AUTH_COOKIE = "cb_auth";
+const SESSION_TTL_SECONDS = 30 * 24 * 60 * 60;
+
 const PROTECTED_PATTERNS = [
   /^\/course\/[^/]+\/[^/]+\/[^/]+/,
   /^\/change-password$/,
 ];
 const AUTH_PATHS = ["/login", "/signup"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const response = NextResponse.next();
@@ -39,9 +42,17 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  if (isAuthenticated) {
-    response.headers.set("x-user-uid", session.uid);
-    response.headers.set("x-user-email", session.email);
+  const hasCbAuth = request.cookies.has(CB_AUTH_COOKIE);
+  if (isAuthenticated && !hasCbAuth) {
+    response.cookies.set(CB_AUTH_COOKIE, "1", {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: SESSION_TTL_SECONDS,
+      path: "/",
+    });
+  } else if (!isAuthenticated && hasCbAuth) {
+    response.cookies.delete(CB_AUTH_COOKIE);
   }
 
   return response;

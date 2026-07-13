@@ -1,23 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  AccountDialog,
-  type AccountCourse,
-} from "@/components/course/AccountDialog";
-import { Button } from "@/components/ui/button";
+import { HeaderAuth } from "@/components/HeaderAuth";
 
-type MainHeaderProps = {
-  isAuthenticated: boolean;
-  account?: {
-    email: string;
-    courses: AccountCourse[];
-    currentCourseId?: string;
-    canChangePassword: boolean;
-  };
-};
-
-export function MainHeader({ isAuthenticated, account }: MainHeaderProps) {
+export function MainHeader() {
   return (
     <header className="border-b bg-background px-3">
       <div className="mx-auto flex h-14 w-[90vw] max-w-[1280px] items-center justify-between">
@@ -34,23 +20,7 @@ export function MainHeader({ isAuthenticated, account }: MainHeaderProps) {
           </p>
         </Link>
 
-        {isAuthenticated && account ? (
-          <AccountDialog
-            email={account.email}
-            courses={account.courses}
-            currentCourseId={account.currentCourseId}
-            canChangePassword={account.canChangePassword}
-          />
-        ) : (
-          <div className="flex items-center gap-2">
-            <Button asChild variant="default" size="sm">
-              <Link href="/register">Utwórz darmowe konto</Link>
-            </Button>
-            <Button asChild variant="ghost" size="sm">
-              <Link href="/login">Zaloguj się</Link>
-            </Button>
-          </div>
-        )}
+        <HeaderAuth />
       </div>
     </header>
   );

@@ -13,6 +13,10 @@ import {
   courseElementDocumentSchema,
   courseSectionDocumentSchema,
 } from "@/schemas/courseSchema";
+import {
+  COURSE_SEED_REGISTRY,
+  isRegisteredCourse,
+} from "@/actions/courses/seed-registry";
 
 function coursesCollection() {
   return adminDB.collection("courses");
@@ -63,13 +67,16 @@ function parseElementDocument(
 }
 
 export async function listCourseIds(): Promise<string[]> {
-  const snapshot = await coursesCollection().get();
-  return snapshot.docs.map((doc) => doc.id);
+  return Object.keys(COURSE_SEED_REGISTRY);
 }
 
 export async function getCourseDocument(
   courseId: string,
 ): Promise<CourseDocument | null> {
+  if (!isRegisteredCourse(courseId)) {
+    return null;
+  }
+
   const snapshot = await courseDocRef(courseId).get();
   if (!snapshot.exists) {
     return null;
@@ -81,6 +88,10 @@ export async function getCourseDocument(
 export async function getCourseSections(
   courseId: string,
 ): Promise<CourseSectionDocument[]> {
+  if (!isRegisteredCourse(courseId)) {
+    return [];
+  }
+
   const snapshot = await sectionsCollection(courseId)
     .orderBy("order")
     .get();
@@ -96,6 +107,10 @@ export async function getSectionElementSummaries(
 ): Promise<
   Array<Pick<CourseElementDocument, "id" | "type" | "order" | "displayTitle">>
 > {
+  if (!isRegisteredCourse(courseId)) {
+    return [];
+  }
+
   const snapshot = await elementsCollection(courseId, sectionId)
     .orderBy("order")
     .select("id", "type", "order", "displayTitle")
@@ -117,6 +132,10 @@ export async function getCourseElement(
   sectionId: string,
   elementId: string,
 ): Promise<CourseElementDocument | null> {
+  if (!isRegisteredCourse(courseId)) {
+    return null;
+  }
+
   const snapshot = await elementsCollection(courseId, sectionId)
     .doc(elementId)
     .get();

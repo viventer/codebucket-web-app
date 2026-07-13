@@ -1,16 +1,13 @@
 import { MainHeader } from "@/components/MainHeader";
-import { getMainHeaderAccount } from "@/lib/main-header-account";
 
 type SiteLayoutProps = {
   children: React.ReactNode;
 };
 
-export default async function SiteLayout({ children }: SiteLayoutProps) {
-  const { isAuthenticated, account } = await getMainHeaderAccount();
-
+export default function SiteLayout({ children }: SiteLayoutProps) {
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
-      <MainHeader isAuthenticated={isAuthenticated} account={account} />
+      <MainHeader />
       {children}
     </div>
   );

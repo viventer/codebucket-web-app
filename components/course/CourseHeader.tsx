@@ -1,10 +1,12 @@
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
 import type { SectionProgress } from "@/lib/course/progress";
-import {
-  AccountDialog,
-  type AccountCourse,
-} from "@/components/course/AccountDialog";
+
+const AccountDialog = dynamic(
+  () => import("@/components/course/AccountDialog").then((m) => ({ default: m.AccountDialog })),
+  { ssr: false },
+);
 import { CourseHeaderProgress } from "@/components/course/CourseHeaderProgress";
 import {
   CourseNavSheet,
@@ -19,12 +21,6 @@ export type CourseHeaderProps = {
   currentSectionId: string;
   currentElementId: string;
   progress: SectionProgress;
-  account: {
-    email: string;
-    courses: AccountCourse[];
-    currentCourseId?: string;
-    canChangePassword?: boolean;
-  };
 };
 
 export function CourseHeader({
@@ -35,7 +31,6 @@ export function CourseHeader({
   currentSectionId,
   currentElementId,
   progress,
-  account,
 }: CourseHeaderProps) {
   return (
     <header className="gap-3 border-b bg-background px-3">
@@ -73,12 +68,7 @@ export function CourseHeader({
         </div>
 
         <div className="ml-auto">
-          <AccountDialog
-            email={account.email}
-            courses={account.courses}
-            currentCourseId={account.currentCourseId}
-            canChangePassword={account.canChangePassword}
-          />
+          <AccountDialog />
         </div>
       </div>
     </header>

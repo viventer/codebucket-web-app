@@ -1,3 +1,5 @@
+"use server";
+
 import { getCourseTitle } from "@/actions/courses/read-courses";
 import { getSessionUser } from "@/lib/session";
 import { userCanChangePassword } from "@/lib/user-can-change-password";

@@ -4,7 +4,6 @@ import {
   getAllCourseElementParams,
   getCourseElement,
   getCourseNavigationData,
-  getCourseTitle,
 } from "@/actions/courses/read-courses";
 import {
   buildOrderedElementRefs,
@@ -21,8 +20,6 @@ import {
 } from "@/lib/courses";
 import { buildCourseNavigationMetadata } from "@/lib/course/build-navigation-metadata";
 import { mockUser } from "@/lib/mock-user";
-import { getSessionUser } from "@/lib/session";
-import { userCanChangePassword } from "@/lib/user-can-change-password";
 import {
   getCompletedElementIds,
   getSectionProgress,
@@ -127,25 +124,6 @@ export default async function ElementLayout({
     })),
   }));
 
-  const unlockedCourseTitles = await Promise.all(
-    user.unlockedCourses.map(async (courseId) => ({
-      id: courseId,
-      title: (await getCourseTitle(courseId)) ?? courseId,
-    })),
-  );
-
-  const sessionUser = await getSessionUser();
-  const canChangePassword = sessionUser
-    ? await userCanChangePassword(sessionUser.uid)
-    : false;
-
-  const account = {
-    email: user.email,
-    courses: unlockedCourseTitles,
-    currentCourseId: user.currentCourse,
-    canChangePassword,
-  };
-
   const isExercise =
     currentElement.type === "platformCodeExercise" ||
     currentElement.type === "localCodeExercise" ||
@@ -176,7 +154,6 @@ export default async function ElementLayout({
         currentSectionId: sectionId,
         currentElementId: elementId,
         progress,
-        account,
       }}
       actionBarProps={{
         type: currentElement.type,
