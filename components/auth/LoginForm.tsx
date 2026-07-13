@@ -91,7 +91,7 @@ export function LoginForm() {
           {errors.email && (
             <p
               id="email-error"
-              className="text-sm text-destructive"
+              className="text-sm text-feedback-destructive"
               role="alert"
             >
               {errors.email}
@@ -114,7 +114,7 @@ export function LoginForm() {
           {errors.password && (
             <p
               id="password-error"
-              className="text-sm text-destructive"
+              className="text-sm text-feedback-destructive"
               role="alert"
             >
               {errors.password}
@@ -123,7 +123,7 @@ export function LoginForm() {
         </div>
 
         {errors.form && (
-          <p className="text-sm text-destructive" role="alert">
+          <p className="text-sm text-feedback-destructive" role="alert">
             {errors.form}
           </p>
         )}

@@ -217,7 +217,10 @@ export function ChangePasswordForm({ uid, email }: ChangePasswordFormProps) {
       />
 
       {/* Keep password fields in DOM so password managers detect the change */}
-      <div className={cn(step === "otp" && "sr-only")} aria-hidden={step === "otp"}>
+      <div
+        className={cn(step === "otp" && "sr-only")}
+        aria-hidden={step === "otp"}
+      >
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="current-password">Aktualne hasło</Label>
@@ -239,7 +242,7 @@ export function ChangePasswordForm({ uid, email }: ChangePasswordFormProps) {
               tabIndex={step === "otp" ? -1 : undefined}
             />
             {step1Errors.currentPassword && (
-              <p className="text-sm text-destructive" role="alert">
+              <p className="text-sm text-feedback-destructive" role="alert">
                 {step1Errors.currentPassword}
               </p>
             )}
@@ -269,7 +272,7 @@ export function ChangePasswordForm({ uid, email }: ChangePasswordFormProps) {
                       newPasswordTouched || newPassword.length > 0
                         ? rule.passed
                           ? "text-feedback-success"
-                          : "text-destructive"
+                          : "text-feedback-destructive"
                         : "text-muted-foreground",
                     )}
                   >
@@ -288,7 +291,7 @@ export function ChangePasswordForm({ uid, email }: ChangePasswordFormProps) {
               </ul>
             )}
             {step1Errors.newPassword && (
-              <p className="text-sm text-destructive" role="alert">
+              <p className="text-sm text-feedback-destructive" role="alert">
                 {step1Errors.newPassword}
               </p>
             )}
@@ -308,7 +311,7 @@ export function ChangePasswordForm({ uid, email }: ChangePasswordFormProps) {
               tabIndex={step === "otp" ? -1 : undefined}
             />
             {step1Errors.confirmPassword && (
-              <p className="text-sm text-destructive" role="alert">
+              <p className="text-sm text-feedback-destructive" role="alert">
                 {step1Errors.confirmPassword}
               </p>
             )}
@@ -319,7 +322,7 @@ export function ChangePasswordForm({ uid, email }: ChangePasswordFormProps) {
       {step === "credentials" ? (
         <>
           {step1Errors.form && (
-            <p className="text-sm text-destructive" role="alert">
+            <p className="text-sm text-feedback-destructive" role="alert">
               {step1Errors.form}
             </p>
           )}
@@ -382,7 +385,7 @@ export function ChangePasswordForm({ uid, email }: ChangePasswordFormProps) {
             </div>
 
             {otpError && (
-              <p className="text-sm text-destructive" role="alert">
+              <p className="text-sm text-feedback-destructive" role="alert">
                 {otpError}
               </p>
             )}

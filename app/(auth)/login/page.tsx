@@ -1,4 +1,5 @@
 import { LoginForm } from "@/components/auth/LoginForm";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const metadata = {
   title: "Zaloguj się – CodeBucket",
@@ -7,8 +8,14 @@ export const metadata = {
 export default function LoginPage() {
   return (
     <>
-      <h1 className="mb-6 text-center text-2xl font-bold">Zaloguj się</h1>
-      <LoginForm />
+      <CardHeader>
+        <CardTitle className="text-center text-2xl font-bold">
+          Zaloguj się
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <LoginForm />
+      </CardContent>
     </>
   );
 }

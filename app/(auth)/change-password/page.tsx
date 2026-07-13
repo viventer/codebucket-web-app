@@ -1,4 +1,10 @@
 import { ChangePasswordForm } from "@/components/auth/ChangePasswordForm";
+import {
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { getSessionUser } from "@/lib/session";
 import { userCanChangePassword } from "@/lib/user-can-change-password";
 import { redirect } from "next/navigation";
@@ -16,11 +22,17 @@ export default async function ChangePasswordPage() {
 
   return (
     <>
-      <h1 className="mb-2 text-center text-2xl font-bold">Zmień hasło</h1>
-      <p className="mb-6 text-center text-sm text-muted-foreground">
-        Po podaniu nowego hasła wyślemy kod weryfikacyjny na Twój adres email.
-      </p>
-      <ChangePasswordForm uid={user.uid} email={user.email} />
+      <CardHeader>
+        <CardTitle className="text-center text-2xl font-bold">
+          Zmień hasło
+        </CardTitle>
+        <CardDescription className="text-center text-sm text-muted-foreground">
+          Po podaniu nowego hasła wyślemy kod weryfikacyjny na Twój adres email.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ChangePasswordForm uid={user.uid} email={user.email} />
+      </CardContent>
     </>
   );
 }

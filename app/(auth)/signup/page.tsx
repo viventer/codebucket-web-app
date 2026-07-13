@@ -1,4 +1,5 @@
 import { SignupForm } from "@/components/auth/SignupForm";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const metadata = {
   title: "Utwórz konto – CodeBucket",
@@ -7,8 +8,14 @@ export const metadata = {
 export default function SignupPage() {
   return (
     <>
-      <h1 className="mb-6 text-center text-2xl font-bold">Utwórz konto</h1>
-      <SignupForm />
+      <CardHeader>
+        <CardTitle className="text-center text-2xl font-bold">
+          Utwórz konto
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <SignupForm />
+      </CardContent>
     </>
   );
 }

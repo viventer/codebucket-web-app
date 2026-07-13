@@ -50,7 +50,7 @@ export function OAuthButtons() {
     <div className="flex flex-col gap-3">
       <Button
         type="button"
-        variant="outline"
+        variant="secondary"
         className="w-full"
         onClick={() => handleOAuth("google")}
         disabled={loadingProvider !== null}
@@ -62,7 +62,7 @@ export function OAuthButtons() {
       </Button>
       <Button
         type="button"
-        variant="outline"
+        variant="secondary"
         className="w-full"
         onClick={() => handleOAuth("github")}
         disabled={loadingProvider !== null}

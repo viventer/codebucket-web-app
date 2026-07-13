@@ -101,7 +101,7 @@ export function SignupForm() {
           {errors.email && (
             <p
               id="signup-email-error"
-              className="text-sm text-destructive"
+              className="text-sm text-feedback-destructive"
               role="alert"
             >
               {errors.email}
@@ -131,7 +131,7 @@ export function SignupForm() {
                   passwordTouched || password.length > 0
                     ? rule.passed
                       ? "text-feedback-success"
-                      : "text-destructive"
+                      : "text-feedback-destructive"
                     : "text-muted-foreground",
                 )}
               >
@@ -149,7 +149,7 @@ export function SignupForm() {
             ))}
           </ul>
           {errors.password && (
-            <p className="text-sm text-destructive" role="alert">
+            <p className="text-sm text-feedback-destructive" role="alert">
               {errors.password}
             </p>
           )}
@@ -172,7 +172,7 @@ export function SignupForm() {
           {errors.confirmPassword && (
             <p
               id="confirm-error"
-              className="text-sm text-destructive"
+              className="text-sm text-feedback-destructive"
               role="alert"
             >
               {errors.confirmPassword}
@@ -181,7 +181,7 @@ export function SignupForm() {
         </div>
 
         {errors.form && (
-          <p className="text-sm text-destructive" role="alert">
+          <p className="text-sm text-feedback-destructive" role="alert">
             {errors.form}
           </p>
         )}

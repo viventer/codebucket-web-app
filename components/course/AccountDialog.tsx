@@ -209,7 +209,7 @@ export function AccountDialog({
                   size="sm"
                   onClick={handleSignOut}
                   disabled={isSigningOut}
-                  className="hover:text-destructive"
+                  className="hover:text-feedback-destructive"
                 >
                   <LogOutIcon className="size-4" />
                   {isSigningOut ? "Wylogowywanie..." : "Wyloguj się"}
