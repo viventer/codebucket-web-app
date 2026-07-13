@@ -15,7 +15,7 @@ export function MainHeader() {
             height={28}
             priority
           />
-          <p className="text-lg font-bold hidden sm:block">
+          <p className="text-lg font-bold hidden sm:block tracking-tight">
             Code<span className="text-accent">Bucket</span>
           </p>
         </Link>

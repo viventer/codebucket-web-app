@@ -12,7 +12,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
       <div className="w-full max-w-sm">
         <Link href="/" className="mb-6 flex items-center justify-center gap-2">
           <Image src="/logo.svg" alt="CodeBucket" width={32} height={32} />
-          <p className="text-lg font-semibold">
+          <p className="text-lg font-semibold tracking-tight">
             Code<span className="text-accent">Bucket</span>
           </p>
         </Link>

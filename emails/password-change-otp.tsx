@@ -1,11 +1,14 @@
 import {
   Body,
+  Column,
   Container,
   Head,
   Heading,
   Hr,
   Html,
+  Img,
   Preview,
+  Row,
   Section,
   Tailwind,
   Text,
@@ -40,6 +43,8 @@ const emailTheme = {
   },
 } as const;
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+
 export function PasswordChangeOtpEmail({
   code,
   ttlMinutes,
@@ -47,7 +52,7 @@ export function PasswordChangeOtpEmail({
   return (
     <Html lang="pl" dir="ltr">
       <Head />
-      <Preview>Twój kod do zmiany hasła CodeBucket: {code}</Preview>
+      <Preview>Twój kod do zmiany hasła w CodeBucket</Preview>
       <Tailwind
         config={{
           theme: {
@@ -55,44 +60,43 @@ export function PasswordChangeOtpEmail({
           },
         }}
       >
-        <Body className="bg-background font-sans m-0 py-8">
-          <Container className="max-w-[480px] mx-auto">
-            <Section className="bg-card rounded-t-lg px-8 pt-8 pb-6 border border-border border-b-0">
-              <Heading
-                as="h1"
-                className="text-primary text-2xl font-bold m-0 tracking-tight"
-              >
-                CodeBucket
+        <Body className="text-foreground bg-background m-0 py-16 font-[ubuntu,roboto,arial,sans-serif]">
+          <Container className="max-w-[480px] mx-auto bg-card rounded-lg border border-border">
+            <Section className="px-8 pt-8 pb-6 ">
+              <Heading as="h1" className="m-0">
+                <Row className="w-fit">
+                  <Column>
+                    <Img
+                      src={`${baseUrl}/logo.svg`}
+                      alt="CodeBucket"
+                      width={32}
+                      height={32}
+                      className="mr-2"
+                    />
+                  </Column>
+                  <Column>
+                    <Text className="text-2xl font-bold m-0 tracking-tight">
+                      Code<span className="text-accent">Bucket</span>
+                    </Text>
+                  </Column>
+                </Row>
               </Heading>
             </Section>
 
-            <Section className="bg-card px-8 py-6 border-x border-border">
-              <Heading
-                as="h2"
-                className="text-card-foreground text-xl font-semibold mt-0 mb-4"
-              >
+            <Section className="px-8 py-6 ">
+              <Heading as="h2" className=" text-xl font-medium mt-0 mb-1">
                 Potwierdź zmianę hasła
               </Heading>
               <Text className="text-muted-foreground text-sm leading-relaxed mt-0 mb-6">
-                Otrzymaliśmy prośbę o zmianę hasła do Twojego konta CodeBucket.
-                Wprowadź poniższy kod, aby potwierdzić operację.
+                Otrzymaliśmy prośbę o zmianę hasła do Twojego konta. Wprowadź
+                poniższy kod, aby potwierdzić operację.
               </Text>
 
-              <Section className="bg-secondary border border-primary rounded-lg py-5 px-4 text-center mb-6">
-                <Text
-                  className="text-primary text-xs font-semibold uppercase tracking-[0.15em] m-0 mb-2"
-                  style={{ letterSpacing: "0.15em" }}
-                >
+              <Section>
+                <Heading as="h2" className="text-xl font-medium mt-0 mb-1">
                   Kod weryfikacyjny
-                </Text>
-                <Text
-                  className="text-foreground font-mono text-4xl font-bold m-0 tracking-[0.5em]"
-                  style={{
-                    fontFamily: "monospace",
-                    letterSpacing: "0.5em",
-                    paddingLeft: "0.5em",
-                  }}
-                >
+                </Heading>
+                <Text className="text-4xl tracking-widest font-bold m-0">
                   {code}
                 </Text>
               </Section>
@@ -106,19 +110,12 @@ export function PasswordChangeOtpEmail({
               </Text>
             </Section>
 
-            <Section className="bg-card px-8 pb-8 border-x border-border">
-              <Hr className="border-border my-6" />
+            <Section className="px-8 pb-8 ">
+              <Hr className="border-muted-foreground my-6" />
               <Text className="text-muted-foreground text-xs leading-relaxed m-0">
                 Jeśli nie inicjowałeś zmiany hasła, zignoruj tę wiadomość —
                 Twoje hasło pozostanie bez zmian. Jeśli uważasz, że ktoś próbuje
                 uzyskać dostęp do Twojego konta, zmień hasło jak najszybciej.
-              </Text>
-            </Section>
-
-            <Section className="bg-background rounded-b-lg px-8 py-5 border border-border border-t-0">
-              <Text className="text-muted-foreground text-xs m-0 text-center">
-                © {new Date().getFullYear()} CodeBucket. Wszystkie prawa
-                zastrzeżone.
               </Text>
             </Section>
           </Container>
