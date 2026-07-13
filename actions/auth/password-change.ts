@@ -3,7 +3,9 @@
 import { adminDB } from "@/firebase/admin-init";
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import crypto from "crypto";
-import { Resend } from "resend";
+import * as React from "react";
+import { PasswordChangeOtpEmail } from "@/emails/password-change-otp";
+import { sendEmail } from "@/lib/email/send-email";
 
 const COLLECTION = "otp_password_change";
 const MAX_ATTEMPTS = 5;
@@ -70,8 +72,6 @@ export async function verifyPasswordChangeOtp(
   }
 }
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const OTP_TTL_MINUTES = 10;
 const MAX_RESENDS = 3;
 const RESEND_COOLDOWN_SECONDS = 60;
@@ -137,27 +137,16 @@ export async function sendPasswordChangeOtp(
       lastResentAt: FieldValue.serverTimestamp(),
     });
 
-    const { error } = await resend.emails.send({
-      from: "Acme <onboarding@resend.dev>",
+    const emailResult = await sendEmail({
       to: "kontakt.codebucket@gmail.com",
       subject: "Potwierdź zmianę hasła – CodeBucket",
-      html: `
-        <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
-          <h2>Potwierdź zmianę hasła</h2>
-          <p>Otrzymaliśmy prośbę o zmianę hasła do Twojego konta CodeBucket.</p>
-          <p>Wprowadź poniższy kod, aby potwierdzić operację:</p>
-          <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px; padding: 16px 0;">
-            ${code}
-          </div>
-          <p style="color: #666; font-size: 14px;">
-            Kod jest ważny przez ${OTP_TTL_MINUTES} minut.<br/>
-            Jeśli nie inicjowałeś zmiany hasła, zignoruj tę wiadomość — Twoje hasło pozostanie bez zmian.
-          </p>
-        </div>
-      `,
+      react: React.createElement(PasswordChangeOtpEmail, {
+        code,
+        ttlMinutes: OTP_TTL_MINUTES,
+      }),
     });
 
-    if (error) {
+    if (!emailResult.success) {
       return {
         success: false,
         error: "Nie udało się wysłać emaila. Spróbuj ponownie.",
