@@ -21,6 +21,8 @@ import {
 } from "@/lib/courses";
 import { buildCourseNavigationMetadata } from "@/lib/course/build-navigation-metadata";
 import { mockUser } from "@/lib/mock-user";
+import { getSessionUser } from "@/lib/session";
+import { userCanChangePassword } from "@/lib/user-can-change-password";
 import {
   getCompletedElementIds,
   getSectionProgress,
@@ -132,10 +134,16 @@ export default async function ElementLayout({
     })),
   );
 
+  const sessionUser = await getSessionUser();
+  const canChangePassword = sessionUser
+    ? await userCanChangePassword(sessionUser.uid)
+    : false;
+
   const account = {
     email: user.email,
     courses: unlockedCourseTitles,
     currentCourseId: user.currentCourse,
+    canChangePassword,
   };
 
   const isExercise =

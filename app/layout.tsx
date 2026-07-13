@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Ubuntu, Ubuntu_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
-import { mockUser } from "@/lib/mock-user";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -27,13 +27,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const userTheme = mockUser.preferences.colorScheme;
-
   return (
     <html
       lang="pl"
+      suppressHydrationWarning
       className={cn(
-        userTheme,
         "h-full scrollbar scrollbar-thumb-primary scrollbar-track-card",
         "antialiased",
         "font-sans",
@@ -42,8 +40,10 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col">
-        {children}
-        <Toaster />
+        <ThemeProvider>
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

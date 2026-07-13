@@ -1,5 +1,5 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { Analytics, getAnalytics } from "firebase/analytics";
@@ -25,10 +25,12 @@ const googleAuthProvider = new GoogleAuthProvider();
 googleAuthProvider.setCustomParameters({
   prompt: "select_account",
 });
+const githubAuthProvider = new GithubAuthProvider();
+githubAuthProvider.setCustomParameters({ allow_signup: "true" });
 const storage = getStorage(app);
 let analytics: Analytics | null = null;
 if (typeof window !== "undefined") {
   analytics = getAnalytics(app);
 }
 
-export { db, app, storage, auth, googleAuthProvider, analytics };
+export { db, app, storage, auth, googleAuthProvider, githubAuthProvider, analytics };

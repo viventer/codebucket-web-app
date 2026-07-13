@@ -23,6 +23,7 @@ export type CourseHeaderProps = {
     email: string;
     courses: AccountCourse[];
     currentCourseId?: string;
+    canChangePassword?: boolean;
   };
 };
 
@@ -76,6 +77,7 @@ export function CourseHeader({
             email={account.email}
             courses={account.courses}
             currentCourseId={account.currentCourseId}
+            canChangePassword={account.canChangePassword}
           />
         </div>
       </div>

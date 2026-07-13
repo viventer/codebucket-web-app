@@ -3,14 +3,14 @@
 import { DownloadIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
-
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { getCheatsheetDownloadUrl } from "@/actions/storage/download-cheatsheet";
 
 import { ActionBarButtonLabel } from "./ActionBarButtonLabel";
 
 export function DownloadCheatsheetButton() {
+  const { toast } = useToast();
   const params = useParams<{ id: string; element: string }>();
   const [isLoading, setIsLoading] = useState(false);
 

@@ -3,8 +3,7 @@
 import { DownloadIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
-
+import { useToast } from "@/hooks/use-toast";
 import { getExerciseMaterialsDownloadUrl } from "@/actions/storage/download-exercise-materials";
 import { Button } from "@/components/ui/button";
 
@@ -17,6 +16,7 @@ type DownloadMaterialsButtonProps = {
 export function DownloadMaterialsButton({
   source = "exercise",
 }: DownloadMaterialsButtonProps) {
+  const { toast } = useToast();
   const params = useParams<{ id: string; element: string }>();
   const [isLoading, setIsLoading] = useState(false);
 

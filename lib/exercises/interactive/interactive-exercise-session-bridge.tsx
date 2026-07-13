@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ExerciseHintDialog } from "@/components/course/exercises/ExerciseHintDialog";
 import { ExerciseSolutionDialog } from "@/components/course/exercises/ExerciseSolutionDialog";
 import { SuccessCelebration } from "@/components/course/exercises/SuccessCelebration";
-import { toast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 import type { getInteractiveExerciseConfig } from "../shared/create-exercise-controller";
 import { EXERCISE_ERROR_FEEDBACK } from "../shared/exercise-feedback-messages";
@@ -43,6 +43,7 @@ export function InteractiveExerciseSessionBridge({
   children,
   hints,
 }: InteractiveExerciseSessionBridgeProps) {
+  const { toast } = useToast();
   const controller = useInteractiveExerciseController(config.content, hints);
   const [hintOpen, setHintOpen] = useState(false);
   const [solutionOpen, setSolutionOpen] = useState(false);
