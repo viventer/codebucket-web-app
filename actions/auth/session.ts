@@ -26,6 +26,7 @@ export async function createSession(idToken: string): Promise<CreateSessionResul
     const session = await getSession();
     session.uid = uid;
     session.email = userResult.email;
+    session.issuedAt = Date.now();
     await session.save();
 
     const cookieStore = await cookies();
@@ -43,12 +44,12 @@ export async function createSession(idToken: string): Promise<CreateSessionResul
   }
 }
 
-export async function deleteSession(): Promise<void> {
+export async function deleteSession(redirectTo = "/login"): Promise<void> {
   const session = await getSession();
   session.destroy();
 
   const cookieStore = await cookies();
   cookieStore.delete(CB_AUTH_COOKIE);
 
-  redirect("/login");
+  redirect(redirectTo);
 }

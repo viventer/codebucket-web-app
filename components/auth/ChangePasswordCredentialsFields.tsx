@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { PasswordRulesList } from "@/components/auth/PasswordRulesList";
+import { NewPasswordFields } from "@/components/auth/NewPasswordFields";
 
 type Step1Errors = {
   currentPassword?: string;
@@ -86,52 +86,16 @@ export function ChangePasswordCredentialsFields({
             )}
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="new-password">Nowe hasło</Label>
-            <Input
-              id="new-password"
-              name="new-password"
-              type="password"
-              autoComplete="new-password"
-              value={newPassword}
-              onChange={(e) => onNewPasswordChange(e.target.value)}
-              onBlur={onNewPasswordBlur}
-              disabled={isPending || isOtpStep}
-              aria-invalid={!!errors.newPassword}
-              tabIndex={isOtpStep ? -1 : undefined}
-            />
-            {!isOtpStep && (
-              <PasswordRulesList
-                password={newPassword}
-                touched={newPasswordTouched}
-              />
-            )}
-            {errors.newPassword && (
-              <p className="text-sm text-feedback-destructive" role="alert">
-                {errors.newPassword}
-              </p>
-            )}
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="confirm-password">Potwierdź nowe hasło</Label>
-            <Input
-              id="confirm-password"
-              name="confirm-new-password"
-              type="password"
-              autoComplete="new-password"
-              value={confirmPassword}
-              onChange={(e) => onConfirmPasswordChange(e.target.value)}
-              disabled={isPending || isOtpStep}
-              aria-invalid={!!errors.confirmPassword}
-              tabIndex={isOtpStep ? -1 : undefined}
-            />
-            {errors.confirmPassword && (
-              <p className="text-sm text-feedback-destructive" role="alert">
-                {errors.confirmPassword}
-              </p>
-            )}
-          </div>
+          <NewPasswordFields
+            newPassword={newPassword}
+            confirmPassword={confirmPassword}
+            newPasswordTouched={newPasswordTouched}
+            errors={errors}
+            isPending={isPending || isOtpStep}
+            onNewPasswordChange={onNewPasswordChange}
+            onConfirmPasswordChange={onConfirmPasswordChange}
+            onNewPasswordBlur={onNewPasswordBlur}
+          />
         </div>
       </div>
 

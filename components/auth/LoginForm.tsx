@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { flattenError } from "zod";
@@ -17,6 +17,9 @@ import { Separator } from "@/components/ui/separator";
 
 export function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const passwordChanged = searchParams.get("passwordChanged") === "1";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{
@@ -67,6 +70,12 @@ export function LoginForm() {
 
   return (
     <div className="flex flex-col gap-6">
+      {passwordChanged && (
+        <p className="rounded-lg bg-primary/20 border border-primary px-3 py-2 text-center text-sm text-foreground">
+          Twoje hasło zostało zmienione. Zaloguj się ponownie.
+        </p>
+      )}
+
       <OAuthButtons />
 
       <div className="flex items-center gap-3">
@@ -100,7 +109,15 @@ export function LoginForm() {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="password">Hasło</Label>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password">Hasło</Label>
+            <Link
+              href="/reset-password"
+              className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
+            >
+              Nie pamiętam hasła
+            </Link>
+          </div>
           <Input
             id="password"
             type="password"

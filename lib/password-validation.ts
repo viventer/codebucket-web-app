@@ -38,3 +38,13 @@ export const changePasswordSchema = z
     message: "Hasła nie są identyczne.",
     path: ["confirmPassword"],
   });
+
+export const resetPasswordSchema = z
+  .object({
+    newPassword: passwordSchema,
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Hasła nie są identyczne.",
+    path: ["confirmPassword"],
+  });

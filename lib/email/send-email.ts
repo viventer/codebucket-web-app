@@ -20,7 +20,7 @@ export async function sendEmail({
 }: SendEmailOptions): Promise<SendEmailResult> {
   const { error } = await resend.emails.send({
     from: process.env.EMAIL_FROM ?? "CodeBucket <onboarding@resend.dev>",
-    to,
+    to: "kontakt.codebucket@gmail.com",
     subject,
     react,
   });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useTransition } from "react";
 import {
   EmailAuthProvider,
   reauthenticateWithCredential,
@@ -19,13 +19,15 @@ import {
   applyOtpSendResult,
   getOtpCooldownSecondsLeft,
 } from "@/lib/otp-cooldown";
-import { useToast } from "@/hooks/use-toast";
 import {
   sendPasswordChangeOtp,
   verifyPasswordChangeOtp,
 } from "@/actions/auth/password-change";
+import { revokeUserSessions } from "@/lib/revoke-user-sessions";
+import { deleteSession } from "@/actions/auth/session";
 import { ChangePasswordCredentialsFields } from "@/components/auth/ChangePasswordCredentialsFields";
-import { ChangePasswordOtpStep } from "@/components/auth/ChangePasswordOtpStep";
+import { OtpStep } from "@/components/auth/OtpStep";
+import { useOtpCountdown } from "@/hooks/use-otp-countdown";
 
 type Step = "credentials" | "otp";
 
@@ -35,8 +37,6 @@ type ChangePasswordCardProps = {
 };
 
 export function ChangePasswordCard({ uid, email }: ChangePasswordCardProps) {
-  const { toast } = useToast();
-
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -53,27 +53,12 @@ export function ChangePasswordCard({ uid, email }: ChangePasswordCardProps) {
   const [code, setCode] = useState("");
   const [otpError, setOtpError] = useState<string | null>(null);
   const [tooManyAttempts, setTooManyAttempts] = useState(false);
-  const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
-  const [secondsLeft, setSecondsLeft] = useState(0);
   const [maxResendsReached, setMaxResendsReached] = useState(false);
   const [isPendingOtp, startOtpTransition] = useTransition();
   const [isResending, startResendTransition] = useTransition();
 
-  useEffect(() => {
-    if (!cooldownUntil) return;
-    const update = () => {
-      const left = getOtpCooldownSecondsLeft(cooldownUntil);
-      if (left <= 0) {
-        setSecondsLeft(0);
-        setCooldownUntil(null);
-      } else {
-        setSecondsLeft(left);
-      }
-    };
-    update();
-    const id = setInterval(update, 1000);
-    return () => clearInterval(id);
-  }, [cooldownUntil]);
+  const { setCooldownUntil, secondsLeft, setSecondsLeft } =
+    useOtpCountdown();
 
   function handleStep1Submit(e: React.FormEvent) {
     e.preventDefault();
@@ -158,9 +143,9 @@ export function ChangePasswordCard({ uid, email }: ChangePasswordCardProps) {
         );
         await reauthenticateWithCredential(user, credential);
         await updatePassword(user, newPassword);
-
-        toast.success("Hasło zostało zmienione.");
-        window.location.assign("/");
+        await revokeUserSessions(uid);
+        await auth.signOut();
+        await deleteSession("/login?passwordChanged=1");
       } catch (err) {
         const firebaseCode = (err as { code?: string }).code ?? "";
         setOtpError(getFirebaseErrorMessage(firebaseCode));
@@ -229,7 +214,7 @@ export function ChangePasswordCard({ uid, email }: ChangePasswordCardProps) {
           />
 
           {step === "otp" && (
-            <ChangePasswordOtpStep
+            <OtpStep
               code={code}
               otpError={otpError}
               tooManyAttempts={tooManyAttempts}
@@ -239,6 +224,7 @@ export function ChangePasswordCard({ uid, email }: ChangePasswordCardProps) {
               isResending={isResending}
               verifyDisabled={verifyDisabled}
               resendDisabled={resendDisabled}
+              submitLabel="Potwierdź zmianę hasła"
               onCodeChange={setCode}
               onVerify={handleVerifyOtp}
               onResend={handleResend}

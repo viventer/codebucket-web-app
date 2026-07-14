@@ -8,7 +8,7 @@ import {
 import { RefreshCwIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type ChangePasswordOtpStepProps = {
+type OtpStepProps = {
   code: string;
   otpError: string | null;
   tooManyAttempts: boolean;
@@ -18,12 +18,13 @@ type ChangePasswordOtpStepProps = {
   isResending: boolean;
   verifyDisabled: boolean;
   resendDisabled: boolean;
+  submitLabel: string;
   onCodeChange: (value: string) => void;
   onVerify: () => void;
   onResend: () => void;
 };
 
-export function ChangePasswordOtpStep({
+export function OtpStep({
   code,
   otpError,
   tooManyAttempts,
@@ -33,10 +34,11 @@ export function ChangePasswordOtpStep({
   isResending,
   verifyDisabled,
   resendDisabled,
+  submitLabel,
   onCodeChange,
   onVerify,
   onResend,
-}: ChangePasswordOtpStepProps) {
+}: OtpStepProps) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
@@ -105,7 +107,7 @@ export function ChangePasswordOtpStep({
         disabled={verifyDisabled}
         className="w-full"
       >
-        {isPendingOtp ? "Weryfikowanie..." : "Potwierdź zmianę hasła"}
+        {isPendingOtp ? "Weryfikowanie..." : submitLabel}
       </Button>
     </div>
   );

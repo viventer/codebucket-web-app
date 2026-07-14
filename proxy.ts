@@ -20,7 +20,7 @@ const PROTECTED_PATTERNS = [
   /^\/course\/[^/]+\/[^/]+\/[^/]+/,
   /^\/change-password$/,
 ];
-const AUTH_PATHS = ["/login", "/signup"];
+const AUTH_PATHS = ["/login", "/signup", "/reset-password"];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
