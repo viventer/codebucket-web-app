@@ -4,9 +4,15 @@ import { useState } from "react";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleAuthProvider, githubAuthProvider } from "@/firebase/init";
 import { createSession } from "@/actions/auth/session";
+import { migrateAllGuestProgressFromStorage } from "@/lib/course/migrate-guest-progress";
 import { getFirebaseErrorMessage } from "@/lib/firebase-errors";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
+
+function getSafeNext(): string {
+  const raw = new URLSearchParams(window.location.search).get("next") ?? "";
+  return raw.startsWith("/") && !raw.startsWith("//") ? raw : "/";
+}
 
 export function OAuthButtons() {
   const { toast } = useToast();
@@ -31,9 +37,12 @@ export function OAuthButtons() {
         return;
       }
 
-      window.location.assign("/");
+      await migrateAllGuestProgressFromStorage();
+
+      window.location.assign(getSafeNext());
     } catch (err) {
       const code = (err as { code?: string }).code ?? "";
+      console.log("oauth error", err);
       if (
         code !== "auth/popup-closed-by-user" &&
         code !== "auth/cancelled-popup-request"

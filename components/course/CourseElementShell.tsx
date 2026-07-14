@@ -61,8 +61,13 @@ export function CourseElementShell({
   centerContentOnMobile = false,
   children,
 }: CourseElementShellProps) {
+  const sectionSpecs = staticSections.map((s) => ({
+    id: s.id,
+    elementIds: s.elements.map((el) => el.id),
+  }));
+
   return (
-    <CourseProgressProvider courseId={courseId}>
+    <CourseProgressProvider courseId={courseId} sections={sectionSpecs}>
       <CourseShellContent
         navigationMetadata={navigationMetadata}
         staticSections={staticSections}

@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getIronSession } from "iron-session";
 import type { SessionData } from "@/lib/session";
+import { isGuestFreeSection } from "@/lib/course/free-sections";
 
 const SESSION_OPTIONS = {
   cookieName: "cb_session",
@@ -16,11 +17,9 @@ const SESSION_OPTIONS = {
 const CB_AUTH_COOKIE = "cb_auth";
 const SESSION_TTL_SECONDS = 30 * 24 * 60 * 60;
 
-const PROTECTED_PATTERNS = [
-  /^\/course\/[^/]+\/[^/]+\/[^/]+/,
-  /^\/change-password$/,
-];
-const AUTH_PATHS = ["/login", "/signup", "/reset-password"];
+const COURSE_ELEMENT_PATTERN = /^\/course\/([^/]+)\/([^/]+)\/[^/]+$/;
+
+const AUTH_PATHS = ["/login", "/signup", "/reset-password", "/registration-required"];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -29,16 +28,30 @@ export async function proxy(request: NextRequest) {
   const session = await getIronSession<SessionData>(request, response, SESSION_OPTIONS);
   const isAuthenticated = !!(session.uid && session.email);
 
-  const isProtected = PROTECTED_PATTERNS.some((pattern) => pattern.test(pathname));
-  const isAuthPage = AUTH_PATHS.some((path) => pathname.startsWith(path));
-
-  if (isProtected && !isAuthenticated) {
+  // Gate: change-password requires auth
+  if (pathname === "/change-password" && !isAuthenticated) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("next", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  if (isAuthPage && isAuthenticated) {
+  // Gate: course elements — first sections are public, later sections require auth
+  const courseMatch = COURSE_ELEMENT_PATTERN.exec(pathname);
+  if (courseMatch && !isAuthenticated) {
+    const courseId = courseMatch[1];
+    const sectionId = courseMatch[2];
+
+    if (!isGuestFreeSection(courseId, sectionId)) {
+      const url = new URL("/registration-required", request.url);
+      url.searchParams.set("next", pathname);
+      return NextResponse.redirect(url);
+    }
+  }
+
+  const isAuthPage = AUTH_PATHS.some((path) => pathname.startsWith(path));
+
+  // Only redirect page loads (GET), not Server Action POSTs — those must reach the page handler
+  if (isAuthPage && isAuthenticated && request.method === "GET") {
     return NextResponse.redirect(new URL("/", request.url));
   }
 

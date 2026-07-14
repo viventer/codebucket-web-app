@@ -1,12 +1,7 @@
 import Image from "next/image";
-import dynamic from "next/dynamic";
 
 import type { SectionProgress } from "@/lib/course/progress";
-
-const AccountDialog = dynamic(
-  () => import("@/components/course/AccountDialog").then((m) => ({ default: m.AccountDialog })),
-  { ssr: false },
-);
+import { HeaderAuth } from "@/components/HeaderAuth";
 import { CourseHeaderProgress } from "@/components/course/CourseHeaderProgress";
 import {
   CourseNavSheet,
@@ -68,7 +63,7 @@ export function CourseHeader({
         </div>
 
         <div className="ml-auto">
-          <AccountDialog />
+          <HeaderAuth />
         </div>
       </div>
     </header>

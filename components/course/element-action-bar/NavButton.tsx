@@ -5,6 +5,11 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useCourseNavigationOptional } from "@/lib/course/navigation-transition-context";
 import { useCourseProgressOptional } from "@/lib/course/course-progress-context";
+import { isGuestUser } from "@/lib/course/guest-progress";
+import {
+  isGuestFreeSection,
+  parseCourseElementPath,
+} from "@/lib/course/free-sections";
 
 import type { NavButtonProps } from "./types";
 
@@ -63,6 +68,17 @@ export function NavButton({
     // and post-exercise "Przejdź dalej" (exercises also call markElementCompleted earlier,
     // but the action is idempotent so the double-call is harmless).
     courseProgress?.markElementCompleted(metadata.currentElement.id);
+
+    // Guests must register before entering a non-free section
+    if (isGuestUser()) {
+      const target = parseCourseElementPath(href);
+      if (target && !isGuestFreeSection(target.courseId, target.sectionId)) {
+        router.push(
+          `/registration-required?next=${encodeURIComponent(href)}`,
+        );
+        return;
+      }
+    }
 
     router.push(href);
   };

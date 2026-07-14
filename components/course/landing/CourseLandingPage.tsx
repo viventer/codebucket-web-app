@@ -44,6 +44,7 @@ export function CourseLandingPage({ data }: CourseLandingPageProps) {
             ctaDescription={data.ctaDescription}
             startHref={data.startHref}
             finalCtaButtonLabel={data.finalCtaButtonLabel}
+            isFree={data.isFree}
           />
         </div>
       </main>
@@ -52,6 +53,7 @@ export function CourseLandingPage({ data }: CourseLandingPageProps) {
         courseId={data.id}
         startHref={data.startHref}
         label={data.finalCtaButtonLabel}
+        isFree={data.isFree}
         className="sm:hidden"
       />
     </>

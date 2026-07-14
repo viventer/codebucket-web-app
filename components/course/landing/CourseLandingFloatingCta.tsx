@@ -11,6 +11,7 @@ type CourseLandingFloatingCtaProps = {
   courseId: string;
   startHref: string | null;
   label: string;
+  isFree?: boolean;
   className?: string;
 };
 
@@ -18,6 +19,7 @@ export function CourseLandingFloatingCta({
   courseId,
   startHref,
   label,
+  isFree = false,
   className,
 }: CourseLandingFloatingCtaProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -87,6 +89,7 @@ export function CourseLandingFloatingCta({
           courseId={courseId}
           startHref={startHref!}
           label={label}
+          isFree={isFree}
           className="w-full max-w-md"
         />
       </motion.div>

@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { FieldValue } from "firebase-admin/firestore";
+import type { DocumentReference } from "firebase-admin/firestore";
 
 import { adminDB } from "@/firebase/admin-init";
 import { getSessionUser } from "@/lib/session";
@@ -20,6 +21,13 @@ export type UpdateProgressResult =
 const updateProgressInput = z.object({
   courseId: z.string().min(1),
   elementId: z.string().min(1),
+});
+
+const migrateProgressInput = z.object({
+  courseId: z.string().min(1),
+  elementsCompleted: z.array(z.string().min(1)),
+  started: z.boolean().optional(),
+  setAsCurrentCourse: z.boolean().optional(),
 });
 
 export async function getCourseProgress(
@@ -64,6 +72,79 @@ export async function getCourseProgress(
   }
 }
 
+/**
+ * Recomputes and persists section/course completion after elementsCompleted changes.
+ * Reads the current Firestore state, so it's safe to call after any arrayUnion.
+ */
+async function recomputeCompletion(
+  userRef: DocumentReference,
+  courseId: string,
+): Promise<void> {
+  const [navData, userDoc] = await Promise.all([
+    getCourseNavigationData(courseId),
+    userRef.get(),
+  ]);
+
+  if (!navData) return;
+
+  const data = userDoc.data();
+  const rawEntry = data?.courseProgress?.[courseId] as
+    | Partial<CourseProgressEntry>
+    | undefined;
+  const nowCompleted = new Set<string>(rawEntry?.elementsCompleted ?? []);
+  const sectionsAlreadyCompleted: string[] = rawEntry?.sectionsCompleted ?? [];
+
+  const sectionUpdates: Record<string, unknown> = {};
+
+  for (const section of navData.outline.sections) {
+    if (sectionsAlreadyCompleted.includes(section.id)) continue;
+    const allElementIds = sortOutlineElements(section.elements).map(
+      (el) => el.id,
+    );
+    if (
+      allElementIds.length > 0 &&
+      allElementIds.every((id) => nowCompleted.has(id))
+    ) {
+      sectionUpdates[`courseProgress.${courseId}.sectionsCompleted`] =
+        FieldValue.arrayUnion(section.id);
+    }
+  }
+
+  const newlyCompletedSectionIds = Object.keys(sectionUpdates).length > 0
+    ? navData.outline.sections
+        .filter((s) => !sectionsAlreadyCompleted.includes(s.id))
+        .filter((s) => {
+          const allElementIds = sortOutlineElements(s.elements).map(
+            (el) => el.id,
+          );
+          return (
+            allElementIds.length > 0 &&
+            allElementIds.every((id) => nowCompleted.has(id))
+          );
+        })
+        .map((s) => s.id)
+    : [];
+
+  const allSectionIds = navData.outline.sections.map((s) => s.id);
+  const sectionsAfterUpdate = [
+    ...sectionsAlreadyCompleted,
+    ...newlyCompletedSectionIds,
+  ];
+  const courseComplete = allSectionIds.every((id) =>
+    sectionsAfterUpdate.includes(id),
+  );
+
+  if (Object.keys(sectionUpdates).length > 0 || courseComplete) {
+    await userRef.update({
+      ...sectionUpdates,
+      ...(courseComplete
+        ? { completedCourses: FieldValue.arrayUnion(courseId) }
+        : {}),
+      updatedAt: FieldValue.serverTimestamp(),
+    });
+  }
+}
+
 export async function updateCourseProgress(
   input: unknown,
 ): Promise<UpdateProgressResult> {
@@ -81,7 +162,6 @@ export async function updateCourseProgress(
   try {
     const userRef = adminDB.collection("users").doc(sessionUser.uid);
 
-    // Atomically add element to elementsCompleted
     await userRef.update({
       [`courseProgress.${courseId}.elementsCompleted`]:
         FieldValue.arrayUnion(elementId),
@@ -89,84 +169,64 @@ export async function updateCourseProgress(
       updatedAt: FieldValue.serverTimestamp(),
     });
 
-    // After updating, check if the element's section is now fully complete
-    const [navData, userDoc] = await Promise.all([
-      getCourseNavigationData(courseId),
-      userRef.get(),
-    ]);
-
-    if (!navData) {
-      return { success: true };
-    }
-
-    const data = userDoc.data();
-    const rawEntry = data?.courseProgress?.[courseId] as
-      | Partial<CourseProgressEntry>
-      | undefined;
-    const nowCompleted = new Set<string>(rawEntry?.elementsCompleted ?? []);
-    const sectionsAlreadyCompleted: string[] =
-      rawEntry?.sectionsCompleted ?? [];
-
-    // Find which section owns the element
-    const owningSection = navData.outline.sections.find((section) =>
-      section.elements.some((el) => el.id === elementId),
-    );
-
-    const sectionUpdates: Record<string, unknown> = {};
-
-    if (owningSection) {
-      const allElementIds = sortOutlineElements(owningSection.elements).map(
-        (el) => el.id,
-      );
-      const sectionNowComplete = allElementIds.every((id) =>
-        nowCompleted.has(id),
-      );
-
-      if (
-        sectionNowComplete &&
-        !sectionsAlreadyCompleted.includes(owningSection.id)
-      ) {
-        sectionUpdates[`courseProgress.${courseId}.sectionsCompleted`] =
-          FieldValue.arrayUnion(owningSection.id);
-      }
-    }
-
-    // Check overall course completion
-    const allSections = navData.outline.sections;
-    const sectionsAfterUpdate = owningSection
-      ? [
-          ...sectionsAlreadyCompleted,
-          ...(sectionUpdates[
-            `courseProgress.${courseId}.sectionsCompleted`
-          ] !== undefined
-            ? [owningSection.id]
-            : []),
-        ]
-      : sectionsAlreadyCompleted;
-
-    const allSectionIds = allSections.map((s) => s.id);
-    const courseComplete = allSectionIds.every((id) =>
-      sectionsAfterUpdate.includes(id),
-    );
-
-    if (Object.keys(sectionUpdates).length > 0 || courseComplete) {
-      if (courseComplete) {
-        await userRef.update({
-          ...sectionUpdates,
-          completedCourses: FieldValue.arrayUnion(courseId),
-          updatedAt: FieldValue.serverTimestamp(),
-        });
-      } else {
-        await userRef.update({
-          ...sectionUpdates,
-          updatedAt: FieldValue.serverTimestamp(),
-        });
-      }
-    }
+    await recomputeCompletion(userRef, courseId);
 
     return { success: true };
   } catch (error) {
     console.error("updateCourseProgress failed:", error);
     return { success: false, error: "Failed to update progress" };
+  }
+}
+
+/**
+ * Merges guest localStorage progress into Firestore after the user logs in or registers.
+ * Idempotent — uses arrayUnion so duplicate calls are safe.
+ */
+export async function migrateGuestProgress(
+  input: unknown,
+): Promise<UpdateProgressResult> {
+  const parsed = migrateProgressInput.safeParse(input);
+  if (!parsed.success) {
+    return { success: false, error: "Invalid input" };
+  }
+  const { courseId, elementsCompleted, started, setAsCurrentCourse } =
+    parsed.data;
+
+  if (elementsCompleted.length === 0 && !started) {
+    return { success: true };
+  }
+
+  const sessionUser = await getSessionUser();
+  if (!sessionUser) {
+    return { success: false, error: "Unauthenticated" };
+  }
+
+  try {
+    const userRef = adminDB.collection("users").doc(sessionUser.uid);
+
+    const updates: Record<string, unknown> = {
+      unlockedCourses: FieldValue.arrayUnion(courseId),
+      updatedAt: FieldValue.serverTimestamp(),
+    };
+
+    if (elementsCompleted.length > 0) {
+      updates[`courseProgress.${courseId}.elementsCompleted`] =
+        FieldValue.arrayUnion(...elementsCompleted);
+    }
+
+    if (setAsCurrentCourse) {
+      updates.currentCourse = courseId;
+    }
+
+    await userRef.update(updates);
+
+    if (elementsCompleted.length > 0) {
+      await recomputeCompletion(userRef, courseId);
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("migrateGuestProgress failed:", error);
+    return { success: false, error: "Failed to migrate guest progress" };
   }
 }

@@ -7,6 +7,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { flattenError } from "zod";
 import { auth } from "@/firebase/init";
 import { createSession } from "@/actions/auth/session";
+import { migrateAllGuestProgressFromStorage } from "@/lib/course/migrate-guest-progress";
 import { getFirebaseErrorMessage } from "@/lib/firebase-errors";
 import { loginSchema } from "@/lib/password-validation";
 import { OAuthButtons } from "@/components/auth/OAuthButtons";
@@ -15,10 +16,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 
+function getSafeNext(raw: string | null): string {
+  if (!raw) return "/";
+  return raw.startsWith("/") && !raw.startsWith("//") ? raw : "/";
+}
+
 export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const passwordChanged = searchParams.get("passwordChanged") === "1";
+  const nextParam = searchParams.get("next");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -59,7 +66,10 @@ export function LoginForm() {
           setErrors({ form: result.error });
           return;
         }
-        router.push("/");
+
+        await migrateAllGuestProgressFromStorage();
+
+        router.push(getSafeNext(nextParam));
         router.refresh();
       } catch (err) {
         const code = (err as { code?: string }).code ?? "";

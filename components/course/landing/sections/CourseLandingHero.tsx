@@ -90,6 +90,7 @@ export function CourseLandingHero({
                   courseId={id}
                   startHref={startHref}
                   label={startButtonLabel}
+                  isFree={isFree}
                   className="w-full max-w-md"
                 />
               </div>

@@ -4,7 +4,7 @@ import { StartCourseButton } from "@/components/course/landing/StartCourseButton
 
 type CourseLandingFinalCtaProps = Pick<
   CourseLandingData,
-  "id" | "ctaDescription" | "startHref" | "finalCtaButtonLabel"
+  "id" | "ctaDescription" | "startHref" | "finalCtaButtonLabel" | "isFree"
 >;
 
 export function CourseLandingFinalCta({
@@ -12,6 +12,7 @@ export function CourseLandingFinalCta({
   ctaDescription,
   startHref,
   finalCtaButtonLabel,
+  isFree,
 }: CourseLandingFinalCtaProps) {
   return (
     <Card className="ring-accent">
@@ -26,6 +27,7 @@ export function CourseLandingFinalCta({
             courseId={id}
             startHref={startHref}
             label={finalCtaButtonLabel}
+            isFree={isFree}
             className="w-full max-w-md"
           />
         ) : null}

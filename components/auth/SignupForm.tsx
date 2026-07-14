@@ -5,6 +5,7 @@ import Link from "next/link";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/init";
 import { createSession } from "@/actions/auth/session";
+import { migrateAllGuestProgressFromStorage } from "@/lib/course/migrate-guest-progress";
 import { getFirebaseErrorMessage } from "@/lib/firebase-errors";
 import { signupSchema, PASSWORD_RULES } from "@/lib/password-validation";
 import { OAuthButtons } from "@/components/auth/OAuthButtons";
@@ -14,6 +15,11 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { CheckIcon, XIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+function getSafeNext(raw: string | null): string {
+  if (!raw) return "/";
+  return raw.startsWith("/") && !raw.startsWith("//") ? raw : "/";
+}
 
 export function SignupForm() {
   const [email, setEmail] = useState("");
@@ -67,7 +73,12 @@ export function SignupForm() {
           return;
         }
 
-        window.location.assign("/");
+        await migrateAllGuestProgressFromStorage();
+
+        const next = getSafeNext(
+          new URLSearchParams(window.location.search).get("next"),
+        );
+        window.location.assign(next);
       } catch (err) {
         const code = (err as { code?: string }).code ?? "";
         setErrors({ form: getFirebaseErrorMessage(code) });
