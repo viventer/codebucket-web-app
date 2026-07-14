@@ -15,7 +15,7 @@ export function CourseLandingFinalCta({
   isFree,
 }: CourseLandingFinalCtaProps) {
   return (
-    <Card className="ring-accent">
+    <Card className="ring-accent bg-accent/5">
       <CardContent className="flex flex-col items-center gap-4 text-center">
         <div className="flex flex-col gap-1">
           <h2 className="text-lg font-medium">Gotowy rozpocząć naukę?</h2>

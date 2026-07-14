@@ -104,9 +104,9 @@
   --syntax-salmon: #653c30;
   --syntax-green: #2f4b23;
   --syntax-foreground: #252525;
-  --feedback-success: #3dd000;
-  --feedback-warning: #dacb00;
-  --feedback-destructive: #eb3100;
+  --feedback-success: #237600;
+  --feedback-warning: #ebb700;
+  --feedback-destructive: #c82a00;
 }
 
 .dark {
@@ -148,7 +148,7 @@
   --syntax-green: #87c270;
   --syntax-foreground: #fafafa;
   --feedback-success: #93ff66;
-  --feedback-warning: #dfff66;
+  --feedback-warning: #f4ff66;
   --feedback-destructive: #ff8666;
 }
 

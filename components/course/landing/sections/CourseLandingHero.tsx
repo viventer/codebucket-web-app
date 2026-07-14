@@ -61,8 +61,8 @@ export function CourseLandingHero({
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <section className="flex flex-col gap-6">
             {isFree ? (
-              <div className="w-fit rounded-full bg-foreground/20 px-5 py-1 text-sm">
-                Cały kurs <span className="text-feedback-success">za 0 zł</span>
+              <div className="w-fit rounded-full bg-feedback-success/5 border border-feedback-success px-5 py-1 text-sm">
+                Cały kurs za darmo
               </div>
             ) : null}
 
@@ -96,7 +96,7 @@ export function CourseLandingHero({
               </div>
             ) : null}
           </section>
-          <Card className="w-full sm:w-fit justify-center bg-primary/20 ring-0">
+          <Card className="w-full sm:w-fit justify-center ring-primary bg-primary/5">
             <CardHeader>
               <CardTitle className="text-lg">Ten kurs zawiera</CardTitle>
             </CardHeader>
