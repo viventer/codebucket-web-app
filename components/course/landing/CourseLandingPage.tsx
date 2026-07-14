@@ -16,6 +16,7 @@ export function CourseLandingPage({ data }: CourseLandingPageProps) {
     <>
       <main className="mx-auto flex w-[90vw] max-w-[1280px] flex-1 flex-col gap-16 pt-8 pb-16 sm:pt-16">
         <CourseLandingHero
+          id={data.id}
           title={data.title}
           description={data.description}
           imageUrl={data.imageUrl}
@@ -39,6 +40,7 @@ export function CourseLandingPage({ data }: CourseLandingPageProps) {
 
         <div data-course-landing-final-cta>
           <CourseLandingFinalCta
+            id={data.id}
             ctaDescription={data.ctaDescription}
             startHref={data.startHref}
             finalCtaButtonLabel={data.finalCtaButtonLabel}
@@ -47,6 +49,7 @@ export function CourseLandingPage({ data }: CourseLandingPageProps) {
       </main>
 
       <CourseLandingFloatingCta
+        courseId={data.id}
         startHref={data.startHref}
         label={data.finalCtaButtonLabel}
         className="sm:hidden"

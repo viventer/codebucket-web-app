@@ -1,21 +1,21 @@
 "use client";
 
-import Link from "next/link";
-import { RocketIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
+import { StartCourseButton } from "@/components/course/landing/StartCourseButton";
 
 type CourseLandingFloatingCtaProps = {
+  courseId: string;
   startHref: string | null;
   label: string;
   className?: string;
 };
 
 export function CourseLandingFloatingCta({
+  courseId,
   startHref,
   label,
   className,
@@ -83,12 +83,12 @@ export function CourseLandingFloatingCta({
         }}
         className="mx-auto flex w-[90vw] max-w-[1280px] items-center justify-center rounded-xl border border-accent bg-background/70 px-4! py-3 backdrop-blur"
       >
-        <Button asChild size="lg" className="w-full max-w-md">
-          <Link href={startHref!}>
-            <RocketIcon />
-            {label}
-          </Link>
-        </Button>
+        <StartCourseButton
+          courseId={courseId}
+          startHref={startHref!}
+          label={label}
+          className="w-full max-w-md"
+        />
       </motion.div>
     </nav>
   );

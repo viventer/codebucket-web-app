@@ -45,7 +45,7 @@ export async function ensureUserDocument(
       unlockedCourses: [],
       completedCourses: [],
       currentCourse: null,
-      courseProgress: [],
+      courseProgress: {},
       preferences: {
         colorScheme: null,
       },

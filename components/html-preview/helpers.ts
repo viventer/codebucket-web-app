@@ -2,8 +2,6 @@
 
 import { useSyncExternalStore } from "react";
 
-import { mockUser } from "@/lib/mock-user";
-
 export type ThemeColors = {
   background: string;
   color: string;
@@ -27,8 +25,8 @@ const THEME_COLORS: Record<"light" | "dark", ThemeColors> = {
 };
 
 function getServerThemeColors(): ThemeColors {
-  const scheme = mockUser.preferences.colorScheme;
-  return THEME_COLORS[scheme === "dark" ? "dark" : "light"];
+  // SSR fallback — actual theme resolved client-side via useSyncExternalStore
+  return THEME_COLORS.dark;
 }
 
 function readThemeColors(): ThemeColors {

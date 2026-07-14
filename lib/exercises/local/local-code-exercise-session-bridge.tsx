@@ -10,6 +10,8 @@ import {
   ExerciseSessionContext,
   type ExerciseSessionContextValue,
 } from "@/lib/exercises/shared/exercise-session-context-shared";
+import { useCourseNavigationOptional } from "@/lib/course/navigation-transition-context";
+import { useCourseProgressOptional } from "@/lib/course/course-progress-context";
 
 type LocalCodeExerciseSessionBridgeProps = {
   config: LocalCodeExerciseConfig;
@@ -29,8 +31,15 @@ export function LocalCodeExerciseSessionBridge({
   const [solutionConfirmOpen, setSolutionConfirmOpen] = useState(false);
   const [solutionCodeOpen, setSolutionCodeOpen] = useState(false);
 
+  const navigation = useCourseNavigationOptional();
+  const courseProgress = useCourseProgressOptional();
+
   function markLocalExerciseCompleted() {
     setLocalPhase("completed");
+    const elementId = navigation?.metadata.currentElement.id;
+    if (elementId) {
+      courseProgress?.markElementCompleted(elementId);
+    }
   }
 
   function tryShowSolution() {

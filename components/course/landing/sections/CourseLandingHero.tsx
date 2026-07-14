@@ -1,17 +1,15 @@
 import Image from "next/image";
-import Link from "next/link";
 import {
   FileTextIcon,
   FolderKanbanIcon,
   Gamepad2Icon,
   PlayCircleIcon,
-  RocketIcon,
   type LucideIcon,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { CourseLandingData } from "@/lib/course/landing-data";
+import { StartCourseButton } from "@/components/course/landing/StartCourseButton";
 
 function getCourseIncludeIcon(label: string): LucideIcon {
   const normalized = label.toLowerCase();
@@ -37,6 +35,7 @@ function getCourseIncludeIcon(label: string): LucideIcon {
 
 type CourseLandingHeroProps = Pick<
   CourseLandingData,
+  | "id"
   | "title"
   | "description"
   | "imageUrl"
@@ -47,6 +46,7 @@ type CourseLandingHeroProps = Pick<
 >;
 
 export function CourseLandingHero({
+  id,
   title,
   description,
   imageUrl,
@@ -85,17 +85,14 @@ export function CourseLandingHero({
             </div>
 
             {startHref ? (
-              <Button
-                asChild
-                size="lg"
-                className="w-full max-w-md"
-                data-course-landing-hero-cta
-              >
-                <Link href={startHref}>
-                  <RocketIcon />
-                  {startButtonLabel}
-                </Link>
-              </Button>
+              <div data-course-landing-hero-cta>
+                <StartCourseButton
+                  courseId={id}
+                  startHref={startHref}
+                  label={startButtonLabel}
+                  className="w-full max-w-md"
+                />
+              </div>
             ) : null}
           </section>
           <Card className="w-full sm:w-fit justify-center bg-primary/20 ring-0">

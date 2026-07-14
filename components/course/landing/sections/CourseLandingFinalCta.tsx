@@ -1,16 +1,14 @@
-import Link from "next/link";
-import { RocketIcon } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { CourseLandingData } from "@/lib/course/landing-data";
+import { StartCourseButton } from "@/components/course/landing/StartCourseButton";
 
 type CourseLandingFinalCtaProps = Pick<
   CourseLandingData,
-  "ctaDescription" | "startHref" | "finalCtaButtonLabel"
+  "id" | "ctaDescription" | "startHref" | "finalCtaButtonLabel"
 >;
 
 export function CourseLandingFinalCta({
+  id,
   ctaDescription,
   startHref,
   finalCtaButtonLabel,
@@ -24,12 +22,12 @@ export function CourseLandingFinalCta({
         </div>
 
         {startHref ? (
-          <Button asChild size="lg" className="w-full max-w-md">
-            <Link href={startHref}>
-              <RocketIcon />
-              {finalCtaButtonLabel}
-            </Link>
-          </Button>
+          <StartCourseButton
+            courseId={id}
+            startHref={startHref}
+            label={finalCtaButtonLabel}
+            className="w-full max-w-md"
+          />
         ) : null}
       </CardContent>
     </Card>

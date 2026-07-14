@@ -1,4 +1,4 @@
-import type { User } from "@/schemas/userSchema";
+import type { CourseProgressEntry } from "@/schemas/userSchema";
 
 export type SectionProgress = {
   completed: number;
@@ -7,32 +7,23 @@ export type SectionProgress = {
 };
 
 export function getCompletedElementIds(
-  user: User,
-  courseId: string,
+  entry: CourseProgressEntry | undefined,
 ): Set<string> {
-  const progress = user.courseProgress.find((p) => p.courseId === courseId);
-  return new Set(progress?.elementsCompleted ?? []);
+  return new Set(entry?.elementsCompleted ?? []);
 }
 
 export function getSectionsCompleted(
-  user: User,
-  courseId: string,
+  entry: CourseProgressEntry | undefined,
 ): string[] {
-  const progress = user.courseProgress.find((p) => p.courseId === courseId);
-  return progress?.sectionsCompleted ?? [];
+  return entry?.sectionsCompleted ?? [];
 }
 
 export function getSectionProgress(
-  courseId: string,
   sectionElementIds: string[],
-  user: User,
+  completedIds: Set<string>,
 ): SectionProgress {
-  const completedIds = getCompletedElementIds(user, courseId);
   const total = sectionElementIds.length;
-  const completed = sectionElementIds.filter((elementId) =>
-    completedIds.has(elementId),
-  ).length;
+  const completed = sectionElementIds.filter((id) => completedIds.has(id)).length;
   const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
-
   return { completed, total, percent };
 }

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { useCourseNavigationOptional } from "@/lib/course/navigation-transition-context";
+import { useCourseProgressOptional } from "@/lib/course/course-progress-context";
 
 import type { NavButtonProps } from "./types";
 
@@ -14,6 +15,7 @@ export function NavButton({
 }: NavButtonProps) {
   const router = useRouter();
   const navigation = useCourseNavigationOptional();
+  const courseProgress = useCourseProgressOptional();
 
   const handleNavigate = () => {
     if (!href || !navigation) {
@@ -55,6 +57,12 @@ export function NavButton({
     ) {
       beginExerciseTransition();
     }
+
+    // Mark the current element completed on forward navigation.
+    // Covers: video, interactiveDemo, guidedProject, cheatsheet, individualProject,
+    // and post-exercise "Przejdź dalej" (exercises also call markElementCompleted earlier,
+    // but the action is idempotent so the double-call is harmless).
+    courseProgress?.markElementCompleted(metadata.currentElement.id);
 
     router.push(href);
   };

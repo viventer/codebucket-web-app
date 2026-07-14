@@ -19,13 +19,8 @@ import {
   elementHasMaterials,
 } from "@/lib/courses";
 import { buildCourseNavigationMetadata } from "@/lib/course/build-navigation-metadata";
-import { mockUser } from "@/lib/mock-user";
-import {
-  getCompletedElementIds,
-  getSectionProgress,
-  getSectionsCompleted,
-} from "@/lib/course/progress";
 import { CourseElementShell } from "@/components/course/CourseElementShell";
+import type { StaticNavSection } from "@/components/course/CourseElementShell";
 
 export async function generateStaticParams() {
   return getAllCourseElementParams();
@@ -102,27 +97,23 @@ export default async function ElementLayout({
     nextElement,
   );
 
-  const user = mockUser;
-  const completedIds = getCompletedElementIds(user, course.id);
-  const elementsCompleted = Array.from(completedIds);
-  const sectionsCompleted = getSectionsCompleted(user, course.id);
-  const progress = getSectionProgress(
-    course.id,
-    sortOutlineElements(currentSection.elements).map((element) => element.id),
-    user,
+  // Static section structure — completion flags are added client-side from Firestore
+  const staticSections: StaticNavSection[] = sortOutlineSections(outline).map(
+    (section) => ({
+      id: section.id,
+      title: section.title,
+      order: section.order,
+      elements: sortOutlineElements(section.elements).map((element) => ({
+        id: element.id,
+        title: element.displayTitle,
+        type: element.type,
+      })),
+    }),
   );
 
-  const sections = sortOutlineSections(outline).map((section) => ({
-    id: section.id,
-    title: section.title,
-    order: section.order,
-    elements: sortOutlineElements(section.elements).map((element) => ({
-      id: element.id,
-      title: element.displayTitle,
-      type: element.type,
-      completed: completedIds.has(element.id),
-    })),
-  }));
+  const currentSectionElementIds = sortOutlineElements(
+    currentSection.elements,
+  ).map((el) => el.id);
 
   const isExercise =
     currentElement.type === "platformCodeExercise" ||
@@ -143,17 +134,16 @@ export default async function ElementLayout({
 
   return (
     <CourseElementShell
+      courseId={course.id}
       navigationMetadata={navigationMetadata}
-      sectionsCompleted={sectionsCompleted}
-      elementsCompleted={elementsCompleted}
-      headerProps={{
+      staticSections={staticSections}
+      currentSectionElementIds={currentSectionElementIds}
+      headerStaticProps={{
         courseId: course.id,
         courseTitle: course.title,
         sectionTitle: currentSection.title,
-        sections,
         currentSectionId: sectionId,
         currentElementId: elementId,
-        progress,
       }}
       actionBarProps={{
         type: currentElement.type,

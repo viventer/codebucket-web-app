@@ -6,6 +6,8 @@ import { ExerciseHintDialog } from "@/components/course/exercises/ExerciseHintDi
 import { ExerciseSolutionDialog } from "@/components/course/exercises/ExerciseSolutionDialog";
 import { SuccessCelebration } from "@/components/course/exercises/SuccessCelebration";
 import { useToast } from "@/hooks/use-toast";
+import { useCourseNavigationOptional } from "@/lib/course/navigation-transition-context";
+import { useCourseProgressOptional } from "@/lib/course/course-progress-context";
 
 import type { getInteractiveExerciseConfig } from "../shared/create-exercise-controller";
 import { EXERCISE_ERROR_FEEDBACK } from "../shared/exercise-feedback-messages";
@@ -50,6 +52,10 @@ export function InteractiveExerciseSessionBridge({
   const [showCelebration, setShowCelebration] = useState(false);
   const advanceTimeoutRef = useRef<number | null>(null);
   const autoAdvancedStagesRef = useRef<Set<number>>(new Set());
+  const markedCompletedRef = useRef(false);
+
+  const courseNavigation = useCourseNavigationOptional();
+  const courseProgress = useCourseProgressOptional();
 
   const { navigation, session, feedback, clearTransientFeedback } = controller;
   const { isLastStage, advanceStage, currentStageIndex, flowPhase, stageProgress } =
@@ -270,6 +276,16 @@ export function InteractiveExerciseSessionBridge({
       : feedback === "success" ||
         feedback === "solution" ||
         feedback === "stageCloseCall");
+
+  // Mark the exercise completed in Firestore the first time canProceed becomes true
+  useEffect(() => {
+    if (!canProceed || markedCompletedRef.current) return;
+    markedCompletedRef.current = true;
+    const elementId = courseNavigation?.metadata.currentElement.id;
+    if (elementId) {
+      courseProgress?.markElementCompleted(elementId);
+    }
+  }, [canProceed, courseNavigation, courseProgress]);
 
   const canProceedStage =
     !isLastStage &&
