@@ -170,7 +170,10 @@ export function AccountDialog({
                             {course.title}
                           </p>
                           <Button asChild variant="outline" size="sm">
-                            <Link href={`/course/${course.id}`}>
+                            <Link
+                              href={`/course/${course.id}`}
+                              onClick={() => setOpen(false)}
+                            >
                               {course.id === accountData.currentCourseId
                                 ? "Przejdź do kursu"
                                 : "Otwórz"}
