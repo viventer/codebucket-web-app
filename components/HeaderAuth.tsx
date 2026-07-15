@@ -37,7 +37,7 @@ export function HeaderAuth() {
         <Button asChild variant="ghost" size="sm">
           <Link href="/login">Zaloguj się</Link>
         </Button>
-        <Button asChild variant="default" size="sm">
+        <Button asChild variant="secondary" size="sm">
           <Link href="/signup">Utwórz darmowe konto</Link>
         </Button>
       </div>

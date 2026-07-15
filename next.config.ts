@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
 };
 
 module.exports = {
-  allowedDevOrigins: ["317b-185-172-85-145.ngrok-free.app"],
+  allowedDevOrigins: ["f0ff-185-172-85-145.ngrok-free.app"],
 };
 
 export default nextConfig;
