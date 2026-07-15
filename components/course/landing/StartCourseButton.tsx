@@ -1,12 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { RocketIcon } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { ClientIcon } from "@/components/ui/client-icon";
 import { startCourse } from "@/actions/user/start-course";
 import { isGuestUser, writeGuestCourseStarted } from "@/lib/course/guest-progress";
+import { cn } from "@/lib/utils";
 
 type StartCourseButtonProps = {
   courseId: string;
@@ -54,8 +55,16 @@ export function StartCourseButton({
   }
 
   return (
-    <Button size={size} className={className} onClick={handleClick} disabled={loading}>
-      <RocketIcon />
+    <Button
+      size={size}
+      className={cn(
+        "gap-2 [&_svg]:pointer-events-auto! [&_svg:not([class*='size-'])]:size-auto",
+        className,
+      )}
+      onClick={handleClick}
+      disabled={loading}
+    >
+      <ClientIcon src="rocket.svg" size={24} />
       {label}
     </Button>
   );

@@ -84,7 +84,10 @@ export function ClientIcon({
       role={label ? "img" : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
-      className={cn("inline-block shrink-0 [&>svg]:block", className)}
+      className={cn(
+        "inline-block shrink-0 [&>svg]:block [&>svg]:size-full",
+        className,
+      )}
       style={{ color, width: w, height: h, ...style }}
       dangerouslySetInnerHTML={{ __html: svgHtml }}
       {...props}
