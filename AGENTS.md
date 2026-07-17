@@ -59,6 +59,8 @@ Pre-sale:
 - Server Actions when possible
 - No any types
 - avoid unnecessary client components
+- shadcn components when possible
+- don't modify shadcn components when it isn't necessary
 
 ## Business model
 
