@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getIronSession } from "iron-session";
-import type { SessionData } from "@/lib/session";
+import type { SessionData } from "@/lib/auth/session";
 import { isGuestFreeSection } from "@/lib/course/free-sections";
 
 const SESSION_OPTIONS = {
@@ -19,13 +19,22 @@ const SESSION_TTL_SECONDS = 30 * 24 * 60 * 60;
 
 const COURSE_ELEMENT_PATTERN = /^\/course\/([^/]+)\/([^/]+)\/[^/]+$/;
 
-const AUTH_PATHS = ["/login", "/signup", "/reset-password", "/registration-required"];
+const AUTH_PATHS = [
+  "/login",
+  "/signup",
+  "/reset-password",
+  "/registration-required",
+];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const response = NextResponse.next();
-  const session = await getIronSession<SessionData>(request, response, SESSION_OPTIONS);
+  const session = await getIronSession<SessionData>(
+    request,
+    response,
+    SESSION_OPTIONS,
+  );
   const isAuthenticated = !!(session.uid && session.email);
 
   // Gate: change-password requires auth

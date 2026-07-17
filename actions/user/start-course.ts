@@ -3,7 +3,7 @@
 import { FieldValue } from "firebase-admin/firestore";
 
 import { adminDB } from "@/firebase/admin-init";
-import { getSessionUser } from "@/lib/session";
+import { getSessionUser } from "@/lib/auth/session";
 import { getCourseNavigationData } from "@/actions/courses/read-courses";
 
 export type StartCourseResult =
@@ -11,7 +11,9 @@ export type StartCourseResult =
   | { success: false; needsAuth: true }
   | { success: false; needsAuth?: false; error: string };
 
-export async function startCourse(courseId: string): Promise<StartCourseResult> {
+export async function startCourse(
+  courseId: string,
+): Promise<StartCourseResult> {
   const sessionUser = await getSessionUser();
   if (!sessionUser) {
     return { success: false, needsAuth: true };
@@ -28,11 +30,14 @@ export async function startCourse(courseId: string): Promise<StartCourseResult> 
       return { success: false, error: "Course requires payment" };
     }
 
-    await adminDB.collection("users").doc(sessionUser.uid).update({
-      unlockedCourses: FieldValue.arrayUnion(courseId),
-      currentCourse: courseId,
-      updatedAt: FieldValue.serverTimestamp(),
-    });
+    await adminDB
+      .collection("users")
+      .doc(sessionUser.uid)
+      .update({
+        unlockedCourses: FieldValue.arrayUnion(courseId),
+        currentCourse: courseId,
+        updatedAt: FieldValue.serverTimestamp(),
+      });
 
     return { success: true };
   } catch (error) {

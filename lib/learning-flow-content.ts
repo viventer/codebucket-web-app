@@ -24,7 +24,7 @@ export const LEARNING_FLOW_ITEMS: LearningFlowItemConfig[] = [
     titleBefore: "Ucz się ",
     titleAccent: "aktywnie",
     description:
-      "Interaktywne ćwiczenia ułatwiają zapamiętywanie i zrozumienie nowych tematów.",
+      "Interaktywne ćwiczenia ułatwiają zapamiętywanie nowych zagadnień.",
     storagePath: "landing-demo/exercises-demo.mp4",
   },
   {

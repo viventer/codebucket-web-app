@@ -1,8 +1,8 @@
 "use server";
 
 import { getCourseTitle } from "@/actions/courses/read-courses";
-import { getSessionUser } from "@/lib/session";
-import { userCanChangePassword } from "@/lib/user-can-change-password";
+import { getSessionUser } from "@/lib/auth/session";
+import { userCanChangePassword } from "@/lib/auth/user-can-change-password";
 import { adminDB } from "@/firebase/admin-init";
 
 export async function getMainHeaderAccount() {
@@ -19,7 +19,8 @@ export async function getMainHeaderAccount() {
     ]);
     const userData = userDoc.data();
     const unlockedCourses: string[] = userData?.unlockedCourses ?? [];
-    const currentCourse: string | undefined = userData?.currentCourse ?? undefined;
+    const currentCourse: string | undefined =
+      userData?.currentCourse ?? undefined;
 
     const courses = await Promise.all(
       unlockedCourses.map(async (courseId) => ({

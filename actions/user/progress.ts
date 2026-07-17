@@ -5,7 +5,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import type { DocumentReference } from "firebase-admin/firestore";
 
 import { adminDB } from "@/firebase/admin-init";
-import { getSessionUser } from "@/lib/session";
+import { getSessionUser } from "@/lib/auth/session";
 import { getCourseNavigationData } from "@/actions/courses/read-courses";
 import { sortOutlineElements } from "@/actions/courses/helpers";
 import type { CourseProgressEntry } from "@/schemas/userSchema";
@@ -15,8 +15,7 @@ export type CourseProgressResult =
   | { success: false; error: string };
 
 export type UpdateProgressResult =
-  | { success: true }
-  | { success: false; error: string };
+  { success: true } | { success: false; error: string };
 
 const updateProgressInput = z.object({
   courseId: z.string().min(1),
@@ -44,8 +43,7 @@ export async function getCourseProgress(
     const data = userDoc.data();
 
     const rawEntry = data?.courseProgress?.[courseId] as
-      | Partial<CourseProgressEntry>
-      | undefined;
+      Partial<CourseProgressEntry> | undefined;
 
     const entry: CourseProgressEntry = {
       elementsCompleted: rawEntry?.elementsCompleted ?? [],
@@ -89,8 +87,7 @@ async function recomputeCompletion(
 
   const data = userDoc.data();
   const rawEntry = data?.courseProgress?.[courseId] as
-    | Partial<CourseProgressEntry>
-    | undefined;
+    Partial<CourseProgressEntry> | undefined;
   const nowCompleted = new Set<string>(rawEntry?.elementsCompleted ?? []);
   const sectionsAlreadyCompleted: string[] = rawEntry?.sectionsCompleted ?? [];
 
@@ -110,20 +107,21 @@ async function recomputeCompletion(
     }
   }
 
-  const newlyCompletedSectionIds = Object.keys(sectionUpdates).length > 0
-    ? navData.outline.sections
-        .filter((s) => !sectionsAlreadyCompleted.includes(s.id))
-        .filter((s) => {
-          const allElementIds = sortOutlineElements(s.elements).map(
-            (el) => el.id,
-          );
-          return (
-            allElementIds.length > 0 &&
-            allElementIds.every((id) => nowCompleted.has(id))
-          );
-        })
-        .map((s) => s.id)
-    : [];
+  const newlyCompletedSectionIds =
+    Object.keys(sectionUpdates).length > 0
+      ? navData.outline.sections
+          .filter((s) => !sectionsAlreadyCompleted.includes(s.id))
+          .filter((s) => {
+            const allElementIds = sortOutlineElements(s.elements).map(
+              (el) => el.id,
+            );
+            return (
+              allElementIds.length > 0 &&
+              allElementIds.every((id) => nowCompleted.has(id))
+            );
+          })
+          .map((s) => s.id)
+      : [];
 
   const allSectionIds = navData.outline.sections.map((s) => s.id);
   const sectionsAfterUpdate = [

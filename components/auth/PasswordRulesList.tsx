@@ -1,5 +1,5 @@
 import { CheckIcon, XIcon } from "lucide-react";
-import { PASSWORD_RULES } from "@/lib/password-validation";
+import { PASSWORD_RULES } from "@/lib/auth/password-validation";
 import { cn } from "@/lib/utils";
 
 type PasswordRulesListProps = {
@@ -7,7 +7,10 @@ type PasswordRulesListProps = {
   touched: boolean;
 };
 
-export function PasswordRulesList({ password, touched }: PasswordRulesListProps) {
+export function PasswordRulesList({
+  password,
+  touched,
+}: PasswordRulesListProps) {
   const showResults = touched || password.length > 0;
 
   return (

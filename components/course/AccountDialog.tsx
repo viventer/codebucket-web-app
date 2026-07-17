@@ -4,7 +4,7 @@ import { useTransition, useState, useEffect } from "react";
 import Link from "next/link";
 import { auth } from "@/firebase/init";
 import { deleteSession } from "@/actions/auth/session";
-import { getMainHeaderAccount } from "@/lib/main-header-account";
+import { getMainHeaderAccount } from "@/lib/auth/main-header-account";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import {

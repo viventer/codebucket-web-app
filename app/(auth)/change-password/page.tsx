@@ -1,6 +1,6 @@
 import { ChangePasswordCard } from "@/components/auth/ChangePasswordCard";
-import { getSessionUser } from "@/lib/session";
-import { userCanChangePassword } from "@/lib/user-can-change-password";
+import { getSessionUser } from "@/lib/auth/session";
+import { userCanChangePassword } from "@/lib/auth/user-can-change-password";
 import { redirect } from "next/navigation";
 
 export const metadata = {

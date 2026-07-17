@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { LEARNING_FLOW_ITEMS } from "@/components/home/learning-flow-content";
+import { LEARNING_FLOW_ITEMS } from "@/lib/learning-flow-content";
 import { LearningFlowCard } from "@/components/home/LearningFlowCard";
 import { ClientIcon } from "@/components/ui/client-icon";
 import { normalizeStoragePath } from "@/actions/storage/helpers";

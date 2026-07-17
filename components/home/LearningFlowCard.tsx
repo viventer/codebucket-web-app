@@ -1,4 +1,4 @@
-import type { LearningFlowItemConfig } from "@/components/home/learning-flow-content";
+import type { LearningFlowItemConfig } from "@/lib/learning-flow-content";
 import { LazyVideo } from "@/components/home/LazyVideo";
 import { ClientIcon } from "@/components/ui/client-icon";
 import {

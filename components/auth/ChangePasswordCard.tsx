@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import { auth } from "@/firebase/init";
 import { getFirebaseErrorMessage } from "@/lib/firebase-errors";
-import { changePasswordSchema } from "@/lib/password-validation";
+import { changePasswordSchema } from "@/lib/auth/password-validation";
 import {
   CardContent,
   CardDescription,
@@ -18,12 +18,12 @@ import {
 import {
   applyOtpSendResult,
   getOtpCooldownSecondsLeft,
-} from "@/lib/otp-cooldown";
+} from "@/lib/otp/otp-cooldown";
 import {
   sendPasswordChangeOtp,
   verifyPasswordChangeOtp,
 } from "@/actions/auth/password-change";
-import { revokeUserSessions } from "@/lib/revoke-user-sessions";
+import { revokeUserSessions } from "@/lib/auth/revoke-user-sessions";
 import { deleteSession } from "@/actions/auth/session";
 import { ChangePasswordCredentialsFields } from "@/components/auth/ChangePasswordCredentialsFields";
 import { OtpStep } from "@/components/auth/OtpStep";
@@ -57,8 +57,7 @@ export function ChangePasswordCard({ uid, email }: ChangePasswordCardProps) {
   const [isPendingOtp, startOtpTransition] = useTransition();
   const [isResending, startResendTransition] = useTransition();
 
-  const { setCooldownUntil, secondsLeft, setSecondsLeft } =
-    useOtpCountdown();
+  const { setCooldownUntil, secondsLeft, setSecondsLeft } = useOtpCountdown();
 
   function handleStep1Submit(e: React.FormEvent) {
     e.preventDefault();
@@ -186,8 +185,8 @@ export function ChangePasswordCard({ uid, email }: ChangePasswordCardProps) {
             <>
               Wysłaliśmy kod weryfikacyjny na adres{" "}
               <span className="font-medium text-foreground">{email}</span>.
-              Wprowadź go, aby potwierdzić zmianę hasła. Kod jest ważny przez
-              10 minut.
+              Wprowadź go, aby potwierdzić zmianę hasła. Kod jest ważny przez 10
+              minut.
             </>
           )}
         </CardDescription>

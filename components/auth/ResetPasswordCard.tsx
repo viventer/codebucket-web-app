@@ -16,9 +16,9 @@ import { NewPasswordFields } from "@/components/auth/NewPasswordFields";
 import {
   applyOtpSendResult,
   getOtpCooldownSecondsLeft,
-} from "@/lib/otp-cooldown";
+} from "@/lib/otp/otp-cooldown";
 import { useOtpCountdown } from "@/hooks/use-otp-countdown";
-import { resetPasswordSchema } from "@/lib/password-validation";
+import { resetPasswordSchema } from "@/lib/auth/password-validation";
 import {
   sendPasswordResetOtp,
   verifyPasswordResetOtp,

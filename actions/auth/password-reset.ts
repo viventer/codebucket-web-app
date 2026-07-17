@@ -4,7 +4,7 @@ import * as React from "react";
 import { adminAuth } from "@/firebase/admin-init";
 import { sendOtp, verifyOtp } from "@/lib/otp/otp-service";
 import type { SendOtpResult, VerifyOtpResult } from "@/lib/otp/otp-service";
-import { revokeUserSessions } from "@/lib/revoke-user-sessions";
+import { revokeUserSessions } from "@/lib/auth/revoke-user-sessions";
 import { PasswordResetOtpEmail } from "@/emails/password-reset-otp";
 
 const COLLECTION = "otp_password_reset";
@@ -103,6 +103,9 @@ export async function resetPasswordWithOtp(
     await revokeUserSessions(uid);
     return { success: true };
   } catch {
-    return { success: false, error: "Nie udało się zmienić hasła. Spróbuj ponownie." };
+    return {
+      success: false,
+      error: "Nie udało się zmienić hasła. Spróbuj ponownie.",
+    };
   }
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getOtpCooldownSecondsLeft } from "@/lib/otp-cooldown";
+import { getOtpCooldownSecondsLeft } from "@/lib/otp/otp-cooldown";
 
 export function useOtpCountdown() {
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);

@@ -4,7 +4,7 @@ import { ScrollSnapController } from "@/components/home/ScrollSnapController";
 import { getCourseDocument } from "@/actions/courses/read-courses";
 import { buildCourseLandingData } from "@/lib/course/landing-data";
 import { getPublicStorageUrls } from "@/actions/storage/storage";
-import { LEARNING_FLOW_ITEMS } from "@/components/home/learning-flow-content";
+import { LEARNING_FLOW_ITEMS } from "@/lib/learning-flow-content";
 
 const DEFAULT_FREE_COURSE_ID = "html-fundamentals";
 

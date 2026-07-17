@@ -2,7 +2,7 @@
 
 import { adminAuth } from "@/firebase/admin-init";
 import { ensureUserDocument } from "@/actions/auth/create-user";
-import { getSession } from "@/lib/session";
+import { getSession } from "@/lib/auth/session";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -13,7 +13,9 @@ type CreateSessionResult =
   | { success: true; uid: string; email: string }
   | { success: false; error: string };
 
-export async function createSession(idToken: string): Promise<CreateSessionResult> {
+export async function createSession(
+  idToken: string,
+): Promise<CreateSessionResult> {
   try {
     const decoded = await adminAuth.verifyIdToken(idToken);
     const uid = decoded.uid;
@@ -40,7 +42,10 @@ export async function createSession(idToken: string): Promise<CreateSessionResul
 
     return { success: true, uid, email: userResult.email };
   } catch {
-    return { success: false, error: "Nie udało się zweryfikować tokenu logowania." };
+    return {
+      success: false,
+      error: "Nie udało się zweryfikować tokenu logowania.",
+    };
   }
 }
 
