@@ -9,14 +9,14 @@ type HomeHeroProps = {
 
 export function HomeHero({ courseId, startHref, isFree }: HomeHeroProps) {
   return (
-    <section className="flex flex-col items-center gap-9 lg:flex-row lg:items-center lg:justify-between lg:gap-16 min-h-[60dvh] max-h-[80dvh]">
+    <section className="flex min-h-[60dvh] max-h-[80dvh] flex-col items-center gap-9 lg:flex-row lg:items-center lg:justify-between lg:gap-16 mb-24">
       <div className="flex flex-col gap-3 shrink-0 lg:max-w-xl">
-        <h1 className="text-2xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+        <h1 className="text-2xl tracking-tight sm:text-4xl lg:text-5xl">
           Naucz się programowania{" "}
-          <span className="text-accent">bez marnowania czasu</span>
+          <span className="text-accent font-bold">bez marnowania czasu</span>
         </h1>
 
-        <p className="text-sm text-muted-foreground sm:text-base lg:text-lg mb-6">
+        <p className="text-sm text-muted-foreground sm:text-base lg:text-lg mb-6 leading-tight">
           Ucz się poprzez ćwiczenia i budowanie projektów zamiast spędzać
           godziny na oglądaniu kursów.
         </p>

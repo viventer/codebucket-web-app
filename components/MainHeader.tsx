@@ -5,7 +5,7 @@ import { HeaderAuth } from "@/components/HeaderAuth";
 
 export function MainHeader() {
   return (
-    <header className="border-b bg-background px-3">
+    <header className="sticky top-0 z-50 border-b bg-background px-3">
       <div className="mx-auto flex h-14 w-[90vw] max-w-[1280px] items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image

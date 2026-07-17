@@ -214,6 +214,11 @@
 }
 
 @layer utilities {
+  .snap-page {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 3.5rem;
+  }
+
   .cn-toast-success {
     border-color: var(--feedback-success) !important;
   }
