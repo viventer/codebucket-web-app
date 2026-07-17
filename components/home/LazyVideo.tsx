@@ -51,7 +51,7 @@ export function LazyVideo({ src, className, isActive = true }: LazyVideoProps) {
   if (!src) return null;
 
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full sm:min-w-[720px]">
       <video
         ref={videoRef}
         src={src}

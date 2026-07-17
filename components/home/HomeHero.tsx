@@ -1,15 +1,9 @@
 import { Button } from "../ui/button";
 import { ClientIcon } from "../ui/client-icon";
 
-type HomeHeroProps = {
-  courseId: string;
-  startHref: string;
-  isFree: boolean;
-};
-
-export function HomeHero({ courseId, startHref, isFree }: HomeHeroProps) {
+export function HomeHero() {
   return (
-    <section className="flex min-h-[60dvh] max-h-[80dvh] flex-col items-center gap-9 lg:flex-row lg:items-center lg:justify-between lg:gap-16 mb-24">
+    <section className="flex min-h-[60dvh] max-h-[80dvh] flex-col items-center gap-9 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
       <div className="flex flex-col gap-3 shrink-0 lg:max-w-xl">
         <h1 className="text-2xl tracking-tight sm:text-4xl lg:text-5xl">
           Naucz się programowania{" "}

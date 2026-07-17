@@ -15,7 +15,7 @@ export function LearningFlow({ videoUrls }: LearningFlowProps) {
   const [activeTab, setActiveTab] = useState("0");
 
   return (
-    <section className="flex snap-start flex-col items-center justify-center gap-8">
+    <section className="flex snap-center flex-col items-center justify-center gap-8">
       <header className="flex max-w-[720px] flex-col items-center gap-2 text-center">
         <h2 className="text-xl tracking-tight sm:text-2xl lg:text-3xl">
           Poznaj <span className="text-accent font-bold">optymalny</span> sposób

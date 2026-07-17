@@ -16,6 +16,7 @@ type StartCourseButtonProps = {
   isFree?: boolean;
   size?: "default" | "lg";
   className?: string;
+  showIcon?: boolean;
 };
 
 export function StartCourseButton({
@@ -25,6 +26,7 @@ export function StartCourseButton({
   isFree = false,
   size = "lg",
   className,
+  showIcon = true,
 }: StartCourseButtonProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -64,7 +66,7 @@ export function StartCourseButton({
       onClick={handleClick}
       disabled={loading}
     >
-      <ClientIcon src="rocket.svg" size={24} />
+      {showIcon ? <ClientIcon src="rocket.svg" size={24} /> : null}
       {label}
     </Button>
   );
