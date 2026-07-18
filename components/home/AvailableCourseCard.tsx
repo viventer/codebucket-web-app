@@ -1,8 +1,9 @@
-import { CheckCircle2Icon, CheckCircleIcon, CheckIcon } from "lucide-react";
+import { CheckIcon, ListChecksIcon, TagIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { StartCourseButton } from "@/components/course/landing/StartCourseButton";
+import { FreeBadge } from "@/components/course/FreeBadge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,6 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { AvailableCourseDisplay } from "@/lib/available-courses-content";
+import { formatPrice } from "@/lib/format-price";
 
 type AvailableCourseCardProps = {
   course: AvailableCourseDisplay;
@@ -22,6 +24,8 @@ export function AvailableCourseCard({ course }: AvailableCourseCardProps) {
   return (
     <Card>
       <CardHeader className="grid-cols-1 gap-2">
+        {course.isFree ? <FreeBadge className="mb-2" /> : null}
+
         <div className="flex items-center gap-2">
           <Image
             src={course.iconUrl}
@@ -39,7 +43,25 @@ export function AvailableCourseCard({ course }: AvailableCourseCardProps) {
         </CardDescription>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="flex flex-col gap-4">
+        <section>
+          {!course.isFree && course.currentPrice !== undefined ? (
+            <p className="text-base font-bold flex items-center gap-1.5">
+              <TagIcon
+                className="size-4 shrink-0 text-feedback-success"
+                strokeWidth={3}
+              />
+              {formatPrice(course.currentPrice)}
+            </p>
+          ) : null}
+
+          {course.ctaType === "presale" && course.regularPrice !== undefined ? (
+            <p className="text-sm text-muted-foreground">
+              Cena regularna po premierze: {formatPrice(course.regularPrice)}
+            </p>
+          ) : null}
+        </section>
+
         <ul className="flex flex-col gap-2.5">
           {course.highlights.map((highlight) => (
             <li key={highlight} className="flex items-center gap-1.5 text-sm">

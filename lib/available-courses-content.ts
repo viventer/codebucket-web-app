@@ -1,4 +1,5 @@
-import type { CourseLandingData } from "@/lib/course/landing-data";
+import type { CourseDocument } from "@/schemas/courseSchema";
+import { buildCourseLandingData } from "@/lib/course/landing-data";
 import { getCoursePath } from "@/lib/courses";
 
 export type AvailableCourseCtaType = "free-start" | "presale";
@@ -14,6 +15,8 @@ export type AvailableCourseDisplay = {
   detailsHref: string;
   startHref: string | null;
   isFree: boolean;
+  currentPrice?: number;
+  regularPrice?: number;
 };
 
 const HTML_HIGHLIGHTS = [
@@ -52,15 +55,23 @@ const STATIC_COURSES = [
     highlights: CSS_HIGHLIGHTS,
     ctaType: "presale" as const,
     primaryCtaLabel: "Kup w przedsprzedaży",
+    currentPrice: 39.99,
+    regularPrice: 79.99,
   },
 ] as const;
 
 export function buildAvailableCoursesDisplay(
-  htmlLanding: CourseLandingData | null,
+  coursesById: Partial<Record<string, CourseDocument | null>>,
 ): AvailableCourseDisplay[] {
   return STATIC_COURSES.map((course) => {
-    const isHtmlCourse = course.id === "html-fundamentals";
-    const landing = isHtmlCourse ? htmlLanding : null;
+    const courseDoc = coursesById[course.id] ?? null;
+    const landing = courseDoc ? buildCourseLandingData(courseDoc) : null;
+    const isFree = landing?.isFree ?? course.id === "html-fundamentals";
+    const staticPrice =
+      "currentPrice" in course ? course.currentPrice : undefined;
+    const staticRegularPrice =
+      "regularPrice" in course ? course.regularPrice : undefined;
+    const isPresale = course.ctaType === "presale";
 
     return {
       id: course.id,
@@ -72,7 +83,13 @@ export function buildAvailableCoursesDisplay(
       primaryCtaLabel: course.primaryCtaLabel,
       detailsHref: getCoursePath(course.id),
       startHref: landing?.startHref ?? null,
-      isFree: landing?.isFree ?? isHtmlCourse,
+      isFree,
+      currentPrice: isFree
+        ? undefined
+        : (courseDoc?.price.currentPrice ?? staticPrice),
+      regularPrice: isPresale
+        ? (courseDoc?.price.standardPrice ?? staticRegularPrice)
+        : undefined,
     };
   });
 }

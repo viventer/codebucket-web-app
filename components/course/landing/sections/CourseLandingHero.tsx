@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { FreeBadge } from "@/components/course/FreeBadge";
 import type { CourseLandingData } from "@/lib/course/landing-data";
 import { StartCourseButton } from "@/components/course/landing/StartCourseButton";
 
@@ -60,11 +61,7 @@ export function CourseLandingHero({
       <section className="flex-1 bg-transparent ring-0">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <section className="flex flex-col gap-6">
-            {isFree ? (
-              <div className="w-fit rounded-full bg-feedback-success/5 border border-feedback-success px-5 py-1 text-sm">
-                Cały kurs za darmo
-              </div>
-            ) : null}
+            {isFree ? <FreeBadge /> : null}
 
             <div className="flex items-start gap-3">
               <Image

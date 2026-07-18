@@ -32,7 +32,7 @@ export default function RootLayout({
       lang="pl"
       suppressHydrationWarning
       className={cn(
-        "h-full scrollbar scrollbar-thumb-primary scrollbar-track-card",
+        "h-full scrollbar scrollbar-thumb-primary scrollbar-track-card scroll-smooth",
         "antialiased",
         "font-sans",
         ubuntu.variable,
