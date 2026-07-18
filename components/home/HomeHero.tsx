@@ -1,5 +1,6 @@
 import { Button } from "../ui/button";
 import { ClientIcon } from "../ui/client-icon";
+import { HeroGraphic } from "./HeroGraphic";
 
 export function HomeHero() {
   return (
@@ -29,23 +30,7 @@ export function HomeHero() {
         </Button>
       </div>
 
-      <picture className="flex-1 min-h-0 w-full max-w-sm xl:max-w-md lg:flex-none lg:h-fit lg:shrink-0">
-        <source
-          media="(orientation: portrait)"
-          srcSet="/hero-graphic-landscape.svg"
-          width={467}
-          height={409}
-        />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/hero-graphic-portrait.svg"
-          alt=""
-          width={354}
-          height={522}
-          fetchPriority="high"
-          className="h-full w-full object-contain lg:h-auto"
-        />
-      </picture>
+      <HeroGraphic className="flex-1 min-h-0 w-full max-w-sm xl:max-w-md lg:flex-none lg:h-fit lg:shrink-0 lg:[&>div>svg]:h-auto" />
     </section>
   );
 }

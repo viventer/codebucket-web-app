@@ -27,7 +27,7 @@ export function LearningFlowCard({
           <ClientIcon
             src={item.icon}
             size={50}
-            className="hidden shrink-0 sm:inline-block"
+            className="hidden text-accent shrink-0 sm:inline-block"
           />
           <div className="flex flex-col gap-1">
             <CardTitle className="text-lg tracking-tight sm:text-xl">
