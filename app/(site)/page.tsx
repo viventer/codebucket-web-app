@@ -30,7 +30,7 @@ export default async function HomePage() {
   return (
     <>
       <ScrollSnapController />
-      <main className="mx-auto flex w-[90vw] max-w-[1280px] flex-1 flex-col pt-8 pb-16 sm:pt-16 gap-24">
+      <main className="mx-auto flex w-[90vw] max-w-[1280px] flex-1 flex-col pt-8 pb-24 sm:pb-32 sm:pt-16 gap-24">
         <HomeHero />
         <LearningFlow videoUrls={videoUrls} />
         <AvailableCourses courses={availableCourses} />
