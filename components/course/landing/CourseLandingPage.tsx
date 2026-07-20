@@ -47,7 +47,7 @@ export function CourseLandingPage({ data }: CourseLandingPageProps) {
         </div>
 
         {data.isPresale && data.presale ? (
-          <>
+          <div className="flex flex-col gap-12">
             <CourseLandingPresaleTimeline
               presale={data.presale}
               currentPrice={data.currentPrice}
@@ -59,7 +59,7 @@ export function CourseLandingPage({ data }: CourseLandingPageProps) {
               currentPrice={data.currentPrice}
               standardPrice={data.standardPrice}
             />
-          </>
+          </div>
         ) : null}
 
         <CourseLandingCurriculum
