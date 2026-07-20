@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import type { AvailableCourseDisplay } from "@/lib/available-courses-content";
+import type { AvailableCourseDisplay } from "@/lib/course/available-courses";
 import { formatPrice } from "@/lib/format-price";
 
 type AvailableCourseCardProps = {

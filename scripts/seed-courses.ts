@@ -35,25 +35,24 @@ function buildOutline(course: Course): CourseOutline {
   const firstSection = sections[0];
   const firstElement = firstSection?.elements[0];
 
-  if (!firstSection || !firstElement) {
-    throw new Error(
-      `Course "${course.id}" must have at least one section and element.`,
-    );
+  // Presale courses can have sections without any elements yet. Omit the start
+  // pointers entirely (rather than writing `undefined`, which Firestore rejects).
+  const outline: CourseOutline = { sections };
+  if (firstSection && firstElement) {
+    outline.startSectionId = firstSection.id;
+    outline.startElementId = firstElement.id;
   }
 
-  return {
-    startSectionId: firstSection.id,
-    startElementId: firstElement.id,
-    sections,
-  };
+  return outline;
 }
 
-function toCourseDocument(course: Course): Omit<CourseDocument, "badge" | "badgeClassName" | "isPresale"> {
+function toCourseDocument(course: Course): CourseDocument {
   const { sections: _sections, ...metadata } = course;
 
   return {
     ...metadata,
     outline: buildOutline(course),
+    isPresale: Boolean(course.presale),
   };
 }
 

@@ -141,6 +141,34 @@ export const coursePriceSchema = z.object({
   thirtyDayLowestPrice: z.number().min(0, "Price must be positive").optional(),
 });
 
+/** Presale metadata. Its presence marks a course as a presale course. */
+export const coursePresaleSchema = z.object({
+  presaleStartDate: z.string().min(1, "Presale start date is required"),
+  releaseDate: z.string().min(1, "Release date is required"),
+  refundDays: z.number().min(0, "Refund days must be positive"),
+});
+
+export const courseFaqItemSchema = z.object({
+  question: z.string().min(1, "Question is required"),
+  answer: z.string().min(1, "Answer is required"),
+});
+
+export const courseLearningMethodSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+});
+
+export const coursePrerequisiteSchema = z.object({
+  label: z.string().min(1, "Prerequisite label is required"),
+  courseId: z.string().min(1, "Prerequisite course id is required").optional(),
+});
+
+/** Accepts plain labels or objects with an optional linked course id. */
+export const coursePrerequisiteInputSchema = z.union([
+  z.string().min(1),
+  coursePrerequisiteSchema,
+]);
+
 export const courseSchema = z.object({
   id: z.string().min(1, "Course id is required"),
   title: z.string().min(1, "Title is required"),
@@ -149,7 +177,7 @@ export const courseSchema = z.object({
   image: z.string().min(1, "Image is required"),
   duration: z.number().gt(0, "Duration must be greater than 0"),
   level: z.string().min(1).optional(),
-  prerequisites: z.array(z.string()).optional(),
+  prerequisites: z.array(coursePrerequisiteInputSchema).optional(),
   courseIncludes: z
     .array(z.string().min(1))
     .min(1, "Course includes is required"),
@@ -157,6 +185,12 @@ export const courseSchema = z.object({
   whatYouWillLearn: z
     .array(z.string())
     .min(1, "What you will learn is required"),
+  highlights: z.array(z.string().min(1)).optional(),
+  additionalLearningMethods: z.array(courseLearningMethodSchema).optional(),
+  faq: z.array(courseFaqItemSchema).optional(),
+  presale: coursePresaleSchema.optional(),
+  badge: z.string().min(1).optional(),
+  badgeClassName: z.string().min(1).optional(),
   sections: z.array(courseSectionSchema),
   createdAt: z.date(),
   updatedAt: z.date(),
@@ -174,6 +208,13 @@ export type CheatsheetContent = z.infer<typeof cheatsheetContentSchema>;
 export type CourseEndingContent = z.infer<typeof courseEndingContentSchema>;
 export type CourseElement = z.infer<typeof courseElementSchema>;
 export type CourseSection = z.infer<typeof courseSectionSchema>;
+export type CoursePresale = z.infer<typeof coursePresaleSchema>;
+export type CourseFaqItem = z.infer<typeof courseFaqItemSchema>;
+export type CourseLearningMethod = z.infer<typeof courseLearningMethodSchema>;
+export type CoursePrerequisite = z.infer<typeof coursePrerequisiteSchema>;
+export type CoursePrerequisiteInput = z.infer<
+  typeof coursePrerequisiteInputSchema
+>;
 /** @deprecated Use CourseEndingContent */
 export type CourseEnding = CourseEndingContent;
 export type Course = z.infer<typeof courseSchema>;

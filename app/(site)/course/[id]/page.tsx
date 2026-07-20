@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 
 import { CourseLandingPage } from "@/components/course/landing/CourseLandingPage";
-import { buildCourseLandingData } from "@/lib/course/landing-data";
+import {
+  buildCourseLandingData,
+  getPrerequisiteCourseIds,
+} from "@/lib/course/landing-data";
 import { getCourseDocument, listCourseIds } from "@/actions/courses/read-courses";
 
 export async function generateStaticParams() {
@@ -21,7 +24,22 @@ export default async function CourseLandingRoute({
   const course = await getCourseDocument(id);
   if (!course) notFound();
 
-  const data = buildCourseLandingData(course);
+  const prerequisiteCourseIds = getPrerequisiteCourseIds(course);
+  const existingPrerequisiteCourseIds = new Set(
+    (
+      await Promise.all(
+        prerequisiteCourseIds.map(async (courseId) => {
+          const prerequisiteCourse = await getCourseDocument(courseId);
+          return prerequisiteCourse ? courseId : null;
+        }),
+      )
+    ).filter((courseId): courseId is string => courseId !== null),
+  );
+
+  const data = buildCourseLandingData(
+    course,
+    existingPrerequisiteCourseIds,
+  );
 
   return <CourseLandingPage data={data} />;
 }

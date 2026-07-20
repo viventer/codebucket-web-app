@@ -11,7 +11,9 @@ export function CourseLandingObjectives({
   return (
     <Card className="ring-primary bg-primary/5">
       <CardHeader>
-        <CardTitle className="text-lg">Czego się nauczysz?</CardTitle>
+        <CardTitle className="text-lg font-medium">
+          Czego się nauczysz?
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ul className="flex flex-col gap-3">

@@ -1,0 +1,170 @@
+{
+  "id": "css-basics",
+  "title": "Podstawy CSS",
+  "description": "Naucz się stylować strony internetowe od podstaw.",
+  "price": {
+    "isFree": false,
+    "currentPrice": 49.99,
+    "standardPrice": 79.99
+  },
+  "image": "css-logo.svg",
+  "duration": 180,
+  "level": "Początkujący",
+  "prerequisites": [
+    {
+      "label": "Podstawy HTML",
+      "courseId": "html-fundamentals"
+    }
+  ],
+  "courseIncludes": [
+    "Krótkie lekcje wideo",
+    "Interaktywne ćwiczenia",
+    "Wspólny projekt",
+    "Projekt indywidualny i końcowy",
+    "Podsumowania do szybkiego powtórzenia"
+  ],
+  "CTADescription": "Zacznij stylować swoje strony internetowe.",
+  "whatYouWillLearn": [
+    "Stylować elementy za pomocą CSS.",
+    "Pracować z kolorami, typografią i grafikami.",
+    "Budować układy stron za pomocą Flexboxa i Grida.",
+    "Dobierać odpowiednie selektory i pisać czytelny kod.",
+    "Wykorzystywać pseudoklasy, transformacje i filtry.",
+    "Dostosowywać strony do telefonów, tabletów i komputerów.",
+    "Samodzielnie odtwarzać projekty graficzne w kodzie."
+  ],
+  "highlights": [
+    "Selektory i klasy CSS",
+    "Kolory i typografia",
+    "Box model",
+    "Flexbox",
+    "Responsywność"
+  ],
+  "additionalLearningMethods": [
+    {
+      "title": "Indywidualny projekt",
+      "description": "Rozwijaj własną stronę internetową od pierwszej do ostatniej lekcji."
+    },
+    {
+      "title": "Projekt końcowy",
+      "description": "Samodzielnie odtwórz projekt z Figmy i sprawdź swoje umiejętności w praktyce."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Co jeśli premiera kursu się opóźni?",
+      "answer": "Jeśli termin premiery ulegnie zmianie, poinformujemy Cię o tym mailowo. W każdej chwili możesz zrezygnować z zakupu i otrzymać pełny zwrot wpłaty."
+    },
+    {
+      "question": "Co jeśli kurs mi się nie spodoba?",
+      "answer": "Masz 30 dni od premiery pełnej wersji kursu, aby poprosić o pełny zwrot wpłaty. Nie musisz podawać przyczyny."
+    },
+    {
+      "question": "Jak mogę uzyskać zwrot wpłaty?",
+      "answer": "Wystarczy wypełnić krótki formularz dostępny po zakupie kursu. Zwrot środków zostanie zrealizowany tą samą metodą płatności."
+    },
+    {
+      "question": "Czy po zakupie otrzymam dostęp do przyszłych aktualizacji?",
+      "answer": "Tak. Kupując kurs w przedsprzedaży otrzymujesz bezterminowy dostęp do kursu oraz wszystkich przyszłych aktualizacji bez dodatkowych opłat."
+    },
+    {
+      "question": "Czy dostęp do kursu jest ograniczony czasowo?",
+      "answer": "Nie. Dostęp do kursu jest bezterminowy."
+    }
+  ],
+  "presale": {
+    "presaleStartDate": "2026-07-25",
+    "releaseDate": "2026-08-08",
+    "refundDays": 30
+  },
+  "badge": "CSS",
+  "badgeClassName": "bg-blue-500/15 text-blue-500",
+  "sections": [
+    {
+      "id": "introduction",
+      "title": "Wstęp",
+      "description": "Poznaj zawartość kursu i sposób nauki.",
+      "order": 0,
+      "elements": []
+    },
+    {
+      "id": "fundamentals",
+      "title": "Fundamenty",
+      "description": "Poznaj, czym jest i jak działa CSS.",
+      "order": 1,
+      "elements": []
+    },
+    {
+      "id": "colors-and-typography",
+      "title": "Kolory i typografia",
+      "description": "Naucz się stylować tekst i ustawiać kolory elementów.",
+      "order": 2,
+      "elements": []
+    },
+    {
+      "id": "layout-basics",
+      "title": "Podstawy layoutu",
+      "description": "Poznaj box-model i właściwość display.",
+      "order": 3,
+      "elements": []
+    },
+    {
+      "id": "images-and-gradients",
+      "title": "Zdjęcia i gradienty",
+      "description": "Naucz się stylować zdjęcia, stosować opływanie i tworzyć gradienty.",
+      "order": 4,
+      "elements": []
+    },
+    {
+      "id": "flexbox",
+      "title": "Flexbox",
+      "description": "Naucz się tworzyć układy stron za pomocą flexboxa.",
+      "order": 5,
+      "elements": []
+    },
+    {
+      "id": "positioning",
+      "title": "Pozycjonowanie elementów na stronie",
+      "description": "Poznaj właściwości position i z-index.",
+      "order": 6,
+      "elements": []
+    },
+    {
+      "id": "advanced-selectors",
+      "title": "Zaawansowane selektory",
+      "description": "Poznaj kombinatory, specyficzność i kaskadowość.",
+      "order": 7,
+      "elements": []
+    },
+    {
+      "id": "pseudo-classes-filters-transforms",
+      "title": "Pseudoklasy, filtry i transformacje",
+      "description": "Naucz się dodawać efekty zależne od stanu elementu i korzystać z pseudoklas.",
+      "order": 8,
+      "elements": []
+    },
+    {
+      "id": "responsiveness",
+      "title": "Responsywność",
+      "description": "Naucz się tworzyć responsywne układy za pomocą flexboxa i media queries.",
+      "order": 9,
+      "elements": []
+    },
+    {
+      "id": "grid",
+      "title": "Grid",
+      "description": "Poznaj grid — kolejny sposób tworzenia układów stron.",
+      "order": 10,
+      "elements": []
+    },
+    {
+      "id": "summary",
+      "title": "Podsumowanie",
+      "description": "Podsumuj zdobytą wiedzę i wykonaj projekt końcowy.",
+      "order": 11,
+      "elements": []
+    }
+  ],
+  "createdAt": "2026-07-20T00:00:00.000Z",
+  "updatedAt": "2026-07-20T00:00:00.000Z"
+}

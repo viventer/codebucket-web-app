@@ -2,23 +2,25 @@ import { AvailableCourses } from "@/components/home/AvailableCourses";
 import { HomeHero } from "@/components/home/HomeHero";
 import { LearningFlow } from "@/components/home/LearningFlow";
 import { ScrollSnapController } from "@/components/home/ScrollSnapController";
-import { getCourseDocument } from "@/actions/courses/read-courses";
-import { buildAvailableCoursesDisplay } from "@/lib/available-courses-content";
+import {
+  getCourseDocument,
+  listCourseIds,
+} from "@/actions/courses/read-courses";
+import { buildAvailableCoursesDisplay } from "@/lib/course/available-courses";
 import { getPublicStorageUrls } from "@/actions/storage/storage";
 import { LEARNING_FLOW_ITEMS } from "@/lib/learning-flow-content";
-
-const AVAILABLE_COURSE_IDS = ["html-fundamentals", "css-basics"] as const;
+import type { CourseDocument } from "@/schemas/courseSchema";
 
 const VIDEO_STORAGE_PATHS = LEARNING_FLOW_ITEMS.map((item) => item.storagePath);
 
 export default async function HomePage() {
-  const [htmlCourse, cssCourse] = await Promise.all(
-    AVAILABLE_COURSE_IDS.map((id) => getCourseDocument(id)),
+  const courseIds = await listCourseIds();
+  const courseDocs = await Promise.all(
+    courseIds.map((id) => getCourseDocument(id)),
   );
-  const availableCourses = buildAvailableCoursesDisplay({
-    "html-fundamentals": htmlCourse,
-    "css-basics": cssCourse,
-  });
+  const availableCourses = buildAvailableCoursesDisplay(
+    courseDocs.filter((doc): doc is CourseDocument => doc !== null),
+  );
 
   let videoUrls: Record<string, string> = {};
   try {

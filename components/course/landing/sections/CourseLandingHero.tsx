@@ -4,6 +4,7 @@ import {
   FolderKanbanIcon,
   Gamepad2Icon,
   PlayCircleIcon,
+  TagIcon,
   type LucideIcon,
 } from "lucide-react";
 
@@ -11,6 +12,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FreeBadge } from "@/components/course/FreeBadge";
 import type { CourseLandingData } from "@/lib/course/landing-data";
 import { StartCourseButton } from "@/components/course/landing/StartCourseButton";
+import { PresaleCtaButton } from "@/components/course/landing/PresaleCtaButton";
+import { PresaleGuaranteeInfo } from "@/components/course/landing/PresaleGuaranteeInfo";
+import { formatPrice } from "@/lib/format-price";
 
 function getCourseIncludeIcon(label: string): LucideIcon {
   const normalized = label.toLowerCase();
@@ -44,6 +48,10 @@ type CourseLandingHeroProps = Pick<
   | "startButtonLabel"
   | "courseIncludes"
   | "isFree"
+  | "isPresale"
+  | "currentPrice"
+  | "standardPrice"
+  | "presale"
 >;
 
 export function CourseLandingHero({
@@ -55,6 +63,10 @@ export function CourseLandingHero({
   startButtonLabel,
   courseIncludes,
   isFree,
+  isPresale,
+  currentPrice,
+  standardPrice,
+  presale,
 }: CourseLandingHeroProps) {
   return (
     <div className="flex gap-6">
@@ -71,7 +83,7 @@ export function CourseLandingHero({
                 height={72}
                 className="size-12 shrink-0 sm:size-16"
               />
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col">
                 <h1 className="text-xl font-bold tracking-tight sm:text-2xl">
                   {title}
                 </h1>
@@ -81,7 +93,35 @@ export function CourseLandingHero({
               </div>
             </div>
 
-            {startHref ? (
+            {isPresale ? (
+              <div className="flex flex-col gap-6" data-course-landing-hero-cta>
+                <div className="flex flex-col gap-0.5">
+                  {currentPrice !== undefined ? (
+                    <p className="flex items-center gap-1.5 text-xl font-bold">
+                      <TagIcon
+                        className="size-4 shrink-0 text-feedback-success"
+                        strokeWidth={3}
+                      />
+                      {formatPrice(currentPrice)}
+                    </p>
+                  ) : null}
+                  {standardPrice !== undefined ? (
+                    <p className="text-sm text-muted-foreground">
+                      Cena regularna po premierze: {formatPrice(standardPrice)}
+                    </p>
+                  ) : null}
+                </div>
+                <div className="flex flex-col gap-2">
+                  <PresaleCtaButton
+                    label={startButtonLabel}
+                    className="w-full max-w-md"
+                  />
+                  {presale ? (
+                    <PresaleGuaranteeInfo refundDays={presale.refundDays} />
+                  ) : null}
+                </div>
+              </div>
+            ) : startHref ? (
               <div data-course-landing-hero-cta>
                 <StartCourseButton
                   courseId={id}

@@ -23,6 +23,13 @@
     "Tworzyć formularze.",
     "Korzystać z semantycznych tagów."
   ],
+  "highlights": [
+    "Struktura strony",
+    "Podstawowe tagi HTML",
+    "Multimedia na stronie",
+    "Formularze w HTML",
+    "Semantyczne tagi HTML"
+  ],
   "sections": [
     {
       "id": "introduction",

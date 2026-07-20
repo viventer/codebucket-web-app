@@ -1,5 +1,5 @@
 import { AvailableCourseCard } from "@/components/home/AvailableCourseCard";
-import type { AvailableCourseDisplay } from "@/lib/available-courses-content";
+import type { AvailableCourseDisplay } from "@/lib/course/available-courses";
 
 type AvailableCoursesProps = {
   courses: AvailableCourseDisplay[];
