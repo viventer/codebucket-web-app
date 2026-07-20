@@ -9,18 +9,21 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/HoverCard";
 import { getPresaleRiskFreeBenefit } from "@/lib/course/landing-data";
+import { cn } from "@/lib/utils";
 
 type PresaleGuaranteeInfoProps = {
   refundDays: number;
+  className?: string;
 };
 
 export function PresaleGuaranteeInfo({
   refundDays,
+  className,
 }: PresaleGuaranteeInfoProps) {
   const benefit = getPresaleRiskFreeBenefit(refundDays);
 
   return (
-    <p className="flex items-center gap-1.5 text-sm">
+    <p className={cn("flex items-center gap-1.5 text-sm", className)}>
       <ClientIcon
         src="shield-check.svg"
         size={16}

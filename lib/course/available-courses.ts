@@ -20,6 +20,7 @@ export type AvailableCourseDisplay = {
   isFree: boolean;
   currentPrice?: number;
   regularPrice?: number;
+  refundDays?: number;
 };
 
 /**
@@ -47,6 +48,7 @@ export function buildAvailableCoursesDisplay(
       isFree,
       currentPrice: isFree ? undefined : course.price.currentPrice,
       regularPrice: isPresale ? course.price.standardPrice : undefined,
+      refundDays: course.presale?.refundDays,
     };
   });
 }

@@ -3,8 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { StartCourseButton } from "@/components/course/landing/StartCourseButton";
+import { PresaleGuaranteeInfo } from "@/components/course/landing/PresaleGuaranteeInfo";
 import { FreeBadge } from "@/components/course/FreeBadge";
 import { Button } from "@/components/ui/button";
+import { ClientIcon } from "@/components/ui/client-icon";
 import {
   Card,
   CardContent,
@@ -44,8 +46,8 @@ export function AvailableCourseCard({ course }: AvailableCourseCardProps) {
       </CardHeader>
 
       <CardContent className="flex flex-col gap-4">
-        <section>
-          {!course.isFree && course.currentPrice !== undefined ? (
+        {!course.isFree && course.currentPrice !== undefined ? (
+          <section>
             <p className="text-base font-bold flex items-center gap-1.5">
               <TagIcon
                 className="size-4 shrink-0 text-feedback-success"
@@ -53,16 +55,25 @@ export function AvailableCourseCard({ course }: AvailableCourseCardProps) {
               />
               {formatPrice(course.currentPrice)}
             </p>
-          ) : null}
 
-          {course.ctaType === "presale" && course.regularPrice !== undefined ? (
-            <p className="text-sm text-muted-foreground">
-              Cena regularna po premierze: {formatPrice(course.regularPrice)}
-            </p>
-          ) : null}
-        </section>
+            {course.ctaType === "presale" &&
+            course.regularPrice !== undefined ? (
+              <>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Cena regularna po premierze:{" "}
+                  {formatPrice(course.regularPrice)}
+                </p>
+                <PresaleGuaranteeInfo
+                  refundDays={course.refundDays ?? 0}
+                  className="w-full"
+                />
+              </>
+            ) : null}
+          </section>
+        ) : null}
 
-        <ul className="flex flex-col gap-2.5">
+        <hr />
+        <ul className="flex flex-col gap-2.5 flex-1 justify-end">
           {course.highlights.map((highlight) => (
             <li key={highlight} className="flex items-center gap-1.5 text-sm">
               <CheckIcon
@@ -83,12 +94,18 @@ export function AvailableCourseCard({ course }: AvailableCourseCardProps) {
             startHref={course.startHref}
             label={course.primaryCtaLabel}
             isFree={course.isFree}
-            showIcon={false}
             className="w-full"
           />
         ) : (
-          <Button asChild className="w-full" size="lg">
-            <Link href={course.detailsHref}>{course.primaryCtaLabel}</Link>
+          <Button
+            asChild
+            className="w-full gap-2 [&_svg]:pointer-events-auto! [&_svg:not([class*='size-'])]:size-auto"
+            size="lg"
+          >
+            <Link href={course.detailsHref}>
+              <ClientIcon src="shopping-cart.svg" size={24} />
+              {course.primaryCtaLabel}
+            </Link>
           </Button>
         )}
         <Button asChild variant="secondary" className="w-full" size="lg">
