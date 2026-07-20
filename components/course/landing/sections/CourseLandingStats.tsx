@@ -67,7 +67,12 @@ export function CourseLandingStats({
                 >
                   <span>{prerequisite.label}</span>
                   {prerequisite.courseHref ? (
-                    <Button asChild variant="secondary" size="sm">
+                    <Button
+                      asChild
+                      variant="secondary"
+                      size="sm"
+                      className="font-normal"
+                    >
                       <Link href={prerequisite.courseHref}>zobacz kurs</Link>
                     </Button>
                   ) : null}
