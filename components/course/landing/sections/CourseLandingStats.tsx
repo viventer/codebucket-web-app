@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { ClockIcon, GraduationCapIcon, ListChecksIcon } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Icon } from "@/components/ui/icon";
 import type { CourseLandingData } from "@/lib/course/landing-data";
 import { Button } from "@/components/ui/button";
 
@@ -14,13 +14,13 @@ const stats = [
   {
     key: "duration",
     label: "Czas trwania",
-    icon: ClockIcon,
+    icon: "clock.svg",
     getValue: (data: CourseLandingStatsProps) => data.durationLabel,
   },
   {
     key: "level",
     label: "Poziom",
-    icon: GraduationCapIcon,
+    icon: "graduation-cap.svg",
     getValue: (data: CourseLandingStatsProps) => data.levelLabel,
   },
 ] as const;
@@ -32,11 +32,11 @@ export function CourseLandingStats({
 }: CourseLandingStatsProps) {
   return (
     <div className="grid gap-6 sm:grid-cols-3">
-      {stats.map(({ key, label, icon: Icon, getValue }) => (
+      {stats.map(({ key, label, icon, getValue }) => (
         <Card key={key} className="gap-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 font-light">
-              <Icon className="size-5 text-accent" />
+              <Icon src={icon} size={20} className="text-accent" />
               {label}
             </CardTitle>
           </CardHeader>
@@ -51,7 +51,7 @@ export function CourseLandingStats({
       <Card className="gap-2">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-light">
-            <ListChecksIcon className="size-5 text-accent" />
+            <Icon src="checklist.svg" size={20} className="text-accent" />
             Wymagania wstępne
           </CardTitle>
         </CardHeader>

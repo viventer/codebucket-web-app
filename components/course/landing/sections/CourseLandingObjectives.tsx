@@ -1,6 +1,5 @@
-import { CheckCircle2Icon } from "lucide-react";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Icon } from "@/components/ui/icon";
 import type { CourseLandingData } from "@/lib/course/landing-data";
 
 type CourseLandingObjectivesProps = Pick<CourseLandingData, "whatYouWillLearn">;
@@ -19,7 +18,11 @@ export function CourseLandingObjectives({
         <ul className="flex flex-col gap-3">
           {whatYouWillLearn.map((item) => (
             <li key={item} className="flex items-center gap-2">
-              <CheckCircle2Icon className="size-4 shrink-0 text-accent" />
+              <Icon
+                src="checkCircle.svg"
+                size={16}
+                className="shrink-0 text-accent"
+              />
               <span>{item}</span>
             </li>
           ))}

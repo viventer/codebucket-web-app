@@ -1,13 +1,14 @@
 "use client";
 
 import {
-  CheckIcon,
   InfoIcon,
   Loader2Icon,
   OctagonXIcon,
   TriangleAlertIcon,
 } from "lucide-react";
 import { Toaster as Sonner, type ToasterProps } from "sonner";
+
+import { ClientIcon } from "@/components/ui/client-icon";
 
 const Toaster = ({ ...props }: ToasterProps) => {
   return (
@@ -22,7 +23,13 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       className="toaster group"
       icons={{
-        success: <CheckIcon className="size-5 text-feedback-success" />,
+        success: (
+          <ClientIcon
+            src="checkCircle.svg"
+            size={20}
+            className="text-feedback-success"
+          />
+        ),
         info: <InfoIcon className="size-5 text-accent" />,
         warning: <TriangleAlertIcon className="size-5 text-feedback-warning" />,
         error: <OctagonXIcon className="size-5 text-feedback-destructive" />,

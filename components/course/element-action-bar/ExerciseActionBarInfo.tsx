@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import type { CourseElement } from "@/schemas/courseSchema";
+import { ClientIcon } from "@/components/ui/client-icon";
 import { useCourseNavigation } from "@/lib/course/navigation-transition-context";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { useExerciseSessionOptional } from "@/lib/exercises/session/ExerciseSessionContext";
@@ -31,7 +32,6 @@ export function ExerciseActionBarInfo({
   const session = useExerciseSessionOptional();
   const { transitionState } = useCourseNavigation();
   const prefersReducedMotion = usePrefersReducedMotion();
-  const Icon = ELEMENT_TYPE_ICONS[type];
   const stageProgress = session?.stageProgress;
   const [showSectionBadge, setShowSectionBadge] = useState(false);
 
@@ -61,7 +61,11 @@ export function ExerciseActionBarInfo({
         hideOnMobile && "hidden sm:flex",
       )}
     >
-      <Icon className="size-5 shrink-0 text-primary" />
+      <ClientIcon
+        src={ELEMENT_TYPE_ICONS[type]}
+        size={20}
+        className="shrink-0 text-primary"
+      />
       <div className="min-w-0 w-full">
         <AnimatePresence mode="wait" initial={false}>
           {showSectionBadge ? (

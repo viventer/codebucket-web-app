@@ -10,6 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ClientIcon } from "@/components/ui/client-icon";
 import { cn } from "@/lib/utils";
 import type { CourseElement } from "@/schemas/courseSchema";
 
@@ -76,8 +77,6 @@ export function CourseSectionsAccordion({
                 const isCurrent =
                   section.id === currentSectionId &&
                   element.id === currentElementId;
-                const Icon = ELEMENT_TYPE_ICONS[element.type];
-
                 const link = (
                   <Link
                     href={element.href}
@@ -89,9 +88,11 @@ export function CourseSectionsAccordion({
                         : "text-muted-foreground",
                     )}
                   >
-                    <Icon
+                    <ClientIcon
+                      src={ELEMENT_TYPE_ICONS[element.type]}
+                      size={16}
                       className={cn(
-                        "size-4 shrink-0",
+                        "shrink-0",
                         element.completed
                           ? "text-feedback-success"
                           : "text-muted-foreground",

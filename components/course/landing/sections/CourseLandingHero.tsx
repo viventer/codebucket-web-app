@@ -1,12 +1,4 @@
 import Image from "next/image";
-import {
-  FileTextIcon,
-  FolderKanbanIcon,
-  Gamepad2Icon,
-  PlayCircleIcon,
-  TagIcon,
-  type LucideIcon,
-} from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FreeBadge } from "@/components/course/FreeBadge";
@@ -14,28 +6,29 @@ import type { CourseLandingData } from "@/lib/course/landing-data";
 import { StartCourseButton } from "@/components/course/landing/StartCourseButton";
 import { PresaleCtaButton } from "@/components/course/landing/PresaleCtaButton";
 import { PresaleGuaranteeInfo } from "@/components/course/landing/PresaleGuaranteeInfo";
+import { Icon } from "@/components/ui/icon";
 import { formatPrice } from "@/lib/format-price";
 
-function getCourseIncludeIcon(label: string): LucideIcon {
+function getCourseIncludeIcon(label: string): string {
   const normalized = label.toLowerCase();
 
   if (normalized.includes("wideo") || normalized.includes("film")) {
-    return PlayCircleIcon;
+    return "clapperboard.svg";
   }
 
   if (normalized.includes("ćwiczen")) {
-    return Gamepad2Icon;
+    return "gamepad.svg";
   }
 
   if (normalized.includes("projekt")) {
-    return FolderKanbanIcon;
+    return "ruler-cross-pen.svg";
   }
 
   if (normalized.includes("podsumow") || normalized.includes("ściąg")) {
-    return FileTextIcon;
+    return "file-text.svg";
   }
 
-  return PlayCircleIcon;
+  return "clapperboard.svg";
 }
 
 type CourseLandingHeroProps = Pick<
@@ -98,9 +91,10 @@ export function CourseLandingHero({
                 <div className="flex flex-col gap-0.5">
                   {currentPrice !== undefined ? (
                     <p className="flex items-center gap-1.5 text-xl font-bold">
-                      <TagIcon
-                        className="size-4 shrink-0 text-feedback-success"
-                        strokeWidth={3}
+                      <Icon
+                        src="price-tag.svg"
+                        size={16}
+                        className="shrink-0 text-feedback-success"
                       />
                       {formatPrice(currentPrice)}
                     </p>
@@ -139,16 +133,16 @@ export function CourseLandingHero({
             </CardHeader>
             <CardContent>
               <ul className="flex flex-col gap-3">
-                {courseIncludes.map((item) => {
-                  const Icon = getCourseIncludeIcon(item);
-
-                  return (
-                    <li key={item} className="flex items-center gap-2">
-                      <Icon className="size-4 shrink-0 text-accent" />
-                      {item}
-                    </li>
-                  );
-                })}
+                {courseIncludes.map((item) => (
+                  <li key={item} className="flex items-center gap-2">
+                    <Icon
+                      src={getCourseIncludeIcon(item)}
+                      size={16}
+                      className="shrink-0 text-accent"
+                    />
+                    {item}
+                  </li>
+                ))}
               </ul>
             </CardContent>
           </Card>

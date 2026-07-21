@@ -1,12 +1,11 @@
-import { CheckIcon, ListChecksIcon, TagIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { StartCourseButton } from "@/components/course/landing/StartCourseButton";
 import { PresaleGuaranteeInfo } from "@/components/course/landing/PresaleGuaranteeInfo";
-import { FreeBadge } from "@/components/course/FreeBadge";
 import { Button } from "@/components/ui/button";
 import { ClientIcon } from "@/components/ui/client-icon";
+import { Icon } from "@/components/ui/icon";
 import {
   Card,
   CardContent,
@@ -46,9 +45,10 @@ export function AvailableCourseCard({ course }: AvailableCourseCardProps) {
       <CardContent className="flex flex-col gap-4">
         <section>
           <p className="text-base font-bold flex items-center gap-1.5">
-            <TagIcon
-              className="size-4 shrink-0 text-feedback-success"
-              strokeWidth={3}
+            <Icon
+              src="price-tag.svg"
+              size={16}
+              className="shrink-0 text-feedback-success"
             />
             {course.currentPrice !== undefined
               ? formatPrice(course.currentPrice)
@@ -72,9 +72,10 @@ export function AvailableCourseCard({ course }: AvailableCourseCardProps) {
         <ul className="flex flex-col gap-2.5 flex-1 justify-end">
           {course.highlights.map((highlight) => (
             <li key={highlight} className="flex items-center gap-1.5 text-sm">
-              <CheckIcon
-                className="size-4 shrink-0 text-accent"
-                strokeWidth={3}
+              <Icon
+                src="checkCircle.svg"
+                size={16}
+                className="shrink-0 text-accent"
               />
               <span>{highlight}</span>
             </li>

@@ -1,5 +1,3 @@
-import { CheckIcon, EyeIcon, LightbulbIcon } from "lucide-react";
-
 import { ActionBarButtonLabel } from "./ActionBarButtonLabel";
 import { DownloadMaterialsButton } from "./DownloadMaterialsButton";
 import { NavButton } from "./NavButton";
@@ -18,13 +16,13 @@ export function ProjectActions({
     <>
       {hasMaterials && <DownloadMaterialsButton />}
       <PlaceholderButton variant="ghost">
-        <ActionBarButtonLabel label="Ściąga" icon={LightbulbIcon} />
+        <ActionBarButtonLabel label="Ściąga" iconSrc="lightbulb.svg" />
       </PlaceholderButton>
       <PlaceholderButton variant="ghost">
-        <ActionBarButtonLabel label="Rozwiązanie" icon={EyeIcon} />
+        <ActionBarButtonLabel label="Rozwiązanie" iconSrc="eye.svg" />
       </PlaceholderButton>
       <NavButton href={nextHref}>
-        <ActionBarButtonLabel label="Zrobione" icon={CheckIcon} />
+        <ActionBarButtonLabel label="Zrobione" iconSrc="checkCircle.svg" />
       </NavButton>
     </>
   );

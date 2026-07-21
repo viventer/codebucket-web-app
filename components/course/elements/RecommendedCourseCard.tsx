@@ -1,9 +1,4 @@
-import {
-  CheckCircle2Icon,
-  CheckCircleIcon,
-  CheckIcon,
-  ShoppingCartIcon,
-} from "lucide-react";
+import { ShoppingCartIcon } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -15,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Icon } from "@/components/ui/icon";
 import { getCoursePath } from "@/lib/courses";
 import type { CourseCardData } from "@/actions/courses/types";
 import { cn } from "@/lib/utils";
@@ -67,10 +63,7 @@ export function RecommendedCourseCard({
         <ul className="flex flex-col gap-2.5">
           {topics.map((topic) => (
             <li key={topic} className="flex items-center gap-2 text-sm">
-              <CheckCircle2Icon
-                className="size-4 text-accent"
-                strokeWidth={3}
-              />
+              <Icon src="checkCircle.svg" size={16} className="text-accent" />
               <p>{topic}</p>
             </li>
           ))}

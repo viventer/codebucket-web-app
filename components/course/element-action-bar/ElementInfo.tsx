@@ -1,4 +1,5 @@
 import type { CourseElement } from "@/schemas/courseSchema";
+import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 
 import { ELEMENT_TYPE_ICONS } from "./element-type-icons";
@@ -14,8 +15,6 @@ export function ElementInfo({
   title,
   hideOnMobile = false,
 }: ElementInfoProps) {
-  const Icon = ELEMENT_TYPE_ICONS[type];
-
   return (
     <div
       className={cn(
@@ -23,7 +22,11 @@ export function ElementInfo({
         hideOnMobile && "hidden sm:flex",
       )}
     >
-      <Icon className="size-5 shrink-0 text-primary" />
+      <Icon
+        src={ELEMENT_TYPE_ICONS[type]}
+        size={20}
+        className="shrink-0 text-primary"
+      />
       <p className="truncate text-sm font-medium text-foreground">{title}</p>
     </div>
   );

@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  CheckIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  EyeIcon,
-  LightbulbIcon,
-} from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -51,12 +45,12 @@ export function LocalCodeExerciseActions({
       {hasMaterials && <DownloadMaterialsButton />}
       {hasHint && (
         <Button variant="ghost" onClick={showHintDialog}>
-          <ActionBarButtonLabel label="Ściąga" icon={LightbulbIcon} />
+          <ActionBarButtonLabel label="Ściąga" iconSrc="lightbulb.svg" />
         </Button>
       )}
       {!isCompleted && (
         <Button variant="ghost" onClick={tryShowSolution}>
-          <ActionBarButtonLabel label="Rozwiązanie" icon={EyeIcon} />
+          <ActionBarButtonLabel label="Rozwiązanie" iconSrc="eye.svg" />
         </Button>
       )}
       {prevHref && (
@@ -70,7 +64,7 @@ export function LocalCodeExerciseActions({
         </NavButton>
       ) : (
         <Button onClick={markLocalExerciseCompleted}>
-          <ActionBarButtonLabel label="Zrobione" icon={CheckIcon} />
+          <ActionBarButtonLabel label="Zrobione" iconSrc="checkCircle.svg" />
         </Button>
       )}
     </div>

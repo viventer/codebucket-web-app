@@ -1,10 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { PartyPopperIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { ClientIcon } from "@/components/ui/client-icon";
 import { useCourseNavigation } from "@/lib/course/navigation-transition-context";
 import type { TransitionOverlayVariant } from "@/lib/course/navigation-transition-types";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
@@ -112,7 +112,11 @@ export function CourseTransitionOverlay() {
           >
             <CardContent className="flex flex-col gap-4 p-8">
               <div className="flex w-full items-center justify-center gap-3">
-                <PartyPopperIcon className="size-7 text-feedback-success" />
+                <ClientIcon
+                  src="confetti.svg"
+                  size={28}
+                  className="text-feedback-success"
+                />
                 <p className="text-lg font-bold text-foreground">Gratulacje!</p>
               </div>
               <p className="text-sm text-muted-foreground">

@@ -105,7 +105,7 @@ export function OtpEmail({
 
               <Text className="text-muted-foreground text-xs leading-relaxed mt-0 mb-0">
                 Kod jest ważny przez{" "}
-                <span className="text-foreground font-semibold">
+                <span className="text-foreground font-medium">
                   {ttlMinutes} minut
                 </span>
                 .

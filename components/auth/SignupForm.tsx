@@ -13,7 +13,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { CheckIcon, XIcon } from "lucide-react";
+import { XIcon } from "lucide-react";
+import { ClientIcon } from "@/components/ui/client-icon";
 import { cn } from "@/lib/utils";
 
 function getSafeNext(raw: string | null): string {
@@ -148,7 +149,11 @@ export function SignupForm() {
               >
                 {passwordTouched || password.length > 0 ? (
                   rule.passed ? (
-                    <CheckIcon className="size-3 shrink-0" />
+                    <ClientIcon
+                      src="checkCircle.svg"
+                      size={12}
+                      className="shrink-0"
+                    />
                   ) : (
                     <XIcon className="size-3 shrink-0" />
                   )
