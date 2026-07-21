@@ -26,8 +26,6 @@ export function AvailableCourseCard({ course }: AvailableCourseCardProps) {
   return (
     <Card>
       <CardHeader className="grid-cols-1 gap-2">
-        {course.isFree ? <FreeBadge className="mb-2" /> : null}
-
         <div className="flex items-center gap-2">
           <Image
             src={course.iconUrl}
@@ -46,31 +44,29 @@ export function AvailableCourseCard({ course }: AvailableCourseCardProps) {
       </CardHeader>
 
       <CardContent className="flex flex-col gap-4">
-        {!course.isFree && course.currentPrice !== undefined ? (
-          <section>
-            <p className="text-base font-bold flex items-center gap-1.5">
-              <TagIcon
-                className="size-4 shrink-0 text-feedback-success"
-                strokeWidth={3}
-              />
-              {formatPrice(course.currentPrice)}
-            </p>
+        <section>
+          <p className="text-base font-bold flex items-center gap-1.5">
+            <TagIcon
+              className="size-4 shrink-0 text-feedback-success"
+              strokeWidth={3}
+            />
+            {course.currentPrice !== undefined
+              ? formatPrice(course.currentPrice)
+              : "Za darmo"}
+          </p>
 
-            {course.ctaType === "presale" &&
-            course.regularPrice !== undefined ? (
-              <>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Cena regularna po premierze:{" "}
-                  {formatPrice(course.regularPrice)}
-                </p>
-                <PresaleGuaranteeInfo
-                  refundDays={course.refundDays ?? 0}
-                  className="w-full"
-                />
-              </>
-            ) : null}
-          </section>
-        ) : null}
+          {course.ctaType === "presale" && course.regularPrice !== undefined ? (
+            <>
+              <p className="text-sm text-muted-foreground mb-4">
+                Cena regularna po premierze: {formatPrice(course.regularPrice)}
+              </p>
+              <PresaleGuaranteeInfo
+                refundDays={course.refundDays ?? 0}
+                className="w-full"
+              />
+            </>
+          ) : null}
+        </section>
 
         <hr />
         <ul className="flex flex-col gap-2.5 flex-1 justify-end">
