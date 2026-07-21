@@ -36,14 +36,7 @@ type CourseLandingMethodologyProps = {
 export function CourseLandingMethodology({
   extraItems = [],
 }: CourseLandingMethodologyProps) {
-  const items: Array<{
-    title: string;
-    description: string;
-    icon: string;
-  }> = [
-    ...methodologyItems,
-    ...extraItems.map((item) => ({ ...item, icon: "ruler-cross-pen.svg" })),
-  ];
+  const items = [...methodologyItems, ...extraItems];
 
   return (
     <section className="flex flex-col gap-6">

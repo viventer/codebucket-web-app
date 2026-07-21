@@ -31,6 +31,7 @@ export type CoursePresaleInfo = {
 export type CourseLandingMethod = {
   title: string;
   description: string;
+  icon: string;
 };
 
 export type CourseLandingFaqItem = {

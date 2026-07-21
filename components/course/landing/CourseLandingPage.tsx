@@ -20,7 +20,7 @@ type CourseLandingPageProps = {
 export function CourseLandingPage({ data }: CourseLandingPageProps) {
   return (
     <>
-      <main className="mx-auto flex w-[90vw] max-w-[1280px] flex-1 flex-col gap-24 pt-8 pb-16 sm:pb-32 sm:pt-16">
+      <main className="mx-auto flex w-[90vw] max-w-7xl flex-1 flex-col gap-24 pt-8 pb-24 sm:pb-32 sm:pt-16">
         <CourseLandingHero
           id={data.id}
           title={data.title}

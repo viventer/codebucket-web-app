@@ -43,11 +43,13 @@
   "additionalLearningMethods": [
     {
       "title": "Indywidualny projekt",
-      "description": "Rozwijaj własną stronę internetową od pierwszej do ostatniej lekcji."
+      "description": "Rozwijaj własną stronę internetową od pierwszej do ostatniej lekcji.",
+      "icon": "keyboard.svg"
     },
     {
       "title": "Projekt końcowy",
-      "description": "Samodzielnie odtwórz projekt z Figmy i sprawdź swoje umiejętności w praktyce."
+      "description": "Samodzielnie odtwórz projekt z Figmy i sprawdź swoje umiejętności w praktyce.",
+      "icon": "figma-file.svg"
     }
   ],
   "faq": [
