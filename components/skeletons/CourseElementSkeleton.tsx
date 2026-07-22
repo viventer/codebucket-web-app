@@ -13,7 +13,7 @@ export function CourseElementSkeleton() {
               <Skeleton className="h-2 w-20 rounded-full sm:w-28" />
             </div>
           </div>
-          <Skeleton className="ml-auto h-8 w-20 rounded-md" />
+          <Skeleton className="ml-auto size-7 shrink-0 rounded-md sm:h-8 sm:w-48" />
         </div>
       </header>
 

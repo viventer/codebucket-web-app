@@ -63,7 +63,7 @@ export function CourseHeader({
         </div>
 
         <div className="ml-auto">
-          <HeaderAuth />
+          <HeaderAuth mobilePopover />
         </div>
       </div>
     </header>

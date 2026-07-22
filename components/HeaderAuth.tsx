@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import dynamic from "next/dynamic";
-import { Button } from "@/components/ui/button";
+import { AuthButtons } from "./AuthButtons";
+import { AuthPopover } from "./AuthPopover";
 
 const AccountDialog = dynamic(
   () =>
@@ -19,7 +19,12 @@ function readAuthCookie(): boolean {
     .some((c) => c.trim().startsWith("cb_auth="));
 }
 
-export function HeaderAuth() {
+type HeaderAuthProps = {
+  /** On <sm show a user icon + popover instead of auth buttons (course header only). */
+  mobilePopover?: boolean;
+};
+
+export function HeaderAuth({ mobilePopover = false }: HeaderAuthProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -28,20 +33,29 @@ export function HeaderAuth() {
 
   if (isAuthenticated === null) {
     // Fixed-size placeholder to prevent layout shift during hydration
-    return <div className="h-8 w-48" aria-hidden />;
+    return (
+      <div
+        className={
+          mobilePopover ? "h-8 w-8 sm:w-48" : "h-8 w-48"
+        }
+        aria-hidden
+      />
+    );
   }
 
   if (!isAuthenticated) {
-    return (
-      <div className="flex items-center gap-2">
-        <Button asChild variant="ghost" size="sm">
-          <Link href="/login">Zaloguj się</Link>
-        </Button>
-        <Button asChild variant="secondary" size="sm">
-          <Link href="/signup">Utwórz darmowe konto</Link>
-        </Button>
-      </div>
-    );
+    if (mobilePopover) {
+      return (
+        <>
+          <div className="hidden sm:block">
+            <AuthButtons />
+          </div>
+          <AuthPopover />
+        </>
+      );
+    }
+
+    return <AuthButtons />;
   }
 
   return <AccountDialog />;
