@@ -1,6 +1,5 @@
-import { XIcon } from "lucide-react";
+import { CheckIcon, XIcon } from "lucide-react";
 import { PASSWORD_RULES } from "@/lib/auth/password-validation";
-import { ClientIcon } from "@/components/ui/client-icon";
 import { cn } from "@/lib/utils";
 
 type PasswordRulesListProps = {
@@ -32,11 +31,7 @@ export function PasswordRulesList({
           >
             {showResults ? (
               passed ? (
-                <ClientIcon
-                  src="checkCircle.svg"
-                  size={12}
-                  className="shrink-0"
-                />
+                <CheckIcon className="size-3 shrink-0" />
               ) : (
                 <XIcon className="size-3 shrink-0" />
               )

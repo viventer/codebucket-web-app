@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRightIcon } from "lucide-react";
+import { CheckIcon, ChevronRightIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useExerciseSession } from "@/lib/exercises/session/ExerciseSessionContext";
@@ -54,7 +54,7 @@ export function InteractiveExerciseSubmitAction({
 
   return (
     <Button onClick={handleCheck} disabled={!hasController || isLocked}>
-      <ActionBarButtonLabel label="Zatwierdź" iconSrc="checkCircle.svg" />
+      <ActionBarButtonLabel label="Zatwierdź" icon={CheckIcon} />
     </Button>
   );
 }

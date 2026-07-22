@@ -15,7 +15,11 @@ export function prepareSvg(
     .replace(/fill="#[0-9A-Fa-f]{3,8}"/g, 'fill="currentColor"')
     .replace(/stroke="#[0-9A-Fa-f]{3,8}"/g, 'stroke="currentColor"')
     .replace(/<svg([^>]*)>/, (_, attrs: string) => {
-      const cleanAttrs = attrs.replace(/\s(width|height)="[^"]*"/gi, "");
-      return `<svg${cleanAttrs} width="${width}" height="${height}">`;
+      // `size-full` opts out of Button's `[&_svg:not([class*='size-'])]:size-*`
+      // so the icon follows the wrapper size instead of staying at 16px.
+      const cleanAttrs = attrs
+        .replace(/\s(width|height)="[^"]*"/gi, "")
+        .replace(/\sclass="[^"]*"/i, "");
+      return `<svg${cleanAttrs} class="size-full" width="${width}" height="${height}">`;
     });
 }

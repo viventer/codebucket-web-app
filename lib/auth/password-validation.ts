@@ -2,7 +2,10 @@ import { z } from "zod";
 
 export const PASSWORD_RULES = [
   { label: "Minimum 8 znaków", test: (v: string) => v.length >= 8 },
-  { label: "Przynajmniej jedna wielka litera", test: (v: string) => /[A-Z]/.test(v) },
+  {
+    label: "Przynajmniej jedna wielka litera",
+    test: (v: string) => /[A-Z]/.test(v),
+  },
   { label: "Przynajmniej jedna cyfra", test: (v: string) => /[0-9]/.test(v) },
 ] as const;
 

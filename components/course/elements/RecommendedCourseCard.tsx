@@ -1,4 +1,3 @@
-import { ShoppingCartIcon } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -14,6 +13,7 @@ import { Icon } from "@/components/ui/icon";
 import { getCoursePath } from "@/lib/courses";
 import type { CourseCardData } from "@/actions/courses/types";
 import { cn } from "@/lib/utils";
+import { ClientIcon } from "@/components/ui/client-icon";
 
 const MAX_TOPICS = 6;
 
@@ -76,7 +76,7 @@ export function RecommendedCourseCard({
       <CardFooter className="flex-col gap-2 border-0 bg-transparent">
         <Button asChild className="w-full" size="lg">
           <a href={purchaseHref}>
-            <ShoppingCartIcon />
+            <ClientIcon src="shoppingCart.svg" size={32} />
             {course.isPresale ? "Kup w przedsprzedaży" : "Kup kurs"}
           </a>
         </Button>
