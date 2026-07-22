@@ -19,7 +19,7 @@ export function CourseLandingObjectives({
           {whatYouWillLearn.map((item) => (
             <li key={item} className="flex items-center gap-2">
               <Icon
-                src="checkCircle.svg"
+                src="check-circle.svg"
                 size={16}
                 className="shrink-0 text-accent"
               />

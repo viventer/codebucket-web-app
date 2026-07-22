@@ -150,7 +150,7 @@ export function SignupForm() {
                 {passwordTouched || password.length > 0 ? (
                   rule.passed ? (
                     <ClientIcon
-                      src="checkCircle.svg"
+                      src="check-circle.svg"
                       size={12}
                       className="shrink-0"
                     />

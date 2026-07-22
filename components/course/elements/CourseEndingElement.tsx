@@ -1,14 +1,15 @@
 import type { CourseEndingContent } from "@/schemas/courseSchema";
-import type { CourseCardData } from "@/actions/courses/types";
+import type { AvailableCourseDisplay } from "@/lib/course/available-courses";
 
-import { RecommendedCourseCard } from "./RecommendedCourseCard";
+import { AvailableCourseCard } from "@/components/home/AvailableCourseCard";
+import { SectionHeading } from "@/components/SectionHeading";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClientIcon } from "@/components/ui/client-icon";
 import { Icon } from "@/components/ui/icon";
 
 type CourseEndingElementProps = {
   content: CourseEndingContent;
-  recommendedCourses: CourseCardData[];
+  recommendedCourses: AvailableCourseDisplay[];
 };
 
 export function CourseEndingElement({
@@ -37,19 +38,19 @@ export function CourseEndingElement({
       </section>
 
       <section className="flex flex-col gap-4">
-        <div>
-          <h2 className="text-lg font-medium">Czego się nauczyłeś?</h2>
-          <p className="text-sm text-muted-foreground">
+        <SectionHeading>
+          <SectionHeading.Title>Czego się nauczyłeś?</SectionHeading.Title>
+          <SectionHeading.Description>
             Umiejętności, które przybliżają Cię do Twojego celu.
-          </p>
-        </div>
+          </SectionHeading.Description>
+        </SectionHeading>
         <Card>
           <CardContent>
             <ul className="flex flex-col gap-3">
               {obtainedSkills.map((skill) => (
                 <li key={skill} className="flex items-center gap-2 text-base">
                   <Icon
-                    src="checkCircle.svg"
+                    src="check-circle.svg"
                     size={16}
                     className="text-feedback-success"
                   />
@@ -62,15 +63,15 @@ export function CourseEndingElement({
       </section>
 
       <section className="flex flex-col gap-4">
-        <div>
-          <h2 className="text-lg font-medium">{nextSteps.heading}</h2>
-          <p className="text-sm text-muted-foreground">
+        <SectionHeading>
+          <SectionHeading.Title>{nextSteps.heading}</SectionHeading.Title>
+          <SectionHeading.Description>
             Ukończ kolejny kurs i zdobądź nowe umiejętności.
-          </p>
-        </div>
+          </SectionHeading.Description>
+        </SectionHeading>
         <div className="grid gap-4">
           {recommendedCourses.map((course) => (
-            <RecommendedCourseCard key={course.id} course={course} />
+            <AvailableCourseCard key={course.id} course={course} />
           ))}
         </div>
       </section>

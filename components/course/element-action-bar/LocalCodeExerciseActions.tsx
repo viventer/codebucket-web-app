@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  CheckCircleIcon,
+  CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   EyeIcon,
@@ -32,8 +32,12 @@ export function LocalCodeExerciseActions({
 }: LocalCodeExerciseActionsProps) {
   const router = useRouter();
   const navigation = useCourseNavigationOptional();
-  const { localPhase, markLocalExerciseCompleted, tryShowSolution, showHintDialog } =
-    useExerciseSession();
+  const {
+    localPhase,
+    markLocalExerciseCompleted,
+    tryShowSolution,
+    showHintDialog,
+  } = useExerciseSession();
 
   const isCompleted = localPhase === "completed";
 
@@ -70,7 +74,7 @@ export function LocalCodeExerciseActions({
         </NavButton>
       ) : (
         <Button onClick={markLocalExerciseCompleted}>
-          <ActionBarButtonLabel label="Zrobione" icon={CheckCircleIcon} />
+          <ActionBarButtonLabel label="Zrobione" icon={CheckIcon} />
         </Button>
       )}
     </div>

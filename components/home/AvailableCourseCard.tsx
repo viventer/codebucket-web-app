@@ -73,7 +73,7 @@ export function AvailableCourseCard({ course }: AvailableCourseCardProps) {
           {course.highlights.map((highlight) => (
             <li key={highlight} className="flex items-center gap-1.5 text-sm">
               <Icon
-                src="checkCircle.svg"
+                src="check-circle.svg"
                 size={16}
                 className="shrink-0 text-accent"
               />

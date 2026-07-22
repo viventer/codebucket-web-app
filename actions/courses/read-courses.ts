@@ -2,7 +2,7 @@
 
 import { adminDB } from "@/firebase/admin-init";
 import { firestoreTimestampToDate } from "@/actions/courses/timestamps";
-import type { CourseCardData, CourseNavigationData } from "@/actions/courses/types";
+import type { CourseNavigationData } from "@/actions/courses/types";
 import type {
   CourseDocument,
   CourseElementDocument,
@@ -188,29 +188,4 @@ export async function getAllCourseElementParams(): Promise<
 export async function getCourseTitle(id: string): Promise<string | undefined> {
   const course = await getCourseDocument(id);
   return course?.title;
-}
-
-export async function getCourseCardData(
-  id: string,
-): Promise<CourseCardData | null> {
-  const course = await getCourseDocument(id);
-  if (!course?.isPresale || !course.badge || !course.badgeClassName) {
-    return null;
-  }
-
-  const currentPrice = course.price.currentPrice;
-  if (currentPrice === undefined) {
-    return null;
-  }
-
-  return {
-    id: course.id,
-    title: course.title,
-    description: course.description,
-    badge: course.badge,
-    badgeClassName: course.badgeClassName,
-    currentPrice,
-    whatYouWillLearn: course.whatYouWillLearn,
-    isPresale: course.isPresale,
-  };
 }

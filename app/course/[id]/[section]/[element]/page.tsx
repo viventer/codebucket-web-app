@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import {
-  getCourseCardData,
+  getCourseDocument,
   getCourseElement,
 } from "@/actions/courses/read-courses";
 import { toCourseElement } from "@/actions/courses/helpers";
@@ -19,6 +19,8 @@ import { IndividualProjectElement } from "@/components/course/elements/Individua
 import { InteractiveDemoElement } from "@/components/course/elements/InteractiveDemoElement";
 import { InteractiveExerciseElement } from "@/components/course/elements/InteractiveExerciseElement";
 import { VideoElement } from "@/components/course/elements/VideoElement";
+import { buildAvailableCoursesDisplay } from "@/lib/course/available-courses";
+import type { CourseDocument } from "@/schemas/courseSchema";
 
 type CourseElementPageProps = {
   params: Promise<{ id: string; section: string; element: string }>;
@@ -74,18 +76,18 @@ export default async function CourseElementPage({
         />
       );
     case "courseEnding": {
-      const recommendedCourses = (
+      const courseDocs = (
         await Promise.all(
           element.content.nextSteps.recommendedCourseIds.map((courseId) =>
-            getCourseCardData(courseId),
+            getCourseDocument(courseId),
           ),
         )
-      ).filter((course) => course !== null);
+      ).filter((doc): doc is CourseDocument => doc !== null);
 
       return (
         <CourseEndingElement
           content={element.content}
-          recommendedCourses={recommendedCourses}
+          recommendedCourses={buildAvailableCoursesDisplay(courseDocs)}
         />
       );
     }

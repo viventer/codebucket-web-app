@@ -25,7 +25,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       icons={{
         success: (
           <ClientIcon
-            src="checkCircle.svg"
+            src="check-circle.svg"
             size={20}
             className="text-feedback-success"
           />
