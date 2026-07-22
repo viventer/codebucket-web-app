@@ -21,7 +21,7 @@ type CourseLandingPageProps = {
 export function CourseLandingPage({ data }: CourseLandingPageProps) {
   return (
     <>
-      <MainContainer className="gap-24">
+      <MainContainer>
         <CourseLandingHero
           id={data.id}
           title={data.title}

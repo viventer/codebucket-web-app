@@ -33,7 +33,7 @@ export default async function HomePage() {
   return (
     <>
       <ScrollSnapController />
-      <MainContainer className="gap-24">
+      <MainContainer>
         <HomeHero />
         <LearningFlow videoUrls={videoUrls} />
         <AvailableCourses courses={availableCourses} />

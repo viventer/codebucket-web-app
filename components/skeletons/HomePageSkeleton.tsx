@@ -26,7 +26,7 @@ function CourseCardSkeleton() {
 
 export function HomePageSkeleton() {
   return (
-    <MainContainer className="gap-24">
+    <MainContainer>
       <section className="flex min-h-[60dvh] max-h-[80dvh] flex-col items-center gap-9 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
         <div className="flex w-full flex-col gap-3 shrink-0 lg:max-w-xl">
           <Skeleton className="h-10 w-full sm:h-12 lg:h-14" />

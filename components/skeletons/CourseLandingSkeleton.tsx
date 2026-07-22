@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function CourseLandingSkeleton() {
   return (
-    <MainContainer className="gap-24">
+    <MainContainer>
       <div className="flex gap-6">
         <section className="flex flex-1 flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <section className="flex flex-col gap-6">

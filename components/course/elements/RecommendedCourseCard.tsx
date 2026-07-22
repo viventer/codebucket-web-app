@@ -76,7 +76,7 @@ export function RecommendedCourseCard({
       <CardFooter className="flex-col gap-2 border-0 bg-transparent">
         <Button asChild className="w-full" size="lg">
           <a href={purchaseHref}>
-            <ClientIcon src="shoppingCart.svg" size={32} />
+            <ClientIcon src="shopping-cart.svg" size={24} />
             {course.isPresale ? "Kup w przedsprzedaży" : "Kup kurs"}
           </a>
         </Button>
