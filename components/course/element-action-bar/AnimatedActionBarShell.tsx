@@ -104,7 +104,7 @@ export function AnimatedActionBarShell({
           ease: "easeOut",
         }}
         className={cn(
-          "mx-auto flex w-[90vw] max-w-[1280px] items-center justify-between rounded-xl border bg-background/70 px-4! py-3 backdrop-blur",
+          "mx-auto flex w-[90vw] max-w-7xl items-center justify-between rounded-xl border bg-background/70 px-4! py-3 backdrop-blur",
           borderPulse && "border-primary/40",
         )}
       >

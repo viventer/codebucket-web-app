@@ -7,7 +7,10 @@ import type { CourseNavigationMetadata } from "@/lib/course/navigation-transitio
 import { CourseNavigationProvider } from "@/lib/course/navigation-transition-context";
 import { CheatsheetFullscreenProvider } from "@/lib/course/cheatsheet-fullscreen-context";
 import { ExerciseSessionProvider } from "@/lib/exercises/session/ExerciseSessionContext";
-import { CourseProgressProvider, useCourseProgress } from "@/lib/course/course-progress-context";
+import {
+  CourseProgressProvider,
+  useCourseProgress,
+} from "@/lib/course/course-progress-context";
 import { getSectionProgress } from "@/lib/course/progress";
 import {
   CourseHeader,
@@ -119,7 +122,7 @@ function CourseShellContent({
     <>
       <main
         className={cn(
-          "mx-auto w-[90vw] max-w-[90vw] lg:max-w-[1280px] flex-1 pb-28",
+          "mx-auto w-[90vw] max-w-[90vw] lg:max-w-7xl flex-1 pb-28",
           centerContentOnMobile
             ? "max-sm:flex max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:mt-0 sm:mt-16"
             : "mt-8 sm:mt-16",

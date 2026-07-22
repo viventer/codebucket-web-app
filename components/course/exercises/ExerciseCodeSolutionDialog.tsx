@@ -22,7 +22,7 @@ export function ExerciseCodeSolutionDialog({
 }: ExerciseCodeSolutionDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="flex max-h-[85vh] w-[90vw] max-w-[calc(100%-2rem)] flex-col overflow-hidden lg:max-w-[1280px]">
+      <DialogContent className="flex max-h-[85vh] w-[90vw] max-w-[calc(100%-2rem)] flex-col overflow-hidden lg:max-w-7xl">
         <DialogHeader>
           <DialogTitle>Rozwiązanie</DialogTitle>
         </DialogHeader>

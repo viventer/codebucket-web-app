@@ -29,7 +29,7 @@ export function CourseHeader({
 }: CourseHeaderProps) {
   return (
     <header className="gap-3 border-b bg-background px-3">
-      <div className="flex h-14 items-center w-[90vw] mx-auto max-w-[1280px]">
+      <div className="flex h-14 items-center w-[90vw] mx-auto max-w-7xl">
         <div className="flex min-w-0 items-center gap-8">
           <Image
             src="/logo.svg"

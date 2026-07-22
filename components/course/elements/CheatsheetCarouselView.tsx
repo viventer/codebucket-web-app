@@ -69,7 +69,7 @@ export function CheatsheetCarouselView({
   const renderNavButtons = showNavButtons !== false;
 
   return (
-    <div className={cn("relative mx-auto w-full max-w-[1280px]", className)}>
+    <div className={cn("relative mx-auto w-full max-w-7xl", className)}>
       <Carousel opts={{ loop: true, startIndex }} setApi={handleSetApi}>
         <CarouselContent className={slideClassName ? "h-full" : undefined}>
           {slides.map((slide) => (

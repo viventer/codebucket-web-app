@@ -34,10 +34,10 @@
     "Samodzielnie odtwarzać projekty graficzne w kodzie."
   ],
   "highlights": [
-    "Selektory i klasy CSS",
+    "Selektory, pseudoklasy i filtry",
     "Kolory i typografia",
     "Box model",
-    "Flexbox",
+    "Flexbox i grid",
     "Responsywność"
   ],
   "additionalLearningMethods": [
