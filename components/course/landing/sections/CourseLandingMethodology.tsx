@@ -1,3 +1,4 @@
+import { SectionHeading } from "@/components/SectionHeading";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import type { CourseLandingMethod } from "@/lib/course/landing-data";
@@ -40,15 +41,15 @@ export function CourseLandingMethodology({
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="flex flex-col gap-1">
-        <h2 className="text-xl font-medium text-center">
+      <SectionHeading>
+        <SectionHeading.Title>
           Najskuteczniejszy sposób nauki programowania
-        </h2>
-        <p className="text-sm text-muted-foreground text-center">
+        </SectionHeading.Title>
+        <SectionHeading.Description>
           Ucz się poprzez ćwiczenia i budowanie projektów zamiast spędzać
           godziny na oglądaniu kursów.
-        </p>
-      </div>
+        </SectionHeading.Description>
+      </SectionHeading>
 
       <div className="grid gap-6 sm:grid-cols-2">
         {items.map(({ title, description, icon }) => (

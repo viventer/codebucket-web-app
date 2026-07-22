@@ -2,7 +2,7 @@ import {
   CourseSectionsAccordion,
   type CourseSectionsAccordionSection,
 } from "@/components/course/CourseSectionsAccordion";
-
+import { SectionHeading } from "@/components/SectionHeading";
 import { ExpandableElement } from "@/components/ui/ExpandableElement";
 
 type CourseLandingCurriculumProps = {
@@ -16,12 +16,14 @@ export function CourseLandingCurriculum({
 }: CourseLandingCurriculumProps) {
   return (
     <section>
-      <h2 className="text-center text-xl font-medium mb-1">Program kursu</h2>
-      {note ? (
-        <p className="text-center text-sm text-muted-foreground max-w-xl mx-auto mb-4">
-          {note}
-        </p>
-      ) : null}
+      <SectionHeading>
+        <SectionHeading.Title>Program kursu</SectionHeading.Title>
+        {note ? (
+          <SectionHeading.Description className="mx-auto mb-4 max-w-xl">
+            {note}
+          </SectionHeading.Description>
+        ) : null}
+      </SectionHeading>
       <ExpandableElement
         collapsedHeight={210}
         expandText="Pokaż cały program"

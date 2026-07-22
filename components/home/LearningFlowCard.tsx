@@ -30,7 +30,7 @@ export function LearningFlowCard({
             className="hidden text-accent shrink-0 sm:inline-block"
           />
           <div className="flex flex-col gap-1">
-            <CardTitle className="text-lg tracking-tight sm:text-xl">
+            <CardTitle className="sm:text-lg tracking-tight">
               {item.titleBefore}
               <span className="font-bold text-accent">{item.titleAccent}</span>
               {item.titleAfter ?? ""}
@@ -42,7 +42,7 @@ export function LearningFlowCard({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="mx-auto aspect-video w-full max-w-[720px] overflow-hidden rounded-xl bg-muted">
+        <div className="mx-auto aspect-video w-full max-w-180 overflow-hidden rounded-xl bg-muted">
           <LazyVideo
             src={videoSrc}
             className="h-full w-full"

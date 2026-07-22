@@ -1,4 +1,5 @@
 import { AvailableCourseCard } from "@/components/home/AvailableCourseCard";
+import { SectionHeading } from "@/components/SectionHeading";
 import type { AvailableCourseDisplay } from "@/lib/course/available-courses";
 
 type AvailableCoursesProps = {
@@ -8,14 +9,14 @@ type AvailableCoursesProps = {
 export function AvailableCourses({ courses }: AvailableCoursesProps) {
   return (
     <section className="flex flex-col gap-8">
-      <header className="text-center sm:snap-start sm:scroll-mt-8 flex flex-col gap-2 ">
-        <h2 className="text-xl tracking-tight sm:text-2xl lg:text-3xl">
+      <SectionHeading className="sm:snap-start sm:scroll-mt-8">
+        <SectionHeading.Title>
           Wybierz <span className="text-accent font-bold">swój kurs</span>
-        </h2>
-        <p className="text-sm text-muted-foreground sm:text-base leading-tight">
+        </SectionHeading.Title>
+        <SectionHeading.Description className="leading-tight sm:text-base">
           Wybierz czego chciałbyś się nauczyć i przejdź do działania.
-        </p>
-      </header>
+        </SectionHeading.Description>
+      </SectionHeading>
 
       <div className="grid gap-8 md:grid-cols-2">
         {courses.map((course) => (

@@ -1,3 +1,4 @@
+import { SectionHeading } from "@/components/SectionHeading";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import type { CoursePresaleInfo } from "@/lib/course/landing-data";
@@ -51,15 +52,13 @@ export function CourseLandingPresaleTimeline({
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="flex flex-col gap-1 text-center">
-        <h2 className="text-xl text-center font-medium">
-          Terminarz przedsprzedaży
-        </h2>
-        <p className="text-sm text-muted-foreground">
+      <SectionHeading>
+        <SectionHeading.Title>Terminarz przedsprzedaży</SectionHeading.Title>
+        <SectionHeading.Description>
           Kurs jest w trakcie tworzenia. Pełna wersja będzie dostępna{" "}
           {presale.releaseDateLongLabel}.
-        </p>
-      </div>
+        </SectionHeading.Description>
+      </SectionHeading>
 
       <div className="hidden sm:flex sm:flex-col sm:gap-5">
         <ol className="grid grid-cols-3 gap-6">

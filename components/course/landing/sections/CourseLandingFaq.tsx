@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Card, CardTitle, CardHeader, CardContent } from "@/components/ui/card";
+import { SectionHeading } from "@/components/SectionHeading";
 import type { CourseLandingFaqItem } from "@/lib/course/landing-data";
 
 type CourseLandingFaqProps = {
@@ -18,9 +18,11 @@ export function CourseLandingFaq({ faq }: CourseLandingFaqProps) {
 
   return (
     <section>
-      <h2 className="text-center text-xl font-medium mb-3">
-        Najczęściej zadawane pytania
-      </h2>
+      <SectionHeading>
+        <SectionHeading.Title>
+          Najczęściej zadawane pytania
+        </SectionHeading.Title>
+      </SectionHeading>
       <Accordion type="single" collapsible className="gap-1">
         {faq.map((item, index) => (
           <AccordionItem
