@@ -8,6 +8,7 @@ import { CourseLandingObjectives } from "@/components/course/landing/sections/Co
 import { CourseLandingPresaleBenefits } from "@/components/course/landing/sections/CourseLandingPresaleBenefits";
 import { CourseLandingPresaleTimeline } from "@/components/course/landing/sections/CourseLandingPresaleTimeline";
 import { CourseLandingStats } from "@/components/course/landing/sections/CourseLandingStats";
+import { MainContainer } from "@/components/MainContainer";
 import type { CourseLandingData } from "@/lib/course/landing-data";
 
 const PRESALE_CURRICULUM_NOTE =
@@ -20,7 +21,7 @@ type CourseLandingPageProps = {
 export function CourseLandingPage({ data }: CourseLandingPageProps) {
   return (
     <>
-      <main className="mx-auto flex w-[90vw] max-w-7xl flex-1 flex-col gap-24 pt-8 pb-24 sm:pb-32 sm:pt-16">
+      <MainContainer className="gap-24">
         <CourseLandingHero
           id={data.id}
           title={data.title}
@@ -81,7 +82,7 @@ export function CourseLandingPage({ data }: CourseLandingPageProps) {
             isPresale={data.isPresale}
           />
         </div>
-      </main>
+      </MainContainer>
 
       <CourseLandingFloatingCta
         courseId={data.id}

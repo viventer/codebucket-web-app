@@ -1,6 +1,7 @@
 import { AvailableCourses } from "@/components/home/AvailableCourses";
 import { HomeHero } from "@/components/home/HomeHero";
 import { LearningFlow } from "@/components/home/LearningFlow";
+import { MainContainer } from "@/components/MainContainer";
 import { ScrollSnapController } from "@/components/home/ScrollSnapController";
 import {
   getCourseDocument,
@@ -32,11 +33,11 @@ export default async function HomePage() {
   return (
     <>
       <ScrollSnapController />
-      <main className="mx-auto flex w-[90vw] max-w-7xl flex-1 flex-col pt-8 pb-24 sm:pb-32 sm:pt-16 gap-24">
+      <MainContainer className="gap-24">
         <HomeHero />
         <LearningFlow videoUrls={videoUrls} />
         <AvailableCourses courses={availableCourses} />
-      </main>
+      </MainContainer>
     </>
   );
 }

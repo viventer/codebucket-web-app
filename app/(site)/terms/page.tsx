@@ -1,3 +1,4 @@
+import { MainContainer } from "@/components/MainContainer";
 import { Card, CardContent } from "@/components/ui/card";
 import type { Metadata } from "next";
 
@@ -40,7 +41,7 @@ function Strong({ children }: { children: React.ReactNode }) {
 
 export default function TermsPage() {
   return (
-    <main className="mx-auto flex w-[90vw] max-w-7xl flex-1 flex-col pt-8 pb-24 sm:pt-16 sm:pb-32">
+    <MainContainer>
       <div className="flex flex-col gap-12 max-w-3xl">
         {/* Header */}
         <div className="flex flex-col gap-2">
@@ -596,6 +597,6 @@ export default function TermsPage() {
           </p>
         </Section>
       </div>
-    </main>
+    </MainContainer>
   );
 }
