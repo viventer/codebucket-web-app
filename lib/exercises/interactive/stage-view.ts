@@ -97,6 +97,35 @@ export function deriveIsCurrentStageComplete(state: StageState): boolean {
   return false;
 }
 
+/**
+ * Keep completion feedback stable for the current stage position.
+ * Middle stages must show stageSuccess/stageSolution; the last stage must show
+ * success/solution. Without this, auto-advance overwrites success → stageSuccess
+ * and ExerciseFeedbackMessage remounts (appear → exit → appear).
+ */
+function feedbackForStagePosition(
+  feedback: ExerciseFeedback,
+  isLastStage: boolean,
+): ExerciseFeedback {
+  if (isLastStage) {
+    if (feedback === "stageSuccess") {
+      return "success";
+    }
+    if (feedback === "stageSolution") {
+      return "solution";
+    }
+    return feedback;
+  }
+
+  if (feedback === "success") {
+    return "stageSuccess";
+  }
+  if (feedback === "solution") {
+    return "stageSolution";
+  }
+  return feedback;
+}
+
 export function deriveInteractiveExerciseFeedback(
   state: StageState,
   selectCorrectPersisted: SelectCorrectPersistedState | null,
@@ -108,7 +137,7 @@ export function deriveInteractiveExerciseFeedback(
     state.kind === "fillCode" ||
     state.kind === "matchPairs"
   ) {
-    return state.feedback;
+    return feedbackForStagePosition(state.feedback, isLastStage);
   }
 
   if (
@@ -118,16 +147,12 @@ export function deriveInteractiveExerciseFeedback(
     state.feedback === "solution" ||
     state.feedback === "stageCloseCall"
   ) {
-    return state.feedback;
+    return feedbackForStagePosition(state.feedback, isLastStage);
   }
 
   if (chooseMatchingPersisted) {
     if (chooseMatchingPersisted.phase === "correct") {
-      if (chooseMatchingPersisted.attempt === "retry") {
-        return isLastStage ? "success" : "stageSuccess";
-      }
-
-      return "stageSuccess";
+      return isLastStage ? "success" : "stageSuccess";
     }
 
     if (
@@ -139,11 +164,7 @@ export function deriveInteractiveExerciseFeedback(
   }
 
   if (selectCorrectPersisted?.phase === "correct") {
-    if (selectCorrectPersisted.attempt === "retry") {
-      return isLastStage ? "success" : "stageSuccess";
-    }
-
-    return "success";
+    return isLastStage ? "success" : "stageSuccess";
   }
 
   if (selectCorrectPersisted?.phase === "wrongDeferred") {
