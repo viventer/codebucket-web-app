@@ -1,4 +1,5 @@
 import { AvailableCourses } from "@/components/home/AvailableCourses";
+import { DeveloperPath } from "@/components/home/DeveloperPath/DeveloperPath";
 import { HomeHero } from "@/components/home/HomeHero";
 import { LearningFlow } from "@/components/home/LearningFlow";
 import { MainContainer } from "@/components/MainContainer";
@@ -37,6 +38,7 @@ export default async function HomePage() {
         <HomeHero />
         <LearningFlow videoUrls={videoUrls} />
         <AvailableCourses courses={availableCourses} />
+        <DeveloperPath />
       </MainContainer>
     </>
   );

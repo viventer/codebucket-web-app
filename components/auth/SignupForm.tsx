@@ -210,9 +210,8 @@ export function SignupForm() {
             </Label>
             <InfoHoverCard>
               <p className="text-sm text-muted-foreground">
-                Otrzymuj na swój email dodatkowe materiały, praktyczne
-                wskazówki, informacje o nowych kursach i filmach oraz
-                aktualizacjach platformy.
+                Otrzymuj na swój email dodatkowe materiały, informacje o nowych
+                kursach i filmach oraz aktualizacjach platformy.
               </p>
             </InfoHoverCard>
           </div>

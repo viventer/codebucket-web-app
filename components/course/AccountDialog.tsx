@@ -201,9 +201,8 @@ export function AccountDialog({
                     </Label>
                     <InfoHoverCard>
                       <p className="text-sm text-muted-foreground">
-                        Otrzymuj dodatkowe materiały, praktyczne wskazówki,
-                        informacje o nowych kursach i filmach oraz
-                        aktualizacjach platformy.
+                        Otrzymuj dodatkowe materiały, informacje o nowych
+                        kursach i filmach oraz aktualizacjach platformy.
                       </p>
                     </InfoHoverCard>
                   </div>
