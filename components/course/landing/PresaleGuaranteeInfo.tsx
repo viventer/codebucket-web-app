@@ -1,13 +1,7 @@
 "use client";
 
-import { InfoIcon } from "lucide-react";
-
 import { ClientIcon } from "@/components/ui/client-icon";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/HoverCard";
+import { InfoHoverCard } from "@/components/ui/InfoHoverCard";
 import { getPresaleRiskFreeBenefit } from "@/lib/course/landing-data";
 import { cn } from "@/lib/utils";
 
@@ -29,21 +23,10 @@ export function PresaleGuaranteeInfo({
         size={16}
         className="text-feedback-success"
       />
-      <HoverCard openDelay={200} closeDelay={100}>
-        <HoverCardTrigger asChild>
-          <button
-            type="button"
-            className="inline-flex items-center gap-1.5 text-left underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            {refundDays}-dniowa gwarancja satysfakcji
-            <InfoIcon className="size-4 shrink-0 text-muted-foreground" />
-          </button>
-        </HoverCardTrigger>
-        <HoverCardContent className="flex flex-col gap-1">
-          <p className="font-medium">{benefit.title}</p>
-          <p className="text-sm text-muted-foreground">{benefit.description}</p>
-        </HoverCardContent>
-      </HoverCard>
+      <InfoHoverCard label={`${refundDays}-dniowa gwarancja satysfakcji`}>
+        <p className="font-medium">{benefit.title}</p>
+        <p className="text-sm text-muted-foreground">{benefit.description}</p>
+      </InfoHoverCard>
     </p>
   );
 }

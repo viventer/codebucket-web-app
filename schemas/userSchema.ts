@@ -16,6 +16,7 @@ export const userSchema = z.object({
   courseProgress: z.record(z.string(), courseProgressEntrySchema),
   preferences: z.object({
     colorScheme: z.enum(["light", "dark"]).optional(),
+    newsletter: z.boolean().optional(),
   }),
 });
 

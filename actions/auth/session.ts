@@ -15,12 +15,17 @@ type CreateSessionResult =
 
 export async function createSession(
   idToken: string,
+  newsletter = false,
 ): Promise<CreateSessionResult> {
   try {
     const decoded = await adminAuth.verifyIdToken(idToken);
     const uid = decoded.uid;
 
-    const userResult = await ensureUserDocument(uid, decoded.email ?? "");
+    const userResult = await ensureUserDocument(
+      uid,
+      decoded.email ?? "",
+      newsletter,
+    );
     if (!userResult.success) {
       return { success: false, error: userResult.error };
     }

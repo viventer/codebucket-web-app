@@ -36,6 +36,7 @@ export async function getMainHeaderAccount() {
         courses,
         currentCourseId: currentCourse,
         canChangePassword,
+        newsletter: Boolean(userData?.preferences?.newsletter),
       },
     };
   } catch {
@@ -46,6 +47,7 @@ export async function getMainHeaderAccount() {
         courses: [],
         currentCourseId: undefined,
         canChangePassword: false,
+        newsletter: false,
       },
     };
   }

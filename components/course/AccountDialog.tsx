@@ -4,9 +4,12 @@ import { useTransition, useState, useEffect } from "react";
 import Link from "next/link";
 import { auth } from "@/firebase/init";
 import { deleteSession } from "@/actions/auth/session";
+import { updateNewsletter } from "@/actions/user/update-newsletter";
 import { getMainHeaderAccount } from "@/lib/auth/main-header-account";
+import { useToast } from "@/hooks/use-toast";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +17,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { InfoHoverCard } from "@/components/ui/InfoHoverCard";
+import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import {
   PlusIcon,
@@ -37,6 +42,7 @@ type AccountData = {
   courses: AccountCourse[];
   currentCourseId?: string;
   canChangePassword: boolean;
+  newsletter: boolean;
 };
 
 export type AccountDialogProps = {
@@ -61,11 +67,13 @@ export function AccountDialog({
   triggerLabel = "Twoje konto",
 }: AccountDialogProps) {
   const { theme, setTheme } = useTheme();
+  const { toast } = useToast();
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [accountData, setAccountData] = useState<AccountData | null>(null);
   const [isFetching, startFetchTransition] = useTransition();
   const [isSigningOut, startSignOutTransition] = useTransition();
+  const [isUpdatingNewsletter, startNewsletterTransition] = useTransition();
 
   useEffect(() => {
     setMounted(true);
@@ -87,6 +95,23 @@ export function AccountDialog({
     startSignOutTransition(async () => {
       await auth.signOut();
       await deleteSession();
+    });
+  }
+
+  function handleNewsletterChange(checked: boolean) {
+    if (!accountData) return;
+
+    const previous = accountData.newsletter;
+    setAccountData({ ...accountData, newsletter: checked });
+
+    startNewsletterTransition(async () => {
+      const result = await updateNewsletter(checked);
+      if (!result.success) {
+        setAccountData((current) =>
+          current ? { ...current, newsletter: previous } : current,
+        );
+        toast.error(result.error);
+      }
     });
   }
 
@@ -152,6 +177,33 @@ export function AccountDialog({
                       </span>
                     </Button>
                   ))}
+                </div>
+              </section>
+
+              <section className="flex items-start gap-2">
+                <Checkbox
+                  id="account-newsletter"
+                  checked={accountData.newsletter}
+                  onCheckedChange={(checked) =>
+                    handleNewsletterChange(checked === true)
+                  }
+                  disabled={isUpdatingNewsletter}
+                />
+                <div className="flex items-start gap-1.5">
+                  <Label
+                    htmlFor="account-newsletter"
+                    className="font-normal leading-snug"
+                  >
+                    Chcę otrzymywać dodatkowe materiały, informacje o nowych
+                    kursach, aktualizacjach i promocjach.
+                  </Label>
+                  <InfoHoverCard>
+                    <p className="text-sm text-muted-foreground">
+                      Otrzymuj dodatkowe materiały, praktyczne wskazówki,
+                      informacje o nowych kursach i filmach oraz aktualizacjach
+                      platformy.
+                    </p>
+                  </InfoHoverCard>
                 </div>
               </section>
 

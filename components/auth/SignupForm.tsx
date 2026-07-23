@@ -10,11 +10,12 @@ import { getFirebaseErrorMessage } from "@/lib/firebase-errors";
 import { signupSchema, PASSWORD_RULES } from "@/lib/auth/password-validation";
 import { OAuthButtons } from "@/components/auth/OAuthButtons";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { InfoHoverCard } from "@/components/ui/InfoHoverCard";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { XIcon } from "lucide-react";
-import { ClientIcon } from "@/components/ui/client-icon";
+import { CheckIcon, XIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 function getSafeNext(raw: string | null): string {
@@ -26,6 +27,7 @@ export function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [newsletter, setNewsletter] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [errors, setErrors] = useState<{
     email?: string;
@@ -67,7 +69,7 @@ export function SignupForm() {
         );
         const idToken = await credential.user.getIdToken();
 
-        const sessionResult = await createSession(idToken);
+        const sessionResult = await createSession(idToken, newsletter);
         if (!sessionResult.success) {
           setErrors({ form: sessionResult.error });
           await credential.user.delete();
@@ -149,11 +151,7 @@ export function SignupForm() {
               >
                 {passwordTouched || password.length > 0 ? (
                   rule.passed ? (
-                    <ClientIcon
-                      src="check-circle.svg"
-                      size={12}
-                      className="shrink-0"
-                    />
+                    <CheckIcon className="size-3 shrink-0 text-feedback-success" />
                   ) : (
                     <XIcon className="size-3 shrink-0" />
                   )
@@ -194,6 +192,30 @@ export function SignupForm() {
               {errors.confirmPassword}
             </p>
           )}
+        </div>
+
+        <div className="flex items-start gap-2">
+          <Checkbox
+            id="signup-newsletter"
+            checked={newsletter}
+            onCheckedChange={(checked) => setNewsletter(checked === true)}
+            disabled={isPending}
+          />
+          <div className="flex items-start gap-1.5">
+            <Label
+              htmlFor="signup-newsletter"
+              className="font-normal leading-snug"
+            >
+              Chcę być na bieżąco z nowymi materiałami.
+            </Label>
+            <InfoHoverCard>
+              <p className="text-sm text-muted-foreground">
+                Otrzymuj na swój email dodatkowe materiały, praktyczne
+                wskazówki, informacje o nowych kursach i filmach oraz
+                aktualizacjach platformy.
+              </p>
+            </InfoHoverCard>
+          </div>
         </div>
 
         {errors.form && (

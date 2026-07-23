@@ -17,6 +17,7 @@ async function resolveUserEmail(uid: string, email: string): Promise<string> {
 export async function ensureUserDocument(
   uid: string,
   email: string,
+  newsletter = false,
 ): Promise<CreateUserResult> {
   try {
     const resolvedEmail = await resolveUserEmail(uid, email);
@@ -48,6 +49,7 @@ export async function ensureUserDocument(
       courseProgress: {},
       preferences: {
         colorScheme: null,
+        newsletter,
       },
     });
 
@@ -64,6 +66,7 @@ export async function ensureUserDocument(
 export async function createUser(
   uid: string,
   email: string,
+  newsletter = false,
 ): Promise<CreateUserResult> {
-  return ensureUserDocument(uid, email);
+  return ensureUserDocument(uid, email, newsletter);
 }
