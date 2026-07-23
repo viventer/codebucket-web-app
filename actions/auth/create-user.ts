@@ -38,7 +38,14 @@ export async function ensureUserDocument(
       };
     }
 
-    await userRef.set({
+    const normalizedEmail = resolvedEmail.trim().toLowerCase();
+    const newsletterRef = adminDB.collection("newsletter").doc(normalizedEmail);
+    const newsletterDoc = await newsletterRef.get();
+    const hadAnonymousSubscription = newsletterDoc.exists;
+    const newsletterPreference = newsletter || hadAnonymousSubscription;
+
+    const batch = adminDB.batch();
+    batch.set(userRef, {
       email: resolvedEmail,
       createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
@@ -49,9 +56,15 @@ export async function ensureUserDocument(
       courseProgress: {},
       preferences: {
         colorScheme: null,
-        newsletter,
+        newsletter: newsletterPreference,
       },
     });
+
+    if (hadAnonymousSubscription) {
+      batch.delete(newsletterRef);
+    }
+
+    await batch.commit();
 
     return { success: true, email: resolvedEmail };
   } catch (error) {
