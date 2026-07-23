@@ -194,7 +194,7 @@ export function SignupForm() {
           )}
         </div>
 
-        <div className="flex items-start gap-2">
+        <div className="flex items-center gap-1.5">
           <Checkbox
             id="signup-newsletter"
             checked={newsletter}

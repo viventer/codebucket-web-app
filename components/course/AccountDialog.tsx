@@ -73,7 +73,7 @@ export function AccountDialog({
   const [accountData, setAccountData] = useState<AccountData | null>(null);
   const [isFetching, startFetchTransition] = useTransition();
   const [isSigningOut, startSignOutTransition] = useTransition();
-  const [isUpdatingNewsletter, startNewsletterTransition] = useTransition();
+  const [, startNewsletterTransition] = useTransition();
 
   useEffect(() => {
     setMounted(true);
@@ -108,7 +108,9 @@ export function AccountDialog({
       const result = await updateNewsletter(checked);
       if (!result.success) {
         setAccountData((current) =>
-          current ? { ...current, newsletter: previous } : current,
+          current?.newsletter === checked
+            ? { ...current, newsletter: previous }
+            : current,
         );
         toast.error(result.error);
       }
@@ -180,30 +182,31 @@ export function AccountDialog({
                 </div>
               </section>
 
-              <section className="flex items-start gap-2">
-                <Checkbox
-                  id="account-newsletter"
-                  checked={accountData.newsletter}
-                  onCheckedChange={(checked) =>
-                    handleNewsletterChange(checked === true)
-                  }
-                  disabled={isUpdatingNewsletter}
-                />
-                <div className="flex items-start gap-1.5">
-                  <Label
-                    htmlFor="account-newsletter"
-                    className="font-normal leading-snug"
-                  >
-                    Chcę otrzymywać dodatkowe materiały, informacje o nowych
-                    kursach, aktualizacjach i promocjach.
-                  </Label>
-                  <InfoHoverCard>
-                    <p className="text-sm text-muted-foreground">
-                      Otrzymuj dodatkowe materiały, praktyczne wskazówki,
-                      informacje o nowych kursach i filmach oraz aktualizacjach
-                      platformy.
-                    </p>
-                  </InfoHoverCard>
+              <section className="flex flex-col gap-1">
+                <h3 className="font-medium">Newsletter</h3>
+                <div className="flex items-center gap-1.5">
+                  <Checkbox
+                    id="account-newsletter"
+                    checked={accountData.newsletter}
+                    onCheckedChange={(checked) =>
+                      handleNewsletterChange(checked === true)
+                    }
+                  />
+                  <div className="flex items-start  gap-1.5">
+                    <Label
+                      htmlFor="account-newsletter"
+                      className="font-normal leading-snug"
+                    >
+                      Chcę być na bieżąco z nowymi materiałami.
+                    </Label>
+                    <InfoHoverCard>
+                      <p className="text-sm text-muted-foreground">
+                        Otrzymuj dodatkowe materiały, praktyczne wskazówki,
+                        informacje o nowych kursach i filmach oraz
+                        aktualizacjach platformy.
+                      </p>
+                    </InfoHoverCard>
+                  </div>
                 </div>
               </section>
 
