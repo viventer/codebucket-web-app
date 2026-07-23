@@ -62,6 +62,7 @@ Pre-sale:
 - shadcn components when possible
 - don't modify shadcn components when it isn't necessary
 - don't use margin-top if it isn't necessary
+- each file can contain only one component
 
 ## Business model
 
