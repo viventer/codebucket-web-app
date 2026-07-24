@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, InfoIcon } from "lucide-react";
 import { auth } from "@/firebase/init";
 import { createSession } from "@/actions/auth/session";
 import { migrateAllGuestProgressFromStorage } from "@/lib/course/migrate-guest-progress";
@@ -190,9 +190,20 @@ export function SignupForm() {
           </p>
         )}
 
-        <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? "Tworzenie konta..." : "Utwórz konto"}
-        </Button>
+        <div className="flex flex-col gap-1">
+          <Button type="submit" className="w-full" disabled={isPending}>
+            {isPending ? "Tworzenie konta..." : "Utwórz konto"}
+          </Button>
+          {nextParam && (
+            <div className="flex items-center gap-1.5">
+              <InfoIcon className="size-4 shrink-0 text-muted-foreground" />
+              <p className="text-sm text-muted-foreground leading-tight">
+                Konto jest wymagane, aby zapisać zakupione kursy i postępy w
+                nauce.
+              </p>
+            </div>
+          )}
+        </div>
       </form>
 
       <p className="text-center text-sm text-muted-foreground">
