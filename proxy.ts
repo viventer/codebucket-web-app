@@ -23,7 +23,6 @@ const AUTH_PATHS = [
   "/login",
   "/signup",
   "/reset-password",
-  "/registration-required",
 ];
 
 export async function proxy(request: NextRequest) {
@@ -51,7 +50,7 @@ export async function proxy(request: NextRequest) {
     const sectionId = courseMatch[2];
 
     if (!isGuestFreeSection(courseId, sectionId)) {
-      const url = new URL("/registration-required", request.url);
+      const url = new URL("/signup", request.url);
       url.searchParams.set("next", pathname);
       return NextResponse.redirect(url);
     }

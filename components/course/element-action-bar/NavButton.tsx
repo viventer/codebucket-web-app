@@ -73,9 +73,7 @@ export function NavButton({
     if (isGuestUser()) {
       const target = parseCourseElementPath(href);
       if (target && !isGuestFreeSection(target.courseId, target.sectionId)) {
-        router.push(
-          `/registration-required?next=${encodeURIComponent(href)}`,
-        );
+        router.push(`/signup?next=${encodeURIComponent(href)}`);
         return;
       }
     }

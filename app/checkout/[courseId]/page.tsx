@@ -32,7 +32,7 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
       next: `/checkout/${courseId}`,
       reason: "purchase",
     });
-    redirect(`/registration-required?${search.toString()}`);
+    redirect(`/signup?${search.toString()}`);
   }
 
   if (!isPurchasableCourse(courseId)) {

@@ -1,18 +1,19 @@
 import { Suspense } from "react";
 import { SignupForm } from "@/components/auth/SignupForm";
-import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SignupHeading } from "@/components/auth/SignupHeading";
+import { CardContent, CardHeader } from "@/components/ui/card";
 
 export const metadata = {
-  title: "Utwórz konto – CodeBucket",
+  title: "Załóż darmowe konto – CodeBucket",
 };
 
 export default function SignupPage() {
   return (
     <>
       <CardHeader>
-        <CardTitle className="text-center text-2xl font-bold">
-          Utwórz konto
-        </CardTitle>
+        <Suspense>
+          <SignupHeading />
+        </Suspense>
       </CardHeader>
       <CardContent>
         <Suspense>

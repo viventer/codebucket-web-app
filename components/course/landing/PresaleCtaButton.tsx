@@ -30,7 +30,7 @@ export function PresaleCtaButton({
         next: checkoutPath,
         reason: "purchase",
       });
-      router.push(`/registration-required?${params.toString()}`);
+      router.push(`/signup?${params.toString()}`);
       return;
     }
 
