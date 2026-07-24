@@ -12,12 +12,14 @@ import {
   getPaddleClientToken,
   getPaddleEnvironment,
 } from "@/lib/paddle/config";
+import { useToast } from "@/hooks/use-toast";
 
 type CheckoutClientProps = {
   courseId: string;
   priceId: string;
   userId: string;
   email: string;
+  alreadyOwned?: boolean;
 };
 
 export function CheckoutClient({
@@ -25,8 +27,10 @@ export function CheckoutClient({
   priceId,
   userId,
   email,
+  alreadyOwned = false,
 }: CheckoutClientProps) {
   const router = useRouter();
+  const { toast } = useToast();
   const [error, setError] = useState<string | null>(null);
   const openedRef = useRef(false);
 
@@ -35,6 +39,12 @@ export function CheckoutClient({
       return;
     }
     openedRef.current = true;
+
+    if (alreadyOwned) {
+      toast.info("Masz już dostęp do tego kursu.");
+      router.replace(`/course/${courseId}`);
+      return;
+    }
 
     let paddleInstance: Paddle | undefined;
 
@@ -89,7 +99,7 @@ export function CheckoutClient({
     }
 
     void openCheckout();
-  }, [courseId, email, priceId, router, userId]);
+  }, [alreadyOwned, courseId, email, priceId, router, toast, userId]);
 
   if (error) {
     return (
@@ -111,10 +121,14 @@ export function CheckoutClient({
   return (
     <div className="flex min-h-dvh items-center justify-center px-4">
       <div className="bg-card max-w-md rounded-xl border p-8 text-center">
-        <p className="text-lg font-medium">Otwieramy płatność…</p>
-        <p className="text-muted-foreground mt-2 text-sm">
-          Jeśli okno nie pojawiło się automatycznie, odśwież stronę.
+        <p className="text-lg font-medium">
+          {alreadyOwned ? "Przekierowujemy…" : "Otwieramy płatność…"}
         </p>
+        {!alreadyOwned ? (
+          <p className="text-muted-foreground mt-2 text-sm">
+            Jeśli okno nie pojawiło się automatycznie, odśwież stronę.
+          </p>
+        ) : null}
       </div>
     </div>
   );

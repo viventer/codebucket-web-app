@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 
 import { getCourseDocument } from "@/actions/courses/read-courses";
 import { CheckoutClient } from "@/components/checkout/CheckoutClient";
+import { adminDB } from "@/firebase/admin-init";
 import { getSessionUser } from "@/lib/auth/session";
 import {
   getPriceIdForCourse,
@@ -49,12 +50,17 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
     notFound();
   }
 
+  const userDoc = await adminDB.collection("users").doc(sessionUser.uid).get();
+  const unlockedCourses: string[] = userDoc.data()?.unlockedCourses ?? [];
+  const alreadyOwned = unlockedCourses.includes(courseId);
+
   return (
     <CheckoutClient
       courseId={courseId}
       priceId={priceId}
       userId={sessionUser.uid}
       email={sessionUser.email}
+      alreadyOwned={alreadyOwned}
     />
   );
 }
