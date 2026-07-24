@@ -20,16 +20,10 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Podaj hasło."),
 });
 
-export const signupSchema = z
-  .object({
-    email: z.string().email("Podaj prawidłowy adres email."),
-    password: passwordSchema,
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Hasła nie są identyczne.",
-    path: ["confirmPassword"],
-  });
+export const signupSchema = z.object({
+  email: z.string().email("Podaj prawidłowy adres email."),
+  password: passwordSchema,
+});
 
 export const changePasswordSchema = z
   .object({

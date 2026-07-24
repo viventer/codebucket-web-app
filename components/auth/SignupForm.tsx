@@ -4,20 +4,20 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { auth } from "@/firebase/init";
 import { createSession } from "@/actions/auth/session";
 import { migrateAllGuestProgressFromStorage } from "@/lib/course/migrate-guest-progress";
 import { getFirebaseErrorMessage } from "@/lib/firebase-errors";
-import { signupSchema, PASSWORD_RULES } from "@/lib/auth/password-validation";
+import { signupSchema } from "@/lib/auth/password-validation";
 import { OAuthButtons } from "@/components/auth/OAuthButtons";
+import { PasswordRulesList } from "@/components/auth/PasswordRulesList";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { InfoHoverCard } from "@/components/ui/InfoHoverCard";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { CheckIcon, XIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 function getSafeNext(raw: string | null): string {
   if (!raw) return "/";
@@ -30,30 +30,23 @@ export function SignupForm() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [newsletter, setNewsletter] = useState(false);
-  const [passwordTouched, setPasswordTouched] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
   const [errors, setErrors] = useState<{
     email?: string;
     password?: string;
-    confirmPassword?: string;
     form?: string;
   }>({});
   const [isPending, startTransition] = useTransition();
 
-  const passwordRuleResults = PASSWORD_RULES.map((rule) => ({
-    label: rule.label,
-    passed: rule.test(password),
-  }));
-
   function validate() {
-    const result = signupSchema.safeParse({ email, password, confirmPassword });
+    const result = signupSchema.safeParse({ email, password });
     if (!result.success) {
       const fieldErrors = result.error.flatten().fieldErrors;
       setErrors({
         email: fieldErrors.email?.[0],
         password: fieldErrors.password?.[0],
-        confirmPassword: fieldErrors.confirmPassword?.[0],
       });
       return false;
     }
@@ -130,71 +123,40 @@ export function SignupForm() {
 
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="signup-password">Hasło</Label>
-          <Input
-            id="signup-password"
-            type="password"
-            autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onBlur={() => setPasswordTouched(true)}
-            disabled={isPending}
-            aria-invalid={!!errors.password}
-            aria-describedby="password-rules"
-          />
-          <ul id="password-rules" className="flex flex-col gap-1 mt-1">
-            {passwordRuleResults.map((rule) => (
-              <li
-                key={rule.label}
-                className={cn(
-                  "flex items-center gap-1.5 text-xs",
-                  passwordTouched || password.length > 0
-                    ? rule.passed
-                      ? "text-feedback-success"
-                      : "text-feedback-destructive"
-                    : "text-muted-foreground",
-                )}
-              >
-                {passwordTouched || password.length > 0 ? (
-                  rule.passed ? (
-                    <CheckIcon className="size-3 shrink-0 text-feedback-success" />
-                  ) : (
-                    <XIcon className="size-3 shrink-0" />
-                  )
-                ) : (
-                  <span className="size-3 shrink-0 rounded-full border border-current inline-block" />
-                )}
-                {rule.label}
-              </li>
-            ))}
-          </ul>
+          <div className="relative">
+            <Input
+              id="signup-password"
+              type={showPassword ? "text" : "password"}
+              autoComplete="new-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onFocus={() => setPasswordFocused(true)}
+              disabled={isPending}
+              aria-invalid={!!errors.password}
+              aria-describedby={passwordFocused ? "password-rules" : undefined}
+              className="pr-9"
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              className="absolute top-1/2 right-1 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              onClick={() => setShowPassword((prev) => !prev)}
+              disabled={isPending}
+              aria-label={showPassword ? "Ukryj hasło" : "Pokaż hasło"}
+              aria-pressed={showPassword}
+            >
+              {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+            </Button>
+          </div>
+          {passwordFocused && (
+            <div id="password-rules">
+              <PasswordRulesList password={password} touched />
+            </div>
+          )}
           {errors.password && (
             <p className="text-sm text-feedback-destructive" role="alert">
               {errors.password}
-            </p>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="signup-confirm">Potwierdź hasło</Label>
-          <Input
-            id="signup-confirm"
-            type="password"
-            autoComplete="new-password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            disabled={isPending}
-            aria-invalid={!!errors.confirmPassword}
-            aria-describedby={
-              errors.confirmPassword ? "confirm-error" : undefined
-            }
-          />
-          {errors.confirmPassword && (
-            <p
-              id="confirm-error"
-              className="text-sm text-feedback-destructive"
-              role="alert"
-            >
-              {errors.confirmPassword}
             </p>
           )}
         </div>
