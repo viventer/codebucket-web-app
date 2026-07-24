@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/init";
 import { createSession } from "@/actions/auth/session";
@@ -24,6 +25,9 @@ function getSafeNext(raw: string | null): string {
 }
 
 export function SignupForm() {
+  const searchParams = useSearchParams();
+  const nextParam = searchParams.get("next");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -78,16 +82,17 @@ export function SignupForm() {
 
         await migrateAllGuestProgressFromStorage();
 
-        const next = getSafeNext(
-          new URLSearchParams(window.location.search).get("next"),
-        );
-        window.location.assign(next);
+        window.location.assign(getSafeNext(nextParam));
       } catch (err) {
         const code = (err as { code?: string }).code ?? "";
         setErrors({ form: getFirebaseErrorMessage(code) });
       }
     });
   }
+
+  const loginHref = nextParam
+    ? `/login?next=${encodeURIComponent(getSafeNext(nextParam))}`
+    : "/login";
 
   return (
     <div className="flex flex-col gap-6">
@@ -231,7 +236,7 @@ export function SignupForm() {
       <p className="text-center text-sm text-muted-foreground">
         Masz już konto?{" "}
         <Link
-          href="/login"
+          href={loginHref}
           className="font-medium text-foreground underline underline-offset-4"
         >
           Zaloguj się

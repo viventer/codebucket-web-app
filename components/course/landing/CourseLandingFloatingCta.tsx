@@ -89,7 +89,11 @@ export function CourseLandingFloatingCta({
         className="mx-auto flex w-[90vw] max-w-7xl items-center justify-center rounded-xl border border-accent bg-background/70 px-4! py-3 backdrop-blur"
       >
         {isPresale ? (
-          <PresaleCtaButton label={label} className="w-full max-w-md" />
+          <PresaleCtaButton
+            courseId={courseId}
+            label={label}
+            className="w-full max-w-md"
+          />
         ) : (
           <StartCourseButton
             courseId={courseId}

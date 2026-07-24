@@ -30,6 +30,7 @@ export function CourseLandingFinalCta({
     >
       {isPresale ? (
         <PresaleCtaButton
+          courseId={id}
           label={finalCtaButtonLabel}
           className="w-full max-w-md"
         />

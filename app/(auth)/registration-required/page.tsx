@@ -1,11 +1,6 @@
-import { Suspense } from "react";
-import {
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CardContent, CardHeader } from "@/components/ui/card";
 import { RegistrationRequiredButtons } from "@/components/auth/RegistrationRequiredButtons";
+import { RegistrationRequiredCopy } from "@/components/auth/RegistrationRequiredCopy";
 
 export const metadata = {
   title: "Załóż darmowe konto – CodeBucket",
@@ -15,17 +10,10 @@ export default function RegistrationRequiredPage() {
   return (
     <>
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">
-          Załóż darmowe konto
-        </CardTitle>
-        <CardDescription className="mt-1">
-          Potrzebujesz konta, aby zapisać postęp i przejść do kolejnej sekcji.
-        </CardDescription>
+        <RegistrationRequiredCopy />
       </CardHeader>
       <CardContent>
-        <Suspense>
-          <RegistrationRequiredButtons />
-        </Suspense>
+        <RegistrationRequiredButtons />
       </CardContent>
     </>
   );

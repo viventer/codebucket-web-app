@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { SignupForm } from "@/components/auth/SignupForm";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -14,7 +15,9 @@ export default function SignupPage() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <SignupForm />
+        <Suspense>
+          <SignupForm />
+        </Suspense>
       </CardContent>
     </>
   );

@@ -107,6 +107,7 @@ export function CourseLandingHero({
                 </div>
                 <div className="flex flex-col gap-2">
                   <PresaleCtaButton
+                    courseId={id}
                     label={startButtonLabel}
                     className="w-full max-w-md"
                   />

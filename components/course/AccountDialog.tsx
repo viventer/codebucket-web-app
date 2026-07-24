@@ -214,11 +214,11 @@ export function AccountDialog({
                   <h3 className="text-sm font-medium">Twoje kursy</h3>
 
                   {accountData.courses.length > 0 ? (
-                    <ul className="flex flex-col gap-4">
+                    <ul className="flex flex-col gap-2">
                       {accountData.courses.map((course) => (
                         <li
                           key={course.id}
-                          className="flex items-center justify-between gap-4"
+                          className="flex items-center justify-between gap-4 border-b pb-2"
                         >
                           <p className="text-sm text-muted-foreground">
                             {course.title}
@@ -228,9 +228,7 @@ export function AccountDialog({
                               href={`/course/${course.id}`}
                               onClick={() => setOpen(false)}
                             >
-                              {course.id === accountData.currentCourseId
-                                ? "Przejdź do kursu"
-                                : "Otwórz"}
+                              Przejdź do kursu
                             </Link>
                           </Button>
                         </li>

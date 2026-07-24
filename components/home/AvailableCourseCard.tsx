@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { PresaleCtaButton } from "@/components/course/landing/PresaleCtaButton";
 import { StartCourseButton } from "@/components/course/landing/StartCourseButton";
 import { PresaleGuaranteeInfo } from "@/components/course/landing/PresaleGuaranteeInfo";
 import { Button } from "@/components/ui/button";
-import { ClientIcon } from "@/components/ui/client-icon";
 import { Icon } from "@/components/ui/icon";
 import {
   Card,
@@ -94,16 +94,11 @@ export function AvailableCourseCard({ course }: AvailableCourseCardProps) {
             className="w-full"
           />
         ) : (
-          <Button
-            asChild
-            className="w-full gap-2 [&_svg]:pointer-events-auto! [&_svg:not([class*='size-'])]:size-auto"
-            size="lg"
-          >
-            <Link href={course.detailsHref}>
-              <ClientIcon src="shopping-cart.svg" size={24} />
-              {course.primaryCtaLabel}
-            </Link>
-          </Button>
+          <PresaleCtaButton
+            courseId={course.id}
+            label={course.primaryCtaLabel}
+            className="w-full"
+          />
         )}
         <Button asChild variant="secondary" className="w-full" size="lg">
           <Link href={course.detailsHref}>Zobacz szczegóły</Link>

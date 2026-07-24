@@ -1,22 +1,40 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import { ClientIcon } from "@/components/ui/client-icon";
+import { isGuestUser } from "@/lib/course/guest-progress";
 import { cn } from "@/lib/utils";
 
 type PresaleCtaButtonProps = {
+  courseId: string;
   label: string;
   size?: "default" | "lg";
   className?: string;
 };
 
 export function PresaleCtaButton({
+  courseId,
   label,
   size = "lg",
   className,
 }: PresaleCtaButtonProps) {
+  const router = useRouter();
+
   function handleClick() {
-    // TODO: wire up the presale checkout flow once payments are implemented.
+    const checkoutPath = `/checkout/${courseId}`;
+
+    if (isGuestUser()) {
+      const params = new URLSearchParams({
+        next: checkoutPath,
+        reason: "purchase",
+      });
+      router.push(`/registration-required?${params.toString()}`);
+      return;
+    }
+
+    router.push(checkoutPath);
   }
 
   return (

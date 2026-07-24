@@ -163,7 +163,11 @@ export function LoginForm() {
       <p className="text-center text-sm text-muted-foreground">
         Nie masz konta?{" "}
         <Link
-          href="/signup"
+          href={
+            nextParam
+              ? `/signup?next=${encodeURIComponent(getSafeNext(nextParam))}`
+              : "/signup"
+          }
           className="font-medium text-foreground underline underline-offset-4"
         >
           Rejestracja

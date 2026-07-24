@@ -61,7 +61,12 @@ export async function proxy(request: NextRequest) {
 
   // Only redirect page loads (GET), not Server Action POSTs — those must reach the page handler
   if (isAuthPage && isAuthenticated && request.method === "GET") {
-    return NextResponse.redirect(new URL("/", request.url));
+    const nextParam = request.nextUrl.searchParams.get("next");
+    const safeNext =
+      nextParam && nextParam.startsWith("/") && !nextParam.startsWith("//")
+        ? nextParam
+        : "/";
+    return NextResponse.redirect(new URL(safeNext, request.url));
   }
 
   const hasCbAuth = request.cookies.has(CB_AUTH_COOKIE);
