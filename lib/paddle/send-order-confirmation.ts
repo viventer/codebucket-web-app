@@ -1,4 +1,4 @@
-import "server-only";
+"use server";
 
 import { getCourseDocument } from "@/actions/courses/read-courses";
 import { OrderConfirmationEmail } from "@/emails/order-confirmation";
@@ -17,8 +17,7 @@ export async function sendOrderConfirmationEmail(
   const course = await getCourseDocument(input.courseId);
   const courseTitle = course?.title ?? "Podstawy CSS";
   const courseDescription =
-    course?.description ??
-    "Naucz się stylować strony internetowe od podstaw.";
+    course?.description ?? "Naucz się stylować strony internetowe od podstaw.";
   const courseImageUrl = getCourseImageUrl(
     input.courseId,
     course?.image ?? "css-logo.svg",
@@ -45,6 +44,7 @@ export async function sendOrderConfirmationEmail(
     to: "kontakt.codebucket@gmail.com",
     subject: `Potwierdzenie zakupu: ${courseTitle}`,
     react: OrderConfirmationEmail({
+      courseId: input.courseId,
       courseTitle,
       courseDescription,
       courseImageUrl,

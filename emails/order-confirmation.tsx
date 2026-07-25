@@ -1,5 +1,6 @@
 import {
   Body,
+  Button,
   Column,
   Container,
   Head,
@@ -37,6 +38,7 @@ const emailTheme = {
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
 export interface OrderConfirmationEmailProps {
+  courseId: string;
   courseTitle: string;
   courseDescription: string;
   courseImageUrl: string;
@@ -45,12 +47,17 @@ export interface OrderConfirmationEmailProps {
 }
 
 export function OrderConfirmationEmail({
+  courseId,
   courseTitle,
   courseDescription,
   courseImageUrl,
   amountLabel,
   releaseDateLabel,
 }: OrderConfirmationEmailProps) {
+  const resolvedCourseImageUrl = courseImageUrl.startsWith("http")
+    ? courseImageUrl
+    : `${baseUrl}${courseImageUrl}`;
+
   return (
     <Html lang="pl" dir="ltr">
       <Head />
@@ -63,9 +70,9 @@ export function OrderConfirmationEmail({
         }}
       >
         <Body className="text-foreground bg-background m-0 py-16 font-[ubuntu,roboto,arial,sans-serif]">
-          <Container className="max-w-[480px] mx-auto bg-card rounded-lg border border-border">
-            <Section className="px-8 pt-8 pb-6">
-              <Heading as="h1" className="m-0">
+          <Container className="max-w-lg mx-auto bg-card rounded-lg border border-border">
+            <Section className="px-8 pt-8 pb-0">
+              <Heading as="h1" className="m-0 mb-6">
                 <Row className="w-fit">
                   <Column>
                     <Img
@@ -83,40 +90,42 @@ export function OrderConfirmationEmail({
                   </Column>
                 </Row>
               </Heading>
-            </Section>
 
-            <Section className="px-8 py-6">
-              <Heading as="h2" className="text-xl font-medium mt-0 mb-1">
-                Dzięki, że wybrałeś{" "}
-                <span className="text-accent">CodeBucket</span>
+              <Heading
+                as="h2"
+                className="text-2xl font-bold tracking-tight mt-0 mb-2"
+              >
+                Dzięki, że wybrałeś Code
+                <span className="text-accent">Bucket</span>
               </Heading>
-              <Text className="text-muted-foreground text-sm leading-relaxed mt-0 mb-2">
-                Potwierdzamy przyjęcie płatności.
-              </Text>
-              <Text className="text-muted-foreground text-sm leading-relaxed mt-0 mb-6">
+              <Text className="text-muted-foreground text-sm leading-relaxed m-0 mb-0">
                 Cieszę się, że mogę pomóc Ci tworzyć coraz lepsze strony
                 internetowe.
               </Text>
+            </Section>
 
-              <Heading as="h2" className="text-lg font-medium mt-0 mb-3">
-                Twój kurs
+            <Section className="px-8 py-6">
+              <Heading as="h3" className="text-lg font-medium mt-0 mb-1">
+                Zamówiony kurs
               </Heading>
-              <Section className="border border-border rounded-lg p-4 mb-4">
+              <Section
+                className="rounded-lg p-3 mb-4"
+                style={{
+                  backgroundColor: "rgba(126, 224, 240, 0.1)",
+                  border: "1px solid #7ee0f0",
+                }}
+              >
                 <Row>
-                  <Column className="w-[48px] align-top">
+                  <Column className="w-10 align-middle">
                     <Img
-                      src={
-                        courseImageUrl.startsWith("http")
-                          ? courseImageUrl
-                          : `${baseUrl}${courseImageUrl}`
-                      }
+                      src={resolvedCourseImageUrl}
                       alt=""
-                      width={48}
-                      height={48}
+                      width={40}
+                      height={40}
                     />
                   </Column>
-                  <Column className="pl-3 align-top">
-                    <Text className="font-medium m-0 mb-1">{courseTitle}</Text>
+                  <Column className="pl-2 align-middle">
+                    <Text className="font-medium m-0">{courseTitle}</Text>
                     <Text className="text-muted-foreground text-sm m-0">
                       {courseDescription}
                     </Text>
@@ -124,28 +133,31 @@ export function OrderConfirmationEmail({
                 </Row>
               </Section>
 
-              <Text className="text-muted-foreground text-sm leading-relaxed mt-0 mb-1">
+              <Text className="font-medium m-0 mb-0">
                 Kurs został przypisany do Twojego konta.
               </Text>
-              <Text className="text-muted-foreground text-sm leading-relaxed mt-0 mb-1">
+              <Text className="text-muted-foreground text-sm m-0 mb-2">
                 Gdy tylko zostanie opublikowany otrzymasz powiadomienie na
                 maila.
               </Text>
               {releaseDateLabel ? (
-                <Text className="text-muted-foreground text-sm leading-relaxed mt-0 mb-6">
-                  Planowana data premiery: {releaseDateLabel}
+                <Text className="m-0 mb-0">
+                  Planowana data premiery:{" "}
+                  <span className="font-medium text-foreground">
+                    {releaseDateLabel}
+                  </span>
                 </Text>
-              ) : (
-                <Text className="mb-6 mt-0"> </Text>
-              )}
+              ) : null}
+            </Section>
 
-              <Heading as="h2" className="text-lg font-medium mt-0 mb-2">
+            <Section className="px-8 pb-2">
+              <Heading as="h3" className="text-lg font-medium mt-0 mb-1">
                 Szczegóły płatności
               </Heading>
-              <Text className="text-sm mt-0 mb-1">
+              <Text className="text-sm m-0 mb-0">
                 Kwota: <span className="font-medium">{amountLabel}</span>
               </Text>
-              <Text className="text-sm mt-0 mb-0">
+              <Text className="text-sm m-0 mb-0">
                 Status:{" "}
                 <span className="text-feedback-success font-medium">
                   opłacone
@@ -153,7 +165,13 @@ export function OrderConfirmationEmail({
               </Text>
             </Section>
 
-            <Section className="px-8 pb-8">
+            <Section className="px-8 pt-6 pb-8">
+              <Button
+                href={`${baseUrl}/course/${courseId}`}
+                className="bg-primary text-primary-foreground box-border w-full rounded-md py-3 text-center text-sm font-medium no-underline"
+              >
+                Przejdź na stronę kursu
+              </Button>
               <Hr className="border-muted-foreground my-6" />
               <Text className="text-muted-foreground text-xs leading-relaxed m-0">
                 Jeśli masz pytania dotyczące zamówienia napisz na
