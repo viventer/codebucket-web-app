@@ -140,7 +140,7 @@ export function OrderConfirmationEmail({
               )}
 
               <Heading as="h2" className="text-lg font-medium mt-0 mb-2">
-                Szczegóły zamówienia
+                Szczegóły płatności
               </Heading>
               <Text className="text-sm mt-0 mb-1">
                 Kwota: <span className="font-medium">{amountLabel}</span>

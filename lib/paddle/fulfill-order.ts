@@ -106,3 +106,29 @@ export async function markOrderEmailSent(
     updatedAt: FieldValue.serverTimestamp(),
   });
 }
+
+export async function getOrderPaymentStatus(
+  paddleTransactionId: string,
+): Promise<Order["paymentStatus"] | null> {
+  const orderDoc = await adminDB
+    .collection("orders")
+    .doc(paddleTransactionId)
+    .get();
+
+  if (!orderDoc.exists) {
+    return null;
+  }
+
+  const paymentStatus = orderDoc.data()?.paymentStatus;
+  if (
+    paymentStatus === "pending" ||
+    paymentStatus === "paid" ||
+    paymentStatus === "failed" ||
+    paymentStatus === "refunded" ||
+    paymentStatus === "cancelled"
+  ) {
+    return paymentStatus;
+  }
+
+  return null;
+}

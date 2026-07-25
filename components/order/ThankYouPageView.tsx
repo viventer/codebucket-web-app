@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { CourseAccessNotes } from "@/components/order/CourseAccessNotes";
+import { OrderedCourseSection } from "@/components/order/OrderedCourseSection";
 import { OrderStatusLabel } from "@/components/order/OrderStatusLabel";
 import type { ThankYouPaymentViewStatus } from "@/components/order/thank-you-types";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,6 @@ export type ThankYouPageViewProps = {
   currency: string;
   paymentStatus: ThankYouPaymentViewStatus;
   releaseDateLabel: string | null;
-  retryCheckoutHref: string | null;
 };
 
 export function ThankYouPageView({
@@ -36,7 +35,6 @@ export function ThankYouPageView({
   currency,
   paymentStatus,
   releaseDateLabel,
-  retryCheckoutHref,
 }: ThankYouPageViewProps) {
   const amountLabel = new Intl.NumberFormat("pl-PL", {
     style: "currency",
@@ -58,24 +56,11 @@ export function ThankYouPageView({
 
         <CardContent className="flex flex-col gap-6">
           <section className="flex flex-col gap-4">
-            <div>
-              <h2 className="text-lg font-medium mb-1">Twój kurs</h2>
-              <div className="ring-1 ring-accent rounded-lg p-3 bg-accent/10 flex items-center gap-2">
-                <Image
-                  src={courseImageUrl}
-                  alt=""
-                  width={48}
-                  height={48}
-                  className="size-10 shrink-0"
-                />
-                <div className="flex flex-col">
-                  <p className="font-medium">{courseTitle}</p>
-                  <p className="text-muted-foreground text-sm">
-                    {courseDescription}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <OrderedCourseSection
+              courseTitle={courseTitle}
+              courseDescription={courseDescription}
+              courseImageUrl={courseImageUrl}
+            />
             <CourseAccessNotes
               paymentStatus={paymentStatus}
               releaseDateLabel={releaseDateLabel}
@@ -83,7 +68,7 @@ export function ThankYouPageView({
           </section>
 
           <section>
-            <h2 className="text-lg font-medium mb-1">Szczegóły zamówienia</h2>
+            <h2 className="text-lg font-medium mb-1">Szczegóły płatności</h2>
             <p className="text-sm">
               Kwota:{" "}
               <span className="font-medium">
@@ -97,15 +82,9 @@ export function ThankYouPageView({
         </CardContent>
 
         <CardFooter className="border-0 bg-transparent">
-          {paymentStatus === "failed" && retryCheckoutHref ? (
-            <Button asChild className="w-full" size="lg">
-              <Link href={retryCheckoutHref}>Ponów płatność</Link>
-            </Button>
-          ) : (
-            <Button asChild className="w-full" size="lg">
-              <Link href={`/course/${courseId}`}>Przejdź na stronę kursu</Link>
-            </Button>
-          )}
+          <Button asChild className="w-full" size="lg">
+            <Link href={`/course/${courseId}`}>Przejdź na stronę kursu</Link>
+          </Button>
         </CardFooter>
       </Card>
     </div>

@@ -32,13 +32,9 @@ export function CourseAccessNotes({
     );
   }
 
-  if (paymentStatus === "pending") {
-    return (
-      <p>
-        Otrzymasz informacje o płatności i potwierdzenie zamówienia na maila.
-      </p>
-    );
-  }
-
-  return <p>Płatność nie została zrealizowana. Możesz spróbować ponownie.</p>;
+  return (
+    <p>
+      Otrzymasz informacje o płatności i potwierdzenie zamówienia na maila.
+    </p>
+  );
 }
