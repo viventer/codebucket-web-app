@@ -190,7 +190,7 @@ export function CheckoutInlineFrame({
           Twoje dane są szyfrowane i przetwarzane przez Paddle.
         </p>
       </div>
-      <Card className="relative min-h-[720px] overflow-hidden bg-[oklch(0.95_0_0)] p-4 text-[oklch(0.145_0_0)] sm:p-6">
+      <Card className="relative min-h-180 overflow-hidden bg-[oklch(0.95_0_0)] p-4 text-[oklch(0.145_0_0)] sm:p-6">
         {!isLoaded ? <CheckoutPaddleSkeleton /> : null}
         <div
           className={FRAME_TARGET}

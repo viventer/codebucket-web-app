@@ -3,10 +3,10 @@
 import { InfoIcon } from "lucide-react";
 
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/HoverCard";
+  AdaptiveTooltip,
+  AdaptiveTooltipContent,
+  AdaptiveTooltipTrigger,
+} from "@/components/ui/AdaptiveTooltip";
 import { cn } from "@/lib/utils";
 
 type InfoHoverCardProps = {
@@ -28,8 +28,8 @@ export function InfoHoverCard({
   closeDelay = 100,
 }: InfoHoverCardProps) {
   return (
-    <HoverCard openDelay={openDelay} closeDelay={closeDelay}>
-      <HoverCardTrigger asChild>
+    <AdaptiveTooltip openDelay={openDelay} closeDelay={closeDelay}>
+      <AdaptiveTooltipTrigger asChild>
         <button
           type="button"
           aria-label={label ? undefined : "Więcej informacji"}
@@ -44,10 +44,12 @@ export function InfoHoverCard({
           {label}
           <InfoIcon className="size-4 shrink-0 text-muted-foreground" />
         </button>
-      </HoverCardTrigger>
-      <HoverCardContent className={cn("flex flex-col gap-1", contentClassName)}>
+      </AdaptiveTooltipTrigger>
+      <AdaptiveTooltipContent
+        className={cn("flex flex-col gap-1", contentClassName)}
+      >
         {children}
-      </HoverCardContent>
-    </HoverCard>
+      </AdaptiveTooltipContent>
+    </AdaptiveTooltip>
   );
 }

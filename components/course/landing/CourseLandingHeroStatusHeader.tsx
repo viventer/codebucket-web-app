@@ -93,10 +93,10 @@ export function CourseLandingHeroStatusHeader(
 
   return (
     <div className="flex flex-col gap-0.5">
-      <p className="flex items-center gap-2 text-xl font-bold">
+      <p className="flex items-center gap-2 text-lg font-bold">
         <ClientIcon
           src={content.icon}
-          size={24}
+          size={20}
           className={cn("shrink-0", content.iconClassName)}
         />
         {content.title}
