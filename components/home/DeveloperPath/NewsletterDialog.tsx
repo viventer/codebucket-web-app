@@ -8,7 +8,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -20,10 +19,14 @@ import { ROADMAP_CTA } from "@/lib/roadmap/roadmap-content";
 import { newsletterSubscribeInputSchema } from "@/schemas/newsletterSchema";
 
 type NewsletterDialogProps = {
+  onSubscribed: () => void;
   className?: string;
 };
 
-export function NewsletterDialog({ className }: NewsletterDialogProps) {
+export function NewsletterDialog({
+  onSubscribed,
+  className,
+}: NewsletterDialogProps) {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -54,6 +57,7 @@ export function NewsletterDialog({ className }: NewsletterDialogProps) {
       setEmail("");
       setOpen(false);
       toast.success("Zapisano do newslettera.");
+      onSubscribed();
     });
   }
 

@@ -10,11 +10,13 @@ import { ROADMAP_CTA } from "@/lib/roadmap/roadmap-content";
 
 type NewsletterCtaButtonProps = {
   isAuthenticated: boolean;
+  onSubscribed: () => void;
   className?: string;
 };
 
 export function NewsletterCtaButton({
   isAuthenticated,
+  onSubscribed,
   className,
 }: NewsletterCtaButtonProps) {
   const { toast } = useToast();
@@ -28,6 +30,7 @@ export function NewsletterCtaButton({
         return;
       }
       toast.success("Dołączono do newslettera.");
+      onSubscribed();
     });
   }
 
@@ -43,5 +46,7 @@ export function NewsletterCtaButton({
     );
   }
 
-  return <NewsletterDialog className={className} />;
+  return (
+    <NewsletterDialog className={className} onSubscribed={onSubscribed} />
+  );
 }

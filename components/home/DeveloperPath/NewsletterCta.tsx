@@ -6,6 +6,10 @@ import { getNewsletterStatus } from "@/actions/newsletter/newsletter-status";
 import { CtaCard } from "@/components/CtaCard";
 import { NewsletterCtaButton } from "@/components/home/DeveloperPath/NewsletterCtaButton";
 import { isGuestUser } from "@/lib/course/guest-progress";
+import {
+  readGuestNewsletterSubscribed,
+  writeGuestNewsletterSubscribed,
+} from "@/lib/newsletter/guest-newsletter";
 import { ROADMAP_CTA } from "@/lib/roadmap/roadmap-content";
 
 type CtaState =
@@ -22,7 +26,11 @@ export function NewsletterCta() {
     async function resolve() {
       if (isGuestUser()) {
         if (!cancelled) {
-          setState({ status: "ready", isAuthenticated: false });
+          if (readGuestNewsletterSubscribed()) {
+            setState({ status: "hidden" });
+          } else {
+            setState({ status: "ready", isAuthenticated: false });
+          }
         }
         return;
       }
@@ -50,6 +58,13 @@ export function NewsletterCta() {
     };
   }, []);
 
+  function handleSubscribed() {
+    if (isGuestUser()) {
+      writeGuestNewsletterSubscribed();
+    }
+    setState({ status: "hidden" });
+  }
+
   if (state.status !== "ready") {
     return null;
   }
@@ -58,6 +73,7 @@ export function NewsletterCta() {
     <CtaCard title={ROADMAP_CTA.title} description={ROADMAP_CTA.description}>
       <NewsletterCtaButton
         isAuthenticated={state.isAuthenticated}
+        onSubscribed={handleSubscribed}
         className="w-full max-w-md"
       />
     </CtaCard>
