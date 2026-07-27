@@ -1,10 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
-import {
-  getPresaleRiskFreeBenefit,
-  type CoursePresaleInfo,
-} from "@/lib/course/landing-data";
-import { formatPrice } from "@/lib/format-price";
+import type { CoursePresaleInfo } from "@/lib/course/landing-data";
+import { buildPresaleBenefits } from "@/lib/course/presale-benefits";
 
 type CourseLandingPresaleBenefitsProps = {
   presale: CoursePresaleInfo;
@@ -17,34 +14,11 @@ export function CourseLandingPresaleBenefits({
   currentPrice,
   standardPrice,
 }: CourseLandingPresaleBenefitsProps) {
-  const savings =
-    currentPrice !== undefined && standardPrice !== undefined
-      ? Math.round(standardPrice - currentPrice)
-      : null;
-
-  const riskFreeBenefit = getPresaleRiskFreeBenefit(presale.refundDays);
-
-  const benefits = [
-    {
-      icon: "shield-check.svg",
-      title: riskFreeBenefit.title,
-      description: riskFreeBenefit.description,
-    },
-    {
-      icon: "price-tag.svg",
-      title: savings !== null ? `Oszczędzasz ${savings} zł` : "Niższa cena",
-      description:
-        currentPrice !== undefined && standardPrice !== undefined
-          ? `W przedsprzedaży kurs kosztuje tylko ${formatPrice(currentPrice)}. Po premierze cena wzrośnie do ${formatPrice(standardPrice)}.`
-          : "W przedsprzedaży kupujesz kurs w niższej cenie niż po premierze.",
-    },
-    {
-      icon: "lock-unlocked.svg",
-      title: "Dożywotni dostęp",
-      description:
-        "Otrzymujesz bezterminowy dostęp do pełnej wersji kursu i wszystkich aktualizacji.",
-    },
-  ];
+  const benefits = buildPresaleBenefits({
+    refundDays: presale.refundDays,
+    currentPrice,
+    standardPrice,
+  });
 
   return (
     <Card className="ring-primary bg-primary/5">

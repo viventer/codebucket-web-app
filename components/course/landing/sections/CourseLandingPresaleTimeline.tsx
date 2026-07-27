@@ -1,11 +1,11 @@
 import { SectionHeading } from "@/components/SectionHeading";
+import { PresaleTimelineVertical } from "@/components/course/PresaleTimelineVertical";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import type { CoursePresaleInfo } from "@/lib/course/landing-data";
-import { formatPrice } from "@/lib/format-price";
+import { buildPresaleTimelineSteps } from "@/lib/course/presale-timeline";
 import { cn } from "@/lib/utils";
 import DesktopTimeline from "./DesktopTimeline";
-import MobileTimeline, { type PresaleTimelineStep } from "./MobileTimeline";
 
 type CourseLandingPresaleTimelineProps = {
   presale: CoursePresaleInfo;
@@ -18,36 +18,7 @@ export function CourseLandingPresaleTimeline({
   currentPrice,
   standardPrice,
 }: CourseLandingPresaleTimelineProps) {
-  const steps: PresaleTimelineStep[] = [
-    {
-      icon: "rocket.svg",
-      title: "Start przedsprzedaży",
-      description:
-        currentPrice !== undefined
-          ? `Kup kurs w niższej cenie ${formatPrice(currentPrice)}.`
-          : "Kup kurs w niższej cenie.",
-      dateLabel: presale.presaleStartDateLabel,
-      highlighted: false,
-    },
-    {
-      icon: "confetti.svg",
-      title: "Premiera kursu",
-      description:
-        standardPrice !== undefined
-          ? `Koniec przedsprzedaży. Cena wzrasta do ${formatPrice(standardPrice)}.`
-          : "Koniec przedsprzedaży. Cena wzrasta.",
-      dateLabel: presale.releaseDateLabel,
-      highlighted: true,
-    },
-    {
-      icon: "shield-check.svg",
-      title: "Gwarancja satysfakcji",
-      description: `${presale.refundDays} dni na zwrot środków, jeśli kurs Ci się nie spodoba.`,
-      dateLabel: null,
-      highlighted: false,
-    },
-  ];
-
+  const steps = buildPresaleTimelineSteps(presale, currentPrice, standardPrice);
   const refundPeriodLabel = `${presale.refundDays} dni od publikacji`;
 
   return (
@@ -70,7 +41,7 @@ export function CourseLandingPresaleTimeline({
                   step.highlighted && "ring-accent bg-accent/5",
                 )}
               >
-                <CardHeader className="flex items-center justify-center gap-2 w-full">
+                <CardHeader className="flex w-full items-center justify-center gap-2">
                   <Icon
                     src={step.icon}
                     size={32}
@@ -97,7 +68,7 @@ export function CourseLandingPresaleTimeline({
         />
       </div>
 
-      <MobileTimeline steps={steps} />
+      <PresaleTimelineVertical steps={steps} className="sm:hidden" />
     </section>
   );
 }

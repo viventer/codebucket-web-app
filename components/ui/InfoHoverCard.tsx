@@ -45,9 +45,7 @@ export function InfoHoverCard({
           <InfoIcon className="size-4 shrink-0 text-muted-foreground" />
         </button>
       </HoverCardTrigger>
-      <HoverCardContent
-        className={cn("flex flex-col gap-1", contentClassName)}
-      >
+      <HoverCardContent className={cn("flex flex-col gap-1", contentClassName)}>
         {children}
       </HoverCardContent>
     </HoverCard>

@@ -162,7 +162,7 @@ const longDateFormatter = new Intl.DateTimeFormat("pl-PL", {
   timeZone: "UTC",
 });
 
-function buildPresaleInfo(
+export function buildPresaleInfo(
   presale: CourseDocument["presale"],
 ): CoursePresaleInfo | null {
   if (!presale) {

@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 
-import { PendingStatusRefresher } from "@/components/order/PendingStatusRefresher";
 import { ThankYouPageView } from "@/components/order/ThankYouPageView";
 import { loadOrderView } from "@/lib/paddle/load-order-view";
 
@@ -32,20 +31,15 @@ export default async function ThankYouPage({ searchParams }: ThankYouPageProps) 
   }
 
   return (
-    <>
-      {orderView.paymentStatus === "pending" ? (
-        <PendingStatusRefresher />
-      ) : null}
-      <ThankYouPageView
-        courseId={orderView.courseId}
-        courseTitle={orderView.courseTitle}
-        courseDescription={orderView.courseDescription}
-        courseImageUrl={orderView.courseImageUrl}
-        amount={orderView.amount}
-        currency={orderView.currency}
-        paymentStatus={orderView.paymentStatus}
-        releaseDateLabel={orderView.releaseDateLabel}
-      />
-    </>
+    <ThankYouPageView
+      courseId={orderView.courseId}
+      courseTitle={orderView.courseTitle}
+      courseDescription={orderView.courseDescription}
+      courseImageUrl={orderView.courseImageUrl}
+      amount={orderView.amount}
+      currency={orderView.currency}
+      paymentStatus={orderView.paymentStatus}
+      releaseDateLabel={orderView.releaseDateLabel}
+    />
   );
 }

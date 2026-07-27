@@ -1,21 +1,18 @@
 import { Icon } from "@/components/ui/icon";
+import type { PresaleTimelineStep } from "@/lib/course/presale-timeline";
 import { cn } from "@/lib/utils";
 
-export type PresaleTimelineStep = {
-  icon: string;
-  title: string;
-  description: string;
-  dateLabel: string | null;
-  highlighted: boolean;
+type PresaleTimelineVerticalProps = {
+  steps: PresaleTimelineStep[];
+  className?: string;
 };
 
-export default function MobileTimeline({
+export function PresaleTimelineVertical({
   steps,
-}: {
-  steps: PresaleTimelineStep[];
-}) {
+  className,
+}: PresaleTimelineVerticalProps) {
   return (
-    <ol className="flex flex-col sm:hidden">
+    <ol className={cn("flex flex-col", className)}>
       {steps.map((step, index) => {
         const isLast = index === steps.length - 1;
 

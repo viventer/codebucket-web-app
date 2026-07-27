@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CourseAccessNotes } from "@/components/order/CourseAccessNotes";
 import { OrderedCourseSection } from "@/components/order/OrderedCourseSection";
 import { OrderStatusLabel } from "@/components/order/OrderStatusLabel";
+import { RefreshPaymentStatusButton } from "@/components/order/RefreshPaymentStatusButton";
 import type { ThankYouPaymentViewStatus } from "@/components/order/thank-you-types";
 import { Button } from "@/components/ui/button";
 import {
@@ -48,8 +49,7 @@ export function ThankYouPageView({
           Dzięki, że wybrałeś Code<span className="text-accent">Bucket</span>
         </CardTitle>
         <CardDescription>
-          Cieszę się, że mogę pomóc Ci tworzyć coraz lepsze strony
-          internetowe.
+          Cieszę się, że mogę pomóc Ci tworzyć coraz lepsze strony internetowe.
         </CardDescription>
       </CardHeader>
 
@@ -74,9 +74,14 @@ export function ThankYouPageView({
               {amount > 0 ? amountLabel : formatPrice(0)}
             </span>
           </p>
-          <p className="text-sm">
-            Status: <OrderStatusLabel status={paymentStatus} />
-          </p>
+          <div className="flex flex-col gap-2">
+            <p className="text-sm">
+              Status: <OrderStatusLabel status={paymentStatus} />
+            </p>
+            {paymentStatus !== "pending" ? (
+              <RefreshPaymentStatusButton />
+            ) : null}
+          </div>
         </section>
       </CardContent>
 
