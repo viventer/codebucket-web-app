@@ -50,7 +50,6 @@ export function NewsletterDialog({
       const result = await subscribeNewsletter(parsed.data);
       if (!result.success) {
         setError(result.error);
-        toast.error(result.error);
         return;
       }
 
