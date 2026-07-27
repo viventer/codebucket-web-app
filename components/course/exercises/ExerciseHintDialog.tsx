@@ -2,10 +2,10 @@
 
 import {
   Dialog,
-  DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { ResponsiveDialogContent } from "@/components/ui/ResponsiveDialogContent";
 
 type ExerciseHintDialogProps = {
   open: boolean;
@@ -20,7 +20,7 @@ export function ExerciseHintDialog({
 }: ExerciseHintDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <ResponsiveDialogContent>
         <DialogHeader>
           <DialogTitle>Ściąga</DialogTitle>
         </DialogHeader>
@@ -29,7 +29,7 @@ export function ExerciseHintDialog({
             <li key={index}>{hint}</li>
           ))}
         </ul>
-      </DialogContent>
+      </ResponsiveDialogContent>
     </Dialog>
   );
 }

@@ -12,11 +12,11 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
-  DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ResponsiveDialogContent } from "@/components/ui/ResponsiveDialogContent";
 import { InfoHoverCard } from "@/components/ui/InfoHoverCard";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
@@ -127,7 +127,7 @@ export function AccountDialog({
           <UserIcon className="size-4 sm:hidden" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="inset-0 top-0 left-0 flex h-dvh max-h-dvh w-full max-w-none translate-x-0 translate-y-0 flex-col gap-4 overflow-hidden rounded-none p-4 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:h-auto sm:max-h-none sm:max-w-md sm:-translate-x-1/2 sm:-translate-y-1/2 sm:gap-8 sm:overflow-visible sm:rounded-xl sm:p-6">
+      <ResponsiveDialogContent className="sm:max-w-md">
         <DialogHeader className="shrink-0 space-y-0 mb-8 sm:mb-0">
           <DialogTitle className="text-center text-lg sm:text-xl">
             {triggerLabel}
@@ -273,7 +273,7 @@ export function AccountDialog({
             </div>
           )}
         </div>
-      </DialogContent>
+      </ResponsiveDialogContent>
     </Dialog>
   );
 }

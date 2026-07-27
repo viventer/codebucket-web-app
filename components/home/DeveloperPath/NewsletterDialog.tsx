@@ -6,12 +6,12 @@ import { subscribeNewsletter } from "@/actions/newsletter/subscribe-newsletter";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ResponsiveDialogContent } from "@/components/ui/ResponsiveDialogContent";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
@@ -73,7 +73,7 @@ export function NewsletterDialog({
       <DialogTrigger asChild>
         <Button className={className}>{ROADMAP_CTA.buttonLabel}</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <ResponsiveDialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Dołącz do newslettera</DialogTitle>
           <DialogDescription>
@@ -107,7 +107,7 @@ export function NewsletterDialog({
             {isPending ? "Zapisywanie..." : "Zapisz się"}
           </Button>
         </form>
-      </DialogContent>
+      </ResponsiveDialogContent>
     </Dialog>
   );
 }

@@ -3,12 +3,11 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { ResponsiveDialogContent } from "@/components/ui/ResponsiveDialogContent";
 
 type ExerciseSolutionDialogProps = {
   open: boolean;
@@ -23,7 +22,7 @@ export function ExerciseSolutionDialog({
 }: ExerciseSolutionDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent showCloseButton={false}>
+      <ResponsiveDialogContent showCloseButton={false}>
         <DialogHeader>
           <DialogTitle>Czy na pewno chcesz poznać rozwiązanie?</DialogTitle>
           <DialogDescription>
@@ -37,7 +36,7 @@ export function ExerciseSolutionDialog({
             Anuluj
           </Button>
         </div>
-      </DialogContent>
+      </ResponsiveDialogContent>
     </Dialog>
   );
 }

@@ -1,12 +1,8 @@
 "use client";
 
 import { StaticCodePanel } from "@/components/course/elements/interactive-exercises/gap-lines/StaticCodePanel";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { ResponsiveDialogContent } from "@/components/ui/ResponsiveDialogContent";
 import type { CodeSnippet } from "@/schemas/exerciseSchema";
 
 type ExerciseCodeSolutionDialogProps = {
@@ -22,7 +18,7 @@ export function ExerciseCodeSolutionDialog({
 }: ExerciseCodeSolutionDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="flex max-h-[85vh] w-[90vw] max-w-[calc(100%-2rem)] flex-col overflow-hidden lg:max-w-7xl">
+      <ResponsiveDialogContent className="sm:max-h-[85vh] sm:w-[90vw] sm:max-w-[calc(100%-2rem)] sm:overflow-hidden lg:max-w-7xl">
         <DialogHeader>
           <DialogTitle>Rozwiązanie</DialogTitle>
         </DialogHeader>
@@ -40,7 +36,7 @@ export function ExerciseCodeSolutionDialog({
             </div>
           ))}
         </div>
-      </DialogContent>
+      </ResponsiveDialogContent>
     </Dialog>
   );
 }
