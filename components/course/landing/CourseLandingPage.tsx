@@ -1,4 +1,6 @@
 import { CourseLandingFloatingCta } from "@/components/course/landing/CourseLandingFloatingCta";
+import { CourseLandingUserStateProvider } from "@/components/course/landing/CourseLandingUserStateProvider";
+import { SalesCtaGate } from "@/components/course/landing/SalesCtaGate";
 import { CourseLandingCurriculum } from "@/components/course/landing/sections/CourseLandingCurriculum";
 import { CourseLandingFaq } from "@/components/course/landing/sections/CourseLandingFaq";
 import { CourseLandingFinalCta } from "@/components/course/landing/sections/CourseLandingFinalCta";
@@ -20,7 +22,11 @@ type CourseLandingPageProps = {
 
 export function CourseLandingPage({ data }: CourseLandingPageProps) {
   return (
-    <>
+    <CourseLandingUserStateProvider
+      courseId={data.id}
+      isPresale={data.isPresale}
+      sections={data.sections}
+    >
       <MainContainer>
         <CourseLandingHero
           id={data.id}
@@ -72,26 +78,30 @@ export function CourseLandingPage({ data }: CourseLandingPageProps) {
 
         {data.isPresale ? <CourseLandingFaq faq={data.faq} /> : null}
 
-        <div data-course-landing-final-cta>
-          <CourseLandingFinalCta
-            id={data.id}
-            ctaDescription={data.ctaDescription}
-            startHref={data.startHref}
-            finalCtaButtonLabel={data.finalCtaButtonLabel}
-            isFree={data.isFree}
-            isPresale={data.isPresale}
-          />
-        </div>
+        <SalesCtaGate>
+          <div data-course-landing-final-cta>
+            <CourseLandingFinalCta
+              id={data.id}
+              ctaDescription={data.ctaDescription}
+              startHref={data.startHref}
+              finalCtaButtonLabel={data.finalCtaButtonLabel}
+              isFree={data.isFree}
+              isPresale={data.isPresale}
+            />
+          </div>
+        </SalesCtaGate>
       </MainContainer>
 
-      <CourseLandingFloatingCta
-        courseId={data.id}
-        startHref={data.startHref}
-        label={data.finalCtaButtonLabel}
-        isFree={data.isFree}
-        isPresale={data.isPresale}
-        className="sm:hidden"
-      />
-    </>
+      <SalesCtaGate>
+        <CourseLandingFloatingCta
+          courseId={data.id}
+          startHref={data.startHref}
+          label={data.finalCtaButtonLabel}
+          isFree={data.isFree}
+          isPresale={data.isPresale}
+          className="sm:hidden"
+        />
+      </SalesCtaGate>
+    </CourseLandingUserStateProvider>
   );
 }
