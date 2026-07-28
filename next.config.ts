@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
 };
 
 module.exports = {
-  allowedDevOrigins: ["surgeons-mine-stevens-nitrogen.trycloudflare.com"],
+  allowedDevOrigins: ["dev.codebucket.pl"],
 };
 
 export default nextConfig;
