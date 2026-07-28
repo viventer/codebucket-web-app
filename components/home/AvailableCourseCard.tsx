@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { PresaleCtaButton } from "@/components/course/landing/PresaleCtaButton";
-import { StartCourseButton } from "@/components/course/landing/StartCourseButton";
+import { CoursePrimaryCtaButton } from "@/components/course/landing/CoursePrimaryCtaButton";
 import { PresaleGuaranteeInfo } from "@/components/course/landing/PresaleGuaranteeInfo";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
@@ -85,21 +84,15 @@ export function AvailableCourseCard({ course }: AvailableCourseCardProps) {
       </CardContent>
 
       <CardFooter className="mt-auto flex-col gap-2 border-0 bg-transparent pt-0">
-        {course.ctaType === "free-start" && course.startHref ? (
-          <StartCourseButton
-            courseId={course.id}
-            startHref={course.startHref}
-            label={course.primaryCtaLabel}
-            isFree={course.isFree}
-            className="w-full"
-          />
-        ) : (
-          <PresaleCtaButton
-            courseId={course.id}
-            label={course.primaryCtaLabel}
-            className="w-full"
-          />
-        )}
+        <CoursePrimaryCtaButton
+          courseId={course.id}
+          startHref={course.startHref}
+          label={course.primaryCtaLabel}
+          isFree={course.isFree}
+          isPresale={course.isPresale}
+          sections={course.sections}
+          className="w-full"
+        />
         <Button asChild variant="secondary" className="w-full" size="lg">
           <Link href={course.detailsHref}>Zobacz szczegóły</Link>
         </Button>

@@ -1,9 +1,11 @@
 import type { CourseDocument } from "@/schemas/courseSchema";
 import {
+  buildCourseLandingSectionInputs,
   getCourseImageUrl,
   getFirstElementPath,
 } from "@/lib/course/landing-data";
 import { getCoursePath } from "@/lib/courses";
+import type { CourseLandingSectionInput } from "@/lib/course/landing-user-state";
 
 export type AvailableCourseCtaType = "free-start" | "presale";
 
@@ -18,6 +20,8 @@ export type AvailableCourseDisplay = {
   detailsHref: string;
   startHref: string | null;
   isFree: boolean;
+  isPresale: boolean;
+  sections: CourseLandingSectionInput[];
   currentPrice?: number;
   regularPrice?: number;
   refundDays?: number;
@@ -46,6 +50,8 @@ export function buildAvailableCoursesDisplay(
       detailsHref: getCoursePath(course.id),
       startHref: getFirstElementPath(course),
       isFree,
+      isPresale,
+      sections: buildCourseLandingSectionInputs(course),
       currentPrice: isFree ? undefined : course.price.currentPrice,
       regularPrice: isPresale ? course.price.standardPrice : undefined,
       refundDays: course.presale?.refundDays,

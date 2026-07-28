@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
 };
 
 module.exports = {
-  allowedDevOrigins: ["3ab6-185-172-85-145.ngrok-free.app"],
+  allowedDevOrigins: ["surgeons-mine-stevens-nitrogen.trycloudflare.com"],
 };
 
 export default nextConfig;

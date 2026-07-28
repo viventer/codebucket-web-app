@@ -4,6 +4,7 @@ import {
   sortOutlineSections,
 } from "@/actions/courses/helpers";
 import { getCoursePath } from "@/lib/courses";
+import type { CourseLandingSectionInput } from "@/lib/course/landing-user-state";
 
 export type CourseLandingSection = {
   id: string;
@@ -197,6 +198,20 @@ export function getFirstElementPath(course: CourseDocument): string | null {
   }
 
   return `/course/${course.id}/${startSectionId}/${startElementId}`;
+}
+
+/** Minimal outline payload for client-side CTA ownership/progress resolution. */
+export function buildCourseLandingSectionInputs(
+  course: CourseDocument,
+): CourseLandingSectionInput[] {
+  return sortOutlineSections(course.outline).map((section) => ({
+    id: section.id,
+    title: section.title,
+    elements: sortOutlineElements(section.elements).map((element) => ({
+      id: element.id,
+      href: `/course/${course.id}/${section.id}/${element.id}`,
+    })),
+  }));
 }
 
 export function buildCourseLandingData(

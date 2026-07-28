@@ -3,29 +3,17 @@
 import {
   createContext,
   useContext,
-  useEffect,
-  useState,
   type ReactNode,
 } from "react";
 
-import { getCourseLandingState } from "@/actions/user/course-landing-state";
 import {
-  isGuestUser,
-  readAllGuestProgress,
-} from "@/lib/course/guest-progress";
-import {
-  deriveCourseLandingUserState,
-  type CourseLandingSectionInput,
-  type CourseLandingUserState,
-} from "@/lib/course/landing-user-state";
-
-type CourseLandingUserStateContextValue = {
-  loading: boolean;
-  state: CourseLandingUserState;
-};
+  useResolveCourseLandingUserState,
+  type ResolvedCourseLandingUserState,
+} from "@/components/course/landing/useResolveCourseLandingUserState";
+import type { CourseLandingSectionInput } from "@/lib/course/landing-user-state";
 
 const CourseLandingUserStateContext =
-  createContext<CourseLandingUserStateContextValue | null>(null);
+  createContext<ResolvedCourseLandingUserState | null>(null);
 
 type CourseLandingUserStateProviderProps = {
   courseId: string;
@@ -40,75 +28,20 @@ export function CourseLandingUserStateProvider({
   sections,
   children,
 }: CourseLandingUserStateProviderProps) {
-  const [loading, setLoading] = useState(true);
-  const [state, setState] = useState<CourseLandingUserState>({ status: "none" });
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function resolveState() {
-      try {
-        if (isGuestUser()) {
-          const entry = readAllGuestProgress()[courseId];
-          const elementsCompleted = entry?.elementsCompleted ?? [];
-          const unlocked =
-            entry?.startedAt !== undefined || elementsCompleted.length > 0;
-
-          if (!cancelled) {
-            setState(
-              deriveCourseLandingUserState({
-                sections,
-                elementsCompleted,
-                unlocked,
-                isPresale,
-              }),
-            );
-          }
-          return;
-        }
-
-        const result = await getCourseLandingState({ courseId });
-        if (cancelled) return;
-
-        if (!result.success) {
-          setState({ status: "none" });
-          return;
-        }
-
-        setState(
-          deriveCourseLandingUserState({
-            sections,
-            elementsCompleted: result.elementsCompleted,
-            unlocked: result.unlocked,
-            isPresale,
-          }),
-        );
-      } catch {
-        if (!cancelled) {
-          setState({ status: "none" });
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
-      }
-    }
-
-    void resolveState();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [courseId, isPresale, sections]);
+  const value = useResolveCourseLandingUserState({
+    courseId,
+    isPresale,
+    sections,
+  });
 
   return (
-    <CourseLandingUserStateContext.Provider value={{ loading, state }}>
+    <CourseLandingUserStateContext.Provider value={value}>
       {children}
     </CourseLandingUserStateContext.Provider>
   );
 }
 
-export function useCourseLandingUserState(): CourseLandingUserStateContextValue {
+export function useCourseLandingUserState(): ResolvedCourseLandingUserState {
   const value = useContext(CourseLandingUserStateContext);
   if (!value) {
     throw new Error(
@@ -116,4 +49,8 @@ export function useCourseLandingUserState(): CourseLandingUserStateContextValue 
     );
   }
   return value;
+}
+
+export function useOptionalCourseLandingUserState(): ResolvedCourseLandingUserState | null {
+  return useContext(CourseLandingUserStateContext);
 }
