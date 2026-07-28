@@ -1,5 +1,6 @@
 import { SectionHeading } from "@/components/SectionHeading";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ExpandableElement } from "@/components/ui/ExpandableElement";
 import { Icon } from "@/components/ui/icon";
 import type { CourseLandingMethod } from "@/lib/course/landing-data";
 
@@ -51,19 +52,25 @@ export function CourseLandingMethodology({
         </SectionHeading.Description>
       </SectionHeading>
 
-      <div className="grid gap-6 sm:grid-cols-2">
-        {items.map(({ title, description, icon }) => (
-          <Card key={title} className="gap-3">
-            <CardHeader className="flex flex-row items-center gap-2">
-              <Icon src={icon} size={32} className="text-accent" />
-              <CardTitle>{title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">{description}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <ExpandableElement
+        collapsedHeight={400}
+        expandText="Pokaż więcej"
+        collapseText="Zwiń"
+      >
+        <div className="grid gap-6 sm:grid-cols-2">
+          {items.map(({ title, description, icon }) => (
+            <Card key={title} className="gap-3">
+              <CardHeader className="flex flex-row items-center gap-2">
+                <Icon src={icon} size={32} className="text-accent" />
+                <CardTitle>{title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">{description}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </ExpandableElement>
     </section>
   );
 }
