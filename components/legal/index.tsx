@@ -60,6 +60,10 @@ function LegalList({ children }: { children: ReactNode }) {
   return <ul className="flex list-disc flex-col gap-1 pl-5">{children}</ul>;
 }
 
+function LegalOrderedList({ children }: { children: ReactNode }) {
+  return <ol className="flex list-decimal flex-col gap-1 pl-5">{children}</ol>;
+}
+
 function LegalListItem({ children }: { children: ReactNode }) {
   return <li>{children}</li>;
 }
@@ -124,6 +128,7 @@ export {
   LegalLink,
   LegalList,
   LegalListItem,
+  LegalOrderedList,
   LegalSection,
   LegalStrong,
 };
