@@ -17,16 +17,14 @@ export function HomeHero() {
         </p>
 
         <Button
+          asChild
           className="sm:max-w-sm gap-2 py-5 [&_svg]:pointer-events-auto!  [&_svg:not([class*='size-'])]:size-auto"
           size={"lg"}
         >
-          <ClientIcon src="rocket.svg" size={24} />
-          <p className="sm:text-lg font-bold">
-            Rozpocznij naukę{" "}
-            <span className="decoration-accent underline-offset-4 underline decoration-3">
-              za darmo
-            </span>
-          </p>
+          <a href="#wybierz-kurs">
+            <ClientIcon src="rocket.svg" size={24} />
+            <p className="sm:text-lg font-bold">Wybierz kurs</p>
+          </a>
         </Button>
       </div>
 
