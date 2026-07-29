@@ -20,6 +20,9 @@ const ubuntuMono = Ubuntu_Mono({
 export const metadata: Metadata = {
   title: "CodeBucket",
   description: "Najskuteczniejsza platforma do nauki programowania",
+  icons: {
+    icon: "/logo.svg",
+  },
 };
 
 export default function RootLayout({
