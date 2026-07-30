@@ -1,5 +1,6 @@
 import { Button } from "../ui/button";
 import { ClientIcon } from "../ui/client-icon";
+import { CoursesSectionLink } from "./CoursesSectionLink";
 import { HeroGraphic } from "./HeroGraphic";
 
 export function HomeHero() {
@@ -21,10 +22,10 @@ export function HomeHero() {
           className="sm:max-w-sm gap-2 py-5 [&_svg]:pointer-events-auto!  [&_svg:not([class*='size-'])]:size-auto"
           size={"lg"}
         >
-          <a href="#wybierz-kurs">
+          <CoursesSectionLink>
             <ClientIcon src="rocket.svg" size={24} />
             <p className="sm:text-lg font-bold">Wybierz kurs</p>
-          </a>
+          </CoursesSectionLink>
         </Button>
       </div>
 

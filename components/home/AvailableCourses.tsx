@@ -8,7 +8,10 @@ type AvailableCoursesProps = {
 
 export function AvailableCourses({ courses }: AvailableCoursesProps) {
   return (
-    <section className="flex flex-col gap-8" id="wybierz-kurs">
+    <section
+      className="flex flex-col gap-8 scroll-mt-20"
+      id="wybierz-kurs"
+    >
       <SectionHeading>
         <SectionHeading.Title className="snap-start">
           Wybierz <span className="text-accent font-bold">swój kurs</span>

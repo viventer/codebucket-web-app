@@ -1,9 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import type { MouseEvent } from "react";
 import { PlusIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  COURSES_SECTION_HREF,
+  handleCoursesSectionLinkClick,
+} from "@/lib/scroll-to-courses-section";
 
 export type AccountCourse = {
   id: string;
@@ -19,6 +24,11 @@ export function AccountCoursesSection({
   courses,
   onNavigate,
 }: AccountCoursesSectionProps) {
+  function handleUnlockClick(event: MouseEvent<HTMLAnchorElement>) {
+    handleCoursesSectionLinkClick(event);
+    onNavigate?.();
+  }
+
   return (
     <section className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
@@ -47,9 +57,11 @@ export function AccountCoursesSection({
         )}
       </div>
 
-      <Button className="w-full">
-        <PlusIcon />
-        Odblokuj nowy kurs
+      <Button asChild className="w-full">
+        <Link href={COURSES_SECTION_HREF} onClick={handleUnlockClick}>
+          <PlusIcon />
+          Odblokuj nowy kurs
+        </Link>
       </Button>
     </section>
   );
