@@ -77,10 +77,7 @@ export function CourseNavSheet({
           <div className="flex items-center gap-2 pr-8">
             <SheetClose asChild>
               <Button variant="ghost" size="icon" asChild>
-                <Link
-                  href={`/course/${courseId}`}
-                  aria-label="Strona główna kursu"
-                >
+                <Link href="/" aria-label="Strona główna">
                   <HomeIcon />
                 </Link>
               </Button>

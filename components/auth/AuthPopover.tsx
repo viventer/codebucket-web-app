@@ -1,5 +1,5 @@
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Button } from "./ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
 import { UserIcon } from "lucide-react";
 import { AuthButtons } from "./AuthButtons";
 

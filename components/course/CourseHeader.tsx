@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import type { SectionProgress } from "@/lib/course/progress";
-import { HeaderAuth } from "@/components/HeaderAuth";
+import { HeaderAuth } from "@/components/auth/HeaderAuth";
 import { CourseHeaderProgress } from "@/components/course/CourseHeaderProgress";
 import {
   CourseNavSheet,

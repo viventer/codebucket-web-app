@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { AccountButtons } from "../account/AccountButtons";
 import { AuthButtons } from "./AuthButtons";
 import { AuthPopover } from "./AuthPopover";
 
 const AccountDialog = dynamic(
   () =>
-    import("@/components/course/AccountDialog").then((m) => ({
+    import("@/components/account/AccountDialog").then((m) => ({
       default: m.AccountDialog,
     })),
   { ssr: false },
@@ -35,9 +36,7 @@ export function HeaderAuth({ mobilePopover = false }: HeaderAuthProps) {
     // Fixed-size placeholder to prevent layout shift during hydration
     return (
       <div
-        className={
-          mobilePopover ? "h-8 w-8 sm:w-48" : "h-8 w-48"
-        }
+        className={mobilePopover ? "h-8 w-8 sm:w-48" : "h-8 w-56"}
         aria-hidden
       />
     );
@@ -58,5 +57,9 @@ export function HeaderAuth({ mobilePopover = false }: HeaderAuthProps) {
     return <AuthButtons />;
   }
 
-  return <AccountDialog />;
+  if (mobilePopover) {
+    return <AccountDialog iconOnMobile />;
+  }
+
+  return <AccountButtons />;
 }

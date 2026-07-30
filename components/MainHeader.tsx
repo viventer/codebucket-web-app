@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { HeaderAuth } from "@/components/HeaderAuth";
+import { HeaderAuth } from "@/components/auth/HeaderAuth";
 
 export function MainHeader() {
   return (
