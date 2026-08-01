@@ -6,7 +6,7 @@ Znacznik header służy do oznaczania nagłówka strony lub sekcji. Możemy umie
 
 Odwrotnością header'a jest oczywiście footer, który znajduje się na dole tej strony i pod artykułem.
 
-Nav to nawigacja, najczęściej umieszczamy ją w headerze i jest tak naprawdę odpowiednio wystylowaną listą.
+Wewnątrz headera często umieszczamy znacznik nav, czyli nawigację.
 Podobnie jak header i footer, nav również może występować w wielu miejscach. Oprócz głównej tutaj znajduje się również nawigacja po artykule.
 
 Artykuł z kolei to pewien fragment strony, który nie potrzebuje żadnego kontekstu.
@@ -18,7 +18,7 @@ Sekcja również grupuje powiązaną ze sobą zawartość, jednak gdy wyodrębni
 Każda podstrona ma również główną treść, którą umieszczamy w tagu main.
 Gdy przechodzisz pomiędzy kolejnymi artykułami nie przeglądasz za każdym razem nagłówka i nie sprawdzasz co znajduje się w nawigacji. Zamiast tego od razu przechodzisz do treści artykułu, nie zwracając uwagi na całą resztę strony.
 
-Pamiętej, że tag main w odróżnieniu od innych znaczników semantycznych może występować na stronie tylko raz. Tylko jeden fragment może być najważniejszy.
+Pamiętaj, że tag main w odróżnieniu od innych znaczników semantycznych może występować na stronie tylko raz. Tylko jeden fragment może być najważniejszy.
 
 Z kolei jakieś poboczne informacje, które mogą zostać pominięte - umieść w tagach aside. Np. ta nawigacja. Nie jest niezbędna do pełnego zrozumienia treści artykułu.
 
@@ -33,7 +33,7 @@ Podobnie takie tagi jak img, form i button są semantyczne. Przeglądarka widzą
 Innym, nieco rzadziej używanym tagiem semantycznym jest strong. W nim umieszczamy istotne fragmenty tekstu. Przeglądarka domyślnie wyświetli je pogrubione.
 
 Pamiętaj jednak, że nie wszystkie tagi, które wpływają na wygląd elementu mają konkretne znaczenie.
-Takie tagi jak b, u czy i również zmieniają styl tekstu, jednak nie mają znaczenia dla przeglądarki. W większości przypadków ich rolę przejmuje CSS lub znaczniki semantyczne, takie jak strong.
+Takie tagi jak b, u czy i również zmieniają styl tekstu, jednak nie mają znaczenia dla przeglądarki. W większości przypadków ich rolę przejmuje CSS.
 
 ---
 

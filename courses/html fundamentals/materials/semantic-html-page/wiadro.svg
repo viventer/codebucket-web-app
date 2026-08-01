@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" role="img" aria-label="Ilustracja niebieskiego wiadra">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3f8ba0"/>
+      <stop offset="1" stop-color="#2b6070"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="120" cy="188" rx="70" ry="10" fill="#000000" opacity="0.12"/>
+  <path d="M64 46 Q120 12 176 46" fill="none" stroke="#2b6070" stroke-width="9" stroke-linecap="round"/>
+  <path d="M56 58 L184 58 L166 178 Q120 190 74 178 Z" fill="url(#body)"/>
+  <ellipse cx="120" cy="58" rx="64" ry="15" fill="#4fa3ba"/>
+  <ellipse cx="120" cy="58" rx="52" ry="10" fill="#1f4a57"/>
+  <path d="M78 78 Q84 130 92 168" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.25"/>
+</svg>
