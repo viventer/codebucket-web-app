@@ -109,6 +109,8 @@ body > header {
   background: color-mix(in oklab, var(--card) 85%, transparent);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
+  max-width: 1280px;
+  margin: auto;
 }
 
 body > header > a {
