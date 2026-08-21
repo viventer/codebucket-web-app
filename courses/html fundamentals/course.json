@@ -1785,8 +1785,8 @@
           "type": "video",
           "content": {
             "title": "Czym jest semantyczny HTML?",
-            "duration": 0,
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d"
+            "duration": 3,
+            "videoUrl": "https://youtu.be/oucjIsW0B9k"
           },
           "order": 1
         },
@@ -1861,34 +1861,26 @@
                   },
                   {
                     "id": 6,
-                    "content": "<p>"
-                  },
-                  {
-                    "id": 7,
                     "content": "<div>"
                   },
                   {
-                    "id": 8,
+                    "id": 7,
                     "content": "<br />"
                   },
                   {
-                    "id": 9,
-                    "content": "<img />"
+                    "id": 8,
+                    "content": "<span>"
                   },
                   {
-                    "id": 10,
+                    "id": 9,
                     "content": "<b>"
                   },
                   {
-                    "id": 11,
+                    "id": 10,
                     "content": "<u>"
-                  },
-                  {
-                    "id": 12,
-                    "content": "<em>"
                   }
                 ],
-                "correctItemIds": [1, 2, 3, 4, 5, 12]
+                "correctItemIds": [1, 2, 3, 4, 5, 8]
               },
               {
                 "type": "fillGaps",
@@ -2043,20 +2035,10 @@
     },
     {
       "id": "summary",
-      "title": "Podsumowanie",
-      "description": "Szybkie przypomnienie wszystkich tematów.",
+      "title": "Zakończenie",
+      "description": "Zakończono kurs HTML.",
       "order": 7,
       "elements": [
-        {
-          "id": "course-summary",
-          "type": "video",
-          "content": {
-            "title": "HTML w 5 minut",
-            "duration": 5,
-            "videoUrl": "https://youtu.be/dQw4w9WgXcQ?si=w19GYayU7s4bX18d"
-          },
-          "order": 1
-        },
         {
           "id": "course-ending",
           "type": "courseEnding",
@@ -2078,7 +2060,7 @@
               "recommendedCourseIds": ["css-basics"]
             }
           },
-          "order": 2
+          "order": 1
         }
       ]
     }
