@@ -44,5 +44,5 @@ env:
   - variable: PADDLE_WEBHOOK_SECRET
     secret: PADDLE_WEBHOOK_SECRET
 
-  - variable: PADDLE_SANDBOX_API_KEY
-    secret: PADDLE_SANDBOX_API_KEY
+  - variable: PADDLE_API_KEY
+    secret: PADDLE_API_KEY

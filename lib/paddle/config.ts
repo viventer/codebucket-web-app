@@ -21,18 +21,10 @@ export function getPaddleClientToken(): string {
 }
 
 export function getPaddleApiKey(): string {
-  const environment = getPaddleEnvironment();
-  const apiKey =
-    environment === "production"
-      ? process.env.PADDLE_LIVE_API_KEY
-      : process.env.PADDLE_SANDBOX_API_KEY;
+  const apiKey = process.env.PADDLE_API_KEY;
 
   if (!apiKey) {
-    throw new Error(
-      environment === "production"
-        ? "PADDLE_LIVE_API_KEY is not configured"
-        : "PADDLE_SANDBOX_API_KEY is not configured",
-    );
+    throw new Error("PADDLE_API_KEY is not configured");
   }
 
   return apiKey;
