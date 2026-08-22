@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "seed:courses": "node --env-file=.env.local node_modules/.bin/tsx scripts/seed-courses.ts",
+    "sync:storage": "bash scripts/sync-storage.sh",
     "email:dev": "email dev --dir emails --port 3001"
   },
   "dependencies": {
