@@ -16,7 +16,7 @@ export function LearningFlow({ videoUrls }: LearningFlowProps) {
   const [activeTab, setActiveTab] = useState("0");
 
   return (
-    <section className="flex flex-col items-center justify-center gap-8 sm:mb-16 snap-center">
+    <section className="flex flex-col items-center justify-center gap-8 sm:mb-16 sm:snap-center">
       <SectionHeading>
         <SectionHeading.Title>
           Poznaj <span className="text-accent font-bold">optymalny</span> sposób
