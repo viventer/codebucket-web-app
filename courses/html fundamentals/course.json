@@ -1880,7 +1880,7 @@
                     "content": "<u>"
                   }
                 ],
-                "correctItemIds": [1, 2, 3, 4, 5, 8]
+                "correctItemIds": [1, 2, 3, 4, 5]
               },
               {
                 "type": "fillGaps",
