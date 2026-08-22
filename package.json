@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "tsx scripts/seed-courses.ts && next build",
+    "build": "next build && tsx scripts/seed-courses.ts",
     "start": "next start",
     "lint": "eslint",
     "seed:courses": "node --env-file=.env.local node_modules/.bin/tsx scripts/seed-courses.ts",
