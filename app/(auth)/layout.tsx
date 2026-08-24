@@ -1,4 +1,5 @@
 import { BrandLogo } from "@/components/BrandLogo";
+import { SiteFooter } from "@/components/SiteFooter";
 
 type AuthLayoutProps = {
   children: React.ReactNode;
@@ -6,11 +7,14 @@ type AuthLayoutProps = {
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center bg-background px-4 py-12">
-      <div className="w-full max-w-md">
-        <BrandLogo />
-        {children}
+    <div className="flex min-h-dvh flex-col bg-background">
+      <div className="flex flex-1 flex-col items-center justify-center px-4 py-12">
+        <div className="w-full max-w-md">
+          <BrandLogo />
+          {children}
+        </div>
       </div>
+      <SiteFooter />
     </div>
   );
 }
