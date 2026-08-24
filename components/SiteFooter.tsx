@@ -11,9 +11,12 @@ export function SiteFooter() {
   return (
     <footer className="border-t">
       <div className="mx-auto flex w-[90vw] max-w-7xl flex-col gap-4 py-3  sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-        <p className="text-sm font-medium">
-          Code<span className="text-accent">Bucket</span> Studio 2026
-        </p>
+        <div>
+          <p className="text-sm font-medium">
+            &copy; 2026 Code<span className="text-accent">Bucket</span>
+          </p>
+          <p className="text-sm font-light">Oskar Goczał</p>
+        </div>
 
         <nav
           aria-label="Informacje prawne"
