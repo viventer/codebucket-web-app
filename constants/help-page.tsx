@@ -140,6 +140,24 @@ export const FAQ_ITEMS: HelpFaqItem[] = [
     ),
   },
   {
+    question: "Jak mogę uzyskać zwrot wpłaty?",
+    answer: (
+      <>
+        <p>
+          Przy kursach już dostępnych masz 30 dni od daty zakupu na pełny zwrot
+          bez podania przyczyny. Przy zakupie w przedsprzedaży — 30 dni od daty
+          premiery kursu.
+        </p>
+        <p>
+          Wniosek składasz przez{" "}
+          <LegalLink href="/refund/request">formularz zwrotu</LegalLink>. Pełne
+          zasady znajdziesz na stronie{" "}
+          <LegalLink href="/refund">Zasady zwrotów</LegalLink>.
+        </p>
+      </>
+    ),
+  },
+  {
     question: "Nie otrzymałem dostępu do kursu po zakupie — co zrobić?",
     answer: (
       <>
@@ -182,11 +200,6 @@ export const PRESALE_FAQ_ITEMS: HelpFaqItem[] = [
     question: "Co jeśli kurs mi się nie spodoba?",
     answer:
       "Masz 30 dni od premiery pełnej wersji kursu, aby poprosić o pełny zwrot wpłaty. Nie musisz podawać przyczyny.",
-  },
-  {
-    question: "Jak mogę uzyskać zwrot wpłaty?",
-    answer:
-      "Wystarczy wypełnić krótki formularz dostępny po zakupie kursu. Zwrot środków zostanie zrealizowany tą samą metodą płatności.",
   },
   {
     question: "Czy po zakupie otrzymam dostęp do przyszłych aktualizacji?",

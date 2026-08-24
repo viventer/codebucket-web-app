@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: "Regulamin – CodeBucket",
 };
 
-const LAST_UPDATED = "21 lipca 2026 r.";
+const LAST_UPDATED = "24 sierpnia 2026 r.";
 
 export default function TermsPage() {
   return (
@@ -269,10 +269,15 @@ export default function TermsPage() {
           Użytkownik, który zakupił kurs w przedsprzedaży, może zrezygnować z
           zakupu i otrzymać pełny zwrot środków w terminie{" "}
           <LegalStrong>30 dni od daty premiery kursu</LegalStrong>, bez podania
-          przyczyny. Wniosek o zwrot składa się przez formularz dostępny po
-          zakupie w serwisie. Usługodawca przekazuje zatwierdzony wniosek do
-          Paddle, który realizuje zwrot środków na rachunek płatniczy
-          Użytkownika.
+          przyczyny. Wniosek o zwrot składasz przez{" "}
+          <LegalLink href="/refund/request">formularz zwrotu</LegalLink>.
+          Usługodawca przekazuje zatwierdzony wniosek do Paddle, który realizuje
+          zwrot środków na rachunek płatniczy Użytkownika.
+        </p>
+        <p>
+          Pełne zasady zwrotów – także dla kursów już dostępnych – znajdziesz na
+          stronie{" "}
+          <LegalLink href="/refund">Zasady zwrotów</LegalLink>.
         </p>
       </LegalSection>
 
@@ -338,17 +343,26 @@ export default function TermsPage() {
           prawo to wygasa z chwilą udzielenia dostępu.
         </p>
         <p>
-          Powyższe nie ogranicza dobrowolnej gwarancji zwrotu przy zakupach w
-          przedsprzedaży opisanej w sekcji 8 niniejszego regulaminu.
+          Powyższe nie ogranicza dobrowolnej 30-dniowej gwarancji satysfakcji.
+          Przy kursach już dostępnych przysługuje pełny zwrot w terminie{" "}
+          <LegalStrong>30 dni od daty zakupu</LegalStrong>, bez podania
+          przyczyny. Przy zakupach w przedsprzedaży – w terminie{" "}
+          <LegalStrong>30 dni od daty premiery kursu</LegalStrong> (sekcja 8).
+          Gwarancja ta spełnia i przewyższa ustawowe 14 dni na odstąpienie bez
+          podania przyczyny. Pełne zasady znajdziesz na stronie{" "}
+          <LegalLink href="/refund">Zasady zwrotów</LegalLink>.
         </p>
         <p>
           Oświadczenie o odstąpieniu od umowy (w przypadkach, gdy prawo to
-          przysługuje) należy kierować do Usługodawcy na adres e-mail:{" "}
+          przysługuje) oraz wniosek o zwrot w ramach gwarancji satysfakcji
+          składasz przez{" "}
+          <LegalLink href="/refund/request">formularz zwrotu</LegalLink> lub na
+          adres e-mail:{" "}
           <LegalLink href="mailto:zwroty@codebucket.pl">
             zwroty@codebucket.pl
           </LegalLink>
-          . Usługodawca przekazuje potwierdzone odstąpienie do Paddle w celu
-          realizacji zwrotu środków.
+          . Usługodawca przekazuje potwierdzone odstąpienie lub zatwierdzony
+          wniosek do Paddle w celu realizacji zwrotu środków.
         </p>
       </LegalSection>
 
@@ -363,12 +377,14 @@ export default function TermsPage() {
         </p>
         <LegalList>
           <LegalListItem>
-            <LegalStrong>Zwroty i odstąpienia od umowy</LegalStrong> – e-mail:{" "}
+            <LegalStrong>Zwroty i odstąpienia od umowy</LegalStrong> –{" "}
+            <LegalLink href="/refund/request">formularz zwrotu</LegalLink> lub
+            e-mail:{" "}
             <LegalLink href="mailto:zwroty@codebucket.pl">
               zwroty@codebucket.pl
-            </LegalLink>{" "}
-            lub (przy przedsprzedaży) formularz zwrotu dostępny w serwisie po
-            zakupie.
+            </LegalLink>
+            . Pełne zasady:{" "}
+            <LegalLink href="/refund">Zasady zwrotów</LegalLink>.
           </LegalListItem>
           <LegalListItem>
             <LegalStrong>

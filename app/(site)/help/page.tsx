@@ -89,6 +89,9 @@ export default function HelpAndContactPage() {
             <LegalLink href="/terms">Regulamin</LegalLink>
           </LegalListItem>
           <LegalListItem>
+            <LegalLink href="/refund">Zasady zwrotów</LegalLink>
+          </LegalListItem>
+          <LegalListItem>
             <LegalLink href="/privacy">Polityka prywatności</LegalLink>
           </LegalListItem>
         </LegalList>
