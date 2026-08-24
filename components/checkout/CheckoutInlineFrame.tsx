@@ -9,6 +9,7 @@ import {
 } from "@paddle/paddle-js";
 
 import { CheckoutPaddleSkeleton } from "@/components/checkout/CheckoutPaddleSkeleton";
+import { CheckoutTermsAcceptance } from "@/components/checkout/CheckoutTermsAcceptance";
 import { Card } from "@/components/ui/card";
 import { ClientIcon } from "@/components/ui/client-icon";
 import { useToast } from "@/hooks/use-toast";
@@ -16,6 +17,7 @@ import {
   getPaddleClientToken,
   getPaddleEnvironment,
 } from "@/lib/paddle/config";
+import { cn } from "@/lib/utils";
 
 const FRAME_TARGET = "paddle-checkout-frame";
 
@@ -47,6 +49,7 @@ export function CheckoutInlineFrame({
   const { toast } = useToast();
   const [error, setError] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [accepted, setAccepted] = useState(false);
   const paddleRef = useRef<Paddle | null>(null);
   const hasOpenedRef = useRef(false);
 
@@ -190,13 +193,29 @@ export function CheckoutInlineFrame({
           Twoje dane są szyfrowane i przetwarzane przez Paddle.
         </p>
       </div>
-      <Card className="relative min-h-180 overflow-hidden bg-[oklch(0.95_0_0)] p-4 text-[oklch(0.145_0_0)] sm:p-6">
-        {!isLoaded ? <CheckoutPaddleSkeleton /> : null}
-        <div
-          className={FRAME_TARGET}
-          style={{ visibility: isLoaded ? "visible" : "hidden" }}
-        />
-      </Card>
+      <CheckoutTermsAcceptance
+        accepted={accepted}
+        onAcceptedChange={setAccepted}
+      />
+      <div className={cn("relative", !accepted && "h-0 overflow-hidden")}>
+        <Card
+          className={cn(
+            "min-h-180 overflow-hidden bg-[oklch(0.95_0_0)] p-4 text-[oklch(0.145_0_0)] sm:p-6",
+            accepted
+              ? "relative"
+              : "pointer-events-none absolute left-0 w-full opacity-0",
+          )}
+          aria-hidden={!accepted}
+        >
+          {accepted && !isLoaded ? <CheckoutPaddleSkeleton /> : null}
+          <div
+            className={FRAME_TARGET}
+            style={{
+              visibility: isLoaded && accepted ? "visible" : "hidden",
+            }}
+          />
+        </Card>
+      </div>
     </div>
   );
 }
