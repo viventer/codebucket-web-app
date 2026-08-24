@@ -210,6 +210,12 @@ export default function TermsPage() {
       {/* 7 */}
       <LegalSection id="platnosci" title="7. Zakup kursów płatnych i płatności">
         <p>
+          Proces składania zamówienia jest prowadzony przez naszego
+          internetowego resellera Paddle.com. Paddle.com jest Merchant of Record
+          (autoryzowanym sprzedawcą) dla wszystkich naszych zamówień. Paddle
+          realizuje zwroty środków oraz uczestniczy w obsłudze klienta.
+        </p>
+        <p>
           Zakup kursów płatnych w serwisie odbywa się za pośrednictwem{" "}
           <LegalStrong>Paddle jako Merchant of Record</LegalStrong>. Oznacza to,
           że:
@@ -225,7 +231,7 @@ export default function TermsPage() {
           </LegalListItem>
           <LegalListItem>
             Paddle przyjmuje płatność, wystawia dowód zakupu (paragon lub
-            fakturę VAT) i rozlicza podatek VAT,
+            fakturę VAT), rozlicza podatek VAT oraz realizuje zwroty środków,
           </LegalListItem>
           <LegalListItem>
             do transakcji sprzedaży zastosowanie mają{" "}
@@ -240,9 +246,11 @@ export default function TermsPage() {
           </LegalListItem>
         </LegalList>
         <p>
-          W sprawach związanych z dostępem do kursu, reklamacjami i zwrotami
-          należy kontaktować się z Usługodawcą zgodnie z sekcją 12 niniejszego
-          regulaminu.
+          W sprawie zwrotu środków możesz skontaktować się z Usługodawcą
+          (zgodnie z sekcją 12 niniejszego regulaminu) albo bezpośrednio z
+          Paddle. Niezależnie od wybranego kanału sam zwrot środków realizuje
+          Paddle. Pełne zasady zwrotów znajdziesz na stronie{" "}
+          <LegalLink href="/refund">Zasady zwrotów</LegalLink>.
         </p>
       </LegalSection>
 
@@ -276,8 +284,7 @@ export default function TermsPage() {
         </p>
         <p>
           Pełne zasady zwrotów – także dla kursów już dostępnych – znajdziesz na
-          stronie{" "}
-          <LegalLink href="/refund">Zasady zwrotów</LegalLink>.
+          stronie <LegalLink href="/refund">Zasady zwrotów</LegalLink>.
         </p>
       </LegalSection>
 
@@ -361,8 +368,8 @@ export default function TermsPage() {
           <LegalLink href="mailto:zwroty@codebucket.pl">
             zwroty@codebucket.pl
           </LegalLink>
-          . Usługodawca przekazuje potwierdzone odstąpienie lub zatwierdzony
-          wniosek do Paddle w celu realizacji zwrotu środków.
+          . Możesz też skontaktować się w sprawie zwrotu bezpośrednio z Paddle.
+          Sam zwrot środków – niezależnie od wybranego kanału – realizuje Paddle.
         </p>
       </LegalSection>
 
@@ -372,19 +379,20 @@ export default function TermsPage() {
         title="12. Reklamacje i zgodność treści z umową"
       >
         <p>
-          Reklamacje oraz wnioski o zwrot środków we wszystkich sprawach kieruj
-          do Usługodawcy:
+          Reklamacje oraz wnioski o zwrot środków możesz kierować do Usługodawcy
+          albo – w sprawie zwrotu – bezpośrednio do Paddle:
         </p>
         <LegalList>
           <LegalListItem>
             <LegalStrong>Zwroty i odstąpienia od umowy</LegalStrong> –{" "}
-            <LegalLink href="/refund/request">formularz zwrotu</LegalLink> lub
+            <LegalLink href="/refund/request">formularz zwrotu</LegalLink>,
             e-mail:{" "}
             <LegalLink href="mailto:zwroty@codebucket.pl">
               zwroty@codebucket.pl
-            </LegalLink>
-            . Pełne zasady:{" "}
-            <LegalLink href="/refund">Zasady zwrotów</LegalLink>.
+            </LegalLink>{" "}
+            lub bezpośrednio Paddle:{" "}
+            <LegalLink href="mailto:help@paddle.com">help@paddle.com</LegalLink>.
+            Pełne zasady: <LegalLink href="/refund">Zasady zwrotów</LegalLink>.
           </LegalListItem>
           <LegalListItem>
             <LegalStrong>
@@ -398,11 +406,11 @@ export default function TermsPage() {
           </LegalListItem>
         </LegalList>
         <p>
-          Usługodawca przekazuje zatwierdzone wnioski o zwrot do Paddle w celu
-          realizacji przelewu. W przypadku bezpośrednich zapytań do Paddle
-          dotyczących historii transakcji możesz kontaktować się z Paddle pod
-          adresem{" "}
-          <LegalLink href="mailto:help@paddle.com">help@paddle.com</LegalLink>.
+          Wniosek o zwrot złożony u Usługodawcy jest przez niego zatwierdzany i
+          przekazywany do Paddle, które realizuje zwrot środków. Zwrot możesz
+          też zgłosić bezpośrednio do Paddle. Pod adresem{" "}
+          <LegalLink href="mailto:help@paddle.com">help@paddle.com</LegalLink>{" "}
+          uzyskasz również pomoc w sprawach dotyczących historii transakcji.
         </p>
         <p>
           Treści cyfrowe w serwisie są zgodne z umową w rozumieniu rozdziału 5b

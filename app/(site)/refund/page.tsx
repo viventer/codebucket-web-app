@@ -33,8 +33,9 @@ export default function RefundPage() {
         <p>
           Zakup kursów płatnych odbywa się za pośrednictwem{" "}
           <LegalStrong>Paddle.com Market Limited</LegalStrong> jako Merchant of
-          Record. CodeBucket rozpatruje i zatwierdza wnioski o zwrot. Paddle
-          realizuje zwrot środków na rachunek płatniczy Użytkownika tą samą
+          Record. W sprawie zwrotu możesz skontaktować się z CodeBucket albo
+          bezpośrednio z Paddle. Niezależnie od wybranego kanału sam zwrot
+          środków realizuje Paddle – na rachunek płatniczy Użytkownika, tą samą
           metodą płatności, której użyto przy zakupie.
         </p>
         <p>
@@ -115,26 +116,35 @@ export default function RefundPage() {
 
       <LegalSection id="wniosek" title="5. Jak złożyć wniosek o zwrot">
         <p>
-          Wniosek o zwrot składasz przez{" "}
-          <LegalLink href="/refund/request">formularz zwrotu</LegalLink>.
+          Wniosek o zwrot możesz zgłosić na jeden z poniższych sposobów:
+        </p>
+        <LegalList>
+          <LegalListItem>
+            przez <LegalLink href="/refund/request">formularz zwrotu</LegalLink>,
+          </LegalListItem>
+          <LegalListItem>
+            na adres{" "}
+            <LegalLink href="mailto:zwroty@codebucket.pl">
+              zwroty@codebucket.pl
+            </LegalLink>
+            ,
+          </LegalListItem>
+          <LegalListItem>
+            bezpośrednio do Paddle na adres{" "}
+            <LegalLink href="mailto:help@paddle.com">help@paddle.com</LegalLink>.
+          </LegalListItem>
+        </LegalList>
+        <p>
+          Wniosek złożony u Usługodawcy jest rozpatrywany w terminie{" "}
+          <LegalStrong>14 dni kalendarzowych</LegalStrong> od jego otrzymania i
+          po zatwierdzeniu przekazywany do Paddle. Niezależnie od wybranego
+          kanału sam zwrot środków realizuje Paddle – tą samą metodą płatności,
+          której użyto przy zakupie.
         </p>
         <p>
-          Możesz też napisać na adres{" "}
-          <LegalLink href="mailto:zwroty@codebucket.pl">
-            zwroty@codebucket.pl
-          </LegalLink>
-          .
-        </p>
-        <p>
-          Usługodawca rozpatruje wnioski w terminie{" "}
-          <LegalStrong>14 dni kalendarzowych</LegalStrong> od ich otrzymania.
-          Zatwierdzony wniosek przekazywany jest do Paddle, które realizuje
-          zwrot środków tą samą metodą płatności.
-        </p>
-        <p>
-          W sprawach dotyczących historii transakcji możesz kontaktować się
-          bezpośrednio z Paddle pod adresem{" "}
-          <LegalLink href="mailto:help@paddle.com">help@paddle.com</LegalLink>.
+          Pod adresem{" "}
+          <LegalLink href="mailto:help@paddle.com">help@paddle.com</LegalLink>{" "}
+          uzyskasz też pomoc w sprawach dotyczących historii transakcji.
         </p>
       </LegalSection>
     </LegalDocument>
