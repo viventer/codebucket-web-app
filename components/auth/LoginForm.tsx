@@ -25,6 +25,7 @@ export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const passwordChanged = searchParams.get("passwordChanged") === "1";
+  const isRefundReason = searchParams.get("reason") === "refund";
   const nextParam = searchParams.get("next");
 
   const [email, setEmail] = useState("");
@@ -83,6 +84,13 @@ export function LoginForm() {
       {passwordChanged && (
         <p className="rounded-lg bg-primary/20 border border-primary px-3 py-2 text-center text-sm text-foreground">
           Twoje hasło zostało zmienione. Zaloguj się ponownie.
+        </p>
+      )}
+
+      {isRefundReason && (
+        <p className="rounded-lg bg-primary/20 border border-primary px-3 py-2 text-center text-sm text-foreground">
+          Zaloguj się na konto, na którym został dokonany zakup, aby złożyć
+          wniosek o zwrot.
         </p>
       )}
 

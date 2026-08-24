@@ -165,7 +165,7 @@ export function CheckoutInlineFrame({
 
   if (error) {
     return (
-      <Card className="flex min-h-[320px] flex-col items-center justify-center gap-3 p-6 text-center">
+      <Card className="flex min-h-80 flex-col items-center justify-center gap-3 p-6 text-center">
         <p className="text-sm text-destructive">{error}</p>
         <button
           type="button"

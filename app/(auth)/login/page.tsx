@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { LoginForm } from "@/components/auth/LoginForm";
-import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const metadata = {
   title: "Zaloguj się – CodeBucket",
@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function LoginPage() {
   return (
-    <>
+    <Card>
       <CardHeader>
         <CardTitle className="text-center text-2xl font-bold">
           Zaloguj się
@@ -19,6 +19,6 @@ export default function LoginPage() {
           <LoginForm />
         </Suspense>
       </CardContent>
-    </>
+    </Card>
   );
 }

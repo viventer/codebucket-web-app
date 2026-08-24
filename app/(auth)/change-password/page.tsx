@@ -1,4 +1,5 @@
 import { ChangePasswordCard } from "@/components/auth/ChangePasswordCard";
+import { Card } from "@/components/ui/card";
 import { getSessionUser } from "@/lib/auth/session";
 import { userCanChangePassword } from "@/lib/auth/user-can-change-password";
 import { redirect } from "next/navigation";
@@ -14,5 +15,9 @@ export default async function ChangePasswordPage() {
   const canChangePassword = await userCanChangePassword(user.uid);
   if (!canChangePassword) redirect("/");
 
-  return <ChangePasswordCard uid={user.uid} email={user.email} />;
+  return (
+    <Card>
+      <ChangePasswordCard uid={user.uid} email={user.email} />
+    </Card>
+  );
 }
