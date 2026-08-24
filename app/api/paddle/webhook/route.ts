@@ -72,6 +72,7 @@ async function handlePaidTransaction(
   }
 
   const emailResult = await sendOrderConfirmationEmail({
+    to: email,
     courseId: custom.courseId,
     amount,
     currency,

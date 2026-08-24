@@ -6,6 +6,7 @@ import { getCourseImageUrl } from "@/lib/course/landing-data";
 import { sendEmail } from "@/lib/email/send-email";
 
 type SendOrderConfirmationEmailInput = {
+  to: string;
   courseId: string;
   amount: number;
   currency: string;
@@ -14,6 +15,10 @@ type SendOrderConfirmationEmailInput = {
 export async function sendOrderConfirmationEmail(
   input: SendOrderConfirmationEmailInput,
 ): Promise<{ success: boolean; error?: string }> {
+  if (!input.to) {
+    return { success: false, error: "Brak adresu email odbiorcy." };
+  }
+
   const course = await getCourseDocument(input.courseId);
   const courseTitle = course?.title ?? "Podstawy CSS";
   const courseDescription =
@@ -39,9 +44,8 @@ export async function sendOrderConfirmationEmail(
     input.amount > 0 ? input.amount : (course?.price.currentPrice ?? 0),
   );
 
-  // Recipient is currently hardcoded inside sendEmail (kontakt.codebucket@gmail.com).
   const result = await sendEmail({
-    to: "kontakt.codebucket@gmail.com",
+    to: input.to,
     subject: `Potwierdzenie zakupu: ${courseTitle}`,
     react: OrderConfirmationEmail({
       courseId: input.courseId,

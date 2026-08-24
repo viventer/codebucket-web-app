@@ -46,7 +46,7 @@ export async function sendPasswordResetOtp(
   return sendOtp({
     collection: COLLECTION,
     docId: resolved.uid,
-    emailTo: "kontakt.codebucket@gmail.com",
+    emailTo: email,
     emailSubject: "Zresetuj hasło – CodeBucket",
     buildEmailElement: (code, ttlMinutes) =>
       React.createElement(PasswordResetOtpEmail, { code, ttlMinutes }),

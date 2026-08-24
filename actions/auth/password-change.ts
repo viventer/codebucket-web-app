@@ -14,7 +14,7 @@ export async function sendPasswordChangeOtp(
   return sendOtp({
     collection: COLLECTION,
     docId: uid,
-    emailTo: "kontakt.codebucket@gmail.com",
+    emailTo: email,
     emailSubject: "Potwierdź zmianę hasła – CodeBucket",
     buildEmailElement: (code, ttlMinutes) =>
       React.createElement(PasswordChangeOtpEmail, { code, ttlMinutes }),
