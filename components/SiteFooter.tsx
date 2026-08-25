@@ -27,6 +27,7 @@ export function SiteFooter() {
               key={href}
               href={href}
               className="underline decoration-1 underline-offset-2 decoration-accent hover:no-underline"
+              prefetch={false}
             >
               {label}
             </Link>
