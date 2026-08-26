@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 
 import { HelpContactCard } from "@/components/help/HelpContactCard";
@@ -11,6 +12,7 @@ import {
   LegalListItem,
   LegalSection,
 } from "@/components/legal";
+import { Button } from "@/components/ui/button";
 import {
   CONTACT_CHANNELS,
   FAQ_ITEMS,
@@ -33,7 +35,17 @@ export default function HelpAndContactPage() {
         </p>
       </LegalHeader>
 
-      <LegalSection id="kontakt" title="Kontakt">
+      <LegalSection id="kontakt" title="Skontaktuj się z nami">
+        <p>
+          Najszybszym sposobem kontaktu jest formularz zgłoszeniowy. Opisz
+          sprawę, a my odpowiemy na podany adres e-mail.
+        </p>
+        <Button asChild className="w-fit">
+          <Link href="/contact">Przejdź do formularza</Link>
+        </Button>
+      </LegalSection>
+
+      <LegalSection id="kontakt-email" title="Kontakt przez e-mail">
         <div className="flex flex-col gap-3">
           {CONTACT_CHANNELS.map((channel) => (
             <HelpContactCard

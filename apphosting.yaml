@@ -46,3 +46,9 @@ env:
 
   - variable: PADDLE_API_KEY
     secret: PADDLE_API_KEY
+
+  - variable: UPSTASH_REDIS_REST_URL
+    secret: UPSTASH_REDIS_REST_URL
+
+  - variable: UPSTASH_REDIS_REST_TOKEN
+    secret: UPSTASH_REDIS_REST_TOKEN
