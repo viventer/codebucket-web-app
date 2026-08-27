@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: "Regulamin – CodeBucket",
 };
 
-const LAST_UPDATED = "24 sierpnia 2026 r.";
+const LAST_UPDATED = "27 sierpnia 2026 r.";
 
 export default function TermsPage() {
   return (
@@ -112,7 +112,9 @@ export default function TermsPage() {
           <LegalListItem>aktywny adres e-mail,</LegalListItem>
           <LegalListItem>
             włączona obsługa plików cookies (wymagana do utrzymania sesji
-            zalogowanego użytkownika).
+            zalogowanego użytkownika). Szczegółowe informacje o rodzajach
+            cookies i zasadach zgody znajdują się w{" "}
+            <LegalLink href="/privacy">Polityce prywatności</LegalLink>.
           </LegalListItem>
         </LegalList>
         <p>
@@ -466,10 +468,11 @@ export default function TermsPage() {
       </LegalSection>
 
       {/* 14 */}
-      <LegalSection id="dane-osobowe" title="14. Dane osobowe">
+      <LegalSection id="dane-osobowe" title="14. Dane osobowe i cookies">
         <p>
           Zasady przetwarzania danych osobowych Użytkowników przez Usługodawcę
-          określa <LegalLink href="/privacy">Polityka prywatności</LegalLink>{" "}
+          oraz stosowania plików cookies określa{" "}
+          <LegalLink href="/privacy">Polityka prywatności i cookies</LegalLink>{" "}
           dostępna pod adresem codebucket.pl/privacy.
         </p>
         <p>

@@ -15,12 +15,15 @@ export const metadata: Metadata = {
   title: "Polityka prywatności – CodeBucket",
 };
 
-const LAST_UPDATED = "21 lipca 2026 r.";
+const LAST_UPDATED = "27 sierpnia 2026 r.";
 
 export default function PrivacyPolicyPage() {
   return (
     <LegalDocument>
-      <LegalHeader title="Polityka prywatności" lastUpdated={LAST_UPDATED}>
+      <LegalHeader
+        title="Polityka prywatności i cookies"
+        lastUpdated={LAST_UPDATED}
+      >
         <p className="text-sm sm:text-base">
           Niniejsza polityka prywatności opisuje, w jaki sposób przetwarzamy
           dane osobowe użytkowników serwisu CodeBucket (
@@ -108,6 +111,13 @@ export default function PrivacyPolicyPage() {
             wykrywanie nadużyć, wysyłka e-maili transakcyjnych związanych z
             funkcjonowaniem konta (np. resetowanie hasła).
           </LegalListItem>
+          <LegalListItem>
+            <LegalStrong>Zgoda</LegalStrong> (art. 6 ust. 1 lit. a RODO) –
+            pliki cookies statystyczne (Google Analytics) i marketingowe (Google
+            Ads), w tym pomiar konwersji i remarketing. Zgoda jest wyrażana
+            dobrowolnie za pośrednictwem banera cookies i może być w każdej
+            chwili wycofana.
+          </LegalListItem>
         </LegalList>
       </LegalSection>
 
@@ -123,8 +133,21 @@ export default function PrivacyPolicyPage() {
           <LegalListItem>
             <LegalStrong>Google LLC / Google Cloud</LegalStrong> (podmiot
             przetwarzający na podstawie umowy powierzenia) – hosting aplikacji
-            (Firebase Hosting), uwierzytelnianie (Firebase Authentication), baza
-            danych (Cloud Firestore). Polityka prywatności Google:{" "}
+            (Firebase Hosting / Firebase App Hosting), uwierzytelnianie
+            (Firebase Authentication), baza danych (Cloud Firestore). Polityka
+            prywatności Google:{" "}
+            <LegalLink href="https://policies.google.com/privacy" external>
+              policies.google.com/privacy
+            </LegalLink>
+            .
+          </LegalListItem>
+          <LegalListItem>
+            <LegalStrong>Google Ireland Limited / Google LLC</LegalStrong> –
+            Google Analytics (statystyki korzystania z serwisu) oraz Google Ads
+            (pomiar konwersji i remarketing). Dane z tych usług są
+            przekazywane{" "}
+            <LegalStrong>wyłącznie po wyrażeniu zgody</LegalStrong> na
+            odpowiednie kategorie cookies. Polityka prywatności Google:{" "}
             <LegalLink href="https://policies.google.com/privacy" external>
               policies.google.com/privacy
             </LegalLink>
@@ -166,8 +189,10 @@ export default function PrivacyPolicyPage() {
         <p>
           Część podmiotów przetwarzających (Google LLC, Resend Inc.) ma siedzibę
           w Stanach Zjednoczonych, co oznacza przekazywanie danych poza
-          Europejski Obszar Gospodarczy (EOG). Przekazanie odbywa się na
-          podstawie{" "}
+          Europejski Obszar Gospodarczy (EOG). W przypadku Google (w tym Google
+          Analytics i Google Ads) dane mogą być przekazywane do USA. Przekazanie
+          odbywa się na podstawie certyfikacji Google w ramach{" "}
+          <LegalStrong>EU‑US Data Privacy Framework</LegalStrong> oraz{" "}
           <LegalStrong>
             standardowych klauzul umownych (SCC) zatwierdzonych przez Komisję
             Europejską
@@ -224,6 +249,10 @@ export default function PrivacyPolicyPage() {
             <LegalStrong>Dane sesji (cookie):</LegalStrong> do wylogowania lub
             wygaśnięcia sesji (maksymalnie 30 dni).
           </LegalListItem>
+          <LegalListItem>
+            <LegalStrong>Zapis zgody na cookies:</LegalStrong> 12 miesięcy od
+            wyrażenia lub zmiany zgody.
+          </LegalListItem>
         </LegalList>
         <p>
           Po upływie okresu przechowywania dane są trwale usuwane lub
@@ -250,7 +279,7 @@ export default function PrivacyPolicyPage() {
           </LegalListItem>
           <LegalListItem>
             <LegalStrong>Prawo do usunięcia</LegalStrong> (art. 17 RODO) – prawo
-            do żądania usunięcia danych („prawo do bycia zapomnianym"), o ile
+            do żądania usunięcia danych („prawo do bycia zapomnianym”), o ile
             nie istnieje podstawa prawna zobowiązująca do ich dalszego
             przetwarzania.
           </LegalListItem>
@@ -268,6 +297,14 @@ export default function PrivacyPolicyPage() {
             <LegalStrong>Prawo do sprzeciwu</LegalStrong> (art. 21 RODO) – prawo
             do wniesienia sprzeciwu wobec przetwarzania opartego na uzasadnionym
             interesie administratora.
+          </LegalListItem>
+          <LegalListItem>
+            <LegalStrong>Prawo do wycofania zgody</LegalStrong> (art. 7 ust. 3
+            RODO) – jeśli przetwarzanie odbywa się na podstawie zgody (cookies
+            statystyczne i marketingowe), możesz ją w każdej chwili wycofać
+            przez odnośnik „Ustawienia cookies” w stopce strony. Wycofanie zgody
+            nie wpływa na zgodność z prawem przetwarzania dokonanego przed jej
+            wycofaniem.
           </LegalListItem>
         </LegalList>
         <p>
@@ -311,33 +348,66 @@ export default function PrivacyPolicyPage() {
 
       {/* 9 */}
       <LegalSection id="cookies" title="9. Pliki cookies">
-        <p>Serwis korzysta z następujących plików cookies:</p>
+        <p>
+          Serwis wykorzystuje pliki cookies – małe pliki tekstowe zapisywane na
+          urządzeniu użytkownika – w celach technicznych (niezbędnych do
+          działania serwisu) oraz, za Twoją zgodą, statystycznych i
+          marketingowych.
+        </p>
+        <p>Rodzaje cookies używane w serwisie:</p>
         <LegalList>
           <LegalListItem>
-            <LegalStrong>Cookie sesji (sesyjne):</LegalStrong> zaszyfrowany plik
-            cookie{" "}
+            <LegalStrong>Niezbędne</LegalStrong> – konieczne do działania
+            serwisu. Nie wymagają zgody i są zawsze aktywne. Należą do nich:
+            zaszyfrowany plik cookie sesji{" "}
             <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">
-              session
+              cb_session
             </code>{" "}
-            zapisywany przez bibliotekę iron-session. Niezbędny do utrzymania
-            stanu zalogowanego użytkownika. Ważny do momentu wylogowania lub
-            przez maksymalnie 30 dni.
+            (iron-session, httpOnly, maksymalnie 30 dni), znacznik sesji{" "}
+            <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">
+              cb_auth
+            </code>{" "}
+            oraz zapis Twojej decyzji o zgodach{" "}
+            <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">
+              cb_cookie_consent
+            </code>{" "}
+            (12 miesięcy). Preferencja motywu interfejsu (jasny/ciemny) jest
+            przechowywana lokalnie w przeglądarce i nie jest przekazywana do
+            serwerów zewnętrznych.
           </LegalListItem>
           <LegalListItem>
-            <LegalStrong>Cookie preferencji motywu (funkcjonalne):</LegalStrong>{" "}
-            plik cookie zapisujący wybór jasnego lub ciemnego motywu interfejsu.
-            Przechowywany lokalnie bez przekazywania danych do serwerów
-            zewnętrznych.
+            <LegalStrong>Statystyczne</LegalStrong> (Google Analytics / GA4) –
+            służą do zbierania pseudonimowych, zbiorczych informacji o
+            korzystaniu z serwisu (identyfikatory cookies, zdarzenia, przybliżona
+            lokalizacja). Uruchamiane wyłącznie za zgodą użytkownika.
+          </LegalListItem>
+          <LegalListItem>
+            <LegalStrong>Marketingowe</LegalStrong> (Google Ads) – służą do
+            pomiaru konwersji oraz remarketingu (dopasowania reklam do
+            wcześniejszych odwiedzin). Uruchamiane wyłącznie za zgodą
+            użytkownika.
           </LegalListItem>
         </LegalList>
         <p>
-          Nie stosujemy plików cookies śledzących, marketingowych ani
-          analitycznych.
+          Cookies statystyczne i marketingowe są uruchamiane{" "}
+          <LegalStrong>wyłącznie po wyrażeniu zgody</LegalStrong>. Do momentu
+          udzielenia zgody te usługi nie zapisują plików cookies na urządzeniu
+          użytkownika. Stosujemy mechanizm{" "}
+          <LegalStrong>Google Consent Mode v2</LegalStrong>, w którym
+          domyślnym stanem jest brak zgody (denied) na cookies analityczne i
+          marketingowe.
         </p>
         <p>
-          Możesz zarządzać plikami cookies poprzez ustawienia swojej
-          przeglądarki, jednak wyłączenie cookie sesji uniemożliwi korzystanie z
-          konta użytkownika.
+          Przy pierwszej wizycie wyświetlamy baner umożliwiający wyrażenie lub
+          odrzucenie zgody na poszczególne kategorie cookies. Zgodę można w
+          każdej chwili zmienić lub wycofać, korzystając z odnośnika{" "}
+          <LegalStrong>„Ustawienia cookies”</LegalStrong> w stopce strony.
+          Wycofanie zgody jest równie proste jak jej udzielenie.
+        </p>
+        <p>
+          Możesz również w każdej chwili zmienić ustawienia przeglądarki, by
+          zablokować lub usunąć cookies. Wyłączenie cookies niezbędnych
+          uniemożliwi korzystanie z konta użytkownika.
         </p>
       </LegalSection>
 
@@ -347,9 +417,20 @@ export default function PrivacyPolicyPage() {
         title="10. Zautomatyzowane decyzje i profilowanie"
       >
         <p>
-          Nie stosujemy zautomatyzowanego podejmowania decyzji ani profilowania
-          w rozumieniu art. 22 RODO. Żadne decyzje wywołujące skutki prawne lub
-          istotnie wpływające na użytkowników nie są podejmowane automatycznie.
+          Nie stosujemy zautomatyzowanego podejmowania decyzji wywołującego
+          skutki prawne lub istotnie wpływającego na Twoją sytuację w rozumieniu
+          art. 22 RODO.
+        </p>
+        <p>
+          Korzystanie z Google Ads (po wyrażeniu zgody na cookies marketingowe)
+          wiąże się z profilowaniem w celach reklamowych – dopasowaniem reklam
+          do wcześniejszych odwiedzin w serwisie. Profilowanie to{" "}
+          <LegalStrong>
+            nie wywołuje wobec użytkownika skutków prawnych ani nie wpływa w
+            istotny sposób na jego sytuację
+          </LegalStrong>{" "}
+          w rozumieniu art. 22 RODO. Podstawą prawną jest zgoda (art. 6 ust. 1
+          lit. a RODO), którą możesz w każdej chwili wycofać.
         </p>
       </LegalSection>
 

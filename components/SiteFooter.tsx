@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CookieSettingsTrigger } from "@/components/cookie-consent/CookieSettingsTrigger";
 
 const FOOTER_LINKS = [
   { href: "/help", label: "Pomoc i kontakt" },
@@ -32,6 +33,7 @@ export function SiteFooter() {
               {label}
             </Link>
           ))}
+          <CookieSettingsTrigger />
         </nav>
       </div>
     </footer>

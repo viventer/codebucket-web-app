@@ -1,5 +1,5 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
-import { getAnalytics, type Analytics } from "firebase/analytics";
+import { getAnalytics, settings, type Analytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
@@ -32,6 +32,10 @@ const storage = getStorage(app);
 let analytics: Analytics | null = null;
 if (typeof window !== "undefined" && process.env.NODE_ENV === "production") {
   try {
+    // Firebase replaces window.gtag with a wrapper that drops the field name
+    // in gtag("set", <field>, <value>). A dedicated name leaves the snippet
+    // gtag intact; dataLayer stays shared.
+    settings({ gtagName: "gtagFirebase" });
     analytics = getAnalytics(app);
   } catch {
     analytics = null;
