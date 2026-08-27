@@ -10,7 +10,7 @@ const CB_AUTH_COOKIE = "cb_auth";
 const SESSION_TTL_SECONDS = 30 * 24 * 60 * 60;
 
 type CreateSessionResult =
-  | { success: true; uid: string; email: string }
+  | { success: true; uid: string; email: string; isNewUser: boolean }
   | { success: false; error: string };
 
 export async function createSession(
@@ -45,7 +45,12 @@ export async function createSession(
       path: "/",
     });
 
-    return { success: true, uid, email: userResult.email };
+    return {
+      success: true,
+      uid,
+      email: userResult.email,
+      isNewUser: userResult.isNewUser,
+    };
   } catch {
     return {
       success: false,

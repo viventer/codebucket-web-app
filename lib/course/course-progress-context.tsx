@@ -14,6 +14,9 @@ import {
   getCourseProgress,
   updateCourseProgress,
 } from "@/actions/user/progress";
+import { logEvent } from "firebase/analytics";
+
+import { analytics } from "@/firebase/init";
 import {
   isGuestUser,
   readGuestProgress,
@@ -35,6 +38,34 @@ const CourseProgressContext =
 
 type SectionSpec = { id: string; elementIds: string[] };
 
+function emitCompletionEvents(
+  courseId: string,
+  previousSectionIds: string[],
+  nextSectionIds: string[],
+  sections: SectionSpec[],
+) {
+  const previous = new Set(previousSectionIds);
+  for (const sectionId of nextSectionIds) {
+    if (!previous.has(sectionId) && analytics) {
+      logEvent(analytics, "complete_chapter", {
+        course_id: courseId,
+        section_id: sectionId,
+      });
+    }
+  }
+
+  const allComplete =
+    sections.length > 0 &&
+    sections.every((section) => nextSectionIds.includes(section.id));
+  const wasComplete =
+    sections.length > 0 &&
+    sections.every((section) => previousSectionIds.includes(section.id));
+
+  if (allComplete && !wasComplete && analytics) {
+    logEvent(analytics, "complete_course", { course_id: courseId });
+  }
+}
+
 type CourseProgressProviderProps = {
   courseId: string;
   /** Ordered sections with their element IDs — used for client-side section completion when guest */
@@ -54,16 +85,24 @@ export function CourseProgressProvider({
 
   // Track in-flight persists to handle rollback on failure (authenticated path only)
   const pendingRef = useRef<Set<string>>(new Set());
+  const sectionsCompletedRef = useRef<string[]>([]);
+
+  useEffect(() => {
+    sectionsCompletedRef.current = sectionsCompleted;
+  }, [sectionsCompleted]);
 
   useEffect(() => {
     if (isGuestUser()) {
       const ids = new Set(readGuestProgress(courseId));
+      const nextSections = computeSectionsCompleted(sections, ids);
       setCompletedElementIds(ids);
-      setSectionsCompleted(computeSectionsCompleted(sections, ids));
+      sectionsCompletedRef.current = nextSections;
+      setSectionsCompleted(nextSections);
     } else {
       getCourseProgress(courseId).then((result) => {
         if (result.success) {
           setCompletedElementIds(new Set(result.entry.elementsCompleted));
+          sectionsCompletedRef.current = result.entry.sectionsCompleted;
           setSectionsCompleted(result.entry.sectionsCompleted);
         }
       });
@@ -81,11 +120,17 @@ export function CourseProgressProvider({
 
       if (isGuestUser()) {
         writeGuestElementCompleted(courseId, elementId);
-        setCompletedElementIds((prev) => {
-          const next = new Set([...prev, elementId]);
-          setSectionsCompleted(computeSectionsCompleted(sections, next));
-          return next;
-        });
+        const next = new Set([...completedElementIds, elementId]);
+        const nextSections = computeSectionsCompleted(sections, next);
+        emitCompletionEvents(
+          courseId,
+          sectionsCompletedRef.current,
+          nextSections,
+          sections,
+        );
+        sectionsCompletedRef.current = nextSections;
+        setCompletedElementIds(next);
+        setSectionsCompleted(nextSections);
         return;
       }
 
@@ -110,6 +155,14 @@ export function CourseProgressProvider({
         // Re-fetch sections completed (section/course completion is computed server-side)
         getCourseProgress(courseId).then((refreshResult) => {
           if (refreshResult.success) {
+            emitCompletionEvents(
+              courseId,
+              sectionsCompletedRef.current,
+              refreshResult.entry.sectionsCompleted,
+              sections,
+            );
+            sectionsCompletedRef.current =
+              refreshResult.entry.sectionsCompleted;
             setSectionsCompleted(refreshResult.entry.sectionsCompleted);
           }
         });

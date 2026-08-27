@@ -4,10 +4,7 @@ import type { TransactionNotification } from "@paddle/paddle-node-sdk";
 import { adminDB } from "@/firebase/admin-init";
 import { paddleAmountToMajor } from "@/lib/paddle/amounts";
 import { getPaddleWebhookSecret } from "@/lib/paddle/config";
-import {
-  fulfillOrder,
-  markOrderEmailSent,
-} from "@/lib/paddle/fulfill-order";
+import { fulfillOrder, markOrderEmailSent } from "@/lib/paddle/fulfill-order";
 import { sendOrderConfirmationEmail } from "@/lib/paddle/send-order-confirmation";
 import { getPaddleServer } from "@/lib/paddle/server";
 
@@ -165,9 +162,7 @@ export async function POST(request: Request) {
     switch (eventData.eventType) {
       case EventName.TransactionCompleted:
       case EventName.TransactionPaid: {
-        await handlePaidTransaction(
-          eventData.data as TransactionNotification,
-        );
+        await handlePaidTransaction(eventData.data as TransactionNotification);
         break;
       }
       case EventName.TransactionPaymentFailed:

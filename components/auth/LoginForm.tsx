@@ -5,7 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { flattenError } from "zod";
-import { auth } from "@/firebase/init";
+import { logEvent } from "firebase/analytics";
+import { analytics, auth } from "@/firebase/init";
 import { createSession } from "@/actions/auth/session";
 import { migrateAllGuestProgressFromStorage } from "@/lib/course/migrate-guest-progress";
 import { getFirebaseErrorMessage } from "@/lib/firebase-errors";
@@ -69,6 +70,9 @@ export function LoginForm() {
         }
 
         await migrateAllGuestProgressFromStorage();
+        if (analytics) {
+          logEvent(analytics, "login", { method: "email" });
+        }
 
         router.push(getSafeNext(nextParam));
         router.refresh();

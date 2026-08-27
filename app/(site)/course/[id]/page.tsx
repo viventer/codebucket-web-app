@@ -1,11 +1,15 @@
 import { notFound } from "next/navigation";
 
+import { ViewItemTracker } from "@/components/analytics/ViewItemTracker";
 import { CourseLandingPage } from "@/components/course/landing/CourseLandingPage";
 import {
   buildCourseLandingData,
   getPrerequisiteCourseIds,
 } from "@/lib/course/landing-data";
-import { getCourseDocument, listCourseIds } from "@/actions/courses/read-courses";
+import {
+  getCourseDocument,
+  listCourseIds,
+} from "@/actions/courses/read-courses";
 
 export async function generateStaticParams() {
   const courseIds = await listCourseIds();
@@ -36,10 +40,17 @@ export default async function CourseLandingRoute({
     ).filter((courseId): courseId is string => courseId !== null),
   );
 
-  const data = buildCourseLandingData(
-    course,
-    existingPrerequisiteCourseIds,
-  );
+  const data = buildCourseLandingData(course, existingPrerequisiteCourseIds);
 
-  return <CourseLandingPage data={data} />;
+  return (
+    <>
+      <ViewItemTracker
+        itemId={data.id}
+        itemName={data.title}
+        value={data.currentPrice}
+        currency={data.currentPrice !== undefined ? "PLN" : undefined}
+      />
+      <CourseLandingPage data={data} />
+    </>
+  );
 }

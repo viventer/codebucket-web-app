@@ -21,7 +21,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { logEvent } from "firebase/analytics";
+
 import { useToast } from "@/hooks/use-toast";
+import { analytics } from "@/firebase/init";
 import type { RefundableCourse } from "@/lib/refund/get-refundable-courses";
 import {
   REFUND_REASONS,
@@ -65,6 +68,13 @@ export function RefundCourseCard({ course }: RefundCourseCardProps) {
       if (!result.success) {
         setError(result.error);
         return;
+      }
+
+      if (analytics) {
+        logEvent(analytics, "refund", {
+          transaction_id: course.paddleTransactionId,
+          items: [{ item_id: course.courseId }],
+        });
       }
 
       setOpen(false);

@@ -4,7 +4,7 @@ import { adminAuth, adminDB } from "@/firebase/admin-init";
 import { FieldValue } from "firebase-admin/firestore";
 
 type CreateUserResult =
-  | { success: true; email: string }
+  | { success: true; email: string; isNewUser: boolean }
   | { success: false; error: string };
 
 async function resolveUserEmail(uid: string, email: string): Promise<string> {
@@ -34,6 +34,7 @@ export async function ensureUserDocument(
       const storedEmail = existing.data()?.email;
       return {
         success: true,
+        isNewUser: false,
         email: typeof storedEmail === "string" ? storedEmail : resolvedEmail,
       };
     }
@@ -66,7 +67,7 @@ export async function ensureUserDocument(
 
     await batch.commit();
 
-    return { success: true, email: resolvedEmail };
+    return { success: true, isNewUser: true, email: resolvedEmail };
   } catch (error) {
     console.error("ensureUserDocument failed:", error);
     return {

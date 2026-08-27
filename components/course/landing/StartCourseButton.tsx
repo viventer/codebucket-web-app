@@ -5,7 +5,10 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { ClientIcon } from "@/components/ui/client-icon";
+import { logEvent } from "firebase/analytics";
+
 import { startCourse } from "@/actions/user/start-course";
+import { analytics } from "@/firebase/init";
 import { isGuestUser, writeGuestCourseStarted } from "@/lib/course/guest-progress";
 import { cn } from "@/lib/utils";
 
@@ -37,6 +40,9 @@ export function StartCourseButton({
       // Free courses: guests can start the first section without an account
       if (isFree && isGuestUser()) {
         writeGuestCourseStarted(courseId);
+        if (analytics) {
+          logEvent(analytics, "start_course", { course_id: courseId });
+        }
         router.push(startHref);
         return;
       }
@@ -50,6 +56,9 @@ export function StartCourseButton({
         return;
       }
 
+      if (analytics) {
+        logEvent(analytics, "start_course", { course_id: courseId });
+      }
       router.push(startHref);
     } finally {
       setLoading(false);

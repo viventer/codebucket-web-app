@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { EyeIcon, EyeOffIcon, InfoIcon } from "lucide-react";
-import { auth } from "@/firebase/init";
+import { logEvent } from "firebase/analytics";
+import { analytics, auth } from "@/firebase/init";
 import { createSession } from "@/actions/auth/session";
 import { migrateAllGuestProgressFromStorage } from "@/lib/course/migrate-guest-progress";
 import { getFirebaseErrorMessage } from "@/lib/firebase-errors";
@@ -74,6 +75,9 @@ export function SignupForm() {
         }
 
         await migrateAllGuestProgressFromStorage();
+        if (analytics) {
+          logEvent(analytics, "sign_up", { method: "email" });
+        }
 
         window.location.assign(getSafeNext(nextParam));
       } catch (err) {

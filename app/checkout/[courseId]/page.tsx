@@ -76,6 +76,8 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
           priceId={priceId}
           userId={sessionUser.uid}
           email={sessionUser.email}
+          value={course.price.currentPrice}
+          currency="PLN"
         />
       </div>
     </div>

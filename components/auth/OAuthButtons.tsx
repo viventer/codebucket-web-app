@@ -1,8 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { logEvent } from "firebase/analytics";
 import { signInWithPopup } from "firebase/auth";
-import { auth, googleAuthProvider, githubAuthProvider } from "@/firebase/init";
+import {
+  analytics,
+  auth,
+  googleAuthProvider,
+  githubAuthProvider,
+} from "@/firebase/init";
 import { createSession } from "@/actions/auth/session";
 import { migrateAllGuestProgressFromStorage } from "@/lib/course/migrate-guest-progress";
 import { getFirebaseErrorMessage } from "@/lib/firebase-errors";
@@ -38,6 +44,13 @@ export function OAuthButtons() {
       }
 
       await migrateAllGuestProgressFromStorage();
+      if (analytics) {
+        if (sessionResult.isNewUser) {
+          logEvent(analytics, "sign_up", { method: provider });
+        } else {
+          logEvent(analytics, "login", { method: provider });
+        }
+      }
 
       window.location.assign(getSafeNext());
     } catch (err) {

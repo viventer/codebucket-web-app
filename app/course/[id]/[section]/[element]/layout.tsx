@@ -21,6 +21,7 @@ import {
 import { buildCourseNavigationMetadata } from "@/lib/course/build-navigation-metadata";
 import { CourseElementShell } from "@/components/course/CourseElementShell";
 import type { StaticNavSection } from "@/components/course/CourseElementShell";
+import { OpenCourseTracker } from "@/components/analytics/OpenCourseTracker";
 
 export async function generateStaticParams() {
   return getAllCourseElementParams();
@@ -133,35 +134,38 @@ export default async function ElementLayout({
       : null;
 
   return (
-    <CourseElementShell
-      courseId={course.id}
-      navigationMetadata={navigationMetadata}
-      staticSections={staticSections}
-      currentSectionElementIds={currentSectionElementIds}
-      headerStaticProps={{
-        courseId: course.id,
-        courseTitle: course.title,
-        sectionTitle: currentSection.title,
-        currentSectionId: sectionId,
-        currentElementId: elementId,
-      }}
-      actionBarProps={{
-        type: currentElement.type,
-        title: currentElementDocument.displayTitle,
-        sectionOrder: currentSection.order,
-        sectionTitle: currentSection.title,
-        hideInfoOnMobile: elementHideInfoOnMobile(currentElement),
-        prevHref,
-        nextHref,
-        continueHref,
-        hasMaterials: elementHasMaterials(currentElement),
-        hasHint: elementHasHint(currentElement),
-      }}
-      isExercise={isExercise}
-      exerciseElement={currentElement}
-      centerContentOnMobile={elementCentersMediaOnMobile(currentElement)}
-    >
-      {children}
-    </CourseElementShell>
+    <>
+      <OpenCourseTracker courseId={course.id} />
+      <CourseElementShell
+        courseId={course.id}
+        navigationMetadata={navigationMetadata}
+        staticSections={staticSections}
+        currentSectionElementIds={currentSectionElementIds}
+        headerStaticProps={{
+          courseId: course.id,
+          courseTitle: course.title,
+          sectionTitle: currentSection.title,
+          currentSectionId: sectionId,
+          currentElementId: elementId,
+        }}
+        actionBarProps={{
+          type: currentElement.type,
+          title: currentElementDocument.displayTitle,
+          sectionOrder: currentSection.order,
+          sectionTitle: currentSection.title,
+          hideInfoOnMobile: elementHideInfoOnMobile(currentElement),
+          prevHref,
+          nextHref,
+          continueHref,
+          hasMaterials: elementHasMaterials(currentElement),
+          hasHint: elementHasHint(currentElement),
+        }}
+        isExercise={isExercise}
+        exerciseElement={currentElement}
+        centerContentOnMobile={elementCentersMediaOnMobile(currentElement)}
+      >
+        {children}
+      </CourseElementShell>
+    </>
   );
 }

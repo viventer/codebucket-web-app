@@ -1,8 +1,8 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
+import { getAnalytics, type Analytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { Analytics, getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -28,9 +28,22 @@ googleAuthProvider.setCustomParameters({
 const githubAuthProvider = new GithubAuthProvider();
 githubAuthProvider.setCustomParameters({ allow_signup: "true" });
 const storage = getStorage(app);
+
 let analytics: Analytics | null = null;
-if (typeof window !== "undefined") {
-  analytics = getAnalytics(app);
+if (typeof window !== "undefined" && process.env.NODE_ENV === "production") {
+  try {
+    analytics = getAnalytics(app);
+  } catch {
+    analytics = null;
+  }
 }
 
-export { db, app, storage, auth, googleAuthProvider, githubAuthProvider, analytics };
+export {
+  db,
+  app,
+  storage,
+  auth,
+  googleAuthProvider,
+  githubAuthProvider,
+  analytics,
+};

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import {
   CheckoutEventNames,
   initializePaddle,
+  type CheckoutEventsData,
   type Paddle,
 } from "@paddle/paddle-js";
 
@@ -12,7 +13,11 @@ import { CheckoutPaddleSkeleton } from "@/components/checkout/CheckoutPaddleSkel
 import { CheckoutTermsAcceptance } from "@/components/checkout/CheckoutTermsAcceptance";
 import { Card } from "@/components/ui/card";
 import { ClientIcon } from "@/components/ui/client-icon";
+import { logEvent } from "firebase/analytics";
+
 import { useToast } from "@/hooks/use-toast";
+import { analytics } from "@/firebase/init";
+import { paddleAmountToMajor } from "@/lib/paddle/amounts";
 import {
   getPaddleClientToken,
   getPaddleEnvironment,
@@ -37,13 +42,35 @@ type CheckoutInlineFrameProps = {
   priceId: string;
   userId: string;
   email: string;
+  value?: number;
+  currency?: string;
 };
+
+function readCheckoutMoney(
+  data: CheckoutEventsData | undefined,
+  fallbackValue?: number,
+  fallbackCurrency?: string,
+): { value?: number; currency?: string } {
+  const currency = data?.currency_code ?? fallbackCurrency;
+  const total = data?.totals?.total;
+  const value =
+    typeof total === "number"
+      ? paddleAmountToMajor(String(total))
+      : fallbackValue;
+
+  return {
+    ...(typeof value === "number" ? { value } : {}),
+    ...(currency ? { currency } : {}),
+  };
+}
 
 export function CheckoutInlineFrame({
   courseId,
   priceId,
   userId,
   email,
+  value: fallbackValue,
+  currency: fallbackCurrency,
 }: CheckoutInlineFrameProps) {
   const router = useRouter();
   const { toast } = useToast();
@@ -52,6 +79,7 @@ export function CheckoutInlineFrame({
   const [accepted, setAccepted] = useState(false);
   const paddleRef = useRef<Paddle | null>(null);
   const hasOpenedRef = useRef(false);
+  const hasTrackedBeginCheckoutRef = useRef(false);
 
   useEffect(() => {
     if (hasOpenedRef.current) {
@@ -71,12 +99,38 @@ export function CheckoutInlineFrame({
           eventCallback: (event) => {
             if (event.name === CheckoutEventNames.CHECKOUT_LOADED) {
               setIsLoaded(true);
+              if (!hasTrackedBeginCheckoutRef.current) {
+                hasTrackedBeginCheckoutRef.current = true;
+                const money = readCheckoutMoney(
+                  event.data,
+                  fallbackValue,
+                  fallbackCurrency,
+                );
+                if (analytics) {
+                  logEvent(analytics, "begin_checkout", {
+                    ...money,
+                    items: [{ item_id: courseId }],
+                  });
+                }
+              }
               return;
             }
 
             if (event.name === CheckoutEventNames.CHECKOUT_COMPLETED) {
               const transactionId = event.data?.transaction_id;
               if (transactionId) {
+                const money = readCheckoutMoney(
+                  event.data,
+                  fallbackValue,
+                  fallbackCurrency,
+                );
+                if (analytics) {
+                  logEvent(analytics, "purchase", {
+                    transaction_id: transactionId,
+                    ...money,
+                    items: [{ item_id: courseId }],
+                  });
+                }
                 router.replace(
                   `/order/thank-you?transaction_id=${encodeURIComponent(transactionId)}`,
                 );
@@ -161,7 +215,7 @@ export function CheckoutInlineFrame({
     return () => {
       cancelled = true;
     };
-  }, [courseId, email, priceId, router, toast, userId]);
+  }, [courseId, email, fallbackCurrency, fallbackValue, priceId, router, toast, userId]);
 
   if (error) {
     return (
